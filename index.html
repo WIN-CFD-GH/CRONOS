@@ -3394,11 +3394,6 @@
                                         Monitoreando Asesores
                                     </span>
                                     <span
-                                        class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
-                                        <i class="fa-solid fa-database text-emerald-400"></i>
-                                        Fuente de datos: SUPABASE
-                                    </span>
-                                    <span
                                         class="bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
                                         <i class="fa-solid fa-cubes text-indigo-300"></i>
                                         <span id="dash-header-modulos-count">7 Módulos Monitoreados</span>
@@ -4054,11 +4049,6 @@
                                         <i class="fa-solid fa-user-check text-win-orange"></i>
                                         Monitoreando Asesores
                                     </span>
-                                    <span
-                                        class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
-                                        <i class="fa-solid fa-database text-emerald-400"></i>
-                                        Fuente de datos: SUPABASE
-                                    </span>
                                 </div>
                                 <p class="text-xs md:text-sm text-purple-200 mt-1 max-w-2xl">
                                     Medición continua de tiempos de espera en línea de asesores, pausas, reinicios y
@@ -4080,81 +4070,46 @@
                         </div>
                     </div>
 
-                    <!-- Tarjetas de Métricas SLA Reales (Fuente exclusiva: Supabase) -->
-                    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
-                        <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm text-center">
-                            <span class="text-[10px] font-bold uppercase text-indigo-600 block">Total Eventos</span>
-                            <div id="sla-metric-total" class="text-2xl font-black text-indigo-600 mt-1 font-mono">0</div>
-                            <span class="text-[9px] text-slate-400">Registros SLA</span>
-                        </div>
+                    <!-- 7 Tarjetas de Métricas SLA Reales -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
                         <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm text-center">
                             <span class="text-[10px] font-bold uppercase text-slate-400 block">Total Inicios</span>
-                            <div id="sla-metric-inicios" class="text-2xl font-black text-emerald-600 mt-1 font-mono">0</div>
+                            <div id="sla-metric-inicios" class="text-2xl font-black text-emerald-600 mt-1 font-mono">0
+                            </div>
                             <span class="text-[9px] text-slate-400">Activaciones</span>
                         </div>
                         <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm text-center">
                             <span class="text-[10px] font-bold uppercase text-slate-400 block">Total Pausas</span>
-                            <div id="sla-metric-pausas" class="text-2xl font-black text-amber-600 mt-1 font-mono">0</div>
+                            <div id="sla-metric-pausas" class="text-2xl font-black text-amber-600 mt-1 font-mono">0
+                            </div>
                             <span class="text-[9px] text-slate-400">Pausas en llamada</span>
                         </div>
                         <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm text-center">
                             <span class="text-[10px] font-bold uppercase text-slate-400 block">Total Reinicios</span>
-                            <div id="sla-metric-reinicios" class="text-2xl font-black text-blue-600 mt-1 font-mono">0</div>
+                            <div id="sla-metric-reinicios" class="text-2xl font-black text-blue-600 mt-1 font-mono">0
+                            </div>
                             <span class="text-[9px] text-slate-400">Puestas a cero</span>
                         </div>
                         <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm text-center">
                             <span class="text-[10px] font-bold uppercase text-slate-400 block">Promedio de Uso</span>
-                            <div id="sla-metric-promedio" class="text-2xl font-black text-purple-600 mt-1 font-mono">0s</div>
+                            <div id="sla-metric-promedio" class="text-2xl font-black text-purple-600 mt-1 font-mono">0s
+                            </div>
                             <span class="text-[9px] text-slate-400">Por interacción</span>
                         </div>
                         <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm text-center">
-                            <span class="text-[10px] font-bold uppercase text-amber-600 block">45 Segundos</span>
+                            <span class="text-[10px] font-bold uppercase text-amber-600 block">Llegaron a 45s</span>
                             <div id="sla-metric-45s" class="text-2xl font-black text-amber-500 mt-1 font-mono">0</div>
                             <span class="text-[9px] text-amber-600 font-bold">Preventivo</span>
                         </div>
                         <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm text-center">
-                            <span class="text-[10px] font-bold uppercase text-orange-600 block">60 Segundos</span>
+                            <span class="text-[10px] font-bold uppercase text-orange-600 block">Llegaron a 60s</span>
                             <div id="sla-metric-60s" class="text-2xl font-black text-orange-600 mt-1 font-mono">0</div>
                             <span class="text-[9px] text-orange-600 font-bold">Límite SLA</span>
                         </div>
                         <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm text-center">
-                            <span class="text-[10px] font-bold uppercase text-rose-600 block">70 Segundos</span>
+                            <span class="text-[10px] font-bold uppercase text-rose-600 block">Superaron 70s</span>
                             <div id="sla-metric-70s" class="text-2xl font-black text-rose-600 mt-1 font-mono">0</div>
                             <span class="text-[9px] text-rose-600 font-bold">SLA Crítico</span>
-                        </div>
-                    </div>
-
-                    <!-- Ranking de Asesores SLA (Fuente exclusiva: Supabase) -->
-                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden p-5">
-                        <div class="flex items-center justify-between gap-3 mb-4">
-                            <div>
-                                <h3 class="font-extrabold text-slate-800 text-sm flex items-center gap-2">
-                                    <i class="fa-solid fa-trophy text-amber-500"></i> Ranking de Asesores - Gestión SLA
-                                </h3>
-                                <p class="text-xs text-slate-500 mt-0.5">Desempeño y volumen de interacción con CRONOS SLA por asesor</p>
-                            </div>
-                            <span class="text-[10px] font-extrabold text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full flex items-center gap-1">
-                                <i class="fa-solid fa-database text-emerald-600"></i> Fuente de datos: SUPABASE
-                            </span>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left text-xs">
-                                <thead class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200 uppercase text-[10px] tracking-wider">
-                                    <tr>
-                                        <th class="p-3 text-center">#</th>
-                                        <th class="p-3">Asesor</th>
-                                        <th class="p-3">Correo</th>
-                                        <th class="p-3 text-center">Inicios</th>
-                                        <th class="p-3 text-center">Pausas</th>
-                                        <th class="p-3 text-center">Reinicios</th>
-                                        <th class="p-3 text-center">Alertas (45s/60s/70s)</th>
-                                        <th class="p-3 text-center font-black text-purple-700">Total Eventos SLA</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="sla-ranking-tbody" class="divide-y divide-slate-100 font-medium text-slate-700">
-                                    <!-- Inyectado dinámicamente -->
-                                </tbody>
-                            </table>
                         </div>
                     </div>
 
@@ -12520,7 +12475,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                         autoRefreshToken: false
                     }
                 });
-                console.log("Supabase conectado");
+                console.log('%c[CRONOS FID - Supabase]%c Cliente inicializado exitosamente para public.cronos_sla.', 'color:#3ECF8E;font-weight:bold;', 'color:#10b981;');
             } else {
                 console.warn('[Supabase] SDK no disponible de inmediato en window, se usará fallback REST API.');
             }
@@ -12531,23 +12486,13 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         // Helper para insertar eventos SLA exclusivamente en Supabase
         async function insertSupabaseSLAEvent(record) {
             try {
-                // Solo ROL = ASESOR genera eventos en Supabase
-                const user = window.CRONOS_CURRENT_USER;
-                if (user && typeof isRoleAsesor === 'function' && !isRoleAsesor(user)) {
-                    return null;
-                }
-                if (record && typeof isRoleAsesor === 'function' && !isRoleAsesor(record)) {
-                    return null;
-                }
-
-                let inserted = null;
                 if (window.supabaseClient) {
                     const { data, error } = await window.supabaseClient
                         .from('cronos_sla')
                         .insert([record])
                         .select();
                     if (error) throw error;
-                    inserted = (data && data[0]) ? data[0] : record;
+                    return (data && data[0]) ? data[0] : record;
                 } else {
                     const res = await fetch(`${window.SUPABASE_CONFIG.url}/rest/v1/cronos_sla`, {
                         method: 'POST',
@@ -12564,10 +12509,8 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                         throw new Error(`HTTP ${res.status}: ${errTxt}`);
                     }
                     const data = await res.json();
-                    inserted = (data && data[0]) ? data[0] : record;
+                    return (data && data[0]) ? data[0] : record;
                 }
-                console.log("Evento SLA insertado");
-                return inserted;
             } catch (err) {
                 console.error('[Supabase] Error al insertar evento en public.cronos_sla:', err);
                 throw err;
@@ -12576,7 +12519,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         window.insertSupabaseSLAEvent = insertSupabaseSLAEvent;
 
         // Helper para consultar eventos SLA exclusivamente desde Supabase
-        async function fetchSupabaseSLAEvents(limit = 5000) {
+        async function fetchSupabaseSLAEvents(limit = 1000) {
             try {
                 let rows = [];
                 if (window.supabaseClient) {
@@ -12601,7 +12544,6 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     }
                     rows = await res.json();
                 }
-                console.log("Eventos SLA cargados");
                 const normalized = (rows || []).map(r => normalizeSLADoc(r));
                 normalized.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
                 return normalized;
@@ -13122,47 +13064,11 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             async logLogin(user) {
                 const u = user || window.CRONOS_CURRENT_USER;
                 const nombre = u ? (u.nombre || u.usuario) : "Usuario";
-                // REGLA: Si es Asesor, registrar INICIO_SESION en Supabase
-                if (u && isRoleAsesor(u)) {
-                    try {
-                        const record = {
-                            correo: u.correo || 'usuario@win.pe',
-                            nombre: nombre,
-                            rol: u.rol || 'Asesor',
-                            accion: 'INICIO_SESION',
-                            estado_sla: 'Normal',
-                            tiempo: '00:00',
-                            fecha_hora: new Date().toISOString(),
-                            modulo: 'Autenticación'
-                        };
-                        await insertSupabaseSLAEvent(record);
-                    } catch (e) {
-                        console.error('[Supabase] Error al registrar INICIO_SESION:', e);
-                    }
-                }
                 return await this.logEvent("INICIO_SESION", "Autenticación", `Ingreso exitoso a CRONOS FID (${nombre})`);
             },
             async logLogout(user) {
                 const u = user || window.CRONOS_CURRENT_USER;
                 const nombre = u ? (u.nombre || u.usuario) : "Usuario";
-                // REGLA: Si es Asesor, registrar CIERRE_SESION en Supabase
-                if (u && isRoleAsesor(u)) {
-                    try {
-                        const record = {
-                            correo: u.correo || 'usuario@win.pe',
-                            nombre: nombre,
-                            rol: u.rol || 'Asesor',
-                            accion: 'CIERRE_SESION',
-                            estado_sla: 'Normal',
-                            tiempo: '00:00',
-                            fecha_hora: new Date().toISOString(),
-                            modulo: 'Autenticación'
-                        };
-                        await insertSupabaseSLAEvent(record);
-                    } catch (e) {
-                        console.error('[Supabase] Error al registrar CIERRE_SESION:', e);
-                    }
-                }
                 return await this.logEvent("CIERRE_SESION", "Autenticación", `Sesión finalizada por ${nombre}`);
             },
             async logModuleAccess(module, user) {
@@ -13171,6 +13077,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 if (!u || !isRoleAsesor(u)) {
                     return null;
                 }
+                // Modulos que NO deben generar metricas: Dashboard, Auditoria, Analitica SLA, Gestion Usuarios, Exportaciones, etc.
                 const validOperationalModules = [
                     'clave secreta', 'generator',
                     'tipificaciones',
@@ -13185,55 +13092,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 if (!isValid) {
                     return null;
                 }
-
-                // Normalizar nombre de los 7 módulos monitoreados
-                let canonMod = module;
-                if (modLower.includes('clave') || modLower.includes('secreta') || modLower.includes('generator')) canonMod = 'Clave Secreta';
-                else if (modLower.includes('tipificaci')) canonMod = 'Tipificaciones';
-                else if (modLower.includes('ticket')) canonMod = 'Tickets Tecnológico';
-                else if (modLower.includes('derivaci') || modLower.includes('discord')) canonMod = 'Derivaciones Discord';
-                else if (modLower.includes('acuerdo') || modLower.includes('voz')) canonMod = 'Acuerdos de Voz';
-                else if (modLower.includes('directorio') || modLower.includes('escalam')) canonMod = 'Directorio Escalamiento';
-                else if (modLower.includes('sla')) canonMod = 'CRONOS SLA';
-
-                // Registrar ACCESO_MODULO en Supabase
-                try {
-                    const record = {
-                        correo: u.correo || 'usuario@win.pe',
-                        nombre: u.nombre || u.usuario || 'Usuario WIN',
-                        rol: u.rol || 'Asesor',
-                        accion: 'ACCESO_MODULO',
-                        estado_sla: 'Normal',
-                        tiempo: '00:00',
-                        fecha_hora: new Date().toISOString(),
-                        modulo: canonMod
-                    };
-                    await insertSupabaseSLAEvent(record);
-                } catch (e) {
-                    console.error('[Supabase] Error al registrar ACCESO_MODULO:', e);
-                }
-
-                return await this.logEvent("ACCESO_MODULO", canonMod, `Usuario accedió al módulo ${canonMod}`);
-            },
-            async logSLAUsage(detalle, user) {
-                const u = user || window.CRONOS_CURRENT_USER;
-                if (!u || !isRoleAsesor(u)) return null;
-                try {
-                    const record = {
-                        correo: u.correo || 'usuario@win.pe',
-                        nombre: u.nombre || u.usuario || 'Usuario WIN',
-                        rol: u.rol || 'Asesor',
-                        accion: 'USO_CRONOS_SLA',
-                        estado_sla: 'Normal',
-                        tiempo: '00:00',
-                        fecha_hora: new Date().toISOString(),
-                        modulo: 'CRONOS SLA'
-                    };
-                    await insertSupabaseSLAEvent(record);
-                } catch (e) {
-                    console.error('[Supabase] Error al registrar USO_CRONOS_SLA:', e);
-                }
-                return await this.logEvent("USO_CRONOS_SLA", "CRONOS SLA", detalle || "Uso del cronómetro SLA");
+                return await this.logEvent("ACCESO_MODULO", module, `Usuario accedió al módulo ${module}`);
             },
             async logExport(module = "Auditoría", detalle = "Descarga de bitácora") {
                 return await this.logEvent("EXPORTACION", module, detalle);
@@ -13261,36 +13120,57 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
         /**
          * SLAManager: Control y métricas de eventos de temporizador CRONOS SLA.
-         * Todos los eventos se escriben exclusivamente en Supabase public.cronos_sla
          */
         const SLAManager = {
             async writeSLAEvent(payload) {
-                return await logSLAEvent(payload.accion || 'INICIAR', payload.tiempoSegundos || 0, payload.estado_sla || payload.estadoSLA);
+                try {
+                    const user = window.CRONOS_CURRENT_USER;
+                    const record = {
+                        correo: payload.correo || (user ? user.correo : 'usuario@win.pe'),
+                        nombre: payload.nombre || payload.usuario || (user ? user.nombre : 'Usuario WIN'),
+                        rol: payload.rol || (user ? user.rol : 'Asesor'),
+                        accion: payload.accion || 'Iniciar',
+                        estado_sla: payload.estado_sla || payload.estadoSLA || 'Normal',
+                        tiempo: payload.tiempo || payload.tiempoExacto || (typeof payload.tiempoSegundos === 'number' ? formatSecondsToMMSS(payload.tiempoSegundos) : '00:00'),
+                        fecha_hora: payload.fecha_hora || payload.fechaHora || new Date().toISOString(),
+                        modulo: payload.modulo || 'CRONOS SLA'
+                    };
+                    const res = await insertSupabaseSLAEvent(record);
+                    console.log("[SLAManager] SLA WRITE Supabase exitoso:", res);
+                    return res;
+                } catch (error) {
+                    console.error("SUPABASE ERROR [cronos_sla]:", {
+                        tabla: "public.cronos_sla",
+                        documento: payload,
+                        error: error
+                    });
+                    throw error;
+                }
             },
             async saveSLAEvent(accion, tiempoSegundos, estadoOverride) {
                 return await logSLAEvent(accion, tiempoSegundos, estadoOverride);
             },
             async registerStart(timeStr = '00:00', seconds = 0) {
-                return await this.saveSLAEvent('INICIAR', typeof seconds === 'number' ? seconds : 0, 'Normal');
+                return await this.saveSLAEvent('Iniciar', typeof seconds === 'number' ? seconds : 0, 'Normal');
             },
             async registerPause(timeStr, seconds) {
                 const secs = typeof seconds === 'number' ? seconds : (parseInt(timeStr) || 0);
                 const status = secs >= 70 ? 'SLA Crítico' : (secs >= 60 ? 'Límite SLA' : (secs >= 45 ? 'Preventivo' : 'Normal'));
-                return await this.saveSLAEvent('PAUSA', secs, status);
+                return await this.saveSLAEvent('Pausa', secs, status);
             },
             async registerReset(timeStr, seconds) {
                 const secs = typeof seconds === 'number' ? seconds : (parseInt(timeStr) || 0);
                 const status = secs >= 70 ? 'SLA Crítico' : (secs >= 60 ? 'Límite SLA' : (secs >= 45 ? 'Preventivo' : 'Normal'));
-                return await this.saveSLAEvent('REINICIO', secs, status);
+                return await this.saveSLAEvent('Reinicio', secs, status);
             },
             async register45Seconds() {
-                return await this.saveSLAEvent('45_SEGUNDOS', 45, 'Preventivo');
+                return await this.saveSLAEvent('Alcanzó 45s', 45, 'Preventivo');
             },
             async register60Seconds() {
-                return await this.saveSLAEvent('60_SEGUNDOS', 60, 'Límite SLA');
+                return await this.saveSLAEvent('Alcanzó 60s', 60, 'Límite SLA');
             },
             async register70Seconds() {
-                return await this.saveSLAEvent('70_SEGUNDOS', 70, 'SLA Crítico');
+                return await this.saveSLAEvent('Superó 70s', 70, 'SLA Crítico');
             },
             getStats() {
                 const events = window.CRONOS_SLA_EVENTS || [];
@@ -13993,19 +13873,19 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
         function trackModuleAccess(moduleKey) {
             const user = window.CRONOS_CURRENT_USER;
-            // REGLA: SOLAMENTE EL ROL ASESOR genera métricas operativas
+            // REGLA: SOLAMENTE EL ROL ASESOR genera metricas operativas
             if (!user || !isRoleAsesor(user)) {
                 return;
             }
 
-            // Normalizar a uno de los 7 módulos operativos
+            // Normalizar a uno de los 7 modulos operativos
             let normKey = moduleKey;
             if (moduleKey === 'acuerdos-voz') normKey = 'acuerdos_voz';
             else if (moduleKey === 'cronos-sla') normKey = 'cronos_sla';
 
             const validKeys = ['generator', 'tipificaciones', 'tickets', 'derivaciones', 'acuerdos_voz', 'directorio', 'cronos_sla'];
             if (!validKeys.includes(normKey)) {
-                // Módulos administrativos (dashboard, auditoria, analitica_sla, gestion_usuarios, etc.) NO generan métricas
+                // Modulos administrativos (dashboard, auditoria, analitica_sla, gestion_usuarios, etc.) NO generan metricas
                 return;
             }
 
@@ -14029,27 +13909,13 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         async function logSLAEvent(accion, tiempoSegundos, estadoOverride) {
             try {
                 const user = window.CRONOS_CURRENT_USER;
-                // REGLA PRINCIPAL: SOLAMENTE EL ROL ASESOR debe generar métricas operativas y eventos SLA
+                // REGLA PRINCIPAL: SOLAMENTE EL ROL ASESOR debe generar metricas operativas y eventos SLA
                 if (!user || !isRoleAsesor(user)) {
                     console.log(`[CRONOS SLA] Evento ignorado para perfil administrativo (${user ? (user.correo || user.rol) : 'Sin sesion'}): ${accion}`);
                     return;
                 }
 
-                // Normalización oficial de acciones
-                let accionNorm = accion;
-                const accLower = (accion || '').toLowerCase().trim();
-                if (accLower === 'iniciar' || accLower === 'reanudar' || accLower === 'iniciar') accionNorm = 'INICIAR';
-                else if (accLower === 'pausa' || accLower === 'pausar') accionNorm = 'PAUSA';
-                else if (accLower === 'reinicio' || accLower === 'reiniciar') accionNorm = 'REINICIO';
-                else if (accLower.includes('45s') || accLower === '45_segundos' || accLower.includes('45')) accionNorm = '45_SEGUNDOS';
-                else if (accLower.includes('60s') || accLower === '60_segundos' || accLower.includes('60')) accionNorm = '60_SEGUNDOS';
-                else if (accLower.includes('70s') || accLower === '70_segundos' || accLower.includes('70')) accionNorm = '70_SEGUNDOS';
-                else if (accLower === 'inicio_sesion' || accLower.includes('inicio de sesi')) accionNorm = 'INICIO_SESION';
-                else if (accLower === 'acceso_modulo' || accLower.includes('acceso')) accionNorm = 'ACCESO_MODULO';
-                else if (accLower === 'uso_cronos_sla' || accLower.includes('uso cronos')) accionNorm = 'USO_CRONOS_SLA';
-                else if (accLower === 'cierre_sesion' || accLower.includes('cierre de sesi')) accionNorm = 'CIERRE_SESION';
-
-                // Incremento de actividad operativa del módulo CRONOS SLA
+                // Incremento de actividad operativa del modulo CRONOS SLA
                 if (window.CRONOS_MODULE_STATS && window.CRONOS_MODULE_STATS.cronos_sla !== undefined) {
                     window.CRONOS_MODULE_STATS.cronos_sla++;
                 }
@@ -14067,17 +13933,18 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     correo: user.correo || "usuario@win.pe",
                     nombre: user.nombre || "Usuario WIN",
                     rol: user.rol || "Asesor",
-                    accion: accionNorm,
+                    accion: accion,
                     estado_sla: estadoSLA,
                     tiempo: tiempoExacto,
                     fecha_hora: nowISO,
                     modulo: "CRONOS SLA"
                 };
 
-                // Escribir EXCLUSIVAMENTE en Supabase tabla public.cronos_sla
+                // Escribir EXCLUSIVAMENTE en Supabase tabla public.cronos_sla (Ya NO en Firestore)
                 let insertedDoc = null;
                 try {
                     insertedDoc = await insertSupabaseSLAEvent(supabaseRecord);
+                    console.log("[Supabase] Evento de Asesor registrado exclusivamente en 'public.cronos_sla':", insertedDoc || supabaseRecord);
                 } catch (sbInsertErr) {
                     console.error("SUPABASE ERROR [logSLAEvent insert]:", sbInsertErr);
                 }
@@ -14091,8 +13958,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     correo: user.correo || "usuario@win.pe",
                     rol: user.rol || "Asesor",
                     modulo: "CRONOS SLA",
-                    accion: accionNorm,
-                    tiempo: tiempoExacto,
+                    accion: accion,
                     tiempoExacto: tiempoExacto,
                     tiempoSegundos: typeof tiempoSegundos === 'number' ? tiempoSegundos : (parseInt(tiempoSegundos) || 0),
                     estadoSLA: estadoSLA,
@@ -14110,12 +13976,21 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     window.CRONOS_SLA_EVENTS.unshift(slaEvent);
                 }
 
+                if (window.AuditManager && typeof window.AuditManager.logEvent === 'function') {
+                    window.AuditManager.logEvent("USO_CRONOS_SLA", "CRONOS SLA", `${accion} (${tiempoExacto} - ${estadoSLA})`);
+                }
+
+                const usrInDb = (window.CRONOS_USERS_DB || []).find(u => u.uid === user.uid || (u.correo && user.correo && u.correo.toLowerCase() === user.correo.toLowerCase()));
+                if (usrInDb && window.UserManager && typeof window.UserManager.updateUser === 'function') {
+                    usrInDb.usoSLA = (usrInDb.usoSLA || 0) + 1;
+                    window.UserManager.updateUser(usrInDb.uid, { usoSLA: usrInDb.usoSLA }).catch(e => console.error("FIRESTORE ERROR:", e));
+                }
+
                 renderSLAMetricsCards();
                 renderSLATable();
-                renderSLARanking();
                 renderDashboard();
             } catch (error) {
-                console.error("ERROR [logSLAEvent]:", error);
+                console.error("FIRESTORE ERROR [logSLAEvent]:", error);
             }
         }
         window.logSLAEvent = logSLAEvent;
@@ -14153,17 +14028,17 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             const todayStr = today.toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit', year: 'numeric' });
             const todayISO = today.toISOString().split('T')[0];
 
-            // FUENTE EXCLUSIVA: Supabase public.cronos_sla
-            const allEvents = (window.CRONOS_SLA_EVENTS || []).filter(e => isRoleAsesor(e));
+            const rawAuditLogs = window.CRONOS_ACCESS_LOGS || [];
+            const rawSlaEvents = window.CRONOS_SLA_EVENTS || [];
+
+            // REGLA PRINCIPAL: SOLAMENTE EL ROL ASESOR genera metricas operativas
+            const auditLogs = rawAuditLogs.filter(l => isRoleAsesor(l));
+            const slaEvents = rawSlaEvents.filter(e => isRoleAsesor(e));
 
             function getLogMs(item) {
                 if (typeof item.timestamp === 'number' && item.timestamp > 0) return item.timestamp;
-                if (item.fechaHora || item.fecha_hora) {
-                    const t = new Date(item.fechaHora || item.fecha_hora).getTime();
-                    if (!isNaN(t) && t > 0) return t;
-                }
-                if (item.createdAt || item.created_at) {
-                    const t = new Date(item.createdAt || item.created_at).getTime();
+                if (item.fechaHora) {
+                    const t = new Date(item.fechaHora).getTime();
                     if (!isNaN(t) && t > 0) return t;
                 }
                 return 0;
@@ -14171,8 +14046,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
             function isToday(item) {
                 if (item.fecha && item.fecha === todayStr) return true;
-                const iso = item.fechaHora || item.fecha_hora || item.created_at || '';
-                if (iso && iso.startsWith(todayISO)) return true;
+                if (item.fechaHora && item.fechaHora.startsWith(todayISO)) return true;
                 const ms = getLogMs(item);
                 if (ms > 0) {
                     return new Date(ms).toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit', year: 'numeric' }) === todayStr;
@@ -14180,83 +14054,83 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 return false;
             }
 
-            // 1. USUARIOS ACTIVOS (Exclusivamente Asesores desde Supabase)
+            // 1. USUARIOS ACTIVOS (Exclusivamente Asesores)
             const activeTodaySet = new Set();
             const active24hSet = new Set();
             const active7dSet = new Set();
 
-            allEvents.forEach(ev => {
-                const userKey = (ev.correo || ev.usuario || ev.nombre || '').toLowerCase().trim();
-                if (!userKey || userKey === 'sistema') return;
+            auditLogs.forEach(log => {
+                const u = log.usuario || log.correo || log.nombre;
+                if (!u || u === 'Sistema') return;
+                const ms = getLogMs(log);
+                const diffMs = ms > 0 ? (now - ms) : Infinity;
+                if (isToday(log) || diffMs <= 24 * 3600 * 1000) activeTodaySet.add(u);
+                if (diffMs <= 24 * 3600 * 1000 || isToday(log)) active24hSet.add(u);
+                if (diffMs <= 7 * 24 * 3600 * 1000) active7dSet.add(u);
+            });
+
+            slaEvents.forEach(ev => {
+                const u = ev.usuario || ev.correo;
+                if (!u || u === 'Sistema') return;
                 const ms = getLogMs(ev);
                 const diffMs = ms > 0 ? (now - ms) : Infinity;
-
-                if (isToday(ev) || diffMs <= 24 * 3600 * 1000) {
-                    activeTodaySet.add(userKey);
-                }
-                if (diffMs <= 24 * 3600 * 1000) {
-                    active24hSet.add(userKey);
-                }
-                if (diffMs <= 7 * 24 * 3600 * 1000) {
-                    active7dSet.add(userKey);
-                }
+                if (isToday(ev) || diffMs <= 24 * 3600 * 1000) activeTodaySet.add(u);
+                if (diffMs <= 24 * 3600 * 1000 || isToday(ev)) active24hSet.add(u);
+                if (diffMs <= 7 * 24 * 3600 * 1000) active7dSet.add(u);
             });
 
             if (activeTodaySet.size === 0 && window.CRONOS_CURRENT_USER && isRoleAsesor(window.CRONOS_CURRENT_USER)) {
-                activeTodaySet.add((window.CRONOS_CURRENT_USER.correo || window.CRONOS_CURRENT_USER.nombre || 'asesor').toLowerCase());
+                activeTodaySet.add(window.CRONOS_CURRENT_USER.nombre || window.CRONOS_CURRENT_USER.correo || "Asesor");
             }
             if (active24hSet.size === 0 && window.CRONOS_CURRENT_USER && isRoleAsesor(window.CRONOS_CURRENT_USER)) {
-                active24hSet.add((window.CRONOS_CURRENT_USER.correo || window.CRONOS_CURRENT_USER.nombre || 'asesor').toLowerCase());
+                active24hSet.add(window.CRONOS_CURRENT_USER.nombre || window.CRONOS_CURRENT_USER.correo || "Asesor");
             }
 
-            // 2. SESIONES INICIADAS (Exclusivamente Asesores desde Supabase)
+            // 2. SESIONES INICIADAS (Exclusivamente Asesores)
             let sesHoy = 0, sesSem = 0, sesMes = 0, sesTotal = 0;
-            allEvents.forEach(ev => {
-                const accionNorm = (ev.accion || '').toUpperCase().trim();
-                const isLogin = accionNorm === 'INICIO_SESION' || accionNorm === 'LOGIN' || accionNorm.includes('INICIO DE SESI');
+            auditLogs.forEach(log => {
+                const accionNorm = (log.accion || '').toUpperCase().trim();
+                const isLogin = accionNorm === 'INICIO_SESION' || accionNorm === 'INICIO DE SESIÓN' || accionNorm === 'INICIO DE SESION' || accionNorm === 'LOGIN' || accionNorm.includes('INICIO');
                 if (isLogin) {
                     sesTotal++;
-                    const ms = getLogMs(ev);
+                    const ms = getLogMs(log);
                     const diffMs = ms > 0 ? (now - ms) : Infinity;
-                    if (isToday(ev) || diffMs <= 24 * 3600 * 1000) sesHoy++;
+                    if (isToday(log) || diffMs <= 24 * 3600 * 1000) sesHoy++;
                     if (diffMs <= 7 * 24 * 3600 * 1000) sesSem++;
                     if (diffMs <= 30 * 24 * 3600 * 1000) sesMes++;
                 }
             });
+            if (sesTotal === 0 && window.CRONOS_CURRENT_USER && isRoleAsesor(window.CRONOS_CURRENT_USER)) {
+                sesHoy = 1;
+                sesSem = 1;
+                sesMes = 1;
+                sesTotal = 1;
+            }
 
-            // 3. EVENTOS CRONOS SLA (Exclusivamente Asesores desde Supabase)
+            // 3. EVENTOS CRONOS SLA (Exclusivamente Asesores)
             let slaIni = 0, slaPau = 0, slaRst = 0;
             let sla45 = 0, sla60 = 0, sla70 = 0;
             let sumPauseSecs = 0, countPauseSecs = 0;
-            let totalSLAEvents = 0;
 
-            allEvents.forEach(ev => {
-                const acc = (ev.accion || '').toUpperCase().trim();
+            slaEvents.forEach(ev => {
+                const acc = (ev.accion || '').toLowerCase().trim();
                 const secs = typeof ev.tiempoSegundos === 'number' ? ev.tiempoSegundos : (parseInt(ev.tiempoSegundos) || 0);
 
-                const isSlaAction = acc === 'INICIAR' || acc === 'PAUSA' || acc === 'REINICIO' ||
-                                    acc === '45_SEGUNDOS' || acc === '60_SEGUNDOS' || acc === '70_SEGUNDOS' ||
-                                    acc.includes('INICI') || acc.includes('PAUS') || acc.includes('REINICI') ||
-                                    acc.includes('45') || acc.includes('60') || acc.includes('70') ||
-                                    (ev.modulo === 'CRONOS SLA' && acc !== 'ACCESO_MODULO');
-
-                if (isSlaAction) totalSLAEvents++;
-
-                if (acc === 'INICIAR' || acc.includes('INICI') || acc.includes('REANUD')) {
+                if (acc === 'iniciar' || acc === 'reanudar' || acc.includes('inici')) {
                     slaIni++;
-                } else if (acc === 'PAUSA' || acc.includes('PAUS')) {
+                } else if (acc === 'pausa' || acc.includes('paus')) {
                     slaPau++;
-                } else if (acc === 'REINICIO' || acc.includes('REINICI')) {
+                } else if (acc === 'reinicio' || acc.includes('reinici')) {
                     slaRst++;
                 }
 
-                if (acc === '45_SEGUNDOS' || acc.includes('45S') || (secs >= 45 && secs < 60)) {
+                if (acc.includes('45s') || (secs >= 45 && secs < 60)) {
                     sla45++;
                 }
-                if (acc === '60_SEGUNDOS' || acc.includes('60S') || (secs >= 60 && secs <= 70)) {
+                if (acc.includes('60s') || (secs >= 60 && secs <= 70)) {
                     sla60++;
                 }
-                if (acc === '70_SEGUNDOS' || acc.includes('70S') || secs > 70) {
+                if (acc.includes('70s') || secs > 70) {
                     sla70++;
                 }
 
@@ -14266,9 +14140,10 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 }
             });
 
-            const slaPromedioStr = countPauseSecs > 0 ? Math.round(sumPauseSecs / countPauseSecs) + 's' : '0s';
+            const totalSLA = slaEvents.length;
+            const slaPromedioStr = countPauseSecs > 0 ? Math.round(sumPauseSecs / countPauseSecs) + "s" : "0s";
 
-            // 4. USO POR MÓDULO (UNICAMENTE LOS 7 MÓDULOS OPERATIVOS MONITOREADOS)
+            // 4. USO POR MODULO (UNICAMENTE LOS 7 MODULOS OPERATIVOS)
             const moduleStats = {
                 generator: 0,
                 tipificaciones: 0,
@@ -14284,25 +14159,31 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 const norm = modName.toLowerCase().trim();
                 if (norm.includes('clave') || norm.includes('generator') || norm.includes('secreta')) return 'generator';
                 if (norm.includes('tipificaci')) return 'tipificaciones';
-                if (norm.includes('ticket')) return 'tickets';
+                if (norm.includes('ticket') || norm.includes('tecnol')) return 'tickets';
                 if (norm.includes('derivaci') || norm.includes('discord')) return 'derivaciones';
                 if (norm.includes('acuerdos') || norm.includes('voz')) return 'acuerdos_voz';
                 if (norm.includes('directorio') || norm.includes('escalamiento')) return 'directorio';
-                if (norm.includes('cronos sla') || norm.includes('sla')) return 'cronos_sla';
+                if (norm.includes('cronos sla') || (norm.includes('sla') && !norm.includes('analitica'))) return 'cronos_sla';
                 return null;
             }
 
             let navCount = 0;
-            allEvents.forEach(ev => {
-                const key = mapModuleToKey(ev.modulo) || mapModuleToKey(ev.accion);
+            auditLogs.forEach(log => {
+                const accionNorm = (log.accion || '').toUpperCase().trim();
+                const isModAccess = accionNorm === 'ACCESO_MODULO' || accionNorm === 'USO_CRONOS_SLA' || accionNorm.includes('ACCESO');
+                const key = mapModuleToKey(log.modulo) || mapModuleToKey(log.accion);
                 if (key && moduleStats[key] !== undefined) {
                     moduleStats[key]++;
+                    navCount++;
+                } else if (isModAccess) {
                     navCount++;
                 }
             });
 
-            if (totalSLAEvents > 0 && moduleStats.cronos_sla < totalSLAEvents) {
-                moduleStats.cronos_sla = Math.max(moduleStats.cronos_sla, totalSLAEvents);
+            // Asegurar conteo de CRONOS SLA con los eventos reales de asesores
+            if (slaEvents.length > 0 && moduleStats.cronos_sla === 0) {
+                moduleStats.cronos_sla = slaEvents.length;
+                navCount += slaEvents.length;
             }
 
             window.CRONOS_MODULE_STATS = moduleStats;
@@ -14316,20 +14197,26 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             const totalModAccess = modEntries.reduce((sum, curr) => sum + curr[1], 0);
             const top1Pct = totalModAccess > 0 ? Math.round((top1Count / totalModAccess) * 100) : 0;
 
-            // 5. INTERACCIONES TOTALES
-            const totalInterac = allEvents.length;
+            // 5. INTERACCIONES TOTALES (Exclusivamente de Asesores)
+            const funcCount = auditLogs.filter(l => (l.accion || '').toUpperCase() !== 'ACCESO_MODULO' && (l.accion || '').toUpperCase() !== 'INICIO_SESION' && (l.accion || '').toUpperCase() !== 'USO_CRONOS_SLA').length + slaEvents.length;
+            const clicsCount = (window.CRONOS_METRICS && typeof window.CRONOS_METRICS.clicsTotal === 'number') ? window.CRONOS_METRICS.clicsTotal : (auditLogs.length + slaEvents.length);
+            const totalInterac = auditLogs.length + slaEvents.length + (window.CRONOS_METRICS && window.CRONOS_METRICS.clicsTotal ? window.CRONOS_METRICS.clicsTotal : 0);
 
-            // 6. ÚLTIMO ACCESO REGISTRADO
-            const lastEvent = allEvents[0] || (window.CRONOS_CURRENT_USER && isRoleAsesor(window.CRONOS_CURRENT_USER) ? {
-                usuario: window.CRONOS_CURRENT_USER.nombre || 'Asesor',
-                hora: today.toLocaleTimeString('es-PE', { hour12: false }),
+            // 6. ULTIMO ACCESO REGISTRADO (Exclusivamente de Asesor)
+            const loginLogs = auditLogs.filter(l => {
+                const a = (l.accion || '').toUpperCase().trim();
+                return a === 'INICIO_SESION' || a === 'INICIO DE SESIÓN' || a === 'INICIO DE SESION' || a === 'LOGIN' || a.includes('INICIO');
+            });
+            const lastLogin = loginLogs[0] || auditLogs[0] || (window.CRONOS_CURRENT_USER && isRoleAsesor(window.CRONOS_CURRENT_USER) ? {
+                usuario: window.CRONOS_CURRENT_USER.nombre || "Asesor",
                 fecha: todayStr,
-                rol: 'Asesor'
+                hora: new Date().toLocaleTimeString('es-PE', { hour12: false }),
+                rol: "Asesor"
             } : {
-                usuario: 'Ninguno',
-                hora: '--:--',
-                fecha: '--/--/----',
-                rol: 'Asesor'
+                usuario: "—",
+                fecha: "—",
+                hora: "—",
+                rol: "Asesor"
             });
 
             return {
@@ -14341,11 +14228,10 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 sesionesMes: sesMes,
                 sesionesTotal: sesTotal,
                 totalInterac: totalInterac,
-                clics: totalInterac,
+                clics: clicsCount,
                 nav: navCount || totalModAccess,
-                func: totalModAccess,
-                totalSLA: allEvents.length,
-                totalEventosSLA: totalSLAEvents,
+                func: funcCount,
+                totalSLA: totalSLA,
                 slaIni: slaIni,
                 slaPau: slaPau,
                 slaRst: slaRst,
@@ -14353,15 +14239,15 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 sla60: sla60,
                 sla70: sla70,
                 slaPromedio: slaPromedioStr,
-                topModuloNombre: top1Key ? getModuleNameByKey(top1Key) : 'Sin datos',
+                topModuloNombre: top1Key ? getModuleNameByKey(top1Key) : "Sin datos",
                 topModuloCount: top1Count,
                 topModuloPct: top1Pct,
-                segundoModuloNombre: top2Key ? getModuleNameByKey(top2Key) : 'Sin datos',
+                segundoModuloNombre: top2Key ? getModuleNameByKey(top2Key) : "Sin datos",
                 segundoModuloCount: top2Count,
-                lastUser: lastEvent.usuario || lastEvent.nombre || 'Asesor',
-                lastDate: (lastEvent.fecha === todayStr || (lastEvent.fechaHora && lastEvent.fechaHora.startsWith(todayISO))) ? 'Hoy' : (lastEvent.fecha || '--/--/----'),
-                lastTime: lastEvent.hora || '--:--',
-                lastRol: lastEvent.rol || 'Asesor'
+                lastUser: lastLogin.usuario || lastLogin.nombre || "Sin actividad reciente",
+                lastDate: (lastLogin.fecha === todayStr || (lastLogin.fechaHora && lastLogin.fechaHora.startsWith(todayISO))) ? "Hoy" : (lastLogin.fecha || "—"),
+                lastTime: lastLogin.hora || "—",
+                lastRol: lastLogin.rol || "Asesor"
             };
         }
 
@@ -14663,32 +14549,66 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
         async function loadDashboardFirestoreData() {
             try {
-                // DASHBOARD: Fuente exclusiva SUPABASE (public.cronos_sla)
-                const slaEvents = await fetchSupabaseSLAEvents(5000).catch(e => {
-                    console.warn("Error get Supabase SLA:", e);
-                    return [];
-                });
+                const firestoreDb = window.db || (typeof firebase !== 'undefined' && firebase.firestore ? firebase.firestore() : null);
+                if (!firestoreDb) {
+                    renderDashboard();
+                    return;
+                }
+
+                console.log("[Dashboard] Consultando métricas reales (Auditoría/Usuarios en Firebase, SLA en Supabase)...");
+
+                // DASHBOARD SLA lee EXCLUSIVAMENTE desde Supabase. Auditoría y Usuarios se mantienen en Firebase.
+                const [slaEvents, audSnap, usrSnap] = await Promise.all([
+                    fetchSupabaseSLAEvents(1000).catch(e => { console.warn("Error get Supabase SLA:", e); return []; }),
+                    firestoreDb.collection("auditoria").orderBy("timestamp", "desc").limit(1000).get().catch(err =>
+                        firestoreDb.collection("auditoria").limit(1000).get().catch(e => { console.warn("Error get auditoria:", e); return null; })
+                    ),
+                    firestoreDb.collection("usuarios").get().catch(e => { console.warn("Error get usuarios:", e); return null; })
+                ]);
 
                 if (Array.isArray(slaEvents) && slaEvents.length > 0) {
                     window.CRONOS_SLA_EVENTS = slaEvents;
+                    console.log("[Dashboard SLA] Eventos SLA cargados exclusivamente desde Supabase:", slaEvents.length);
                 }
 
-                // Cargar usuarios de Firebase para permisos / gestión (sin consultar métricas de Firestore)
-                try {
-                    const firestoreDb = window.db || (typeof firebase !== 'undefined' && firebase.firestore ? firebase.firestore() : null);
-                    if (firestoreDb) {
-                        const usrSnap = await firestoreDb.collection("usuarios").get().catch(() => null);
-                        if (usrSnap && !usrSnap.empty) {
-                            const users = [];
-                            usrSnap.forEach(doc => users.push({ uid: doc.id, ...doc.data() }));
-                            window.CRONOS_USERS_DB = users;
-                        }
-                    }
-                } catch (eUsers) { }
+                if (audSnap && !audSnap.empty) {
+                    const logs = [];
+                    audSnap.forEach(doc => {
+                        const d = doc.data();
+                        const timeMs = d.timestamp || (d.fechaHora ? new Date(d.fechaHora).getTime() : 0);
+                        logs.push({ id: doc.id, ...d, usuario: d.nombre || d.usuario || 'Desconocido', timestamp: timeMs });
+                    });
+                    logs.sort((a, b) => b.timestamp - a.timestamp);
+                    window.CRONOS_ACCESS_LOGS = logs;
+                    window.CRONOS_FIRESTORE_AUDIT_LOGS = logs;
+                    console.log("[Dashboard] Logs de Auditoria cargados desde Firestore:", logs.length);
+                }
 
+                if (usrSnap && !usrSnap.empty) {
+                    const users = [];
+                    usrSnap.forEach(doc => {
+                        users.push({ uid: doc.id, ...doc.data() });
+                    });
+                    window.CRONOS_USERS_DB = users;
+                }
+
+
+                // Indicador interno de Validación en Modo Producción con Firestore conectado
+                if (typeof logProductionStatus === 'function') {
+                    logProductionStatus();
+                } else {
+                    const totalUsuarios = (window.CRONOS_USERS_DB || []).length;
+                    const totalAuditoria = (window.CRONOS_ACCESS_LOGS || []).length;
+                    const totalSLA = (window.CRONOS_SLA_EVENTS || []).length;
+                    console.log("Modo Producción");
+                    console.log("Firestore conectado");
+                    console.log("Usuarios:", totalUsuarios);
+                    console.log("Auditoría:", totalAuditoria);
+                    console.log("SLA:", totalSLA);
+                }
                 renderDashboard();
             } catch (err) {
-                console.error("[Dashboard] Error cargando datos desde Supabase:", err);
+                console.error("[Dashboard] Error cargando datos iniciales:", err);
             }
         }
 
@@ -14697,7 +14617,6 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             renderDashboardModuleBars();
             renderDashboardRanking();
             renderDashboardActivities();
-            console.log("Dashboard actualizado");
         }
 
         function renderDashboardMetricsOnly() {
@@ -14857,7 +14776,6 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             const userMap = new Map();
 
             // REGLA: RANKING DE USUARIOS - Generar ranking UNICAMENTE con usuarios cuyo rol = Asesor
-            // Fuente exclusiva: Supabase public.cronos_sla
             (window.CRONOS_USERS_DB || []).forEach(u => {
                 if (!isRoleAsesor(u)) return;
                 const id = (u.correo || u.nombre || u.uid || '').toLowerCase().trim();
@@ -14868,27 +14786,25 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     correo: u.correo || '',
                     rol: u.rol || 'Asesor',
                     avatar: u.avatar || (u.nombre ? u.nombre.substring(0, 2).toUpperCase() : 'AS'),
-                    sesiones: 0,
-                    accesos: 0,
-                    usoSLA: 0,
-                    tiempoAcumuladoSeconds: 0,
-                    tiempoAcumulado: '0m'
+                    sesiones: u.sesiones || 0,
+                    accesos: u.accesos || 0,
+                    usoSLA: u.usoSLA || 0,
+                    tiempoAcumuladoSeconds: u.tiempoAcumuladoSeconds || 0,
+                    tiempoAcumulado: u.tiempoAcumulado || formatAccumulatedSeconds(u.tiempoAcumuladoSeconds || 0)
                 });
             });
 
-            // Procesar todos los eventos de Supabase
-            (window.CRONOS_SLA_EVENTS || []).forEach(ev => {
-                if (!isRoleAsesor(ev)) return;
-                const id = (ev.correo || ev.usuario || ev.nombre || '').toLowerCase().trim();
+            (window.CRONOS_ACCESS_LOGS || []).forEach(log => {
+                if (!isRoleAsesor(log)) return;
+                const id = (log.correo || log.usuario || log.nombre || '').toLowerCase().trim();
                 if (!id || id === 'sistema') return;
-
                 if (!userMap.has(id)) {
                     userMap.set(id, {
                         uid: id,
-                        nombre: ev.usuario || ev.nombre || ev.correo || 'Asesor',
-                        correo: ev.correo || '',
-                        rol: ev.rol || 'Asesor',
-                        avatar: (ev.usuario || ev.nombre || 'AS').substring(0, 2).toUpperCase(),
+                        nombre: log.usuario || log.nombre || log.correo || 'Asesor',
+                        correo: log.correo || '',
+                        rol: log.rol || 'Asesor',
+                        avatar: (log.usuario || 'AS').substring(0, 2).toUpperCase(),
                         sesiones: 0,
                         accesos: 0,
                         usoSLA: 0,
@@ -14897,16 +14813,34 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     });
                 }
                 const usr = userMap.get(id);
-                const acc = (ev.accion || '').toUpperCase().trim();
-
-                if (acc === 'INICIO_SESION' || acc === 'LOGIN' || acc.includes('INICIO DE SESI')) {
+                const accionNorm = (log.accion || '').toUpperCase().trim();
+                if (accionNorm === 'INICIO_SESION' || accionNorm === 'LOGIN' || accionNorm.includes('INICIO')) {
                     usr.sesiones++;
-                } else if (acc === 'ACCESO_MODULO' || acc.includes('ACCESO')) {
+                } else if (accionNorm === 'ACCESO_MODULO' || accionNorm.includes('ACCESO')) {
                     usr.accesos++;
-                } else {
-                    usr.usoSLA++;
                 }
+            });
 
+            (window.CRONOS_SLA_EVENTS || []).forEach(ev => {
+                if (!isRoleAsesor(ev)) return;
+                const id = (ev.correo || ev.usuario || '').toLowerCase().trim();
+                if (!id || id === 'sistema') return;
+                if (!userMap.has(id)) {
+                    userMap.set(id, {
+                        uid: id,
+                        nombre: ev.usuario || ev.correo || 'Asesor',
+                        correo: ev.correo || '',
+                        rol: ev.rol || 'Asesor',
+                        avatar: (ev.usuario || 'AS').substring(0, 2).toUpperCase(),
+                        sesiones: 0,
+                        accesos: 0,
+                        usoSLA: 0,
+                        tiempoAcumuladoSeconds: 0,
+                        tiempoAcumulado: '0m'
+                    });
+                }
+                const usr = userMap.get(id);
+                usr.usoSLA++;
                 if (ev.tiempoSegundos && ev.tiempoSegundos > 0) {
                     usr.tiempoAcumuladoSeconds = (usr.tiempoAcumuladoSeconds || 0) + ev.tiempoSegundos;
                     usr.tiempoAcumulado = formatAccumulatedSeconds(usr.tiempoAcumuladoSeconds);
@@ -14922,44 +14856,35 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             });
 
             if (userList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400 font-medium">Sin actividad de asesores registrada en Supabase</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400 font-medium">Sin actividad de asesores registrada</td></tr>`;
                 return;
             }
 
             let html = '';
             userList.forEach((usr, idx) => {
                 const style = getRoleBadgeStyle(usr.rol);
-                let medal = `<span class="font-mono font-bold text-slate-500">${idx + 1}</span>`;
-                if (idx === 0) medal = '<span class="text-amber-500 font-extrabold text-sm"><i class="fa-solid fa-crown mr-1"></i>1</span>';
-                else if (idx === 1) medal = '<span class="text-slate-400 font-extrabold text-sm"><i class="fa-solid fa-medal mr-1"></i>2</span>';
-                else if (idx === 2) medal = '<span class="text-amber-700 font-extrabold text-sm"><i class="fa-solid fa-award mr-1"></i>3</span>';
+                const rankBadge = idx === 0 ? 'bg-amber-400 text-slate-900 font-black' : (idx === 1 ? 'bg-slate-300 text-slate-800 font-bold' : (idx === 2 ? 'bg-amber-700 text-white font-bold' : 'bg-slate-100 text-slate-600 font-bold'));
 
                 html += `
-                    <tr class="hover:bg-slate-50/80 transition-colors border-b border-slate-100">
-                        <td class="p-3 text-center">${medal}</td>
-                        <td class="p-3">
-                            <div class="flex items-center gap-2.5">
-                                <div class="w-8 h-8 rounded-full bg-slate-800 text-white font-black text-xs flex items-center justify-center shrink-0">
-                                    ${usr.avatar}
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="p-2.5">
+                            <span class="w-5 h-5 rounded-full ${rankBadge} inline-flex items-center justify-center text-[10px]">${idx + 1}</span>
+                        </td>
+                        <td class="p-2.5">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 rounded-full bg-slate-800 text-white font-black text-[9px] flex items-center justify-center shrink-0">
+                                    ${usr.avatar || 'AS'}
                                 </div>
-                                <div class="truncate">
-                                    <span class="font-bold text-slate-800 block text-xs truncate">${usr.nombre}</span>
-                                    <span class="text-[10px] text-slate-400 font-mono block truncate">${usr.correo}</span>
+                                <div class="truncate max-w-[130px]">
+                                    <div class="font-bold text-slate-800 truncate">${usr.nombre}</div>
+                                    <span class="text-[9px] font-bold ${style.textClass}">${usr.rol}</span>
                                 </div>
                             </div>
                         </td>
-                        <td class="p-3 text-center">
-                            <span class="font-extrabold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md text-xs">${usr.sesiones}</span>
-                        </td>
-                        <td class="p-3 text-center">
-                            <span class="font-extrabold text-win-orange bg-orange-50 px-2 py-0.5 rounded-md text-xs">${usr.accesos}</span>
-                        </td>
-                        <td class="p-3 text-center">
-                            <span class="font-extrabold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-md text-xs">${usr.usoSLA}</span>
-                        </td>
-                        <td class="p-3 text-center font-mono font-bold text-slate-600 text-xs">
-                            ${usr.tiempoAcumulado}
-                        </td>
+                        <td class="p-2.5 text-center font-bold text-slate-700">${usr.sesiones || 0}</td>
+                        <td class="p-2.5 text-center font-black text-indigo-600">${usr.accesos || 0}</td>
+                        <td class="p-2.5 text-center font-black text-win-orange">${usr.usoSLA || 0}</td>
+                        <td class="p-2.5 text-right font-bold text-slate-600">${usr.tiempoAcumulado || '0m'}</td>
                     </tr>
                 `;
             });
@@ -14969,14 +14894,14 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
         function renderDashboardActivities() {
             const tbody = document.getElementById('dash-actividades-tbody');
-            if (!tbody) return;
+            if (!tbody || !window.CRONOS_ACCESS_LOGS) return;
 
-            // REGLA: Exclusivamente actividades operativas de Asesores desde Supabase
-            const asesorEvents = (window.CRONOS_SLA_EVENTS || []).filter(l => isRoleAsesor(l));
-            const recentLogs = asesorEvents.slice(0, 10);
+            // REGLA: Exclusivamente actividades operativas de Asesores
+            const asesorLogs = (window.CRONOS_ACCESS_LOGS || []).filter(l => isRoleAsesor(l));
+            const recentLogs = asesorLogs.slice(0, 10);
 
             if (recentLogs.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400 font-medium">Sin actividades recientes de asesores en Supabase</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400 font-medium">Sin actividades recientes de asesores</td></tr>`;
                 return;
             }
 
@@ -14986,17 +14911,17 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 html += `
                     <tr class="hover:bg-slate-50 transition-colors">
                         <td class="p-2.5 text-slate-500 font-mono text-[11px]">
-                            ${log.hora || ''}
-                            <span class="text-[9px] block text-slate-400">${log.fecha || ''}</span>
+                            ${log.hora}
+                            <span class="text-[9px] block text-slate-400">${log.fecha}</span>
                         </td>
                         <td class="p-2.5 font-bold text-slate-800 truncate max-w-[120px]">
-                            ${log.usuario || log.nombre || 'Asesor'}
+                            ${log.usuario}
                         </td>
                         <td class="p-2.5 text-center">
                             <span class="text-[9px] font-bold px-1.5 py-0.2 rounded ${style.badgeClass}">${style.abbr}</span>
                         </td>
                         <td class="p-2.5 text-slate-700 font-medium truncate max-w-[150px]">
-                            ${log.accion || 'Evento SLA'} <span class="text-[9px] text-purple-600 font-mono">(${log.modulo || 'CRONOS SLA'})</span>
+                            ${log.accion}
                         </td>
                     </tr>
                 `;
@@ -15224,17 +15149,32 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         // MÓDULO DE ANALÍTICA CRONOS SLA EN TIEMPO REAL (EXCLUSIVO SUPABASE)
         // =========================================================================
         async function renderSLAModule() {
+            const tbody = document.getElementById("sla-events-tbody");
+            if (tbody && (!window.CRONOS_SLA_EVENTS || window.CRONOS_SLA_EVENTS.length === 0)) {
+                tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-slate-400 font-medium"><i class="fa-solid fa-spinner fa-spin mr-2 text-purple-600"></i> Consultando eventos CRONOS SLA en tiempo real desde Supabase...</td></tr>`;
+            }
+
             try {
-                // ANALÍTICA CRONOS SLA: Fuente exclusiva Supabase
-                const events = await fetchSupabaseSLAEvents(5000);
+                // ANALÍTICA CRONOS SLA: Leer exclusivamente desde Supabase
+                console.log("[Analítica CRONOS SLA] Consultando exclusivamente desde Supabase...");
+                const events = await fetchSupabaseSLAEvents(1000);
                 window.CRONOS_SLA_EVENTS = events;
-                console.log("Total registros cronos_sla (Supabase):", events.length);
+
+                const totalRegistros = events.length;
+                const registros = events;
+                const ultimaFecha = events.length > 0 ? (events[0].fechaHora || events[0].fecha || (events[0].timestamp ? new Date(events[0].timestamp).toLocaleString("es-PE") : "—")) : "Ninguna";
+                const total = events.length;
+
+                console.log("Total registros cronos_sla (Supabase):", totalRegistros);
+                console.log("Registros SLA encontrados:", registros);
+                console.log("Última fecha encontrada:", ultimaFecha);
+                console.log("Consulta Supabase SLA ejecutada con éxito");
+                console.log("Total SLA cargados:", total);
             } catch (error) {
                 console.error("[SLAModule] Error al cargar cronos_sla desde Supabase:", error);
             }
 
             renderSLAMetricsCards();
-            renderSLARanking();
             renderSLATable();
             renderDashboardMetricsOnly();
 
@@ -15247,7 +15187,6 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         function renderSLAMetricsCards() {
             const m = calculateRealDashboardMetrics();
 
-            const elTotal = document.getElementById('sla-metric-total');
             const elIni = document.getElementById('sla-metric-inicios');
             const elPau = document.getElementById('sla-metric-pausas');
             const elRst = document.getElementById('sla-metric-reinicios');
@@ -15256,79 +15195,13 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             const el60 = document.getElementById('sla-metric-60s');
             const el70 = document.getElementById('sla-metric-70s');
 
-            if (elTotal) elTotal.textContent = m.totalSLA || 0;
-            if (elIni) elIni.textContent = m.slaIni || 0;
-            if (elPau) elPau.textContent = m.slaPau || 0;
-            if (elRst) elRst.textContent = m.slaRst || 0;
-            if (elAvg) elAvg.textContent = m.slaPromedio || '0s';
-            if (el45) el45.textContent = m.sla45 || 0;
-            if (el60) el60.textContent = m.sla60 || 0;
-            if (el70) el70.textContent = m.sla70 || 0;
-        }
-
-        function renderSLARanking() {
-            const tbody = document.getElementById('sla-ranking-tbody');
-            if (!tbody) return;
-
-            const asesorMap = new Map();
-            const events = (window.CRONOS_SLA_EVENTS || []).filter(e => isRoleAsesor(e));
-
-            events.forEach(ev => {
-                const key = (ev.correo || ev.usuario || ev.nombre || '').toLowerCase().trim();
-                if (!key || key === 'sistema') return;
-
-                if (!asesorMap.has(key)) {
-                    asesorMap.set(key, {
-                        nombre: ev.usuario || ev.nombre || ev.correo || 'Asesor',
-                        correo: ev.correo || '',
-                        inicios: 0,
-                        pausas: 0,
-                        reinicios: 0,
-                        alertas: 0,
-                        totalSLA: 0
-                    });
-                }
-                const item = asesorMap.get(key);
-                const acc = (ev.accion || '').toUpperCase().trim();
-
-                item.totalSLA++;
-                if (acc === 'INICIAR' || acc.includes('INICI') || acc.includes('REANUD')) item.inicios++;
-                else if (acc === 'PAUSA' || acc.includes('PAUS')) item.pausas++;
-                else if (acc === 'REINICIO' || acc.includes('REINICI')) item.reinicios++;
-
-                if (acc.includes('45') || acc.includes('60') || acc.includes('70') || ev.estadoSLA === 'Preventivo' || ev.estadoSLA === 'Límite SLA' || ev.estadoSLA === 'SLA Crítico') {
-                    item.alertas++;
-                }
-            });
-
-            const ranking = Array.from(asesorMap.values()).sort((a, b) => b.totalSLA - a.totalSLA);
-
-            if (ranking.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400 font-medium">Sin datos de asesores en Supabase</td></tr>`;
-                return;
-            }
-
-            let html = '';
-            ranking.forEach((as, idx) => {
-                let badge = `<span class="font-mono font-bold text-slate-500">${idx + 1}</span>`;
-                if (idx === 0) badge = '<span class="text-amber-500 font-extrabold"><i class="fa-solid fa-crown mr-1"></i>1</span>';
-                else if (idx === 1) badge = '<span class="text-slate-400 font-extrabold"><i class="fa-solid fa-medal mr-1"></i>2</span>';
-                else if (idx === 2) badge = '<span class="text-amber-700 font-extrabold"><i class="fa-solid fa-award mr-1"></i>3</span>';
-
-                html += `
-                    <tr class="hover:bg-slate-50 transition-colors border-b border-slate-100">
-                        <td class="p-3 text-center">${badge}</td>
-                        <td class="p-3 font-bold text-slate-800">${as.nombre}</td>
-                        <td class="p-3 font-mono text-slate-500 text-[11px]">${as.correo}</td>
-                        <td class="p-3 text-center font-bold text-emerald-600">${as.inicios}</td>
-                        <td class="p-3 text-center font-bold text-amber-600">${as.pausas}</td>
-                        <td class="p-3 text-center font-bold text-blue-600">${as.reinicios}</td>
-                        <td class="p-3 text-center font-bold text-rose-600">${as.alertas}</td>
-                        <td class="p-3 text-center font-black text-purple-700 text-sm">${as.totalSLA}</td>
-                    </tr>
-                `;
-            });
-            tbody.innerHTML = html;
+            if (elIni) elIni.textContent = m.slaIni;
+            if (elPau) elPau.textContent = m.slaPau;
+            if (elRst) elRst.textContent = m.slaRst;
+            if (elAvg) elAvg.textContent = m.slaPromedio;
+            if (el45) el45.textContent = m.sla45;
+            if (el60) el60.textContent = m.sla60;
+            if (el70) el70.textContent = m.sla70;
         }
 
         function renderSLATable() {
@@ -15339,30 +15212,21 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             const filterAction = document.getElementById('sla-events-filter-action');
 
             const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
-            const actionVal = filterAction ? filterAction.value.toUpperCase().trim() : 'TODOS';
+            const actionVal = filterAction ? filterAction.value : 'TODOS';
 
             let filtered = window.CRONOS_SLA_EVENTS.filter(ev => {
                 // REGLA: ANALITICA CRONOS SLA - Mostrar exclusivamente eventos de ROL = Asesor
                 if (!isRoleAsesor(ev)) return false;
-                const accUpper = (ev.accion || '').toUpperCase().trim();
-                if (actionVal !== 'TODOS') {
-                    if (actionVal === 'INICIAR' && !accUpper.includes('INICI') && !accUpper.includes('REANUD')) return false;
-                    else if (actionVal === 'PAUSA' && !accUpper.includes('PAUS')) return false;
-                    else if (actionVal === 'REINICIO' && !accUpper.includes('REINICI')) return false;
-                    else if (actionVal === '45_SEGUNDOS' && !accUpper.includes('45')) return false;
-                    else if (actionVal === '60_SEGUNDOS' && !accUpper.includes('60')) return false;
-                    else if (actionVal === '70_SEGUNDOS' && !accUpper.includes('70')) return false;
-                    else if (!['INICIAR', 'PAUSA', 'REINICIO', '45_SEGUNDOS', '60_SEGUNDOS', '70_SEGUNDOS'].includes(actionVal) && accUpper !== actionVal) return false;
-                }
+                if (actionVal !== 'TODOS' && ev.accion !== actionVal) return false;
                 if (query) {
-                    const str = `${ev.fecha || ''} ${ev.hora || ''} ${ev.usuario || ''} ${ev.correo || ''} ${ev.rol || ''} ${ev.accion || ''} ${ev.tiempoExacto || ''} ${ev.estadoSLA || ''}`.toLowerCase();
+                    const str = `${ev.fecha} ${ev.hora} ${ev.usuario} ${ev.correo} ${ev.rol} ${ev.accion} ${ev.tiempoExacto} ${ev.estadoSLA}`.toLowerCase();
                     if (!str.includes(query)) return false;
                 }
                 return true;
             });
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-slate-400 font-medium">No se encontraron eventos de CRONOS SLA registrados en Supabase.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-slate-400 font-medium">No se encontraron eventos de CRONOS SLA registrados.</td></tr>`;
                 return;
             }
 
@@ -15372,23 +15236,23 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
                 let stateBadge = 'bg-emerald-100 text-emerald-800 font-semibold';
                 if (ev.estadoSLA === 'Preventivo') stateBadge = 'bg-amber-100 text-amber-800 font-bold';
-                else if (ev.estadoSLA === 'Límite SLA' || ev.estado_sla === 'Límite SLA') stateBadge = 'bg-orange-100 text-orange-800 font-bold';
-                else if (ev.estadoSLA === 'SLA Excedido' || ev.estadoSLA === 'SLA Crítico' || ev.estado_sla === 'SLA Crítico') stateBadge = 'bg-rose-100 text-rose-800 font-black animate-pulse';
+                else if (ev.estadoSLA === 'Límite SLA') stateBadge = 'bg-orange-100 text-orange-800 font-bold';
+                else if (ev.estadoSLA === 'SLA Excedido' || ev.estadoSLA === 'SLA Crítico') stateBadge = 'bg-rose-100 text-rose-800 font-black animate-pulse';
 
                 html += `
                     <tr class="hover:bg-slate-50 transition-colors">
-                        <td class="p-3 text-slate-500 font-mono text-[11px] whitespace-nowrap">${ev.fecha || ''}</td>
-                        <td class="p-3 font-mono font-bold text-slate-700 text-[11px] whitespace-nowrap">${ev.hora || ''}</td>
-                        <td class="p-3 font-bold text-slate-800">${ev.usuario || ev.nombre || 'Asesor'}</td>
-                        <td class="p-3 text-slate-500 font-mono text-[11px]">${ev.correo || ''}</td>
+                        <td class="p-3 text-slate-500 font-mono text-[11px] whitespace-nowrap">${ev.fecha}</td>
+                        <td class="p-3 font-mono font-bold text-slate-700 text-[11px] whitespace-nowrap">${ev.hora}</td>
+                        <td class="p-3 font-bold text-slate-800">${ev.usuario}</td>
+                        <td class="p-3 text-slate-500 font-mono text-[11px]">${ev.correo}</td>
                         <td class="p-3 text-center">
-                            <span class="text-[9px] font-bold px-2 py-0.5 rounded-full ${style.badgeClass}">${ev.rol || 'Asesor'}</span>
+                            <span class="text-[9px] font-bold px-2 py-0.5 rounded-full ${style.badgeClass}">${ev.rol}</span>
                         </td>
                         <td class="p-3 text-slate-600 font-semibold">${ev.modulo || 'CRONOS SLA'}</td>
                         <td class="p-3 font-black text-purple-700">${ev.accion}</td>
-                        <td class="p-3 font-mono font-black text-slate-800">${ev.tiempoExacto || ev.tiempo || '00:00'}</td>
+                        <td class="p-3 font-mono font-black text-slate-800">${ev.tiempoExacto}</td>
                         <td class="p-3 text-center">
-                            <span class="text-[10px] px-2.5 py-0.5 rounded-full ${stateBadge}">${ev.estadoSLA || ev.estado_sla || 'Normal'}</span>
+                            <span class="text-[10px] px-2.5 py-0.5 rounded-full ${stateBadge}">${ev.estadoSLA}</span>
                         </td>
                     </tr>
                 `;
@@ -15513,56 +15377,56 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 return { startMs, endMs, label };
             },
 
-            async fetchSupabaseHistorical(startMs, endMs) {
-                let records = [];
-                try {
-                    const startISO = new Date(startMs).toISOString();
-                    const endISO = new Date(endMs).toISOString();
-                    let queryData = [];
-                    if (window.supabaseClient) {
-                        const { data, error } = await window.supabaseClient
-                            .from('cronos_sla')
-                            .select('*')
-                            .gte('created_at', startISO)
-                            .lte('created_at', endISO)
-                            .order('created_at', { ascending: false })
-                            .limit(50000);
-                        if (!error && data) queryData = data;
-                    } else {
-                        const res = await fetch(`${window.SUPABASE_CONFIG.url}/rest/v1/cronos_sla?created_at=gte.${startISO}&created_at=lte.${endISO}&order=created_at.desc&limit=50000`, {
-                            headers: {
-                                'apikey': window.SUPABASE_CONFIG.key,
-                                'Authorization': `Bearer ${window.SUPABASE_CONFIG.key}`
-                            }
-                        });
-                        if (res.ok) queryData = await res.json();
+            async fetchFirestoreHistorical(collectionName, startMs, endMs) {
+                // EXCLUSIVO SUPABASE: Si la colección es cronos_sla, obtener desde Supabase
+                if (collectionName === 'cronos_sla') {
+                    let records = [];
+                    try {
+                        const startISO = new Date(startMs).toISOString();
+                        const endISO = new Date(endMs).toISOString();
+                        let queryData = [];
+                        if (window.supabaseClient) {
+                            const { data, error } = await window.supabaseClient
+                                .from('cronos_sla')
+                                .select('*')
+                                .gte('created_at', startISO)
+                                .lte('created_at', endISO)
+                                .order('created_at', { ascending: false });
+                            if (!error && data) queryData = data;
+                        } else {
+                            const res = await fetch(`${window.SUPABASE_CONFIG.url}/rest/v1/cronos_sla?created_at=gte.${startISO}&created_at=lte.${endISO}&order=created_at.desc`, {
+                                headers: {
+                                    'apikey': window.SUPABASE_CONFIG.key,
+                                    'Authorization': `Bearer ${window.SUPABASE_CONFIG.key}`
+                                }
+                            });
+                            if (res.ok) queryData = await res.json();
+                        }
+                        records = (queryData || []).map(r => normalizeSLADoc(r));
+                        console.log(`[ExportCenter] cronos_sla obtenido desde Supabase: ${records.length} docs`);
+                    } catch (errSup) {
+                        console.error('[ExportCenter] Error al consultar cronos_sla en Supabase:', errSup);
                     }
-                    records = (queryData || []).map(r => normalizeSLADoc(r));
-                    console.log(`[ExportCenter] cronos_sla obtenido directamente desde Supabase: ${records.length} docs`);
-                } catch (errSup) {
-                    console.error('[ExportCenter] Error al consultar cronos_sla en Supabase:', errSup);
+
+                    // Complementar con datos en memoria (CRONOS_SLA_EVENTS)
+                    const localSource = window.CRONOS_SLA_EVENTS || [];
+                    localSource.forEach(item => {
+                        const ms = parseDocTimestamp(item);
+                        if (ms >= startMs && ms <= endMs) {
+                            const alreadyExists = records.some(r =>
+                                (r.id && item.id && r.id === item.id) ||
+                                (r.timestamp === ms && (r.accion === item.accion) && (r.usuario === item.usuario || r.correo === item.correo))
+                            );
+                            if (!alreadyExists) {
+                                records.push(item);
+                            }
+                        }
+                    });
+
+                    records.sort((a, b) => parseDocTimestamp(b) - parseDocTimestamp(a));
+                    return records;
                 }
 
-                // Complementar con datos en memoria si es necesario
-                const localSource = window.CRONOS_SLA_EVENTS || [];
-                localSource.forEach(item => {
-                    const ms = parseDocTimestamp(item);
-                    if (ms >= startMs && ms <= endMs) {
-                        const alreadyExists = records.some(r =>
-                            (r.id && item.id && r.id === item.id) ||
-                            (r.timestamp === ms && (r.accion === item.accion) && (r.usuario === item.usuario || r.correo === item.correo))
-                        );
-                        if (!alreadyExists) {
-                            records.push(item);
-                        }
-                    }
-                });
-
-                records.sort((a, b) => parseDocTimestamp(b) - parseDocTimestamp(a));
-                return records;
-            },
-
-            async fetchFirestoreHistorical(collectionName, startMs, endMs) {
                 // Para otras colecciones (auditoria, usuarios), mantener en Firebase
                 const firestoreDb = window.db || (typeof firebase !== 'undefined' && firebase.firestore ? firebase.firestore() : null);
                 let records = [];
@@ -15853,104 +15717,142 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
             // 1. DASHBOARD HISTÓRICO
             async exportDashboardHistorical({ startMs, endMs, periodLabel, userFilter, format }) {
-                // FUENTE EXCLUSIVA: Supabase public.cronos_sla
-                let events = await this.fetchSupabaseHistorical(startMs, endMs);
+                let auditLogs = await this.fetchFirestoreHistorical('auditoria', startMs, endMs);
+                let slaEvents = await this.fetchFirestoreHistorical('cronos_sla', startMs, endMs);
 
-                // REGLA: EXPORTACIONES - Dashboard exporta UNICAMENTE información perteneciente a: ASESORES
-                events = events.filter(s => isRoleAsesor(s));
+                // REGLA: EXPORTACIONES - Dashboard debe exportar UNICAMENTE informacion perteneciente a: ASESORES
+                auditLogs = auditLogs.filter(l => isRoleAsesor(l));
+                slaEvents = slaEvents.filter(s => isRoleAsesor(s));
 
                 if (userFilter && userFilter !== 'todos') {
                     const uLow = userFilter.toLowerCase().trim();
-                    events = events.filter(s => (s.correo || s.usuario || s.nombre || '').toLowerCase().includes(uLow));
+                    auditLogs = auditLogs.filter(l => (l.correo || l.usuario || l.nombre || '').toLowerCase().includes(uLow));
+                    slaEvents = slaEvents.filter(s => (s.correo || s.usuario || '').toLowerCase().includes(uLow));
                 }
 
                 const activeUsersSet = new Set();
-                let totalSesiones = 0;
+                auditLogs.forEach(l => {
+                    const u = l.usuario || l.nombre || l.correo;
+                    if (u && u !== 'Sistema') activeUsersSet.add(u);
+                });
+                slaEvents.forEach(s => {
+                    const u = s.usuario || s.correo;
+                    if (u && u !== 'Sistema') activeUsersSet.add(u);
+                });
+
+                const loginLogs = auditLogs.filter(l => {
+                    const a = (l.accion || '').toUpperCase().trim();
+                    return a.includes('INICIO_SESION') || a.includes('LOGIN') || a.includes('INICIO DE SESI');
+                });
+                const totalSesiones = loginLogs.length;
+
                 let slaIni = 0, slaPau = 0, slaRst = 0, sla45 = 0, sla60 = 0, sla70 = 0;
                 let sumPauseSecs = 0, countPauseSecs = 0;
-
-                const moduleCounts = {
-                    "Clave Secreta": 0,
-                    "Tipificaciones": 0,
-                    "Tickets Tecnológico": 0,
-                    "Derivaciones Discord": 0,
-                    "Acuerdos de Voz": 0,
-                    "Directorio Escalamiento": 0,
-                    "CRONOS SLA": 0
-                };
-
-                const userActivityMap = new Map();
-
-                events.forEach(ev => {
-                    const u = ev.usuario || ev.nombre || ev.correo || 'Asesor';
-                    if (u && u !== 'Sistema') activeUsersSet.add(u);
-
-                    const acc = (ev.accion || '').toUpperCase().trim();
+                slaEvents.forEach(ev => {
+                    const acc = (ev.accion || '').toLowerCase().trim();
                     const secs = typeof ev.tiempoSegundos === 'number' ? ev.tiempoSegundos : (parseInt(ev.tiempoSegundos) || 0);
+                    if (acc.includes('inici') || acc.includes('reanud')) slaIni++;
+                    else if (acc.includes('paus')) slaPau++;
+                    else if (acc.includes('reinici')) slaRst++;
 
-                    if (acc === 'INICIO_SESION' || acc === 'LOGIN' || acc.includes('INICIO DE SESI')) {
-                        totalSesiones++;
-                    }
-
-                    if (acc === 'INICIAR' || acc.includes('INICI') || acc.includes('REANUD')) slaIni++;
-                    else if (acc === 'PAUSA' || acc.includes('PAUS')) slaPau++;
-                    else if (acc === 'REINICIO' || acc.includes('REINICI')) slaRst++;
-
-                    if (acc.includes('45') || (secs >= 45 && secs < 60)) sla45++;
-                    if (acc.includes('60') || (secs >= 60 && secs <= 70)) sla60++;
-                    if (acc.includes('70') || secs > 70) sla70++;
+                    if (acc.includes('45s') || (secs >= 45 && secs < 60)) sla45++;
+                    if (acc.includes('60s') || (secs >= 60 && secs <= 70)) sla60++;
+                    if (acc.includes('70s') || secs > 70) sla70++;
 
                     if (secs > 0) {
                         sumPauseSecs += secs;
                         countPauseSecs++;
                     }
+                });
+                const slaPromedioStr = countPauseSecs > 0 ? Math.round(sumPauseSecs / countPauseSecs) + "s" : "0s";
 
-                    // Mapeo a los 7 módulos
-                    const mod = (ev.modulo || '').toLowerCase();
-                    if (mod.includes('clave') || mod.includes('secreta')) moduleCounts["Clave Secreta"]++;
-                    else if (mod.includes('tipificaci')) moduleCounts["Tipificaciones"]++;
-                    else if (mod.includes('ticket')) moduleCounts["Tickets Tecnológico"]++;
-                    else if (mod.includes('derivaci') || mod.includes('discord')) moduleCounts["Derivaciones Discord"]++;
-                    else if (mod.includes('acuerdo') || mod.includes('voz')) moduleCounts["Acuerdos de Voz"]++;
-                    else if (mod.includes('directorio') || mod.includes('escalam')) moduleCounts["Directorio Escalamiento"]++;
-                    else if (mod.includes('sla') || acc === 'INICIAR' || acc === 'PAUSA' || acc === 'REINICIO') moduleCounts["CRONOS SLA"]++;
-
-                    // Mapeo por Asesor
-                    const key = (ev.correo || ev.usuario || '').toLowerCase();
-                    if (key) {
-                        if (!userActivityMap.has(key)) {
-                            userActivityMap.set(key, {
-                                nombre: ev.usuario || ev.nombre || "Asesor",
-                                correo: ev.correo || "",
-                                rol: ev.rol || "Asesor",
-                                sesiones: 0,
-                                accesos: 0,
-                                usoSLA: 0,
-                                tiempoAcumuladoSeconds: 0,
-                                tiempoAcumulado: "0m"
-                            });
-                        }
-                        const rec = userActivityMap.get(key);
-                        if (acc === 'INICIO_SESION' || acc.includes('INICIO DE SESI')) rec.sesiones++;
-                        else if (acc === 'ACCESO_MODULO') rec.accesos++;
-                        else rec.usoSLA++;
-
-                        if (secs > 0) {
-                            rec.tiempoAcumuladoSeconds += secs;
-                            rec.tiempoAcumulado = formatAccumulatedSeconds(rec.tiempoAcumuladoSeconds);
-                        }
-                    }
+                // EXACTAMENTE LOS 7 MODULOS OPERATIVOS MONITOREADOS
+                const moduleCounts = {
+                    "Clave Secreta": 0,
+                    "Tipificaciones": 0,
+                    "Tickets (Tecnológico)": 0,
+                    "Derivaciones (Discord)": 0,
+                    "Acuerdos de Voz (Grabación)": 0,
+                    "Directorio (Escalamiento)": 0,
+                    "CRONOS SLA": 0
+                };
+                auditLogs.forEach(l => {
+                    const m = (l.modulo || l.accion || '').toLowerCase();
+                    if (m.includes('clave') || m.includes('generator') || m.includes('secreta')) moduleCounts["Clave Secreta"]++;
+                    else if (m.includes('tipificaci')) moduleCounts["Tipificaciones"]++;
+                    else if (m.includes('ticket') || m.includes('tecnol')) moduleCounts["Tickets (Tecnológico)"]++;
+                    else if (m.includes('derivaci') || m.includes('discord')) moduleCounts["Derivaciones (Discord)"]++;
+                    else if (m.includes('acuerdos') || m.includes('voz')) moduleCounts["Acuerdos de Voz (Grabación)"]++;
+                    else if (m.includes('directorio') || m.includes('escalamiento')) moduleCounts["Directorio (Escalamiento)"]++;
+                    else if (m.includes('cronos sla') || (m.includes('sla') && !m.includes('analitica'))) moduleCounts["CRONOS SLA"]++;
                 });
 
-                const slaPromedioStr = countPauseSecs > 0 ? (Math.round(sumPauseSecs / countPauseSecs) + "s") : "0s";
+                if (moduleCounts["CRONOS SLA"] === 0 && slaEvents.length > 0) {
+                    moduleCounts["CRONOS SLA"] = slaEvents.length;
+                }
+
                 const totalModAccess = Object.values(moduleCounts).reduce((a, b) => a + b, 0);
+
+                const userActivityMap = new Map();
+                (window.CRONOS_USERS_DB || []).forEach(u => {
+                    if (!isRoleAsesor(u)) return; // Excluir perfiles administrativos
+                    userActivityMap.set((u.correo || u.nombre).toLowerCase(), {
+                        nombre: u.nombre || u.usuario || "Asesor",
+                        correo: u.correo || "",
+                        rol: u.rol || "Asesor",
+                        sesiones: 0,
+                        accesos: 0,
+                        usoSLA: 0,
+                        tiempoAcumulado: u.tiempoAcumulado || "0m"
+                    });
+                });
+
+                auditLogs.forEach(l => {
+                    if (!isRoleAsesor(l)) return;
+                    const key = (l.correo || l.usuario || l.nombre || '').toLowerCase();
+                    if (!key) return;
+                    if (!userActivityMap.has(key)) {
+                        userActivityMap.set(key, {
+                            nombre: l.usuario || l.nombre || "Asesor",
+                            correo: l.correo || "",
+                            rol: l.rol || "Asesor",
+                            sesiones: 0,
+                            accesos: 0,
+                            usoSLA: 0,
+                            tiempoAcumulado: "0m"
+                        });
+                    }
+                    const record = userActivityMap.get(key);
+                    const a = (l.accion || '').toUpperCase();
+                    if (a.includes('INICIO_SESION') || a.includes('LOGIN')) record.sesiones++;
+                    record.accesos++;
+                });
+
+                slaEvents.forEach(s => {
+                    if (!isRoleAsesor(s)) return;
+                    const key = (s.correo || s.usuario || '').toLowerCase();
+                    if (!key) return;
+                    if (!userActivityMap.has(key)) {
+                        userActivityMap.set(key, {
+                            nombre: s.usuario || "Asesor",
+                            correo: s.correo || "",
+                            rol: s.rol || "Asesor",
+                            sesiones: 0,
+                            accesos: 0,
+                            usoSLA: 0,
+                            tiempoAcumulado: "0m"
+                        });
+                    }
+                    const record = userActivityMap.get(key);
+                    record.usoSLA++;
+                });
 
                 const rankingList = Array.from(userActivityMap.values())
                     .filter(u => isRoleAsesor(u) && (userFilter === 'todos' ? (u.sesiones > 0 || u.accesos > 0 || u.usoSLA > 0) : true))
                     .sort((a, b) => ((b.sesiones + b.accesos + b.usoSLA) - (a.sesiones + a.accesos + a.usoSLA)));
 
                 const currentUser = window.CRONOS_CURRENT_USER || { nombre: "Administrador", rol: "Administrador" };
-                const totalInteracciones = events.length;
+                const totalInteracciones = auditLogs.length + slaEvents.length;
 
                 if (format === 'xlsx') {
                     const wb = XLSX.utils.book_new();
@@ -15959,12 +15861,13 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                         ["CENTRO DE CONTROL CRONOS FID • WIN - REPORTE HISTÓRICO EJECUTIVO"],
                         ["Fecha de Generación:", new Date().toLocaleString('es-PE'), "", "Generado por:", `${currentUser.nombre} (${currentUser.rol})`],
                         ["Periodo Evaluado:", periodLabel, "", "Filtro Asesor / Usuario:", userFilter === 'todos' ? 'Todos los Usuarios' : userFilter],
-                        ["Fuente de datos:", "SUPABASE", "", "Fuente Oficial:", "Supabase (public.cronos_sla)"],
+                        ["Política de Retención:", "Mínimo 180 días de histórico garantizado en Firestore", "", "Fuente Oficial:", "Firestore"],
                         [],
                         ["MÉTRICA / INDICADOR HISTÓRICO", "VALOR REGISTRADO", "DETALLE"],
-                        ["Usuarios Activos en Periodo", activeUsersSet.size, "Total colaboradores asesores con actividad"],
-                        ["Sesiones Iniciadas", totalSesiones, "Inicios de sesión exitosos registrados"],
-                        ["Total Eventos en Supabase", totalInteracciones, "Eventos operacionales en public.cronos_sla"],
+                        ["Usuarios Activos en Periodo", activeUsersSet.size, "Total colaboradores con actividad"],
+                        ["Sesiones Iniciadas", totalSesiones, "Inicios de sesión exitosos"],
+                        ["Total Interacciones", totalInteracciones, "Auditoría + Eventos CRONOS SLA"],
+                        ["Total Eventos SLA", slaEvents.length, "Registros de temporizador SLA"],
                         ["Inicios de Temporizador SLA", slaIni, "Acciones de Inicio / Reanudación"],
                         ["Pausas de Temporizador SLA", slaPau, "Detenciones temporales de cronómetro"],
                         ["Reinicios de Temporizador SLA", slaRst, "Puestas a cero de cronómetro"],
@@ -15972,14 +15875,14 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                         ["Alertas Límite SLA (60s)", sla60, "Umbral límite 60s"],
                         ["Alertas SLA Crítico (>70s)", sla70, "Superó el tiempo crítico permitido"],
                         ["Tiempo Promedio Pausa SLA", slaPromedioStr, "Media de tiempos registrados"],
-                        ["Total Accesos a Módulos Monitoreados", totalModAccess, "Navegación en los 7 módulos"]
+                        ["Total Accesos a Módulos", totalModAccess, "Navegación operativa registrada"]
                     ];
                     const wsResumen = XLSX.utils.aoa_to_sheet(resumenAOA);
-                    wsResumen['!cols'] = [{ wch: 38 }, { wch: 25 }, { wch: 45 }];
+                    wsResumen['!cols'] = [{ wch: 35 }, { wch: 25 }, { wch: 45 }];
                     XLSX.utils.book_append_sheet(wb, wsResumen, "Resumen Ejecutivo");
 
                     const rankingAOA = [
-                        ["POSICIÓN", "ASESOR / USUARIO", "CORREO INSTITUCIONAL", "ROL", "SESIONES", "ACCESOS MÓDULO", "USO SLA", "TOTAL EVENTOS", "TIEMPO ACUMULADO"]
+                        ["POSICIÓN", "ASESOR / USUARIO", "CORREO INSTITUCIONAL", "ROL", "SESIONES", "ACCESOS MÓDULO", "USO SLA", "TOTAL INTERACCIONES", "TIEMPO ACUMULADO"]
                     ];
                     rankingList.forEach((u, i) => {
                         rankingAOA.push([
@@ -15999,7 +15902,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     XLSX.utils.book_append_sheet(wb, wsRanking, "Ranking Usuarios");
 
                     const modulosAOA = [
-                        ["MÓDULO MONITOREADO", "ACCESOS / EVENTOS", "% DEL TOTAL OPERATIVO"]
+                        ["MÓDULO DE LA PLATAFORMA", "ACCESOS REGISTRADOS", "% DEL TOTAL OPERATIVO"]
                     ];
                     Object.entries(moduleCounts).forEach(([name, count]) => {
                         const pct = totalModAccess > 0 ? ((count / totalModAccess) * 100).toFixed(1) + "%" : "0%";
@@ -16010,98 +15913,99 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     XLSX.utils.book_append_sheet(wb, wsModulos, "Uso por Modulo");
 
                     const actAOA = [
-                        ["N°", "FECHA", "HORA", "ASESOR", "CORREO", "ROL", "ACCIÓN", "MÓDULO", "TIEMPO", "ESTADO SLA", "FECHA HORA ISO"]
+                        ["N°", "FECHA", "HORA", "USUARIO", "CORREO", "ROL", "ACCIÓN", "MÓDULO", "DETALLE / RESULTADO", "TIMESTAMP ISO"]
                     ];
-                    events.slice(0, 50000).forEach((l, i) => {
+                    auditLogs.slice(0, 5000).forEach((l, i) => {
                         actAOA.push([
                             i + 1,
                             l.fecha || "",
                             l.hora || "",
                             l.usuario || l.nombre || "",
                             l.correo || "",
-                            l.rol || "Asesor",
+                            l.rol || "",
                             l.accion || "",
                             l.modulo || "",
-                            l.tiempoExacto || l.tiempo || "",
-                            l.estadoSLA || l.estado_sla || "",
-                            l.fechaHora || l.fecha_hora || ""
+                            l.detalle || l.resultado || "",
+                            l.fechaHora || ""
                         ]);
                     });
                     const wsAct = XLSX.utils.aoa_to_sheet(actAOA);
-                    wsAct['!cols'] = [{ wch: 8 }, { wch: 12 }, { wch: 10 }, { wch: 25 }, { wch: 25 }, { wch: 15 }, { wch: 20 }, { wch: 20 }, { wch: 15 }, { wch: 15 }, { wch: 25 }];
-                    XLSX.utils.book_append_sheet(wb, wsAct, "Eventos Supabase");
+                    wsAct['!cols'] = [{ wch: 8 }, { wch: 12 }, { wch: 10 }, { wch: 25 }, { wch: 25 }, { wch: 15 }, { wch: 20 }, { wch: 20 }, { wch: 35 }, { wch: 25 }];
+                    XLSX.utils.book_append_sheet(wb, wsAct, "Actividades Periodo");
 
-                    const fname = `CRONOS_FID_Dashboard_Supabase_${Date.now()}.xlsx`;
+                    const slaAOA = [
+                        ["N°", "FECHA", "HORA", "ASESOR", "CORREO", "ROL", "MÓDULO", "ACCIÓN", "TIEMPO EXACTO", "SEGUNDOS", "ESTADO SLA", "TIMESTAMP ISO"]
+                    ];
+                    slaEvents.slice(0, 5000).forEach((s, i) => {
+                        slaAOA.push([
+                            i + 1,
+                            s.fecha || "",
+                            s.hora || "",
+                            s.usuario || "",
+                            s.correo || "",
+                            s.rol || "",
+                            s.modulo || "CRONOS SLA",
+                            s.accion || "",
+                            s.tiempoExacto || "",
+                            s.tiempoSegundos || 0,
+                            s.estadoSLA || "",
+                            s.fechaHora || ""
+                        ]);
+                    });
+                    const wsSLA = XLSX.utils.aoa_to_sheet(slaAOA);
+                    wsSLA['!cols'] = [{ wch: 8 }, { wch: 12 }, { wch: 10 }, { wch: 25 }, { wch: 25 }, { wch: 15 }, { wch: 18 }, { wch: 15 }, { wch: 15 }, { wch: 12 }, { wch: 16 }, { wch: 25 }];
+                    XLSX.utils.book_append_sheet(wb, wsSLA, "Eventos SLA Periodo");
+
+                    const fname = `CRONOS_FID_Dashboard_Historico_${Date.now()}.xlsx`;
                     XLSX.writeFile(wb, fname);
                 } else {
-                    let csv = "CENTRO DE CONTROL CRONOS FID • WIN - REPORTE HISTÓRICO EJECUTIVO
-";
-                    csv += `Fuente de datos:,"SUPABASE"
-`;
-                    csv += `Fecha de Generación:,"${new Date().toLocaleString('es-PE')}"
-`;
-                    csv += `Generado por:,"${currentUser.nombre} (${currentUser.rol})"
-`;
-                    csv += `Periodo Evaluado:,"${periodLabel}"
-`;
-                    csv += `Filtro Asesor:,"${userFilter}"
-`;
-                    csv += `Total Eventos en Supabase:,${totalInteracciones}
+                    let csv = "REPORTE HISTÓRICO - CENTRO DE CONTROL CRONOS FID • WIN\n";
+                    csv += `Fecha de Generación:,"${new Date().toLocaleString('es-PE')}"\n`;
+                    csv += `Generado por:,"${currentUser.nombre} (${currentUser.rol})"\n`;
+                    csv += `Periodo Evaluado:,"${periodLabel}"\n`;
+                    csv += `Filtro Asesor:,"${userFilter === 'todos' ? 'Todos los Usuarios' : userFilter}"\n`;
+                    csv += `Política de Retención:,"Mínimo 180 días garantizados en Firestore"\n\n`;
 
-`;
+                    csv += "--- RESUMEN EJECUTIVO ---\n";
+                    csv += `Métrica,Valor\n`;
+                    csv += `"Usuarios Activos en Periodo",${activeUsersSet.size}\n`;
+                    csv += `"Sesiones Iniciadas",${totalSesiones}\n`;
+                    csv += `"Total Interacciones",${totalInteracciones}\n`;
+                    csv += `"Total Eventos SLA",${slaEvents.length}\n`;
+                    csv += `"Inicios SLA",${slaIni}\n`;
+                    csv += `"Pausas SLA",${slaPau}\n`;
+                    csv += `"Reinicios SLA",${slaRst}\n`;
+                    csv += `"Alertas Preventivas (45s)",${sla45}\n`;
+                    csv += `"Alertas Límite (60s)",${sla60}\n`;
+                    csv += `"Alertas Críticas (>70s)",${sla70}\n`;
+                    csv += `"Tiempo Promedio SLA",${slaPromedioStr}\n`;
+                    csv += `"Total Accesos a Módulos",${totalModAccess}\n\n`;
 
-                    csv += "--- RESUMEN EJECUTIVO ---
-";
-                    csv += `"Usuarios Activos",${activeUsersSet.size}
-`;
-                    csv += `"Sesiones Iniciadas",${totalSesiones}
-`;
-                    csv += `"Total Eventos SLA",${slaIni + slaPau + slaRst}
-`;
-                    csv += `"Inicios SLA",${slaIni}
-`;
-                    csv += `"Pausas SLA",${slaPau}
-`;
-                    csv += `"Reinicios SLA",${slaRst}
-`;
-                    csv += `"Alertas 45s",${sla45}
-`;
-                    csv += `"Alertas 60s",${sla60}
-`;
-                    csv += `"Alertas 70s",${sla70}
-`;
-                    csv += `"Tiempo Promedio SLA","${slaPromedioStr}"
-
-`;
-
-                    csv += "--- RANKING DE ASESORES ---
-";
-                    csv += "Posición,Asesor,Correo,Rol,Sesiones,Accesos,UsoSLA,Total,TiempoAcumulado
-";
+                    csv += "--- RANKING DE USUARIOS ---\n";
+                    csv += "Posición,Asesor,Correo,Rol,Sesiones,Accesos Modulo,Uso SLA,Total Interacciones,Tiempo Acumulado\n";
                     rankingList.forEach((u, i) => {
-                        csv += `${i + 1},"${u.nombre}","${u.correo}","${u.rol}",${u.sesiones},${u.accesos},${u.usoSLA},${u.sesiones + u.accesos + u.usoSLA},"${u.tiempoAcumulado}"
-`;
-                    });
-                    csv += "
-";
-
-                    csv += "--- DETALLE DE EVENTOS SUPABASE ---
-";
-                    csv += "N°,Fecha,Hora,Asesor,Correo,Rol,Acción,Módulo,Tiempo,EstadoSLA,FechaHora_ISO
-";
-                    events.slice(0, 50000).forEach((l, i) => {
-                        csv += `${i + 1},"${l.fecha || ''}","${l.hora || ''}","${l.usuario || l.nombre || ''}","${l.correo || ''}","${l.rol || ''}","${l.accion || ''}","${l.modulo || ''}","${l.tiempoExacto || l.tiempo || ''}","${l.estadoSLA || ''}","${l.fechaHora || l.fecha_hora || ''}"
-`;
+                        csv += `${i + 1},"${u.nombre}","${u.correo}","${u.rol}",${u.sesiones},${u.accesos},${u.usoSLA},${u.sesiones + u.accesos + u.usoSLA},"${u.tiempoAcumulado}"\n`;
                     });
 
-                    const fname = `CRONOS_FID_Dashboard_Supabase_${Date.now()}.csv`;
+                    csv += "\n--- USO POR MÓDULO ---\n";
+                    csv += "Módulo,Accesos Registrados,% del Total\n";
+                    Object.entries(moduleCounts).forEach(([name, count]) => {
+                        const pct = totalModAccess > 0 ? ((count / totalModAccess) * 100).toFixed(1) + "%" : "0%";
+                        csv += `"${name}",${count},"${pct}"\n`;
+                    });
+
+                    csv += "\n--- ÚLTIMAS ACTIVIDADES REGISTRADAS ---\n";
+                    csv += "Fecha,Hora,Usuario,Correo,Rol,Acción,Módulo,Detalle\n";
+                    auditLogs.slice(0, 1000).forEach(l => {
+                        csv += `"${l.fecha || ''}","${l.hora || ''}","${l.usuario || l.nombre || ''}","${l.correo || ''}","${l.rol || ''}","${l.accion || ''}","${l.modulo || ''}","${(l.detalle || l.resultado || '').replace(/"/g, '""')}"\n`;
+                    });
+
+                    const fname = `CRONOS_FID_Dashboard_Historico_${Date.now()}.csv`;
                     downloadCSV(fname, csv);
                 }
 
-                console.log("Exportación generada");
-
                 if (window.AuditManager && typeof window.AuditManager.logExport === 'function') {
-                    window.AuditManager.logExport("Dashboard", `Exportación Histórica (${format.toUpperCase()}) - ${periodLabel} (${events.length} registros)`);
+                    window.AuditManager.logExport("Dashboard", `Exportación Histórica (${format.toUpperCase()}) - ${periodLabel}`);
                 }
             },
 
@@ -16214,36 +16118,38 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
             // 3. ANALÍTICA CRONOS SLA HISTÓRICA
             async exportSLAHistorical({ startMs, endMs, periodLabel, userFilter, roleFilter, slaStatusFilter, format }) {
-                // FUENTE EXCLUSIVA: Supabase public.cronos_sla
-                let events = await this.fetchSupabaseHistorical(startMs, endMs);
-
-                // REGLA: ANALITICA CRONOS SLA - Exportar UNICAMENTE eventos de ASESOR
+                let events = await this.fetchFirestoreHistorical('cronos_sla', startMs, endMs);
+                // REGLA: EXPORTACIONES - Analitica CRONOS SLA debe exportar UNICAMENTE informacion perteneciente a: ASESORES
                 events = events.filter(s => isRoleAsesor(s));
 
                 if (userFilter && userFilter !== 'todos') {
                     const uLow = userFilter.toLowerCase().trim();
-                    events = events.filter(s => (s.correo || s.usuario || s.nombre || '').toLowerCase().includes(uLow));
+                    events = events.filter(s => (s.correo || s.usuario || '').toLowerCase().includes(uLow));
+                }
+
+                if (roleFilter && roleFilter !== 'todos') {
+                    events = events.filter(s => (s.rol || '').toLowerCase() === roleFilter.toLowerCase().trim());
                 }
 
                 if (slaStatusFilter && slaStatusFilter !== 'todos') {
                     const stLow = slaStatusFilter.toLowerCase().trim();
-                    events = events.filter(s => (s.estadoSLA || s.estado_sla || '').toLowerCase().includes(stLow));
+                    events = events.filter(s => (s.estadoSLA || '').toLowerCase().includes(stLow));
                 }
 
                 const currentUser = window.CRONOS_CURRENT_USER || { nombre: "Administrador", rol: "Administrador" };
 
-                let cIni = 0, cPau = 0, cRst = 0;
-                let countNormal = 0, countPrev = 0, countLim = 0, countCrit = 0;
                 let sumSecs = 0, countSecs = 0;
+                let countNormal = 0, countPrev = 0, countLim = 0, countCrit = 0;
+                let cIni = 0, cPau = 0, cRst = 0;
 
                 events.forEach(s => {
-                    const acc = (s.accion || '').toUpperCase();
+                    const acc = (s.accion || '').toLowerCase();
                     const secs = typeof s.tiempoSegundos === 'number' ? s.tiempoSegundos : (parseInt(s.tiempoSegundos) || 0);
-                    const status = (s.estadoSLA || s.estado_sla || '').toLowerCase();
+                    const status = (s.estadoSLA || '').toLowerCase();
 
-                    if (acc === 'INICIAR' || acc.includes('INICI') || acc.includes('REANUD')) cIni++;
-                    else if (acc === 'PAUSA' || acc.includes('PAUS')) cPau++;
-                    else if (acc === 'REINICIO' || acc.includes('REINICI')) cRst++;
+                    if (acc.includes('inici') || acc.includes('reanud')) cIni++;
+                    else if (acc.includes('paus')) cPau++;
+                    else if (acc.includes('reinici')) cRst++;
 
                     if (status.includes('normal') || (secs < 45 && !status.includes('prev') && !status.includes('cr') && !status.includes('lím'))) countNormal++;
                     else if (status.includes('prev') || (secs >= 45 && secs < 60)) countPrev++;
@@ -16267,7 +16173,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                         ["Fecha de Generación:", new Date().toLocaleString('es-PE'), "", "Generado por:", `${currentUser.nombre} (${currentUser.rol})`],
                         ["Periodo Evaluado:", periodLabel, "", "Total Eventos:", events.length],
                         ["Filtros Aplicados:", `Usuario: ${userFilter} | Rol: ${roleFilter} | Estado SLA: ${slaStatusFilter}`],
-                        ["Fuente de datos:", "SUPABASE", "", "Fuente Oficial:", "Supabase (public.cronos_sla)"],
+                        ["Retención Oficial:", "Mínimo 180 días de histórico garantizado en Firestore"],
                         [],
                         ["N°", "FECHA", "HORA", "ASESOR / USUARIO", "CORREO INSTITUCIONAL", "ROL", "MÓDULO", "ACCIÓN", "TIEMPO EXACTO", "SEGUNDOS", "ESTADO SLA", "TIMESTAMP ISO"]
                     ];
@@ -16277,15 +16183,15 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                             i + 1,
                             s.fecha || "",
                             s.hora || "",
-                            s.usuario || s.nombre || "",
+                            s.usuario || "",
                             s.correo || "",
                             s.rol || "Asesor",
                             s.modulo || "CRONOS SLA",
                             s.accion || "",
-                            s.tiempoExacto || s.tiempo || "",
+                            s.tiempoExacto || "",
                             s.tiempoSegundos || 0,
-                            s.estadoSLA || s.estado_sla || "Normal",
-                            s.fechaHora || s.fecha_hora || ""
+                            s.estadoSLA || "Normal",
+                            s.fechaHora || ""
                         ]);
                     });
 
@@ -16295,7 +16201,6 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
                     const resumenAOA = [
                         ["ANALÍTICA Y RENDIMIENTO HISTÓRICO DE TIEMPOS CRONOS SLA"],
-                        ["Fuente de datos:", "SUPABASE"],
                         ["Periodo Evaluado:", periodLabel],
                         ["Total Eventos SLA Registrados:", events.length],
                         ["Tiempo Promedio de Pausa / Espera:", `${promStr} (${promSecs} segundos)`],
@@ -16316,59 +16221,36 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     wsResumen['!cols'] = [{ wch: 30 }, { wch: 15 }, { wch: 15 }, { wch: 25 }];
                     XLSX.utils.book_append_sheet(wb, wsResumen, "Analitica Tiempos SLA");
 
-                    const fname = `CRONOS_FID_SLA_Supabase_${Date.now()}.xlsx`;
+                    const fname = `CRONOS_FID_SLA_Historico_${Date.now()}.xlsx`;
                     XLSX.writeFile(wb, fname);
                 } else {
-                    let csv = "REGISTRO DE EVENTOS CRONOS SLA HISTÓRICO - CRONOS FID • WIN
-";
-                    csv += `Fuente de datos:,"SUPABASE"
-`;
-                    csv += `Fecha de Generación:,"${new Date().toLocaleString('es-PE')}"
-`;
-                    csv += `Generado por:,"${currentUser.nombre} (${currentUser.rol})"
-`;
-                    csv += `Periodo Evaluado:,"${periodLabel}"
-`;
-                    csv += `Filtros:,"Usuario: ${userFilter} | Rol: ${roleFilter} | Estado SLA: ${slaStatusFilter}"
-`;
-                    csv += `Total Eventos:,${events.length}
+                    let csv = "REGISTRO DE EVENTOS CRONOS SLA HISTÓRICO - CRONOS FID • WIN\n";
+                    csv += `Fecha de Generación:,"${new Date().toLocaleString('es-PE')}"\n`;
+                    csv += `Generado por:,"${currentUser.nombre} (${currentUser.rol})"\n`;
+                    csv += `Periodo Evaluado:,"${periodLabel}"\n`;
+                    csv += `Filtros:,"Usuario: ${userFilter} | Rol: ${roleFilter} | Estado SLA: ${slaStatusFilter}"\n`;
+                    csv += `Total Eventos:,${events.length}\n`;
+                    csv += `Retención:,"Mínimo 180 días garantizados en Firestore"\n\n`;
 
-`;
+                    csv += "--- RESUMEN ANALÍTICO ---\n";
+                    csv += `"Tiempo Promedio SLA","${promStr}"\n`;
+                    csv += `"Normal (<45s)",${countNormal}\n`;
+                    csv += `"Preventivo (45s-59s)",${countPrev}\n`;
+                    csv += `"Límite SLA (60s-70s)",${countLim}\n`;
+                    csv += `"SLA Crítico (>70s)",${countCrit}\n`;
+                    csv += `"Inicios",${cIni}\n`;
+                    csv += `"Pausas",${cPau}\n`;
+                    csv += `"Reinicios",${cRst}\n\n`;
 
-                    csv += "--- RESUMEN ANALÍTICO ---
-";
-                    csv += `"Tiempo Promedio SLA","${promStr}"
-`;
-                    csv += `"Normal (<45s)",${countNormal}
-`;
-                    csv += `"Preventivo (45s-59s)",${countPrev}
-`;
-                    csv += `"Límite SLA (60s-70s)",${countLim}
-`;
-                    csv += `"SLA Crítico (>70s)",${countCrit}
-`;
-                    csv += `"Inicios",${cIni}
-`;
-                    csv += `"Pausas",${cPau}
-`;
-                    csv += `"Reinicios",${cRst}
-
-`;
-
-                    csv += "--- DETALLE DE EVENTOS ---
-";
-                    csv += "N°,Fecha,Hora,Asesor,Correo,Rol,Modulo,Acción,TiempoExacto,Segundos,EstadoSLA,FechaHora_ISO
-";
+                    csv += "--- DETALLE DE EVENTOS ---\n";
+                    csv += "N°,Fecha,Hora,Asesor,Correo,Rol,Modulo,Acción,TiempoExacto,Segundos,EstadoSLA,FechaHora_ISO\n";
                     events.forEach((s, i) => {
-                        csv += `${i + 1},"${s.fecha || ''}","${s.hora || ''}","${s.usuario || s.nombre || ''}","${s.correo || ''}","${s.rol || 'Asesor'}","${s.modulo || 'CRONOS SLA'}","${s.accion || ''}","${s.tiempoExacto || s.tiempo || ''}",${s.tiempoSegundos || 0},"${s.estadoSLA || s.estado_sla || 'Normal'}","${s.fechaHora || s.fecha_hora || ''}"
-`;
+                        csv += `${i + 1},"${s.fecha || ''}","${s.hora || ''}","${s.usuario || ''}","${s.correo || ''}","${s.rol || 'Asesor'}","${s.modulo || 'CRONOS SLA'}","${s.accion || ''}","${s.tiempoExacto || ''}",${s.tiempoSegundos || 0},"${s.estadoSLA || 'Normal'}","${s.fechaHora || ''}"\n`;
                     });
 
-                    const fname = `CRONOS_FID_SLA_Supabase_${Date.now()}.csv`;
+                    const fname = `CRONOS_FID_SLA_Historico_${Date.now()}.csv`;
                     downloadCSV(fname, csv);
                 }
-
-                console.log("Exportación generada");
 
                 if (window.AuditManager && typeof window.AuditManager.logExport === 'function') {
                     window.AuditManager.logExport("Analítica CRONOS SLA", `Exportación Histórica (${format.toUpperCase()}) - ${periodLabel} (${events.length} registros)`);
@@ -17508,36 +17390,31 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                                 } else if (payload.eventType === "DELETE" && payload.old) {
                                     window.CRONOS_SLA_EVENTS = (window.CRONOS_SLA_EVENTS || []).filter(e => e.id !== payload.old.id);
                                 } else {
-                                    const fresh = await fetchSupabaseSLAEvents(5000);
+                                    const fresh = await fetchSupabaseSLAEvents(1000);
                                     window.CRONOS_SLA_EVENTS = fresh;
                                 }
 
                                 const totalRegistros = (window.CRONOS_SLA_EVENTS || []).length;
+                                const ultimaFecha = totalRegistros > 0 ? (window.CRONOS_SLA_EVENTS[0].fechaHora || window.CRONOS_SLA_EVENTS[0].fecha || "—") : "Ninguna";
                                 console.log("Total registros cronos_sla (Supabase Realtime):", totalRegistros);
-                                console.log("Eventos SLA cargados");
+                                console.log("Última fecha encontrada:", ultimaFecha);
 
                                 renderSLAMetricsCards();
                                 renderSLATable();
-                                renderSLARanking();
                                 renderDashboardMetricsOnly();
                                 renderDashboard();
                             })
                             .subscribe((status) => {
                                 console.log("[Supabase Realtime SLA] Estado de suscripción:", status);
-                                if (status === 'SUBSCRIBED') {
-                                    console.log("Supabase conectado");
-                                }
                             });
 
                         _slaUnsubscribe = () => {
                             try { window.supabaseClient.removeChannel(slaChannel); } catch (e) { }
                         };
-                        console.log("Supabase conectado");
+                        console.log("[Supabase Realtime] Listener suscrito con éxito a public.cronos_sla");
                     } catch (sbRealtimeErr) {
                         console.error("[Supabase Realtime] Error al iniciar suscripción:", sbRealtimeErr);
                     }
-                } else {
-                    console.warn("[Supabase Realtime] Cliente Supabase no disponible para suscripción.");
                 } else {
                     console.warn("[Supabase Realtime] Cliente Supabase no disponible para suscripción.");
                 }
@@ -18448,12 +18325,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 <div>
                     <label
                         class="text-[11px] font-extrabold uppercase tracking-wider text-slate-600 block mb-2 flex items-center justify-between">
-                        <span class="flex items-center gap-2">
-                            <span>1. Módulo a Exportar</span>
-                            <span id="export-source-badge" class="bg-emerald-100 text-emerald-800 border border-emerald-300 text-[10px] font-extrabold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-xs">
-                                <i class="fa-solid fa-database text-emerald-600"></i> Fuente de datos: SUPABASE
-                            </span>
-                        </span>
+                        <span>1. Módulo a Exportar</span>
                         <span class="text-emerald-700 font-bold lowercase text-[10px]"
                             id="export-modal-selected-module-title">Dashboard Ejecutivo</span>
                     </label>
