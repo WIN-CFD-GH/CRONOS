@@ -12848,18 +12848,70 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         };
 
         /**
+         * Control Central de Permisos y Roles (CRONOS FID)
+         */
+        function currentUserPermissions(role) {
+            try {
+                const r = role || ((window.CRONOS_CURRENT_USER && window.CRONOS_CURRENT_USER.rol) ||
+                    (typeof UserManager !== 'undefined' && UserManager.getCurrentRole ? UserManager.getCurrentRole() : 'Asesor'));
+                return (window.CRONOS_PERMISSIONS && window.CRONOS_PERMISSIONS[r]) ||
+                    (window.CRONOS_DEFAULT_PERMISSIONS && window.CRONOS_DEFAULT_PERMISSIONS[r]) ||
+                    (window.CRONOS_DEFAULT_PERMISSIONS && window.CRONOS_DEFAULT_PERMISSIONS["Asesor"]) || {};
+            } catch (e) {
+                return (window.CRONOS_DEFAULT_PERMISSIONS && window.CRONOS_DEFAULT_PERMISSIONS["Asesor"]) || {};
+            }
+        }
+        function rolePermissions(role) {
+            return currentUserPermissions(role);
+        }
+
+        function hasPermission(permissionKey) {
+            try {
+                const userRole = (window.CRONOS_CURRENT_USER && window.CRONOS_CURRENT_USER.rol) ||
+                    (typeof UserManager !== 'undefined' && UserManager.getCurrentRole ? UserManager.getCurrentRole() : 'Asesor');
+                const perms = currentUserPermissions(userRole);
+                if (!perms) return false;
+                if (perms.accesoTotal) return true;
+                return Boolean(perms[permissionKey]);
+            } catch (err) {
+                console.warn('[hasPermission] Error al validar permiso:', permissionKey, err);
+                return false;
+            }
+        }
+        function checkPermission(permissionKey) {
+            return hasPermission(permissionKey);
+        }
+        function validatePermission(permissionKey) {
+            return hasPermission(permissionKey);
+        }
+
+        window.currentUserPermissions = currentUserPermissions;
+        window.rolePermissions = rolePermissions;
+        window.hasPermission = hasPermission;
+        window.checkPermission = checkPermission;
+        window.validatePermission = validatePermission;
+
+        /**
          * RoleManager: Manejo de permisos, visibilidad de módulos y estilos visuales por perfil.
          */
         const RoleManager = {
             getRolePermissions(role) {
-                const r = role || UserManager.getCurrentRole();
-                return (window.CRONOS_DEFAULT_PERMISSIONS && window.CRONOS_DEFAULT_PERMISSIONS[r]) ||
-                    (window.CRONOS_DEFAULT_PERMISSIONS && window.CRONOS_DEFAULT_PERMISSIONS["Asesor"]) || {};
+                return currentUserPermissions(role);
+            },
+            rolePermissions(role) {
+                return currentUserPermissions(role);
+            },
+            currentUserPermissions(role) {
+                return currentUserPermissions(role);
             },
             hasPermission(permissionKey) {
-                const perms = this.getRolePermissions();
-                if (!perms) return false;
-                return Boolean(perms[permissionKey] || perms.accesoTotal);
+                return hasPermission(permissionKey);
+            },
+            checkPermission(permissionKey) {
+                return hasPermission(permissionKey);
+            },
+            validatePermission(permissionKey) {
+                return hasPermission(permissionKey);
             },
             canAccessModule(moduleKey) {
                 return this.hasPermission(moduleKey);
@@ -12875,6 +12927,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 return getRoleBadgeStyle(rol);
             }
         };
+        window.RoleManager = RoleManager;
 
         /**
          * SessionManager: Control del ciclo de vida de sesiones, tiempos activos y tracking.
@@ -15481,29 +15534,41 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             },
 
             openModal(moduleKey = 'dashboard') {
-                if (typeof updateTopHeader === 'function') updateTopHeader('exportaciones');
-                if (!hasPermission('exportExcel')) {
-                    showToast('Acceso denegado: Tu perfil no cuenta con permisos de exportación.', 'error');
-                    return;
+                console.log("Abriendo Exportaciones");
+                try {
+                    console.log("Validando permisos");
+                    const currentRole = (window.CRONOS_CURRENT_USER && window.CRONOS_CURRENT_USER.rol) ||
+                        (typeof UserManager !== 'undefined' && UserManager.getCurrentRole ? UserManager.getCurrentRole() : 'Asesor');
+                    console.log("Rol actual:", currentRole);
+
+                    if (typeof updateTopHeader === 'function') updateTopHeader('exportaciones');
+                    if (!hasPermission('exportExcel')) {
+                        showToast('Acceso denegado: Tu perfil no cuenta con permisos de exportación.', 'error');
+                        return;
+                    }
+
+                    const modal = document.getElementById('modal-centro-exportaciones');
+                    if (!modal) return;
+
+                    this.setModule(moduleKey);
+                    this.populateUserDropdown();
+                    this.setPeriod(this.currentPeriod || 'mes');
+                    this.setFormat(this.currentFormat || 'xlsx');
+
+                    const todayStr = new Date().toISOString().split('T')[0];
+                    const prev30 = new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString().split('T')[0];
+                    const sInput = document.getElementById('export-date-start');
+                    const eInput = document.getElementById('export-date-end');
+                    if (sInput && !sInput.value) sInput.value = prev30;
+                    if (eInput && !eInput.value) eInput.value = todayStr;
+
+                    modal.classList.remove('hidden');
+                    this.updatePreviewCount();
+                    console.log("Exportaciones abiertas correctamente");
+                } catch (error) {
+                    console.error("Export Error:", error);
+                    showToast('Error al abrir exportaciones: ' + (error.message || error), 'error');
                 }
-
-                const modal = document.getElementById('modal-centro-exportaciones');
-                if (!modal) return;
-
-                this.setModule(moduleKey);
-                this.populateUserDropdown();
-                this.setPeriod(this.currentPeriod || 'mes');
-                this.setFormat(this.currentFormat || 'xlsx');
-
-                const todayStr = new Date().toISOString().split('T')[0];
-                const prev30 = new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString().split('T')[0];
-                const sInput = document.getElementById('export-date-start');
-                const eInput = document.getElementById('export-date-end');
-                if (sInput && !sInput.value) sInput.value = prev30;
-                if (eInput && !eInput.value) eInput.value = todayStr;
-
-                modal.classList.remove('hidden');
-                this.updatePreviewCount();
             },
 
             closeModal() {
