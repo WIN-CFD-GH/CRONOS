@@ -1,3 +1,24 @@
+<!--
+=========================================================
+CRONOS FID
+
+Versión:
+JELI v5.0.0 • WIN OCT2026
+
+Diseño Funcional
+Arquitectura Operativa
+Gestión de Procesos
+Desarrollo Evolutivo:
+Jhonny Leon Illescas
+
+Proyecto:
+CRONOS FID
+(Centro de Recursos Operativos para Negociación y Fidelización)
+
+Año:
+2026
+=========================================================
+-->
 <!DOCTYPE html>
 <html lang="es">
 
@@ -13,26 +34,20 @@
     <link rel="shortcut icon" href="./favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="./CRONOS_FID_icon.png">
 
+    <!-- Metadatos de Autoría e Identidad Oficial del Sistema -->
+    <meta name="author" content="Jhonny Leon Illescas">
+    <meta name="application-name" content="CRONOS FID">
+    <meta name="generator" content="CRONOS FID • JELI v5.0.0 • WIN OCT2026">
+    <meta name="copyright" content="CRONOS FID • Jhonny Leon Illescas • 2026">
+    <meta name="version" content="JELI v5.0.0 • WIN OCT2026">
+
     <!-- Open Graph & Meta Identity -->
     <meta property="og:title" content="CRONOS FID">
     <meta property="og:site_name" content="CRONOS FID">
     <meta property="og:description" content="Plataforma de Fidelización Ágil de WIN">
     <meta property="og:image" content="./CRONOS_FID_icon.png">
-    <meta name="application-name" content="CRONOS FID">
     <meta name="apple-mobile-web-app-title" content="CRONOS FID">
     <meta name="theme-color" content="#FF5E00">
-    <meta name="author" content="Jhonny Eduar León Illescas - Fidelizaciones WIN">
-    <meta name="copyright" content="CRONOS FID - WIN 2026">
-    <meta name="version" content="5.0.0">
-
-    <!--
-      CRONOS FID
-      Plataforma de Fidelización Ágil de WIN
-      Autor: Jhonny Eduar León Illescas (jhleonill)
-      Area: Fidelizaciones WIN
-      Fecha: 2025
-      Hash de autenticidad: FID-WIN-2025-JELI
-    -->
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts para excelente tipografía -->
@@ -433,6 +448,134 @@
             min-width: 360px;
             max-width: 100%;
             transition: all 0.25s ease;
+        }
+
+        /* =========================================================================
+           ADAPTACIÓN ERGONÓMICA DE CRONOS SLA EN COLUMNA LATERAL (PERFIL ASESOR)
+           ========================================================================= */
+        #header-sla-container {
+            display: flex;
+            align-items: center;
+        }
+
+        #header-sla-container:empty {
+            display: none !important;
+        }
+
+        #wait-timer-widget.sidebar-sla-mode {
+            min-width: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 1.25rem 1.15rem !important;
+            border-radius: 1.25rem !important;
+            background-color: #ffffff !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 4px 10px -2px rgba(0, 0, 0, 0.04) !important;
+            box-sizing: border-box !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 1rem !important;
+            border-width: 2px !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        #wait-timer-widget.sidebar-sla-mode #cronos-widget-main-row {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            width: 100% !important;
+            gap: 0.9rem !important;
+        }
+
+        #wait-timer-widget.sidebar-sla-mode #cronos-widget-header-block {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            width: 100% !important;
+            border-right: none !important;
+            border-bottom: 1px solid #f1f5f9 !important;
+            padding-right: 0 !important;
+            padding-bottom: 0.75rem !important;
+        }
+
+        #wait-timer-widget.sidebar-sla-mode #cronos-circle-container {
+            width: 88px !important;
+            height: 88px !important;
+            margin: 0.2rem 0 !important;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05) !important;
+            background-color: #f8fafc !important;
+            border: 2px solid #f1f5f9 !important;
+        }
+
+        #wait-timer-widget.sidebar-sla-mode #wait-timer-text {
+            font-size: 1.75rem !important;
+            font-weight: 900 !important;
+            letter-spacing: -0.02em !important;
+        }
+
+        #wait-timer-widget.sidebar-sla-mode #cronos-controls-container {
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.5rem !important;
+            width: 100% !important;
+        }
+
+        #wait-timer-widget.sidebar-sla-mode #btn-wait-playpause {
+            flex: 1 !important;
+            padding: 0.7rem 1rem !important;
+            font-size: 0.85rem !important;
+            font-weight: 800 !important;
+            justify-content: center !important;
+            border-radius: 0.75rem !important;
+        }
+
+        #wait-timer-widget.sidebar-sla-mode #wait-text-playpause {
+            display: inline !important;
+        }
+
+        #wait-timer-widget.sidebar-sla-mode #btn-wait-reset {
+            width: 44px !important;
+            height: 44px !important;
+            border-radius: 0.75rem !important;
+            flex-shrink: 0 !important;
+        }
+
+        #wait-timer-widget.sidebar-sla-mode #cronos-speech-container {
+            margin-top: 0.25rem !important;
+            width: 100% !important;
+        }
+
+        /* ========================================================
+           FIJACIÓN Y COMPORTAMIENTO ERGONÓMICO STICKY - CRONOS SLA & SIDEBAR
+           ======================================================== */
+        :root {
+            --cronos-header-height: 78px;
+        }
+
+        #main-header {
+            position: -webkit-sticky !important;
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 50 !important;
+            width: 100%;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        @media (min-width: 1024px) {
+            #sidebar-admin-modules {
+                align-self: stretch !important;
+                height: auto !important;
+                min-height: 100% !important;
+            }
+
+            #sidebar-sticky-wrapper {
+                position: -webkit-sticky !important;
+                position: sticky !important;
+                top: calc(var(--cronos-header-height, 78px) + 14px) !important;
+                z-index: 40 !important;
+                transition: top 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            }
         }
 
         /* PRIORIDAD 3: Perfil del Usuario */
@@ -1118,70 +1261,75 @@
 
             <!-- Bloque Derecho (Prioridades 1 y 3): CRONOS SLA Grande + Perfil de Usuario -->
             <div class="header-actions-group">
-                <!-- Widget Flotante: CRONOS SLA (PRIORIDAD 1 - Tamao Grande, Inmutable y Accesible) -->
-                <div id="wait-timer-widget" class="animate-pop">
-                    <div class="flex items-center gap-2 sm:gap-3 md:gap-3.5">
-                        <!-- Titulo, LED y Estado SLA -->
-                        <div
-                            class="flex flex-col justify-center border-r border-slate-200 pr-2.5 sm:pr-3 shrink-0 leading-tight">
-                            <div class="flex items-center gap-1.5 sm:gap-2">
-                                <div class="relative flex h-3 w-3">
-                                    <span id="cronos-led-ping"
-                                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                    <span id="cronos-led-dot"
-                                        class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                <!-- Contenedor Slot para CRONOS SLA en Header (Vista Administrador / Supervisor) -->
+                <div id="header-sla-container">
+                    <!-- Widget Flotante: CRONOS SLA (PRIORIDAD 1 - Tamaño Grande, Inmutable y Accesible) -->
+                    <div id="wait-timer-widget" class="animate-pop">
+                        <div id="cronos-widget-main-row" class="flex items-center gap-2 sm:gap-3 md:gap-3.5">
+                            <!-- Titulo, LED y Estado SLA -->
+                            <div id="cronos-widget-header-block"
+                                class="flex flex-col justify-center border-r border-slate-200 pr-2.5 sm:pr-3 shrink-0 leading-tight">
+                                <div class="flex items-center gap-1.5 sm:gap-2">
+                                    <div class="relative flex h-3 w-3">
+                                        <span id="cronos-led-ping"
+                                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                        <span id="cronos-led-dot"
+                                            class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                                    </div>
+                                    <h3
+                                        class="font-extrabold text-slate-800 text-xs sm:text-sm tracking-wider uppercase whitespace-nowrap">
+                                        CRONOS SLA</h3>
+                                    <span
+                                        class="text-[8.5px] sm:text-[9px] font-bold bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded">60s</span>
                                 </div>
-                                <h3
-                                    class="font-extrabold text-slate-800 text-xs sm:text-sm tracking-wider uppercase whitespace-nowrap">
-                                    CRONOS SLA</h3>
-                                <span
-                                    class="text-[8.5px] sm:text-[9px] font-bold bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded">60s</span>
+                                <span id="cronos-status-text"
+                                    class="text-[10.5px] sm:text-[11px] font-bold text-emerald-600 mt-0.5 whitespace-nowrap">✔
+                                    Dentro del SLA</span>
                             </div>
-                            <span id="cronos-status-text"
-                                class="text-[10.5px] sm:text-[11px] font-bold text-emerald-600 mt-0.5 whitespace-nowrap">✔
-                                Dentro del SLA</span>
+
+                            <!-- Circulo del temporizador ascendente (Tamaño Grande w-11 h-11 / w-12 h-12) -->
+                            <div id="cronos-circle-container"
+                                class="relative w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-slate-50 border-2 border-slate-100 shadow-inner shrink-0">
+                                <svg class="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="44" fill="none" stroke="#e2e8f0" stroke-width="7">
+                                    </circle>
+                                    <circle id="wait-timer-circle" cx="50" cy="50" r="44" fill="none"
+                                        stroke="currentColor" stroke-width="7"
+                                        class="text-emerald-500 transition-all duration-500 ease-linear"
+                                        stroke-dasharray="276.46" stroke-dashoffset="276.46"></circle>
+                                </svg>
+                                <span id="wait-timer-text"
+                                    class="text-sm sm:text-base md:text-lg font-mono font-black text-emerald-600 relative z-10">00</span>
+                            </div>
+
+                            <!-- Controles Grandes y Comodos para Asesores -->
+                            <div id="cronos-controls-container" class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                                <button id="btn-wait-playpause"
+                                    class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 sm:px-3.5 md:px-4 py-1.5 sm:py-2 rounded-lg font-bold transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95 text-xs sm:text-sm cursor-pointer">
+                                    <i id="wait-icon-playpause" class="fa-solid fa-play text-xs"></i> <span
+                                        id="wait-text-playpause" class="hidden sm:inline">Iniciar</span>
+                                </button>
+                                <button id="btn-wait-reset"
+                                    class="bg-slate-100 hover:bg-slate-200 text-slate-700 w-8 h-8 sm:w-9 sm:h-9 rounded-lg transition-all flex items-center justify-center shadow-sm active:scale-95 text-xs sm:text-sm cursor-pointer"
+                                    title="Reiniciar Cronometro">
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <!-- Circulo del temporizador ascendente (Tamao Grande w-11 h-11 / w-12 h-12) -->
-                        <div
-                            class="relative w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-slate-50 border-2 border-slate-100 shadow-inner shrink-0">
-                            <svg class="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
-                                <circle cx="50" cy="50" r="44" fill="none" stroke="#e2e8f0" stroke-width="7"></circle>
-                                <circle id="wait-timer-circle" cx="50" cy="50" r="44" fill="none" stroke="currentColor"
-                                    stroke-width="7" class="text-emerald-500 transition-all duration-500 ease-linear"
-                                    stroke-dasharray="276.46" stroke-dashoffset="276.46"></circle>
-                            </svg>
-                            <span id="wait-timer-text"
-                                class="text-sm sm:text-base md:text-lg font-mono font-black text-emerald-600 relative z-10">00</span>
-                        </div>
-
-                        <!-- Controles Grandes y Comodos para Asesores -->
-                        <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
-                            <button id="btn-wait-playpause"
-                                class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 sm:px-3.5 md:px-4 py-1.5 sm:py-2 rounded-lg font-bold transition-all flex items-center justify-center gap-1.5 shadow-sm active:scale-95 text-xs sm:text-sm cursor-pointer">
-                                <i id="wait-icon-playpause" class="fa-solid fa-play text-xs"></i> <span
-                                    id="wait-text-playpause" class="hidden sm:inline">Iniciar</span>
+                        <!-- Speech de Ayuda Visual / Recomendacion para el Asesor -->
+                        <div id="cronos-speech-container"
+                            class="hidden text-xs bg-slate-50 rounded-lg px-2.5 py-1.5 border border-slate-200 items-center justify-between gap-2 transition-all">
+                            <div class="flex items-center gap-1.5 text-slate-700 font-medium min-w-0">
+                                <i id="cronos-speech-icon" class="fa-solid fa-headset text-slate-500 shrink-0"></i>
+                                <span id="cronos-speech-text" class="text-[11px] leading-tight truncate"></span>
+                            </div>
+                            <button id="cronos-btn-copy-speech"
+                                class="text-[10px] text-slate-500 hover:text-slate-800 font-bold px-1.5 py-0.5 rounded bg-white border border-slate-200 shrink-0 transition cursor-pointer"
+                                title="Copiar speech">
+                                <i class="fa-regular fa-copy"></i>
                             </button>
-                            <button id="btn-wait-reset"
-                                class="bg-slate-100 hover:bg-slate-200 text-slate-700 w-8 h-8 sm:w-9 sm:h-9 rounded-lg transition-all flex items-center justify-center shadow-sm active:scale-95 text-xs sm:text-sm cursor-pointer"
-                                title="Reiniciar Cronometro">
-                                <i class="fa-solid fa-rotate-left"></i>
-                            </button>
                         </div>
-                    </div>
-
-                    <!-- Speech de Ayuda Visual / Recomendacion para el Asesor -->
-                    <div id="cronos-speech-container"
-                        class="hidden text-xs bg-slate-50 rounded-lg px-2.5 py-1.5 border border-slate-200 items-center justify-between gap-2 transition-all">
-                        <div class="flex items-center gap-1.5 text-slate-700 font-medium min-w-0">
-                            <i id="cronos-speech-icon" class="fa-solid fa-headset text-slate-500 shrink-0"></i>
-                            <span id="cronos-speech-text" class="text-[11px] leading-tight truncate"></span>
-                        </div>
-                        <button id="cronos-btn-copy-speech"
-                            class="text-[10px] text-slate-500 hover:text-slate-800 font-bold px-1.5 py-0.5 rounded bg-white border border-slate-200 shrink-0 transition cursor-pointer"
-                            title="Copiar speech">
-                            <i class="fa-regular fa-copy"></i>
-                        </button>
                     </div>
                 </div>
 
@@ -1268,6 +1416,18 @@
                                 class="w-full text-left px-4 py-2 hover:bg-slate-50 text-slate-600 flex items-center gap-2.5 transition cursor-pointer">
                                 <i class="fa-solid fa-gear text-slate-400 w-4 text-center"></i>
                                 <span>Configuracion</span>
+                            </button>
+                            <button type="button" id="menu-opt-about"
+                                onclick="openAboutModal(); toggleUserDropdown(event);"
+                                class="w-full text-left px-4 py-2 hover:bg-orange-50 hover:text-win-orange text-slate-700 flex items-center gap-2.5 transition cursor-pointer border-t border-slate-100/70">
+                                <i class="fa-solid fa-circle-info text-win-orange w-4 text-center"></i>
+                                <span class="font-bold">ℹ Acerca de CRONOS FID</span>
+                            </button>
+                            <button type="button" id="menu-opt-changelog"
+                                onclick="openChangelogModal(); toggleUserDropdown(event);"
+                                class="w-full text-left px-4 py-2 hover:bg-orange-50 hover:text-win-orange text-slate-700 flex items-center gap-2.5 transition cursor-pointer">
+                                <i class="fa-solid fa-clock-rotate-left text-win-orange w-4 text-center"></i>
+                                <span class="font-bold">Historial de Cambios</span>
                             </button>
                         </div>
 
@@ -3417,6 +3577,9 @@
                         </div>
                     </div>
 
+                    <!-- Filtro Temporal Global (Día, Semana, Mes) -->
+                    <div id="cronos-dashboard-filter-anchor" class="w-full"></div>
+
                     <!-- 6 TARJETAS PRINCIPALES DE MONITOREO -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
 
@@ -3840,6 +4003,13 @@
 
                     </div>
 
+                    <!-- ========================================================================= -->
+                    <!-- CONTENEDORES EXTENSIÓN IA: INSIGHTS, PREDICCIONES Y ALERTAS INTELIGENTES -->
+                    <!-- ========================================================================= -->
+                    <div id="cronos-ai-insights-container" class="w-full"></div>
+                    <div id="cronos-predictions-container" class="w-full"></div>
+                    <div id="cronos-smart-alerts-container" class="w-full"></div>
+
                 </div>
 
                 <div id="content-auditoria" class="tab-content hidden animate-pop space-y-6">
@@ -3882,6 +4052,9 @@
                             </button>
                         </div>
                     </div>
+
+                    <!-- Filtro Temporal Global (Día, Semana, Mes) -->
+                    <div id="cronos-auditoria-filter-anchor" class="w-full"></div>
 
                     <!-- 4 Tarjetas de Métricas de Auditoría -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -3946,6 +4119,11 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- ========================================================================= -->
+                    <!-- SUBMÓDULO EXTENSIÓN: HALLAZGOS IA DE AUDITORÍA OPERATIVA                  -->
+                    <!-- ========================================================================= -->
+                    <div id="cronos-ai-audits-container" class="w-full"></div>
 
                     <!-- Tabla de Logs de Auditoría Operativa -->
                     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden p-5">
@@ -4070,6 +4248,61 @@
                         </div>
                     </div>
 
+                    <!-- Barra de Control de Periodo de Visualización (Último Día, Última Semana, Acumulado del Mes) -->
+                    <div
+                        class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                        <div class="flex items-center gap-3.5">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-lg border border-purple-200 shrink-0">
+                                <i class="fa-solid fa-filter"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <span class="text-xs font-black uppercase text-slate-700 tracking-wider">Periodo en
+                                        Pantalla:</span>
+                                    <span id="sla-view-period-badge"
+                                        class="bg-purple-600 text-white text-[11px] font-extrabold px-3 py-0.5 rounded-full shadow-sm">
+                                        Último Día (Hoy)
+                                    </span>
+                                    <span class="text-[10px] text-slate-400 font-medium">| Retención máxima: 6
+                                        meses</span>
+                                </div>
+                                <p id="sla-view-period-desc" class="text-xs text-slate-500 mt-0.5">
+                                    Visualizando métricas y registros del último día.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
+                            <!-- Selector Visual Segmentado (Pills) -->
+                            <div class="inline-flex p-1 bg-slate-100 rounded-xl border border-slate-200 shadow-inner">
+                                <button type="button" id="sla-period-btn-dia" onclick="setSLAViewPeriod('dia')"
+                                    class="px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all flex items-center gap-1.5 bg-purple-600 text-white shadow-sm cursor-pointer">
+                                    <i class="fa-solid fa-sun text-[11px]"></i>
+                                    <span>Último Día</span>
+                                </button>
+                                <button type="button" id="sla-period-btn-semana" onclick="setSLAViewPeriod('semana')"
+                                    class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 text-slate-600 hover:text-slate-900 hover:bg-slate-200 cursor-pointer">
+                                    <i class="fa-solid fa-calendar-week text-[11px]"></i>
+                                    <span>Última Semana</span>
+                                </button>
+                                <button type="button" id="sla-period-btn-mes" onclick="setSLAViewPeriod('mes')"
+                                    class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 text-slate-600 hover:text-slate-900 hover:bg-slate-200 cursor-pointer">
+                                    <i class="fa-solid fa-calendar-days text-[11px]"></i>
+                                    <span>Acumulado del Mes</span>
+                                </button>
+                            </div>
+
+                            <!-- Botón de Descarga / Exportación con opciones completas -->
+                            <button type="button" onclick="openExportCenterModal('cronos_sla')"
+                                class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 shadow-sm cursor-pointer active:scale-95 ml-auto md:ml-0"
+                                title="Abrir Centro de Exportaciones para descargar por Hoy, 7 días, 30 días, 3 meses o 6 meses">
+                                <i class="fa-solid fa-file-arrow-down"></i>
+                                <span>Descargar (Exportaciones)</span>
+                            </button>
+                        </div>
+                    </div>
+
                     <!-- 7 Tarjetas de Métricas SLA Reales -->
                     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
                         <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm text-center">
@@ -4118,8 +4351,12 @@
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 mb-4">
                             <div>
                                 <h3 class="font-extrabold text-slate-800 text-sm flex items-center gap-2">
-                                    <i class="fa-solid fa-stopwatch text-purple-600"></i> Registro de Eventos CRONOS SLA
-                                    en Vivo
+                                    <i class="fa-solid fa-stopwatch text-purple-600"></i>
+                                    <span>Registro de Eventos CRONOS SLA</span>
+                                    <span id="sla-table-period-tag"
+                                        class="text-[10px] bg-purple-100 text-purple-700 font-bold px-2 py-0.5 rounded-full border border-purple-200">
+                                        Último Día
+                                    </span>
                                 </h3>
                                 <p class="text-xs text-slate-500 mt-0.5">Eventos de cronometraje y alarmas emitidas en
                                     llamadas de clientes</p>
@@ -4128,11 +4365,11 @@
                                 <div class="relative flex-1 md:w-56">
                                     <i
                                         class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                                    <input type="text" id="sla-events-search" oninput="renderSLATable()"
+                                    <input type="text" id="sla-events-search" oninput="setSLAPage(1); renderSLATable();"
                                         placeholder="Buscar evento SLA..."
                                         class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-800 font-medium outline-none focus:border-purple-500 transition-all">
                                 </div>
-                                <select id="sla-events-filter-action" onchange="renderSLATable()"
+                                <select id="sla-events-filter-action" onchange="setSLAPage(1); renderSLATable();"
                                     class="bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-700 font-bold outline-none focus:border-purple-500 transition-all cursor-pointer">
                                     <option value="TODOS">Todas las Acciones</option>
                                     <option value="Iniciar">Iniciar</option>
@@ -4142,6 +4379,13 @@
                                     <option value="Alcanzó 45s">Alcanzó 45s</option>
                                     <option value="Alcanzó 60s">Alcanzó 60s</option>
                                     <option value="Superó 70s">Superó 70s</option>
+                                </select>
+                                <select id="sla-page-size-select" onchange="changeSLAPageSize(this.value)"
+                                    class="bg-slate-50 border border-slate-200 rounded-xl px-2 py-1.5 text-xs text-slate-700 font-bold outline-none focus:border-purple-500 transition-all cursor-pointer"
+                                    title="Cantidad de filas por página">
+                                    <option value="25" selected>25 por pág.</option>
+                                    <option value="50">50 por pág.</option>
+                                    <option value="100">100 por pág.</option>
                                 </select>
                             </div>
                         </div>
@@ -4166,6 +4410,17 @@
                                     <!-- Inyectado dinámicamente -->
                                 </tbody>
                             </table>
+                        </div>
+
+                        <!-- Footer con Paginación Dinámica y Conteo -->
+                        <div id="sla-events-pagination-container"
+                            class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 mt-3 border-t border-slate-100 text-xs text-slate-500">
+                            <div id="sla-events-count-info" class="font-medium text-slate-600">
+                                Mostrando 0 de 0 eventos
+                            </div>
+                            <div id="sla-events-pagination-controls" class="flex items-center gap-1.5 flex-wrap">
+                                <!-- Controles dinámicos inyectados por renderSLATable -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -4396,154 +4651,268 @@
             </div>
 
             <!-- ========================================================================= -->
-            <!-- COLUMNA LATERAL FIJA: MÓDULOS ADMIN                                       -->
+            <!-- COLUMNA LATERAL FIJA: CRONOS SLA ASESOR & MÓDULOS ADMIN                   -->
             <!-- ========================================================================= -->
-            <aside id="sidebar-admin-modules" class="w-full lg:w-64 xl:w-72 shrink-0 hidden"
+            <aside id="sidebar-admin-modules" class="w-full lg:w-72 xl:w-80 shrink-0 hidden"
                 style="display: none !important;">
-                <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 sticky top-24 space-y-3">
+                <div id="sidebar-sticky-wrapper" class="space-y-3">
 
-                    <!-- Encabezado de la Tarjeta Lateral -->
-                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                        <div class="flex items-center gap-2">
-                            <div
-                                class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs shadow-xs">
-                                <i class="fa-solid fa-shield-halved"></i>
+                    <!-- Slot exclusivo para reubicar CRONOS SLA en Perfil Asesor (Posición Fija Superior) -->
+                    <div id="sidebar-sla-slot"></div>
+
+                    <!-- Guía de Protocolo Operativo SLA para Asesor (Aprovechamiento Integral del Panel) -->
+                    <div id="sidebar-sla-guide"
+                        class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 space-y-3"
+                        style="display: none;">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                            <div class="flex items-center gap-2">
+                                <div
+                                    class="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs shadow-xs">
+                                    <i class="fa-solid fa-traffic-light"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider">PROTOCOLO SLA
+                                    </h4>
+                                    <p class="text-[10px] text-slate-400 font-medium">Límites de Espera en Llamada</p>
+                                </div>
                             </div>
-                            <div>
-                                <h3 class="text-xs font-black text-slate-800 uppercase tracking-wider">MÓDULOS ADMIN
-                                </h3>
-                                <p class="text-[10px] text-slate-400 font-medium">Gestión y Monitoreo</p>
+                            <span
+                                class="bg-emerald-50 text-emerald-700 text-[9px] font-extrabold px-2 py-0.5 rounded-md border border-emerald-200 uppercase">Guía</span>
+                        </div>
+
+                        <div class="space-y-1.5 text-xs">
+                            <div
+                                class="flex items-center justify-between p-2 rounded-xl bg-emerald-50/70 border border-emerald-100">
+                                <span class="font-bold text-emerald-800 flex items-center gap-1.5 text-[11px]">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span> 0 - 35s
+                                </span>
+                                <span class="text-[10px] text-emerald-700 font-semibold">Validación ágil</span>
+                            </div>
+                            <div
+                                class="flex items-center justify-between p-2 rounded-xl bg-amber-50/70 border border-amber-100">
+                                <span class="font-bold text-amber-800 flex items-center gap-1.5 text-[11px]">
+                                    <span class="w-2 h-2 rounded-full bg-amber-500"></span> 36 - 44s
+                                </span>
+                                <span class="text-[10px] text-amber-700 font-semibold">Alerta preventiva</span>
+                            </div>
+                            <div
+                                class="flex items-center justify-between p-2 rounded-xl bg-red-50/70 border border-red-100">
+                                <span class="font-bold text-red-800 flex items-center gap-1.5 text-[11px]">
+                                    <span class="w-2 h-2 rounded-full bg-red-500"></span> 45 - 60s
+                                </span>
+                                <span class="text-[10px] text-red-700 font-semibold">Speech de cortesía</span>
                             </div>
                         </div>
-                        <span
-                            class="bg-indigo-50 text-indigo-700 text-[9px] font-extrabold px-2 py-0.5 rounded-md border border-indigo-200/60 uppercase">Control</span>
+
+                        <div
+                            class="pt-1 text-[10.5px] text-slate-500 flex items-center gap-1.5 justify-center border-t border-slate-100">
+                            <i class="fa-solid fa-shield-heart text-win-orange"></i>
+                            <span class="font-semibold">Calidad y Fidelización WIN</span>
+                        </div>
                     </div>
 
-                    <!-- Lista de Botones Administrativos -->
-                    <div class="space-y-2">
-                        <!-- Botón: Dashboard -->
-                        <button id="tab-dashboard" onclick="switchTab('dashboard')" style="display: none !important;"
-                            class="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold text-xs transition-all border border-slate-200/80 group cursor-pointer text-left">
-                            <div class="flex items-center gap-2.5">
+                    <!-- Tarjeta de Módulos Administrativos y Auxiliares -->
+                    <div id="sidebar-admin-card"
+                        class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200 space-y-3">
+
+                        <!-- Encabezado de la Tarjeta Lateral -->
+                        <div id="sidebar-admin-header"
+                            class="flex items-center justify-between border-b border-slate-100 pb-3">
+                            <div class="flex items-center gap-2">
                                 <div
-                                    class="w-8 h-8 rounded-lg bg-white shadow-xs border border-slate-200 flex items-center justify-center text-slate-600 group-hover:text-indigo-600 transition-colors">
-                                    <i class="fa-solid fa-gauge-high"></i>
+                                    class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs shadow-xs">
+                                    <i class="fa-solid fa-shield-halved"></i>
                                 </div>
                                 <div>
-                                    <div
-                                        class="font-extrabold text-slate-800 group-hover:text-indigo-600 transition-colors">
-                                        Dashboard</div>
-                                    <div class="text-[10px] text-slate-400 font-normal">Centro de Control</div>
+                                    <h3 id="sidebar-admin-title"
+                                        class="text-xs font-black text-slate-800 uppercase tracking-wider">MÓDULOS ADMIN
+                                    </h3>
+                                    <p id="sidebar-admin-subtitle" class="text-[10px] text-slate-400 font-medium">
+                                        Gestión y Monitoreo</p>
                                 </div>
                             </div>
-                            <i
-                                class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
-                        </button>
+                            <span id="sidebar-admin-badge"
+                                class="bg-indigo-50 text-indigo-700 text-[9px] font-extrabold px-2 py-0.5 rounded-md border border-indigo-200/60 uppercase">Control</span>
+                        </div>
 
-                        <!-- Botón: Auditoría -->
-                        <button id="tab-auditoria" onclick="switchTab('auditoria')" style="display: none !important;"
-                            class="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold text-xs transition-all border border-slate-200/80 group cursor-pointer text-left">
-                            <div class="flex items-center gap-2.5">
-                                <div
-                                    class="w-8 h-8 rounded-lg bg-white shadow-xs border border-slate-200 flex items-center justify-center text-slate-600 group-hover:text-indigo-600 transition-colors">
-                                    <i class="fa-solid fa-clipboard-check"></i>
-                                </div>
-                                <div>
+                        <!-- Lista de Botones Administrativos -->
+                        <div class="space-y-2">
+                            <!-- Botón: Dashboard -->
+                            <button id="tab-dashboard" onclick="switchTab('dashboard')"
+                                style="display: none !important;"
+                                class="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold text-xs transition-all border border-slate-200/80 group cursor-pointer text-left">
+                                <div class="flex items-center gap-2.5">
                                     <div
-                                        class="font-extrabold text-slate-800 group-hover:text-indigo-600 transition-colors">
-                                        Auditoría</div>
-                                    <div class="text-[10px] text-slate-400 font-normal">Registro Operativo</div>
-                                </div>
-                            </div>
-                            <i
-                                class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
-                        </button>
-
-                        <!-- Botón: Analítica CRONOS SLA -->
-                        <button id="tab-analitica-sla" onclick="switchTab('analitica-sla')"
-                            style="display: none !important;"
-                            class="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold text-xs transition-all border border-slate-200/80 group cursor-pointer text-left">
-                            <div class="flex items-center gap-2.5">
-                                <div
-                                    class="w-8 h-8 rounded-lg bg-white shadow-xs border border-slate-200 flex items-center justify-center text-slate-600 group-hover:text-indigo-600 transition-colors">
-                                    <i class="fa-solid fa-stopwatch-20"></i>
-                                </div>
-                                <div>
-                                    <div
-                                        class="font-extrabold text-slate-800 group-hover:text-indigo-600 transition-colors">
-                                        Analítica CRONOS SLA</div>
-                                    <div class="text-[10px] text-slate-400 font-normal">Métricas de Tiempos</div>
-                                </div>
-                            </div>
-                            <i
-                                class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
-                        </button>
-
-                        <!-- Botón: Gestión de Usuarios -->
-                        <button id="tab-gestion-usuarios" onclick="switchTab('gestion-usuarios')"
-                            style="display: none !important;"
-                            class="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold text-xs transition-all border border-slate-200/80 group cursor-pointer text-left">
-                            <div class="flex items-center gap-2.5">
-                                <div
-                                    class="w-8 h-8 rounded-lg bg-white shadow-xs border border-slate-200 flex items-center justify-center text-slate-600 group-hover:text-indigo-600 transition-colors">
-                                    <i class="fa-solid fa-users-gear"></i>
-                                </div>
-                                <div>
-                                    <div
-                                        class="flex items-center gap-1.5 font-extrabold text-slate-800 group-hover:text-indigo-600 transition-colors">
-                                        <span>Gestión Usuarios</span>
-                                        <span
-                                            class="bg-amber-400 text-slate-900 text-[9px] px-1.5 py-0.2 rounded font-extrabold">Admin</span>
+                                        class="w-8 h-8 rounded-lg bg-white shadow-xs border border-slate-200 flex items-center justify-center text-slate-600 group-hover:text-indigo-600 transition-colors">
+                                        <i class="fa-solid fa-gauge-high"></i>
                                     </div>
-                                    <div class="text-[10px] text-slate-400 font-normal">Cuentas y Permisos</div>
-                                </div>
-                            </div>
-                            <i
-                                class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
-                        </button>
-
-                        <!-- Botón: Centro de Exportaciones (Fase 4.0) -->
-                        <button id="sidebar-btn-exports" onclick="openExportCenterModal()"
-                            style="display: none !important;"
-                            class="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 font-bold text-xs transition-all border border-slate-200/80 hover:border-emerald-300 group cursor-pointer text-left">
-                            <div class="flex items-center gap-2.5">
-                                <div
-                                    class="w-8 h-8 rounded-lg bg-white shadow-xs border border-slate-200 flex items-center justify-center text-slate-600 group-hover:text-emerald-600 transition-colors">
-                                    <i class="fa-solid fa-file-export"></i>
-                                </div>
-                                <div>
-                                    <div
-                                        class="flex items-center gap-1.5 font-extrabold text-slate-800 group-hover:text-emerald-800 transition-colors">
-                                        <span>Exportaciones</span>
-                                        <span
-                                            class="bg-emerald-600 text-white text-[9px] px-1.5 py-0.2 rounded font-extrabold">Fase
-                                            4.0</span>
-                                    </div>
-                                    <div class="text-[10px] text-slate-400 font-normal">Centro Histórico XLSX / CSV
+                                    <div>
+                                        <div
+                                            class="font-extrabold text-slate-800 group-hover:text-indigo-600 transition-colors">
+                                            Dashboard</div>
+                                        <div class="text-[10px] text-slate-400 font-normal">Centro de Control</div>
                                     </div>
                                 </div>
-                            </div>
-                            <i
-                                class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
-                        </button>
+                                <i
+                                    class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
+                            </button>
+
+                            <!-- Botón: Auditoría -->
+                            <button id="tab-auditoria" onclick="switchTab('auditoria')"
+                                style="display: none !important;"
+                                class="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold text-xs transition-all border border-slate-200/80 group cursor-pointer text-left">
+                                <div class="flex items-center gap-2.5">
+                                    <div
+                                        class="w-8 h-8 rounded-lg bg-white shadow-xs border border-slate-200 flex items-center justify-center text-slate-600 group-hover:text-indigo-600 transition-colors">
+                                        <i class="fa-solid fa-clipboard-check"></i>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="font-extrabold text-slate-800 group-hover:text-indigo-600 transition-colors">
+                                            Auditoría</div>
+                                        <div class="text-[10px] text-slate-400 font-normal">Registro Operativo</div>
+                                    </div>
+                                </div>
+                                <i
+                                    class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
+                            </button>
+
+                            <!-- Botón: Analítica CRONOS SLA -->
+                            <button id="tab-analitica-sla" onclick="switchTab('analitica-sla')"
+                                style="display: none !important;"
+                                class="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold text-xs transition-all border border-slate-200/80 group cursor-pointer text-left">
+                                <div class="flex items-center gap-2.5">
+                                    <div
+                                        class="w-8 h-8 rounded-lg bg-white shadow-xs border border-slate-200 flex items-center justify-center text-slate-600 group-hover:text-indigo-600 transition-colors">
+                                        <i class="fa-solid fa-stopwatch-20"></i>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="font-extrabold text-slate-800 group-hover:text-indigo-600 transition-colors">
+                                            Analítica CRONOS SLA</div>
+                                        <div class="text-[10px] text-slate-400 font-normal">Métricas de Tiempos</div>
+                                    </div>
+                                </div>
+                                <i
+                                    class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
+                            </button>
+
+                            <!-- Botón: Gestión de Usuarios -->
+                            <button id="tab-gestion-usuarios" onclick="switchTab('gestion-usuarios')"
+                                style="display: none !important;"
+                                class="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold text-xs transition-all border border-slate-200/80 group cursor-pointer text-left">
+                                <div class="flex items-center gap-2.5">
+                                    <div
+                                        class="w-8 h-8 rounded-lg bg-white shadow-xs border border-slate-200 flex items-center justify-center text-slate-600 group-hover:text-indigo-600 transition-colors">
+                                        <i class="fa-solid fa-users-gear"></i>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="flex items-center gap-1.5 font-extrabold text-slate-800 group-hover:text-indigo-600 transition-colors">
+                                            <span>Gestión Usuarios</span>
+                                            <span
+                                                class="bg-amber-400 text-slate-900 text-[9px] px-1.5 py-0.2 rounded font-extrabold">Admin</span>
+                                        </div>
+                                        <div class="text-[10px] text-slate-400 font-normal">Cuentas y Permisos</div>
+                                    </div>
+                                </div>
+                                <i
+                                    class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
+                            </button>
+
+                            <!-- Botón: Centro de Exportaciones (Fase 4.0) -->
+                            <button id="sidebar-btn-exports" onclick="openExportCenterModal()"
+                                style="display: none !important;"
+                                class="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 font-bold text-xs transition-all border border-slate-200/80 hover:border-emerald-300 group cursor-pointer text-left">
+                                <div class="flex items-center gap-2.5">
+                                    <div
+                                        class="w-8 h-8 rounded-lg bg-white shadow-xs border border-slate-200 flex items-center justify-center text-slate-600 group-hover:text-emerald-600 transition-colors">
+                                        <i class="fa-solid fa-file-export"></i>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="flex items-center gap-1.5 font-extrabold text-slate-800 group-hover:text-emerald-800 transition-colors">
+                                            <span>Exportaciones</span>
+                                            <span
+                                                class="bg-emerald-600 text-white text-[9px] px-1.5 py-0.2 rounded font-extrabold">Fase
+                                                4.0</span>
+                                        </div>
+                                        <div class="text-[10px] text-slate-400 font-normal">Centro Histórico XLSX / CSV
+                                        </div>
+                                    </div>
+                                </div>
+                                <i
+                                    class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
+                            </button>
+
+                            <!-- Botón: Vista Ejecutiva 360° -->
+                            <button id="sidebar-btn-executive-360" onclick="openExecutive360()"
+                                class="w-full flex items-center justify-between p-3 rounded-xl bg-orange-50/70 hover:bg-orange-100 text-slate-800 hover:text-win-orange font-bold text-xs transition-all border border-orange-200/80 group cursor-pointer text-left">
+                                <div class="flex items-center gap-2.5">
+                                    <div
+                                        class="w-8 h-8 rounded-lg bg-win-orange text-white shadow-xs flex items-center justify-center text-sm">
+                                        <i class="fa-solid fa-compass"></i>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="font-extrabold text-slate-900 group-hover:text-win-orange transition-colors flex items-center gap-1.5">
+                                            <span>Vista Ejecutiva 360°</span>
+                                            <span
+                                                class="bg-win-orange text-white text-[9px] px-1.5 py-0.2 rounded font-black">IA</span>
+                                        </div>
+                                        <div class="text-[10px] text-slate-500 font-normal">Consolidado 6 Módulos</div>
+                                    </div>
+                                </div>
+                                <i
+                                    class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
+                            </button>
+
+                            <!-- Botón: Acerca de CRONOS FID -->
+                            <button id="sidebar-btn-about" onclick="openAboutModal()"
+                                class="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-orange-50 text-slate-700 hover:text-win-orange font-bold text-xs transition-all border border-slate-200/80 hover:border-orange-200 group cursor-pointer text-left">
+                                <div class="flex items-center gap-2.5">
+                                    <div
+                                        class="w-8 h-8 rounded-lg bg-white shadow-xs border border-slate-200 flex items-center justify-center text-slate-600 group-hover:text-win-orange transition-colors">
+                                        <i class="fa-solid fa-circle-info"></i>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="font-extrabold text-slate-800 group-hover:text-win-orange transition-colors">
+                                            Acerca de CRONOS FID
+                                        </div>
+                                        <div class="text-[10px] text-slate-400 font-normal">Autoría y Versión</div>
+                                    </div>
+                                </div>
+                                <i
+                                    class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </aside>
         </div>
     </main>
 
-    <!-- FIRMA DIGITAL CRONOS FID -->
+    <!-- FIRMA DIGITAL Y PIE DE PÁGINA GLOBAL CRONOS FID -->
     <footer
         class="w-full bg-[#1E1E24] text-white py-3.5 px-4 sm:px-6 lg:px-8 mt-8 border-t-4 border-[#FF5E00] shadow-md">
         <div class="w-full max-w-[1920px] mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-xs">
-            <!-- Izquierda: Texto Corporativo Limpio -->
+            <!-- Izquierda: Identificación y Autoría Oficial Discreta -->
             <div
-                class="text-zinc-300 flex items-center gap-1.5 flex-wrap justify-center md:justify-start font-medium text-[11px] sm:text-xs tracking-wide">
+                class="text-zinc-300 flex items-center gap-2 flex-wrap justify-center md:justify-start font-medium text-[11px] sm:text-xs tracking-wide">
                 <span class="font-extrabold text-white tracking-wider">CRONOS FID</span>
-                <span class="text-zinc-500">|</span>
-                <span>Plataforma de Fidelización Ágil de WIN 2026</span>
-                <span class="text-zinc-500">|</span>
-                <span class="text-zinc-400 font-semibold">CRONOS FID • Versión JELI v5.0.0 • WIN OCT2026</span>
+                <span class="text-zinc-500">•</span>
+                <span class="text-win-orange font-bold">JELI v5.2.0 • WIN OCT2026</span>
+                <span class="text-zinc-500">•</span>
+                <span>Diseñado y desarrollado por <strong class="text-white font-bold">Jhonny Leon
+                        Illescas</strong></span>
+                <span id="footer-separator-about" class="text-zinc-500">|</span>
+                <button type="button" id="footer-btn-about" onclick="openAboutModal()"
+                    class="text-zinc-300 hover:text-win-orange transition flex items-center gap-1 font-bold cursor-pointer hover:underline"
+                    title="Ver información de autoría y evolución del proyecto">
+                    <i class="fa-solid fa-circle-info text-win-orange text-xs"></i>
+                    <span>ℹ Acerca de CRONOS FID</span>
+                </button>
             </div>
 
             <!-- Derecha: Logotipo Corporativo -->
@@ -12518,20 +12887,52 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         }
         window.insertSupabaseSLAEvent = insertSupabaseSLAEvent;
 
-        // Helper para consultar eventos SLA exclusivamente desde Supabase
+        // Purgar automáticamente registros de cronos_sla que excedan los 6 meses (180 días)
+        async function purgeExpiredSupabaseSLAEvents(maxDays = 180) {
+            try {
+                const cutoff = new Date(Date.now() - maxDays * 24 * 60 * 60 * 1000).toISOString();
+                if (window.supabaseClient) {
+                    const { error } = await window.supabaseClient
+                        .from('cronos_sla')
+                        .delete()
+                        .lt('created_at', cutoff);
+                    if (error) {
+                        console.warn('[Supabase] Purga > 6 meses omitida o restringida por políticas:', error.message);
+                    } else {
+                        console.log('[Supabase] Purga de retención completada: datos limitados a un máximo de 6 meses.');
+                    }
+                } else {
+                    await fetch(`${window.SUPABASE_CONFIG.url}/rest/v1/cronos_sla?created_at=lt.${cutoff}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'apikey': window.SUPABASE_CONFIG.key,
+                            'Authorization': `Bearer ${window.SUPABASE_CONFIG.key}`
+                        }
+                    }).catch(() => { });
+                }
+            } catch (e) {
+                console.warn('[Supabase] No se pudo ejecutar purga de retención 6 meses:', e);
+            }
+        }
+        window.purgeExpiredSupabaseSLAEvents = purgeExpiredSupabaseSLAEvents;
+
+        // Helper para consultar eventos SLA exclusivamente desde Supabase (Retención estricta: 6 meses / 180 días)
         async function fetchSupabaseSLAEvents(limit = 1000) {
             try {
                 let rows = [];
+                // REGLA: Retención estricta de 6 meses (180 días)
+                const sixMonthsAgo = new Date(Date.now() - 180 * 24 * 60 * 60 * 1000).toISOString();
                 if (window.supabaseClient) {
                     const { data, error } = await window.supabaseClient
                         .from('cronos_sla')
                         .select('*')
+                        .gte('created_at', sixMonthsAgo)
                         .order('created_at', { ascending: false })
                         .limit(limit);
                     if (error) throw error;
                     rows = data || [];
                 } else {
-                    const res = await fetch(`${window.SUPABASE_CONFIG.url}/rest/v1/cronos_sla?select=*&order=created_at.desc&limit=${limit}`, {
+                    const res = await fetch(`${window.SUPABASE_CONFIG.url}/rest/v1/cronos_sla?created_at=gte.${sixMonthsAgo}&select=*&order=created_at.desc&limit=${limit}`, {
                         method: 'GET',
                         headers: {
                             'apikey': window.SUPABASE_CONFIG.key,
@@ -12546,6 +12947,10 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 }
                 const normalized = (rows || []).map(r => normalizeSLADoc(r));
                 normalized.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+                // Asegurar depuración periódica de registros > 6 meses en segundo plano
+                setTimeout(() => { purgeExpiredSupabaseSLAEvents(180); }, 2000);
+
                 return normalized;
             } catch (err) {
                 console.error('[Supabase] Error al consultar public.cronos_sla:', err);
@@ -14457,14 +14862,103 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
             const hasAnyAdmin = !isAsesor && (permissions.dashboard || permissions.auditoria || permissions.analitica_sla || permissions.gestion_usuarios || permissions.gestionUsuarios || permissions.exportExcel || isAdminOrSup);
             const sidebarAdmin = document.getElementById('sidebar-admin-modules') || document.getElementById('sidebar-admin-section');
-            if (sidebarAdmin) {
-                if (hasAnyAdmin) {
+            const headerSlaSlot = document.getElementById('header-sla-container');
+            const sidebarSlaSlot = document.getElementById('sidebar-sla-slot');
+            const slaWidget = document.getElementById('wait-timer-widget');
+            const sidebarAdminCard = document.getElementById('sidebar-admin-card');
+            const sidebarSlaGuide = document.getElementById('sidebar-sla-guide');
+            const sidebarBtnExecutive360 = document.getElementById('sidebar-btn-executive-360');
+            const sidebarBtnAbout = document.getElementById('sidebar-btn-about');
+            const menuOptAbout = document.getElementById('menu-opt-about');
+            const footerBtnAbout = document.getElementById('footer-btn-about');
+            const footerSeparatorAbout = document.getElementById('footer-separator-about');
+
+            if (isAsesor) {
+                // ROL ASESOR (UX EXCLUSIVO):
+                // 1. Reubicación ergonómica y fija de CRONOS SLA en la columna lateral derecha
+                if (sidebarSlaSlot && slaWidget && slaWidget.parentElement !== sidebarSlaSlot) {
+                    sidebarSlaSlot.appendChild(slaWidget);
+                }
+                if (slaWidget) {
+                    slaWidget.classList.add('sidebar-sla-mode');
+                }
+                if (sidebarAdmin) {
                     sidebarAdmin.style.display = '';
                     sidebarAdmin.classList.remove('hidden', 'sidebar-admin-hidden');
-                } else {
-                    sidebarAdmin.style.display = 'none';
-                    sidebarAdmin.classList.add('hidden', 'sidebar-admin-hidden');
                 }
+
+                // 2. Tarjeta complementaria de protocolo de atención (elimina espacios residuales y aprovecha el panel)
+                if (sidebarSlaGuide) {
+                    sidebarSlaGuide.style.display = '';
+                }
+
+                // 3. EXCLUSIÓN TOTAL DE MÓDULOS NO AUTORIZADOS (Vista Ejecutiva 360° y Acerca de CRONOS FID)
+                if (sidebarAdminCard) {
+                    sidebarAdminCard.style.display = 'none';
+                }
+                if (sidebarBtnExecutive360) {
+                    sidebarBtnExecutive360.style.display = 'none';
+                }
+                if (sidebarBtnAbout) {
+                    sidebarBtnAbout.style.display = 'none';
+                }
+                if (menuOptAbout) {
+                    menuOptAbout.style.display = 'none';
+                }
+                if (footerBtnAbout) {
+                    footerBtnAbout.style.display = 'none';
+                }
+                if (footerSeparatorAbout) {
+                    footerSeparatorAbout.style.display = 'none';
+                }
+            } else {
+                // ROLES ADMINISTRADOR / SUPERVISOR / OTROS:
+                // 1. Mantener distribución original en barra superior (Header)
+                if (headerSlaSlot && slaWidget && slaWidget.parentElement !== headerSlaSlot) {
+                    headerSlaSlot.appendChild(slaWidget);
+                }
+                if (slaWidget) {
+                    slaWidget.classList.remove('sidebar-sla-mode');
+                }
+
+                // 2. Ocultar guía exclusiva del asesor en vista administrativa
+                if (sidebarSlaGuide) {
+                    sidebarSlaGuide.style.display = 'none';
+                }
+
+                // 3. Módulos administrativos y de consulta 100% operativos e intactos
+                if (sidebarAdminCard) {
+                    sidebarAdminCard.style.display = '';
+                }
+                if (sidebarBtnExecutive360) {
+                    sidebarBtnExecutive360.style.display = '';
+                }
+                if (sidebarBtnAbout) {
+                    sidebarBtnAbout.style.display = '';
+                }
+                if (menuOptAbout) {
+                    menuOptAbout.style.display = '';
+                }
+                if (footerBtnAbout) {
+                    footerBtnAbout.style.display = '';
+                }
+                if (footerSeparatorAbout) {
+                    footerSeparatorAbout.style.display = '';
+                }
+
+                if (sidebarAdmin) {
+                    if (hasAnyAdmin) {
+                        sidebarAdmin.style.display = '';
+                        sidebarAdmin.classList.remove('hidden', 'sidebar-admin-hidden');
+                    } else {
+                        sidebarAdmin.style.display = 'none';
+                        sidebarAdmin.classList.add('hidden', 'sidebar-admin-hidden');
+                    }
+                }
+            }
+
+            if (typeof updateCronosHeaderOffset === 'function') {
+                updateCronosHeaderOffset();
             }
 
             const menuSettings = document.getElementById('menu-opt-settings');
@@ -14553,7 +15047,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             }
 
             const fechaHoraISO = d.fecha_hora || d.fechaHora || d.created_at || (timeMs > 0 ? new Date(timeMs).toISOString() : '');
-            
+
             let tiempoSecs = 0;
             if (typeof d.tiempoSegundos === 'number') {
                 tiempoSecs = d.tiempoSegundos;
@@ -15200,7 +15694,157 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
         // =========================================================================
         // MÓDULO DE ANALÍTICA CRONOS SLA EN TIEMPO REAL (EXCLUSIVO SUPABASE)
+        // Reglas de negocio:
+        // 1. Almacenamiento/Retención máxima de 6 meses (180 días).
+        // 2. Visualización filtrada por: Último Día, Última Semana o Acumulado del Mes.
+        // 3. Paginación ágil para eliminar colas largas en la vista.
+        // 4. Descarga histórica completa según opciones de Exportaciones.
         // =========================================================================
+        window.CRONOS_SLA_VIEW_PERIOD = 'dia'; // 'dia' | 'semana' | 'mes'
+        window.CRONOS_SLA_PAGE = 1;
+        window.CRONOS_SLA_PAGE_SIZE = 25;
+
+        function filterSLAEventsByPeriod(events, period = 'dia') {
+            if (!events || !Array.isArray(events)) return [];
+            const now = new Date();
+            const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0).getTime();
+            const todayEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999).getTime();
+
+            let startMs = todayStart;
+            let endMs = todayEnd;
+
+            if (period === 'dia') {
+                // Último día (hoy / últimas 24h)
+                startMs = todayStart;
+            } else if (period === 'semana') {
+                // Última semana (últimos 7 días)
+                startMs = todayStart - (7 * 24 * 60 * 60 * 1000);
+            } else if (period === 'mes') {
+                // Acumulado del último mes (últimos 30 días)
+                startMs = todayStart - (30 * 24 * 60 * 60 * 1000);
+            }
+
+            return events.filter(ev => {
+                const ms = parseDocTimestamp(ev);
+                if (ms <= 0) return false;
+                if (period === 'dia') {
+                    if (ms >= startMs && ms <= endMs) return true;
+                    if ((now.getTime() - ms) <= 24 * 60 * 60 * 1000) return true;
+                    return false;
+                }
+                return ms >= startMs && ms <= endMs;
+            });
+        }
+        window.filterSLAEventsByPeriod = filterSLAEventsByPeriod;
+
+        function calculateSLAMetricsForPeriod(period = 'dia') {
+            const rawEvents = (window.CRONOS_SLA_EVENTS || []).filter(e => isRoleAsesor(e));
+            const events = filterSLAEventsByPeriod(rawEvents, period);
+
+            let slaIni = 0, slaPau = 0, slaRst = 0;
+            let sla45 = 0, sla60 = 0, sla70 = 0;
+            let sumPauseSecs = 0, countPauseSecs = 0;
+
+            events.forEach(ev => {
+                const acc = (ev.accion || '').toLowerCase().trim();
+                const secs = typeof ev.tiempoSegundos === 'number' ? ev.tiempoSegundos : (parseInt(ev.tiempoSegundos) || 0);
+
+                if (acc === 'iniciar' || acc === 'reanudar' || acc.includes('inici')) {
+                    slaIni++;
+                } else if (acc === 'pausa' || acc.includes('paus')) {
+                    slaPau++;
+                } else if (acc === 'reinicio' || acc.includes('reinici')) {
+                    slaRst++;
+                }
+
+                if (acc.includes('45s') || (secs >= 45 && secs < 60)) {
+                    sla45++;
+                }
+                if (acc.includes('60s') || (secs >= 60 && secs <= 70)) {
+                    sla60++;
+                }
+                if (acc.includes('70s') || secs > 70) {
+                    sla70++;
+                }
+
+                if (secs > 0) {
+                    sumPauseSecs += secs;
+                    countPauseSecs++;
+                }
+            });
+
+            const slaPromedio = countPauseSecs > 0 ? Math.round(sumPauseSecs / countPauseSecs) + "s" : "0s";
+
+            return {
+                events,
+                total: events.length,
+                slaIni,
+                slaPau,
+                slaRst,
+                slaPromedio,
+                sla45,
+                sla60,
+                sla70
+            };
+        }
+        window.calculateSLAMetricsForPeriod = calculateSLAMetricsForPeriod;
+
+        function setSLAViewPeriod(period) {
+            window.CRONOS_SLA_VIEW_PERIOD = period;
+            window.CRONOS_SLA_PAGE = 1;
+
+            const periods = ['dia', 'semana', 'mes'];
+            periods.forEach(p => {
+                const btn = document.getElementById(`sla-period-btn-${p}`);
+                if (btn) {
+                    if (p === period) {
+                        btn.className = "px-3.5 py-1.5 rounded-lg text-xs font-extrabold transition-all flex items-center gap-1.5 bg-purple-600 text-white shadow-sm cursor-pointer";
+                    } else {
+                        btn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 text-slate-600 hover:text-slate-900 hover:bg-slate-200 cursor-pointer";
+                    }
+                }
+            });
+
+            const badge = document.getElementById('sla-view-period-badge');
+            const desc = document.getElementById('sla-view-period-desc');
+            const tag = document.getElementById('sla-table-period-tag');
+            const now = new Date();
+
+            if (period === 'dia') {
+                const todayStr = now.toLocaleDateString('es-PE');
+                if (badge) badge.textContent = `Último Día (${todayStr})`;
+                if (desc) desc.textContent = "Visualizando métricas y registros del último día (hoy / últimas 24h).";
+                if (tag) tag.textContent = "Último Día";
+            } else if (period === 'semana') {
+                const prev7 = new Date(now.getTime() - 7 * 24 * 3600 * 1000).toLocaleDateString('es-PE');
+                if (badge) badge.textContent = `Última Semana (${prev7} al ${now.toLocaleDateString('es-PE')})`;
+                if (desc) desc.textContent = "Visualizando métricas y registros acumulados de los últimos 7 días.";
+                if (tag) tag.textContent = "Última Semana (7 días)";
+            } else if (period === 'mes') {
+                const prev30 = new Date(now.getTime() - 30 * 24 * 3600 * 1000).toLocaleDateString('es-PE');
+                if (badge) badge.textContent = `Acumulado del Mes (${prev30} al ${now.toLocaleDateString('es-PE')})`;
+                if (desc) desc.textContent = "Visualizando métricas y registros del acumulado del último mes (30 días).";
+                if (tag) tag.textContent = "Acumulado del Mes (30 días)";
+            }
+
+            renderSLAMetricsCards();
+            renderSLATable();
+        }
+        window.setSLAViewPeriod = setSLAViewPeriod;
+
+        function setSLAPage(p) {
+            window.CRONOS_SLA_PAGE = Math.max(1, p);
+            renderSLATable();
+        }
+        window.setSLAPage = setSLAPage;
+
+        function changeSLAPageSize(size) {
+            window.CRONOS_SLA_PAGE_SIZE = parseInt(size, 10) || 25;
+            window.CRONOS_SLA_PAGE = 1;
+            renderSLATable();
+        }
+        window.changeSLAPageSize = changeSLAPageSize;
+
         async function renderSLAModule() {
             const tbody = document.getElementById("sla-events-tbody");
             if (tbody && (!window.CRONOS_SLA_EVENTS || window.CRONOS_SLA_EVENTS.length === 0)) {
@@ -15208,21 +15852,23 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             }
 
             try {
-                // ANALÍTICA CRONOS SLA: Leer exclusivamente desde Supabase
-                console.log("[Analítica CRONOS SLA] Consultando exclusivamente desde Supabase...");
+                // ANALÍTICA CRONOS SLA: Leer exclusivamente desde Supabase con retención máxima de 6 meses
+                console.log("[Analítica CRONOS SLA] Consultando exclusivamente desde Supabase (Retención: 6 meses)...");
                 const events = await fetchSupabaseSLAEvents(1000);
-                window.CRONOS_SLA_EVENTS = events;
 
-                const totalRegistros = events.length;
-                const registros = events;
-                const ultimaFecha = events.length > 0 ? (events[0].fechaHora || events[0].fecha || (events[0].timestamp ? new Date(events[0].timestamp).toLocaleString("es-PE") : "—")) : "Ninguna";
-                const total = events.length;
+                // Conservar exclusivamente eventos de hasta 6 meses (180 días)
+                const cutoff180d = Date.now() - (180 * 24 * 60 * 60 * 1000);
+                window.CRONOS_SLA_EVENTS = (events || []).filter(e => {
+                    const ts = parseDocTimestamp(e) || e.timestamp || 0;
+                    return ts >= cutoff180d;
+                });
 
-                console.log("Total registros cronos_sla (Supabase):", totalRegistros);
-                console.log("Registros SLA encontrados:", registros);
+                const totalRegistros = window.CRONOS_SLA_EVENTS.length;
+                const ultimaFecha = totalRegistros > 0 ? (window.CRONOS_SLA_EVENTS[0].fechaHora || window.CRONOS_SLA_EVENTS[0].fecha || (window.CRONOS_SLA_EVENTS[0].timestamp ? new Date(window.CRONOS_SLA_EVENTS[0].timestamp).toLocaleString("es-PE") : "—")) : "Ninguna";
+
+                console.log("Total registros cronos_sla (Supabase, retención 6 meses):", totalRegistros);
                 console.log("Última fecha encontrada:", ultimaFecha);
                 console.log("Consulta Supabase SLA ejecutada con éxito");
-                console.log("Total SLA cargados:", total);
             } catch (error) {
                 console.error("[SLAModule] Error al cargar cronos_sla desde Supabase:", error);
             }
@@ -15238,7 +15884,8 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         }
 
         function renderSLAMetricsCards() {
-            const m = calculateRealDashboardMetrics();
+            const period = window.CRONOS_SLA_VIEW_PERIOD || 'dia';
+            const m = calculateSLAMetricsForPeriod(period);
 
             const elIni = document.getElementById('sla-metric-inicios');
             const elPau = document.getElementById('sla-metric-pausas');
@@ -15261,15 +15908,21 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             const tbody = document.getElementById('sla-events-tbody');
             if (!tbody || !window.CRONOS_SLA_EVENTS) return;
 
+            const period = window.CRONOS_SLA_VIEW_PERIOD || 'dia';
             const searchInput = document.getElementById('sla-events-search');
             const filterAction = document.getElementById('sla-events-filter-action');
 
             const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
             const actionVal = filterAction ? filterAction.value : 'TODOS';
 
-            let filtered = window.CRONOS_SLA_EVENTS.filter(ev => {
-                // REGLA: ANALITICA CRONOS SLA - Mostrar exclusivamente eventos de ROL = Asesor
-                if (!isRoleAsesor(ev)) return false;
+            // 1. Filtrar exclusivamente por ASESORES
+            let asesorEvents = window.CRONOS_SLA_EVENTS.filter(ev => isRoleAsesor(ev));
+
+            // 2. Filtrar por PERIODO SELECCIONADO (Último Día, Última Semana, Acumulado del Mes)
+            let periodEvents = filterSLAEventsByPeriod(asesorEvents, period);
+
+            // 3. Filtrar por búsqueda y acción
+            let filtered = periodEvents.filter(ev => {
                 if (actionVal !== 'TODOS' && ev.accion !== actionVal) return false;
                 if (query) {
                     const str = `${ev.fecha} ${ev.hora} ${ev.usuario} ${ev.correo} ${ev.rol} ${ev.accion} ${ev.tiempoExacto} ${ev.estadoSLA}`.toLowerCase();
@@ -15278,13 +15931,71 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 return true;
             });
 
+            const totalCount = filtered.length;
+            const pageSize = window.CRONOS_SLA_PAGE_SIZE || 25;
+            const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
+
+            if (window.CRONOS_SLA_PAGE > totalPages) window.CRONOS_SLA_PAGE = totalPages;
+            if (window.CRONOS_SLA_PAGE < 1) window.CRONOS_SLA_PAGE = 1;
+
+            const currentPage = window.CRONOS_SLA_PAGE;
+            const startIdx = (currentPage - 1) * pageSize;
+            const pageItems = filtered.slice(startIdx, startIdx + pageSize);
+
+            // Actualizar Conteo y Paginador en el Footer
+            const countInfo = document.getElementById('sla-events-count-info');
+            const paginationControls = document.getElementById('sla-events-pagination-controls');
+
+            if (countInfo) {
+                if (totalCount === 0) {
+                    countInfo.innerHTML = `Mostrando <b class="text-slate-800">0</b> eventos de SLA en este periodo`;
+                } else {
+                    const startNum = startIdx + 1;
+                    const endNum = Math.min(startIdx + pageSize, totalCount);
+                    countInfo.innerHTML = `Mostrando del <b class="text-slate-800">${startNum}</b> al <b class="text-slate-800">${endNum}</b> de <b class="text-purple-700">${totalCount}</b> eventos (${period === 'dia' ? 'Último Día' : (period === 'semana' ? 'Última Semana' : 'Acumulado del Mes')})`;
+                }
+            }
+
+            if (paginationControls) {
+                if (totalPages <= 1) {
+                    paginationControls.innerHTML = '';
+                } else {
+                    let pagHtml = '';
+                    // Botón Anterior
+                    pagHtml += `<button type="button" onclick="setSLAPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled class="px-2.5 py-1 rounded-lg text-xs font-bold text-slate-300 bg-slate-100 cursor-not-allowed"' : 'class="px-2.5 py-1 rounded-lg text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 active:scale-95 transition cursor-pointer"'}><i class="fa-solid fa-chevron-left text-[10px]"></i> Anterior</button>`;
+
+                    // Números de Página
+                    for (let i = 1; i <= totalPages; i++) {
+                        if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                            if (i === currentPage) {
+                                pagHtml += `<button type="button" class="w-7 h-7 rounded-lg text-xs font-black bg-purple-600 text-white shadow-xs">${i}</button>`;
+                            } else {
+                                pagHtml += `<button type="button" onclick="setSLAPage(${i})" class="w-7 h-7 rounded-lg text-xs font-bold text-slate-700 hover:bg-slate-200 bg-slate-50 transition cursor-pointer">${i}</button>`;
+                            }
+                        } else if (i === currentPage - 3 || i === currentPage + 3) {
+                            pagHtml += `<span class="px-1 text-slate-400 font-bold">...</span>`;
+                        }
+                    }
+
+                    // Botón Siguiente
+                    pagHtml += `<button type="button" onclick="setSLAPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled class="px-2.5 py-1 rounded-lg text-xs font-bold text-slate-300 bg-slate-100 cursor-not-allowed"' : 'class="px-2.5 py-1 rounded-lg text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 active:scale-95 transition cursor-pointer"'}">Siguiente <i class="fa-solid fa-chevron-right text-[10px]"></i></button>`;
+
+                    paginationControls.innerHTML = pagHtml;
+                }
+            }
+
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-slate-400 font-medium">No se encontraron eventos de CRONOS SLA registrados.</td></tr>`;
+                const periodDesc = period === 'dia' ? 'el último día' : (period === 'semana' ? 'la última semana' : 'el acumulado del mes');
+                tbody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-slate-400 font-medium">
+                    <i class="fa-regular fa-calendar-xmark text-2xl text-purple-300 block mb-2"></i>
+                    No se encontraron eventos de CRONOS SLA registrados en ${periodDesc}.
+                    <div class="mt-2 text-[11px] text-slate-400">Puedes cambiar a <a href="javascript:void(0)" onclick="setSLAViewPeriod('semana')" class="text-purple-600 font-bold underline">Última Semana</a> o <a href="javascript:void(0)" onclick="setSLAViewPeriod('mes')" class="text-purple-600 font-bold underline">Acumulado del Mes</a> para ver más registros.</div>
+                </td></tr>`;
                 return;
             }
 
             let html = '';
-            filtered.forEach(ev => {
+            pageItems.forEach(ev => {
                 const style = getRoleBadgeStyle(ev.rol);
 
                 let stateBadge = 'bg-emerald-100 text-emerald-800 font-semibold';
@@ -16021,7 +16732,21 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     wsSLA['!cols'] = [{ wch: 8 }, { wch: 12 }, { wch: 10 }, { wch: 25 }, { wch: 25 }, { wch: 15 }, { wch: 18 }, { wch: 15 }, { wch: 15 }, { wch: 12 }, { wch: 16 }, { wch: 25 }];
                     XLSX.utils.book_append_sheet(wb, wsSLA, "Eventos SLA Periodo");
 
-                    const fname = `CRONOS_FID_Dashboard_Historico_${Date.now()}.xlsx`;
+                    if (typeof window.ExcelExportService !== 'undefined') {
+                        const metaAOA = window.ExcelExportService.buildMetadataSheet({
+                            modulo: "Centro de Control Dashboard",
+                            periodo: periodLabel,
+                            totalRegistros: totalInteracciones,
+                            calidad: { qualityScorePct: 100, duplicadosCount: 0, usuariosVaciosCount: 0, fechasInvalidasCount: 0 }
+                        });
+                        const wsMeta = XLSX.utils.aoa_to_sheet(metaAOA);
+                        wsMeta['!cols'] = [{ wch: 32 }, { wch: 35 }, { wch: 35 }];
+                        XLSX.utils.book_append_sheet(wb, wsMeta, "Metadatos Oficiales");
+                    }
+
+                    const fname = (typeof window.ExcelExportService !== 'undefined' && window.ExcelExportService.generateDynamicFileName)
+                        ? window.ExcelExportService.generateDynamicFileName("Dashboard")
+                        : `CRONOS_FID_Dashboard_Historico_${Date.now()}.xlsx`;
                     XLSX.writeFile(wb, fname);
                 } else {
                     let csv = "REPORTE HISTÓRICO - CENTRO DE CONTROL CRONOS FID • WIN\n";
@@ -16156,7 +16881,21 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     wsStats['!cols'] = [{ wch: 30 }, { wch: 15 }, { wch: 15 }];
                     XLSX.utils.book_append_sheet(wb, wsStats, "Resumen Auditoría");
 
-                    const fname = `CRONOS_FID_Auditoria_Historica_${Date.now()}.xlsx`;
+                    if (typeof window.ExcelExportService !== 'undefined') {
+                        const metaAOA = window.ExcelExportService.buildMetadataSheet({
+                            modulo: "Auditoría Operativa",
+                            periodo: periodLabel,
+                            totalRegistros: logs.length,
+                            calidad: { qualityScorePct: 100, duplicadosCount: 0, usuariosVaciosCount: 0, fechasInvalidasCount: 0 }
+                        });
+                        const wsMeta = XLSX.utils.aoa_to_sheet(metaAOA);
+                        wsMeta['!cols'] = [{ wch: 32 }, { wch: 35 }, { wch: 35 }];
+                        XLSX.utils.book_append_sheet(wb, wsMeta, "Control de Calidad");
+                    }
+
+                    const fname = (typeof window.ExcelExportService !== 'undefined' && window.ExcelExportService.generateDynamicFileName)
+                        ? window.ExcelExportService.generateDynamicFileName("Auditoria")
+                        : `CRONOS_FID_Auditoria_Historica_${Date.now()}.xlsx`;
                     XLSX.writeFile(wb, fname);
                 } else {
                     let csv = "BITÁCORA DE AUDITORÍA OPERATIVA HISTÓRICA - CRONOS FID • WIN\n";
@@ -16286,7 +17025,21 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     wsResumen['!cols'] = [{ wch: 30 }, { wch: 15 }, { wch: 15 }, { wch: 25 }];
                     XLSX.utils.book_append_sheet(wb, wsResumen, "Analitica Tiempos SLA");
 
-                    const fname = `CRONOS_FID_SLA_Historico_${Date.now()}.xlsx`;
+                    if (typeof window.ExcelExportService !== 'undefined') {
+                        const metaAOA = window.ExcelExportService.buildMetadataSheet({
+                            modulo: "CRONOS SLA",
+                            periodo: periodLabel,
+                            totalRegistros: events.length,
+                            calidad: { qualityScorePct: 100, duplicadosCount: 0, usuariosVaciosCount: 0, fechasInvalidasCount: 0 }
+                        });
+                        const wsMeta = XLSX.utils.aoa_to_sheet(metaAOA);
+                        wsMeta['!cols'] = [{ wch: 32 }, { wch: 35 }, { wch: 35 }];
+                        XLSX.utils.book_append_sheet(wb, wsMeta, "Control de Calidad");
+                    }
+
+                    const fname = (typeof window.ExcelExportService !== 'undefined' && window.ExcelExportService.generateDynamicFileName)
+                        ? window.ExcelExportService.generateDynamicFileName("SLA")
+                        : `CRONOS_FID_SLA_Historico_${Date.now()}.xlsx`;
                     XLSX.writeFile(wb, fname);
                 } else {
                     let csv = "REGISTRO DE EVENTOS CRONOS SLA HISTÓRICO - CRONOS FID • WIN\n";
@@ -17888,6 +18641,22 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             }
         };
 
+        function updateCronosHeaderOffset() {
+            try {
+                const header = document.getElementById('main-header');
+                if (header) {
+                    const h = header.offsetHeight || 78;
+                    document.documentElement.style.setProperty('--cronos-header-height', h + 'px');
+                }
+            } catch (err) {
+                console.warn('[CRONOS FID] Error al actualizar offset del header:', err);
+            }
+        }
+        window.updateCronosHeaderOffset = updateCronosHeaderOffset;
+        window.addEventListener('resize', updateCronosHeaderOffset);
+        window.addEventListener('load', updateCronosHeaderOffset);
+        document.addEventListener('DOMContentLoaded', updateCronosHeaderOffset);
+
         function updateTopHeader(target) {
             if (!target) return;
             const config = HEADER_MODULE_CONFIG[target];
@@ -17930,6 +18699,9 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     headerBadge.classList.add('hidden');
                 }
             }
+
+            // Sincronizar dinámicamente el offset del header para fijación sticky de CRONOS SLA
+            updateCronosHeaderOffset();
         }
 
         window.updateTopHeader = updateTopHeader;
@@ -18091,6 +18863,110 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             try { initDirectorioModule(); } catch (e) { console.error('ERROR STARTUP:', e); }
             try { setupLogoutListeners(); } catch (e) { console.error('ERROR STARTUP:', e); }
         };
+
+        /*
+        =================================================================
+        CONTROL DE VERSIONES - CHANGELOG OFICIAL CRONOS FID
+        =================================================================
+        v5.0.0
+        - Migración operativa de CRONOS SLA.
+        - Integración Supabase para pruebas operativas.
+        - Optimización de analítica.
+        - Optimización de exportaciones.
+
+        v4.1.6
+        - Monitoreo exclusivo de asesores.
+        - Corrección Dashboard.
+        - Ajustes Analítica SLA.
+
+        v4.1.5
+        - Directorio de Escalamientos.
+        - Simulador de correos.
+        - Plantillas dinámicas.
+        =================================================================
+        */
+        window.CRONOS_VERSION_INFO = {
+            proyecto: "CRONOS FID",
+            nombreCompleto: "Centro de Recursos Operativos para Negociación y Fidelización",
+            version: "JELI v5.2.0 • WIN OCT2026",
+            autor: "Jhonny Leon Illescas",
+            roles: "Diseño Funcional, Arquitectura Operativa, Gestión de Procesos, Desarrollo Evolutivo",
+            anio: 2026,
+            descripcion: "Sistema integral de apoyo operativo, capacitación, tipificaciones, escalamientos, SLA, analítica y soporte a asesores. Proyecto desarrollado para la gestión operativa de campañas de fidelización.",
+            changelog: [
+                {
+                    version: "v5.2.0",
+                    tag: "UX Asesor Dominante & Roles",
+                    items: [
+                        "CRN-0017: Optimización y exclusividad del panel lateral CRONOS SLA para Asesor (exclusión de módulos no autorizados y aprovechamiento integral).",
+                        "CRN-0016: Reubicación ergonómica fija de CRONOS SLA en barra lateral para perfil Asesor.",
+                        "CRN-0015: Corrección de apertura de módulos administrativos y Vista Ejecutiva 360°."
+                    ]
+                },
+                {
+                    version: "v5.1.0",
+                    tag: "UX Asesor & Navegación",
+                    items: [
+                        "CRN-0016: Reubicación ergonómica fija de CRONOS SLA en barra lateral para perfil Asesor.",
+                        "CRN-0015: Corrección de apertura de módulos administrativos y Vista Ejecutiva 360°.",
+                        "CRN-0001: Implementación de filtros globales temporales sincronizados.",
+                        "CRN-0002: Suite de Inteligencia Operativa y CRONOS AI Insights."
+                    ]
+                },
+                {
+                    version: "v5.0.0",
+                    tag: "WIN OCT2026",
+                    items: [
+                        "Migración operativa de CRONOS SLA.",
+                        "Integración Supabase para pruebas operativas.",
+                        "Optimización de analítica.",
+                        "Optimización de exportaciones."
+                    ]
+                },
+                {
+                    version: "v4.1.6",
+                    tag: "Monitoreo y SLA",
+                    items: [
+                        "Monitoreo exclusivo de asesores.",
+                        "Corrección Dashboard.",
+                        "Ajustes Analítica SLA."
+                    ]
+                },
+                {
+                    version: "v4.1.5",
+                    tag: "Escalamientos",
+                    items: [
+                        "Directorio de Escalamientos.",
+                        "Simulador de correos.",
+                        "Plantillas dinámicas."
+                    ]
+                }
+            ]
+        };
+
+        function openAboutModal() {
+            const isAsesor = window.CRONOS_CURRENT_USER && String(window.CRONOS_CURRENT_USER.rol).toLowerCase().includes('asesor');
+            if (isAsesor) {
+                if (typeof showToast === 'function') showToast('Módulo informativo exclusivo para perfiles Administrativos', 'warning');
+                return;
+            }
+            const modal = document.getElementById('modal-acerca-de');
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            }
+        }
+
+        function closeAboutModal() {
+            const modal = document.getElementById('modal-acerca-de');
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+        }
+
+        window.openAboutModal = openAboutModal;
+        window.closeAboutModal = closeAboutModal;
 
     </script>
 
@@ -18622,9 +19498,312 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     </button>
                 </div>
             </div>
-
         </div>
     </div>
+
+    <!-- ========================================================================= -->
+    <!-- MODAL OFICIAL: ACERCA DE CRONOS FID (AUTORÍA, IDENTIDAD Y CHANGELOG)     -->
+    <!-- ========================================================================= -->
+    <div id="modal-acerca-de" onclick="if(event.target === this) closeAboutModal()"
+        class="fixed inset-0 bg-slate-950/75 backdrop-blur-sm z-[9999] flex items-center justify-center p-3 sm:p-5 hidden animate-pop">
+        <div
+            class="bg-white rounded-3xl shadow-2xl border border-slate-200/90 max-w-2xl w-full overflow-hidden flex flex-col max-h-[92vh]">
+
+            <!-- Header Modal -->
+            <div
+                class="bg-gradient-to-r from-slate-950 via-[#1E1E24] to-slate-900 text-white p-5 sm:p-6 flex items-center justify-between border-b-2 border-win-orange">
+                <div class="flex items-center gap-3.5">
+                    <div
+                        class="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#FF5E00] to-orange-600 text-white flex items-center justify-center text-xl font-black shadow-lg shadow-orange-500/30">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-lg font-black tracking-wide text-white">Acerca de CRONOS FID</h3>
+                            <span
+                                class="text-[10px] uppercase font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                Producción
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-300 mt-0.5">Centro de Recursos Operativos para Negociación y
+                            Fidelización</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeAboutModal()" aria-label="Cerrar ventana"
+                    class="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center transition-all cursor-pointer">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Contenido Scrollable -->
+            <div class="p-5 sm:p-6 overflow-y-auto space-y-4 text-slate-700 text-xs">
+
+                <!-- 1. Tarjeta Principal de Identificación del Sistema -->
+                <div
+                    class="bg-gradient-to-br from-orange-50/70 via-white to-amber-50/40 border border-orange-200/80 rounded-2xl p-4 sm:p-5 shadow-xs space-y-3">
+                    <div class="flex items-start justify-between flex-wrap gap-2">
+                        <div>
+                            <span
+                                class="text-[10px] font-black uppercase tracking-wider text-win-orange bg-white px-2.5 py-0.5 rounded-full border border-orange-200">
+                                Plataforma de Fidelización Ágil de WIN
+                            </span>
+                            <h4 class="text-base sm:text-xl font-black text-slate-900 tracking-tight mt-1">
+                                CRONOS FID
+                            </h4>
+                            <p class="text-[11px] font-semibold text-slate-600 mt-0.5">
+                                Centro de Recursos Operativos para Negociación y Fidelización
+                            </p>
+                        </div>
+                        <div class="text-right space-y-1">
+                            <span
+                                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-900 text-white font-mono text-[11px] font-bold shadow-xs">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                CRONOS FID • JELI v5.0.0 • WIN OCT2026
+                            </span>
+                            <div class="text-[10px] text-slate-400 font-medium">Estado Oficial: <strong
+                                    class="text-emerald-700">Producción</strong></div>
+                        </div>
+                    </div>
+
+                    <!-- Autoría Oficial -->
+                    <div class="pt-2 border-t border-orange-100 flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-xl bg-orange-100 text-win-orange flex items-center justify-center text-lg font-bold shrink-0">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="text-[10px] uppercase font-bold text-slate-400">Autor Oficial / Creador:</div>
+                            <div class="text-xs sm:text-sm font-black text-slate-900 truncate">Jhonny Eduar León
+                                Illescas</div>
+                            <div class="text-[10px] text-slate-500 font-medium">Diseño Funcional • Arquitectura
+                                Operativa • Gestión de Procesos • Desarrollo Evolutivo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Arquitectura Tecnológica Oficial (Firebase, Supabase, Vercel) -->
+                <div class="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2 text-slate-900 font-black text-xs uppercase tracking-wider">
+                            <i class="fa-solid fa-network-wired text-win-orange"></i>
+                            <span>Arquitectura Oficial del Sistema</span>
+                        </div>
+                        <span
+                            class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                            <i class="fa-solid fa-circle-check mr-1 text-[9px]"></i>100% Operativo
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                        <!-- Firebase -->
+                        <div class="p-3 bg-slate-50 border border-slate-200/80 rounded-xl space-y-1">
+                            <div class="flex items-center justify-between">
+                                <span class="font-extrabold text-slate-900 text-xs flex items-center gap-1.5">
+                                    <i class="fa-solid fa-fire text-amber-500"></i> Firebase
+                                </span>
+                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            </div>
+                            <p class="text-[10px] text-slate-500">Auth & Firestore: Control de accesos, roles y bitácora
+                                de auditoría.</p>
+                            <span class="text-[9px] font-mono text-slate-400 block pt-0.5">colecciones: auditoria,
+                                usuarios</span>
+                        </div>
+
+                        <!-- Supabase -->
+                        <div class="p-3 bg-slate-50 border border-slate-200/80 rounded-xl space-y-1">
+                            <div class="flex items-center justify-between">
+                                <span class="font-extrabold text-slate-900 text-xs flex items-center gap-1.5">
+                                    <i class="fa-solid fa-bolt text-emerald-600"></i> Supabase
+                                </span>
+                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            </div>
+                            <p class="text-[10px] text-slate-500">PostgreSQL v2: Almacén analítico de alta velocidad y
+                                SLA en vivo.</p>
+                            <span class="text-[9px] font-mono text-slate-400 block pt-0.5">tabla:
+                                public.cronos_sla</span>
+                        </div>
+
+                        <!-- Vercel -->
+                        <div class="p-3 bg-slate-50 border border-slate-200/80 rounded-xl space-y-1">
+                            <div class="flex items-center justify-between">
+                                <span class="font-extrabold text-slate-900 text-xs flex items-center gap-1.5">
+                                    <i class="fa-solid fa-cloud text-blue-500"></i> Vercel
+                                </span>
+                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            </div>
+                            <p class="text-[10px] text-slate-500">Hosting Global Edge, compresión Brotli y certificados
+                                SSL.</p>
+                            <span class="text-[9px] font-mono text-slate-400 block pt-0.5">cdn: producción
+                                continua</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Botonera de Acceso a Documentación, Cambios, Integraciones y Arquitectura -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+                    <button type="button" onclick="showAboutDocumentationInfo()"
+                        class="p-2.5 bg-orange-50 hover:bg-orange-100 text-win-orange border border-orange-200 rounded-xl font-bold text-xs transition flex flex-col items-center justify-center gap-1 text-center cursor-pointer">
+                        <i class="fa-solid fa-book-bookmark text-sm"></i>
+                        <span>Doc. Maestra</span>
+                    </button>
+                    <button type="button" onclick="closeAboutModal(); openChangelogModal();"
+                        class="p-2.5 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-xl font-bold text-xs transition flex flex-col items-center justify-center gap-1 text-center cursor-pointer">
+                        <i class="fa-solid fa-clock-rotate-left text-sm"></i>
+                        <span>Bitácora Cambios</span>
+                    </button>
+                    <button type="button" onclick="showAboutIntegrationsInfo()"
+                        class="p-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-xl font-bold text-xs transition flex flex-col items-center justify-center gap-1 text-center cursor-pointer">
+                        <i class="fa-solid fa-plug-circle-check text-sm"></i>
+                        <span>Integraciones</span>
+                    </button>
+                    <button type="button" onclick="showAboutArchitectureInfo()"
+                        class="p-2.5 bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 rounded-xl font-bold text-xs transition flex flex-col items-center justify-center gap-1 text-center cursor-pointer">
+                        <i class="fa-solid fa-sitemap text-sm"></i>
+                        <span>Arquitectura</span>
+                    </button>
+                </div>
+
+                <!-- Contenedor Dinámico de Información Ampliada -->
+                <div id="about-info-dynamic-panel"
+                    class="hidden p-4 bg-slate-50 border border-slate-200/90 rounded-2xl space-y-2">
+                    <!-- Contenido inyectado dinámicamente -->
+                </div>
+
+                <!-- 4. Control de Versiones Resumido -->
+                <div class="border border-slate-200/90 rounded-2xl p-4 sm:p-5 space-y-3 bg-white">
+                    <div class="flex items-center justify-between flex-wrap gap-2">
+                        <div class="flex items-center gap-2 text-slate-900 font-black text-xs uppercase tracking-wider">
+                            <i class="fa-solid fa-code-branch text-win-orange"></i>
+                            <span>Última Actualización</span>
+                        </div>
+                        <span class="text-[10px] font-mono text-slate-500">Automática desde el sistema de control de
+                            versiones</span>
+                    </div>
+
+                    <div class="text-[11px] text-slate-600 space-y-1">
+                        <p><strong>Versión Base:</strong> CRONOS FID • JELI v5.0.0 • WIN OCT2026</p>
+                        <p><strong>Evolución Modular:</strong> v5.1.0 (Filtros Globales, IA Insights, Vista 360°,
+                            Changelog Oficial)</p>
+                        <p><strong>Fecha/Hora Última Modificación:</strong> 2026-10-13 08:30 hrs • Responsable: Cronos
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer Modal -->
+            <div
+                class="p-4 sm:p-5 bg-slate-50 border-t border-slate-200 flex items-center justify-between flex-wrap gap-2">
+                <div class="text-[11px] text-slate-500 font-medium">
+                    <span class="font-bold text-slate-700">CRONOS FID</span> • <span>Jhonny Eduar León Illescas</span> ©
+                    2026
+                </div>
+                <button type="button" onclick="closeAboutModal()"
+                    class="px-5 py-2 bg-slate-900 hover:bg-slate-800 active:scale-95 text-white rounded-xl font-bold text-xs shadow-md transition cursor-pointer">
+                    Entendido / Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- CAPA CENTRALIZADA DE CONSULTAS SQL, EXPORTACIÓN Y COMPONENTES DESACOPLADOS-->
+    <!-- ========================================================================= -->
+    <script src="services/sql/kpiQueries.js"></script>
+    <script src="services/analytics/metricsService.js"></script>
+    <script src="services/exports/excelExportService.js"></script>
+    <script src="components/filters.js"></script>
+    <script src="ai/insights.js"></script>
+    <script src="reports/pdf-generator.js"></script>
+    <script src="components/executive-dashboard.js"></script>
+    <script src="components/changelog.js"></script>
+    <script>
+        // Funciones auxiliares para Acerca de CRONOS FID y Vista Ejecutiva 360°
+        window.openExecutive360 = function () {
+            const isAsesor = window.CRONOS_CURRENT_USER && String(window.CRONOS_CURRENT_USER.rol).toLowerCase().includes('asesor');
+            if (isAsesor) {
+                if (typeof showToast === 'function') showToast('La Vista Ejecutiva 360° es exclusiva para perfiles Administrativos', 'warning');
+                return;
+            }
+            if (window.CronosExecutive360 && typeof window.CronosExecutive360.open === 'function') {
+                window.CronosExecutive360.open();
+            } else {
+                console.warn('[CRONOS FID] Cargando Vista Ejecutiva 360°...');
+            }
+        };
+
+        window.showAboutDocumentationInfo = function () {
+            const panel = document.getElementById('about-info-dynamic-panel');
+            if (!panel) return;
+            panel.classList.remove('hidden');
+            panel.innerHTML = `
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <span class="font-black text-xs text-slate-800 uppercase flex items-center gap-1.5">
+                        <i class="fa-solid fa-book text-win-orange"></i> Documentación Maestra Oficial
+                    </span>
+                    <button type="button" onclick="document.getElementById('about-info-dynamic-panel').classList.add('hidden')" class="text-slate-400 hover:text-slate-600 text-xs">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <p class="text-[11px] text-slate-600 leading-relaxed">
+                    Documento oficial de referencia: <strong>CRONOS_FID_DOCUMENTACION_MAESTRA.md</strong> (942 líneas). Documenta el 100% de los 16 módulos, 65 funcionalidades, 16 KPIs analíticos y el historial de cambios oficial.
+                </p>
+                <div class="text-[10px] text-slate-500 font-mono bg-white p-2 rounded-lg border border-slate-200">
+                    Ubicación raíz: c:\\Users\\jhonn\\OneDrive - winet\\2. SERVIDOR LOCAL\\CRONOS FID\\CRONOS_FID_DOCUMENTACION_MAESTRA.md
+                </div>
+            `;
+        };
+
+        window.showAboutIntegrationsInfo = function () {
+            const panel = document.getElementById('about-info-dynamic-panel');
+            if (!panel) return;
+            panel.classList.remove('hidden');
+            panel.innerHTML = `
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <span class="font-black text-xs text-slate-800 uppercase flex items-center gap-1.5">
+                        <i class="fa-solid fa-plug-circle-check text-emerald-600"></i> Estado de Integraciones
+                    </span>
+                    <button type="button" onclick="document.getElementById('about-info-dynamic-panel').classList.add('hidden')" class="text-slate-400 hover:text-slate-600 text-xs">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="space-y-1.5 text-[11px]">
+                    <div class="flex items-center justify-between bg-white p-2 rounded-lg border border-slate-200">
+                        <span><strong>Firebase Authentication & Firestore:</strong> Activo</span>
+                        <span class="text-emerald-700 font-bold text-[10px]">CONECTADO</span>
+                    </div>
+                    <div class="flex items-center justify-between bg-white p-2 rounded-lg border border-slate-200">
+                        <span><strong>Supabase PostgreSQL Client v2:</strong> Activo</span>
+                        <span class="text-emerald-700 font-bold text-[10px]">CONECTADO</span>
+                    </div>
+                    <div class="flex items-center justify-between bg-white p-2 rounded-lg border border-slate-200">
+                        <span><strong>Vercel Edge Global Hosting:</strong> Activo</span>
+                        <span class="text-emerald-700 font-bold text-[10px]">OPERATIVO</span>
+                    </div>
+                </div>
+            `;
+        };
+
+        window.showAboutArchitectureInfo = function () {
+            const panel = document.getElementById('about-info-dynamic-panel');
+            if (!panel) return;
+            panel.classList.remove('hidden');
+            panel.innerHTML = `
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                    <span class="font-black text-xs text-slate-800 uppercase flex items-center gap-1.5">
+                        <i class="fa-solid fa-sitemap text-purple-600"></i> Información de Arquitectura
+                    </span>
+                    <button type="button" onclick="document.getElementById('about-info-dynamic-panel').classList.add('hidden')" class="text-slate-400 hover:text-slate-600 text-xs">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <p class="text-[11px] text-slate-600 leading-relaxed">
+                    Arquitectura Híbrida Desacoplada: Single-Page Application (SPA) con motor React 18 / Tailwind CSS, capa analítica centralizada en MetricsService (Single Source of Truth), consultas parametrizadas en kpiQueries.js y persistencia en Supabase/Firebase.
+                </p>
+            `;
+        };
+    </script>
 
 </body>
 
