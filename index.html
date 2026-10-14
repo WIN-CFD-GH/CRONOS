@@ -2913,6 +2913,7 @@ Año:
                            ========================================================================= */
 
                         let currentSlaNotification = null;
+                        let activeSlaNotifications = [];
                         let slaNotificationPermissionPrompted = false;
 
                         function updateSlaNotificationBellUI(forcedStatus) {
@@ -3013,6 +3014,12 @@ Año:
                         }
 
                         function closeSlaExternalNotifications() {
+                            if (Array.isArray(activeSlaNotifications) && activeSlaNotifications.length > 0) {
+                                activeSlaNotifications.forEach(n => {
+                                    try { n.close(); } catch (e) { }
+                                });
+                                activeSlaNotifications = [];
+                            }
                             if (currentSlaNotification) {
                                 try {
                                     currentSlaNotification.close();
@@ -3025,21 +3032,24 @@ Año:
                             try {
                                 const isOutOfTab = isUserOutOfTab();
 
-                                const title = "CRONOS SLA";
+                                let title = "CRONOS SLA";
                                 let bodyText = "";
                                 if (type === 'preventive') {
-                                    bodyText = "Alerta Preventiva\nLa llamada se aproxima al umbral de atención.\nTiempo actual: 35 segundos.";
+                                    title = "ALERTA 1: RETOMA TU LLAMADA";
+                                    bodyText = "Permítame un momento más a la espera.";
                                 } else if (type === 'critical') {
-                                    bodyText = "ALERTA CRÍTICA\nLa llamada alcanzó 45 segundos.\nSe recomienda actuar inmediatamente.";
+                                    title = "ALERTA 2: MANTÉN EL CONTACTO";
+                                    bodyText = "Gracias por su espera, continúo validando la información.";
                                 } else if (type === 'maximum') {
-                                    bodyText = "SLA EXCEDIDO\nLa llamada ha superado el tiempo permitido.\nRevise la gestión inmediatamente.";
+                                    title = "ALERTA 3: RETÉN AL CLIENTE";
+                                    bodyText = "Gracias por su paciencia, en breve continuaré con su atención.";
                                 }
 
                                 // Alerta visual de pestaña en el navegador si está en otra pestaña/web (Power BI, Outlook, etc.)
                                 if (isOutOfTab) {
-                                    if (type === 'preventive') startTitleFlashing('⚠️ [35s] ¡ATENCIÓN SLA!');
-                                    else if (type === 'critical') startTitleFlashing('🔴 [45s] ¡ALERTA CRÍTICA SLA!');
-                                    else if (type === 'maximum') startTitleFlashing('🚨 [60s] ¡SLA EXCEDIDO!');
+                                    if (type === 'preventive') startTitleFlashing('⚠️ [35s] ALERTA 1: RETOMA TU LLAMADA');
+                                    else if (type === 'critical') startTitleFlashing('🔴 [45s] ALERTA 2: MANTÉN EL CONTACTO');
+                                    else if (type === 'maximum') startTitleFlashing('🚨 [60s] ALERTA 3: RETÉN AL CLIENTE');
                                 }
 
                                 // En file:///, salir de forma segura para no invocar Notification API con URLs file:/// que generen advertencias de seguridad
@@ -3049,7 +3059,6 @@ Año:
 
                                 const triggerNativeOSNotification = () => {
                                     try {
-                                        closeSlaExternalNotifications();
                                         const options = {
                                             body: bodyText,
                                             icon: "./CRONOS_FID_icon.png",
@@ -3059,14 +3068,36 @@ Año:
                                             requireInteraction: true
                                         };
 
-                                        currentSlaNotification = new Notification(title, options);
-
-                                        if (currentSlaNotification) {
-                                            currentSlaNotification.onclick = function () {
-                                                try { window.focus(); } catch (err) { }
-                                                try { currentSlaNotification.close(); } catch (err) { }
-                                            };
+                                        const notif = new Notification(title, options);
+                                        currentSlaNotification = notif;
+                                        if (Array.isArray(activeSlaNotifications)) {
+                                            activeSlaNotifications.push(notif);
                                         }
+
+                                        notif.onclick = function () {
+                                            const cronosUrl = "https://win-cfd-gh.github.io/CRONOS/";
+                                            let focusGranted = false;
+                                            try {
+                                                window.focus();
+                                                focusGranted = true;
+                                            } catch (err) {
+                                                focusGranted = false;
+                                            }
+
+                                            // Si el navegador no permite enfocar la pestaña existente, abrir una nueva pestaña
+                                            if (!focusGranted || typeof window.focus !== 'function') {
+                                                try {
+                                                    window.open(cronosUrl, '_blank');
+                                                } catch (openErr) {
+                                                    console.warn("[CRONOS SLA] Error abriendo CRONOS:", openErr);
+                                                }
+                                            }
+
+                                            try { notif.close(); } catch (err) { }
+                                            if (Array.isArray(activeSlaNotifications)) {
+                                                activeSlaNotifications = activeSlaNotifications.filter(item => item !== notif);
+                                            }
+                                        };
                                     } catch (e) {
                                         console.warn("[CRONOS SLA] new Notification():", e);
                                     }
@@ -3096,6 +3127,7 @@ Año:
                         window.requestSlaNotificationPermission = requestSlaNotificationPermission;
                         window.sendSlaExternalNotification = sendSlaExternalNotification;
                         window.closeSlaExternalNotifications = closeSlaExternalNotifications;
+                        window.activeSlaNotifications = activeSlaNotifications;
                         window.updateSlaNotificationBellUI = updateSlaNotificationBellUI;
                         window.isUserOutOfTab = isUserOutOfTab;
                         window.startTitleFlashing = startTitleFlashing;
