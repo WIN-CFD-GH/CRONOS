@@ -3,7 +3,7 @@
 CRONOS FID
 
 Versión:
-JELI v5.0.0 • WIN OCT2026
+JELI v5.2.1 • WIN OCT2026
 
 Diseño Funcional
 Arquitectura Operativa
@@ -37,9 +37,9 @@ Año:
     <!-- Metadatos de Autoría e Identidad Oficial del Sistema -->
     <meta name="author" content="Jhonny Leon Illescas">
     <meta name="application-name" content="CRONOS FID">
-    <meta name="generator" content="CRONOS FID • JELI v5.0.0 • WIN OCT2026">
+    <meta name="generator" content="CRONOS FID • JELI v5.2.1 • WIN OCT2026">
     <meta name="copyright" content="CRONOS FID • Jhonny Leon Illescas • 2026">
-    <meta name="version" content="JELI v5.0.0 • WIN OCT2026">
+    <meta name="version" content="JELI v5.2.1 • WIN OCT2026">
 
     <!-- Open Graph & Meta Identity -->
     <meta property="og:title" content="CRONOS FID">
@@ -533,7 +533,8 @@ Año:
             display: inline !important;
         }
 
-        #wait-timer-widget.sidebar-sla-mode #btn-wait-reset {
+        #wait-timer-widget.sidebar-sla-mode #btn-wait-reset,
+        #wait-timer-widget.sidebar-sla-mode #btn-sla-notifications {
             width: 44px !important;
             height: 44px !important;
             border-radius: 0.75rem !important;
@@ -1313,6 +1314,11 @@ Año:
                                     class="bg-slate-100 hover:bg-slate-200 text-slate-700 w-8 h-8 sm:w-9 sm:h-9 rounded-lg transition-all flex items-center justify-center shadow-sm active:scale-95 text-xs sm:text-sm cursor-pointer"
                                     title="Reiniciar Cronometro">
                                     <i class="fa-solid fa-rotate-left"></i>
+                                </button>
+                                <button id="btn-sla-notifications" type="button"
+                                    class="bg-slate-100 hover:bg-slate-200 text-slate-700 w-8 h-8 sm:w-9 sm:h-9 rounded-lg transition-all flex items-center justify-center shadow-sm active:scale-95 text-xs sm:text-sm cursor-pointer"
+                                    title="Notificaciones externas SLA (alertas fuera de la pestaña)">
+                                    <i id="icon-sla-notifications" class="fa-regular fa-bell"></i>
                                 </button>
                             </div>
                         </div>
@@ -2658,11 +2664,66 @@ Año:
                             }
                         }
 
+                        // =========================================================================
+                        // SPRINT 1.5: GESTIÓN DE VISIBILIDAD, FOCO Y ALERTAS EXTERNAS SLA
+                        // =========================================================================
+                        let isTabActive = !document.hidden;
+                        let isWindowFocused = (typeof document.hasFocus === 'function') ? document.hasFocus() : true;
+                        let titleFlashInterval = null;
+                        const ORIGINAL_DOCUMENT_TITLE = document.title || "CRONOS FID • Sistema de Gestión y Fidelización";
+
+                        function isUserOutOfTab() {
+                            const isDocHidden = typeof document.hidden !== 'undefined' ? document.hidden : false;
+                            const isVisHidden = typeof document.visibilityState !== 'undefined' ? (document.visibilityState === 'hidden') : false;
+                            const hasFocus = (typeof document.hasFocus === 'function') ? document.hasFocus() : true;
+                            return isDocHidden || isVisHidden || !isTabActive || !isWindowFocused || !hasFocus;
+                        }
+
+                        function startTitleFlashing(alertText) {
+                            stopTitleFlashing();
+                            let toggle = false;
+                            titleFlashInterval = setInterval(() => {
+                                const secsFormatted = (cronosSeconds < 10 ? '0' + cronosSeconds : cronosSeconds) + 's';
+                                document.title = toggle ? alertText : `[${secsFormatted}] CRONOS FID SLA`;
+                                toggle = !toggle;
+                            }, 750);
+                        }
+
+                        function stopTitleFlashing() {
+                            if (titleFlashInterval) {
+                                clearInterval(titleFlashInterval);
+                                titleFlashInterval = null;
+                                document.title = ORIGINAL_DOCUMENT_TITLE;
+                            }
+                        }
+
+                        document.addEventListener('visibilitychange', () => {
+                            isTabActive = !document.hidden;
+                            console.log('[CRONOS SLA] visibilitychange:', document.visibilityState, 'Activa:', isTabActive);
+                            if (!document.hidden) {
+                                stopTitleFlashing();
+                            }
+                        });
+
+                        window.addEventListener('blur', () => {
+                            isWindowFocused = false;
+                            console.log('[CRONOS SLA] window blur: la pestaña perdió el foco directo');
+                        });
+
+                        window.addEventListener('focus', () => {
+                            isWindowFocused = true;
+                            isTabActive = true;
+                            console.log('[CRONOS SLA] window focus: la pestaña recuperó el foco directo');
+                            stopTitleFlashing();
+                        });
+
                         function toggleCronosTimer() {
                             if (isCronosPlaying) {
                                 // Pausar
                                 clearInterval(cronosInterval);
                                 stopAllSounds();
+                                stopTitleFlashing();
+                                closeSlaExternalNotifications();
                                 isCronosPlaying = false;
                                 iconWaitPlayPause.className = 'fa-solid fa-play';
                                 textWaitPlayPause.textContent = 'Reanudar';
@@ -2677,6 +2738,12 @@ Año:
                             } else {
                                 // Iniciar / Reanudar
                                 getAudioContext();
+
+                                // Solicitar autorización de notificaciones nativas al primer uso
+                                if ("Notification" in window && Notification.permission === 'default' && !slaNotificationPermissionPrompted) {
+                                    slaNotificationPermissionPrompted = true;
+                                    requestSlaNotificationPermission(false);
+                                }
 
                                 isCronosPlaying = true;
                                 iconWaitPlayPause.className = 'fa-solid fa-pause';
@@ -2717,12 +2784,25 @@ Año:
                                         else if (typeof window.logSLAEvent === 'function') window.logSLAEvent('Superó 70s', 70);
                                     }
 
-                                    // Alertas sonoras automáticas por rango
-                                    if (cronosSeconds >= 45 && cronosSeconds <= 60) {
+                                    // Disparadores de Notificaciones Externas SLA (Sprint 1.5)
+                                    if (cronosSeconds === 35) {
+                                        sendSlaExternalNotification('preventive');
+                                    } else if (cronosSeconds === 45) {
+                                        sendSlaExternalNotification('critical');
+                                    } else if (cronosSeconds === 60) {
+                                        sendSlaExternalNotification('maximum');
+                                    }
+
+                                    // Alertas sonoras garantizadas por rango
+                                    if (cronosSeconds === 35) {
+                                        // Pitido preventivo garantizado a los 35s (2 beeps claros)
+                                        playPreventiveBeep();
+                                        setTimeout(() => { playPreventiveBeep(); }, 280);
+                                    } else if (cronosSeconds >= 45 && cronosSeconds <= 60) {
                                         startPreventiveWarning();
                                     } else if (cronosSeconds >= 61 && cronosSeconds <= 70) {
                                         startCriticalAlarm();
-                                    } else {
+                                    } else if (cronosSeconds < 35 || (cronosSeconds > 35 && cronosSeconds < 45) || cronosSeconds > 70) {
                                         stopAllSounds();
                                     }
 
@@ -2731,10 +2811,39 @@ Año:
                             }
                         }
 
-                        function resetCronosTimer() {
+                        function requestResetCronosTimer() {
+                            const modal = document.getElementById('modal-confirm-reset-sla');
+                            const timeDisplay = document.getElementById('confirm-reset-current-time');
+                            if (timeDisplay) {
+                                const s = cronosSeconds || 0;
+                                timeDisplay.textContent = (s < 10 ? '0' + s : s) + 's';
+                            }
+                            if (modal) {
+                                modal.classList.remove('hidden');
+                            } else {
+                                executeResetCronosTimer();
+                            }
+                        }
+
+                        function closeConfirmResetSlaModal() {
+                            const modal = document.getElementById('modal-confirm-reset-sla');
+                            if (modal) modal.classList.add('hidden');
+                        }
+
+                        function confirmResetCronosTimer() {
+                            closeConfirmResetSlaModal();
+                            executeResetCronosTimer();
+                            if (typeof showToast === 'function') {
+                                showToast('Temporizador SLA reiniciado a 00s.', 'info');
+                            }
+                        }
+
+                        function executeResetCronosTimer() {
                             const lastSecs = cronosSeconds;
                             clearInterval(cronosInterval);
                             stopAllSounds();
+                            stopTitleFlashing();
+                            closeSlaExternalNotifications();
                             isCronosPlaying = false;
                             cronosSeconds = 0;
 
@@ -2752,9 +2861,329 @@ Año:
                             updateCronosUI();
                         }
 
+                        function resetCronosTimer() {
+                            requestResetCronosTimer();
+                        }
+
+                        /* =========================================================================
+                           SPRINT 1.5: SISTEMA DE NOTIFICACIONES EXTERNAS PARA CRONOS SLA
+                           - Multi-capa:
+                             1. Notificación Nativa OS (Web Notification API)
+                             2. Alerta Acústica Autónoma (Web Audio API a los 35s, 45s y 60s)
+                             3. Alerta Visual de Pestaña Flotante (Parpadeo dinámico de título del documento)
+                             4. Acciones Rápidas (Pausar y Reiniciar) en la notificación y en la interfaz
+                           - Documentación de contexto local file:///:
+                             Chromium (Chrome/Edge) restringe la emisión de notificaciones nativas push
+                             al Centro de Notificaciones de Windows para páginas abiertas mediante file:///.
+                             Para soporte nativo completo en escritorio, se ejecuta sobre http://localhost
+                             o HTTPS. Las alertas sonoras y el parpadeo dinámico de pestaña operan al 100%
+                             en todos los contextos.
+                           ========================================================================= */
+
+                        let currentSlaNotification = null;
+                        let slaNotificationPermissionPrompted = false;
+                        let originalDocumentTitle = document.title || "CRONOS FID";
+                        let titleFlashingInterval = null;
+                        let isTabActive = true;
+
+                        function stopTitleFlashing() {
+                            if (titleFlashingInterval) {
+                                clearInterval(titleFlashingInterval);
+                                titleFlashingInterval = null;
+                            }
+                            document.title = originalDocumentTitle;
+                        }
+
+                        function startTitleFlashing(alertText) {
+                            stopTitleFlashing();
+                            let toggle = false;
+                            titleFlashingInterval = setInterval(() => {
+                                document.title = toggle ? alertText : originalDocumentTitle;
+                                toggle = !toggle;
+                            }, 900);
+                        }
+
+                        window.addEventListener('focus', () => {
+                            isTabActive = true;
+                            stopTitleFlashing();
+                        });
+
+                        window.addEventListener('blur', () => {
+                            isTabActive = false;
+                        });
+
+                        document.addEventListener('visibilitychange', () => {
+                            if (document.visibilityState === 'visible') {
+                                isTabActive = true;
+                                stopTitleFlashing();
+                            } else {
+                                isTabActive = false;
+                            }
+                        });
+
+                        function isUserOutOfTab() {
+                            return Boolean(
+                                document.hidden ||
+                                document.visibilityState === 'hidden' ||
+                                !isTabActive ||
+                                (typeof document.hasFocus === 'function' && !document.hasFocus())
+                            );
+                        }
+
+                        function updateSlaNotificationBellUI(forcedStatus) {
+                            const btn = document.getElementById('btn-sla-notifications');
+                            const icon = document.getElementById('icon-sla-notifications');
+                            if (!btn || !icon) return;
+
+                            if (!("Notification" in window)) {
+                                btn.classList.add('opacity-40', 'cursor-not-allowed');
+                                btn.title = 'Este navegador no admite notificaciones de escritorio';
+                                icon.className = 'fa-solid fa-bell-slash text-slate-400';
+                                return;
+                            }
+
+                            const isLocal = location.protocol === 'file:';
+                            const perm = forcedStatus || Notification.permission;
+                            if (perm === 'granted') {
+                                btn.classList.remove('opacity-40', 'cursor-not-allowed');
+                                btn.title = 'Notificaciones externas SLA: ACTIVADAS (Click para verificar)';
+                                btn.className = 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 w-8 h-8 sm:w-9 sm:h-9 rounded-lg transition-all flex items-center justify-center shadow-sm active:scale-95 text-xs sm:text-sm cursor-pointer border border-emerald-200';
+                                icon.className = 'fa-solid fa-bell text-emerald-600';
+                            } else if (perm === 'denied') {
+                                btn.classList.remove('opacity-40');
+                                btn.title = isLocal ? 'Notificaciones nativas limitadas por Chrome en file:/// (activa en http://localhost)' : 'Notificaciones externas SLA: DESHABILITADAS en navegador';
+                                btn.className = 'bg-amber-50 hover:bg-amber-100 text-amber-700 w-8 h-8 sm:w-9 sm:h-9 rounded-lg transition-all flex items-center justify-center shadow-sm active:scale-95 text-xs sm:text-sm cursor-pointer border border-amber-200';
+                                icon.className = 'fa-solid fa-bell-slash text-amber-600';
+                            } else {
+                                btn.title = 'Activar notificaciones externas SLA (alertas fuera de pestaña)';
+                                btn.className = 'bg-slate-100 hover:bg-slate-200 text-slate-700 w-8 h-8 sm:w-9 sm:h-9 rounded-lg transition-all flex items-center justify-center shadow-sm active:scale-95 text-xs sm:text-sm cursor-pointer';
+                                icon.className = 'fa-regular fa-bell text-slate-500';
+                            }
+                        }
+
+                        function requestSlaNotificationPermission(interactive = false) {
+                            if (!("Notification" in window)) {
+                                if (interactive && typeof showToast === 'function') {
+                                    showToast('Este navegador no admite notificaciones de escritorio.', 'warning', 'Utilice Google Chrome o Microsoft Edge.');
+                                }
+                                return Promise.resolve(false);
+                            }
+
+                            const isLocal = location.protocol === 'file:';
+
+                            if (Notification.permission === 'granted') {
+                                updateSlaNotificationBellUI('granted');
+                                if (interactive && typeof showToast === 'function') {
+                                    showToast('Notificaciones externas SLA activas.', 'success');
+                                }
+                                return Promise.resolve(true);
+                            }
+
+                            if (Notification.permission === 'denied') {
+                                updateSlaNotificationBellUI('denied');
+                                if (interactive && typeof showToast === 'function') {
+                                    if (isLocal) {
+                                        showToast(
+                                            'Restricción local file:/// en Microsoft Edge.',
+                                            'warning',
+                                            'Edge/Chrome restringen notificaciones nativas en file:///. Ejecute sobre http://localhost para soporte de escritorio.'
+                                        );
+                                    } else {
+                                        showToast(
+                                            'Las notificaciones SLA se encuentran deshabilitadas.',
+                                            'warning',
+                                            'Puede activarlas desde la configuración del navegador.'
+                                        );
+                                    }
+                                }
+                                return Promise.resolve(false);
+                            }
+
+                            // Estado 'default': solicitar autorización
+                            return Notification.requestPermission().then(permission => {
+                                console.log('[CRONOS SLA] Resultado de solicitud de permisos:', permission);
+                                updateSlaNotificationBellUI(permission);
+                                if (permission === 'granted') {
+                                    if (interactive && typeof showToast === 'function') {
+                                        showToast('Notificaciones nativas del SO activadas.', 'success');
+                                    }
+                                    return true;
+                                } else {
+                                    if (interactive && typeof showToast === 'function') {
+                                        if (isLocal) {
+                                            showToast(
+                                                'Permiso no persistente en file:///.',
+                                                'warning',
+                                                'Ejecute CRONOS FID vía servidor local (http://localhost) para notificaciones de escritorio de Windows.'
+                                            );
+                                        } else {
+                                            showToast(
+                                                'Las notificaciones SLA se encuentran deshabilitadas.',
+                                                'warning',
+                                                'Puede activarlas desde la configuración del navegador.'
+                                            );
+                                        }
+                                    }
+                                    return false;
+                                }
+                            }).catch(err => {
+                                console.warn("[CRONOS SLA] Error solicitando permisos de notificación:", err);
+                                return false;
+                            });
+                        }
+
+                        function closeSlaExternalNotifications() {
+                            if (currentSlaNotification) {
+                                try {
+                                    currentSlaNotification.close();
+                                } catch (e) { }
+                                currentSlaNotification = null;
+                            }
+                        }
+
+                        function sendSlaExternalNotification(type) {
+                            const isOutOfTab = isUserOutOfTab();
+                            console.log(`[CRONOS SLA Notification Engine] Trigger: ${type} a los ${cronosSeconds}s | isOutOfTab: ${isOutOfTab} (hidden: ${document.hidden}, visState: ${document.visibilityState})`);
+
+                            // Título y cuerpo del sistema nativo según el umbral alcanzado
+                            // Título y cuerpo del sistema nativo según el umbral alcanzado (Compatible con GitHub Pages HTTPS)
+                            const title = "CRONOS SLA";
+                            let bodyText = "";
+                            if (type === 'preventive') {
+                                bodyText = "Alerta Preventiva\nLa llamada se aproxima al umbral de atención.\nTiempo actual: 35 segundos.";
+                            } else if (type === 'critical') {
+                                bodyText = "ALERTA CRÍTICA\nLa llamada alcanzó 45 segundos.\nSe recomienda actuar inmediatamente.";
+                            } else if (type === 'maximum') {
+                                bodyText = "SLA EXCEDIDO\nLa llamada ha superado el tiempo permitido.\nRevise la gestión inmediatamente.";
+                            }
+
+                            // Alerta visual de pestaña en el navegador si está en otra pestaña/web (Power BI, Outlook, etc.)
+                            if (isOutOfTab) {
+                                if (type === 'preventive') startTitleFlashing('⚠️ [35s] ¡ATENCIÓN SLA!');
+                                else if (type === 'critical') startTitleFlashing('🔴 [45s] ¡ALERTA CRÍTICA SLA!');
+                                else if (type === 'maximum') startTitleFlashing('🚨 [60s] ¡SLA EXCEDIDO!');
+                            }
+
+                            // Despacho de Notificación Nativa del Sistema Operativo
+                            if (!("Notification" in window)) {
+                                console.warn("[CRONOS SLA] Notification API no disponible en este navegador.");
+                                return;
+                            }
+
+                            const triggerNativeOSNotification = () => {
+                                closeSlaExternalNotifications();
+                                const options = {
+                                    body: bodyText,
+                                    icon: "./CRONOS_FID_icon.png",
+                                    badge: "./CRONOS_FID_icon.png",
+                                    tag: "cronos-sla-alert-" + type,
+                                    renotify: true,
+                                    requireInteraction: true
+                                };
+
+                                if (type === 'critical') {
+                                    options.actions = [
+                                        { action: 'pause', title: '⏸ Pausar SLA' },
+                                        { action: 'reset', title: '🔄 Reiniciar SLA' }
+                                    ];
+                                }
+
+                                try {
+                                    try {
+                                        currentSlaNotification = new Notification(title, options);
+                                        console.log("[CRONOS SLA] Notificación nativa generada con éxito:", title);
+                                    } catch (optErr) {
+                                        // Fallback seguro sin actions para compatibilidad universal
+                                        const safeOptions = {
+                                            body: bodyText,
+                                            tag: "cronos-sla-alert-" + type,
+                                            renotify: true,
+                                            requireInteraction: true
+                                        };
+                                        currentSlaNotification = new Notification(title, safeOptions);
+                                        console.log("[CRONOS SLA] Notificación nativa generada (safe fallback).");
+                                    }
+
+                                    if (currentSlaNotification) {
+                                        currentSlaNotification.onclick = function (event) {
+                                            try { window.focus(); } catch (err) { }
+                                            const clickedAction = (event && event.action) ? event.action : null;
+
+                                            if (clickedAction === 'pause') {
+                                                if (isCronosPlaying) {
+                                                    toggleCronosTimer();
+                                                }
+                                            } else if (clickedAction === 'reset') {
+                                                requestResetCronosTimer();
+                                            }
+                                            try { currentSlaNotification.close(); } catch (err) { }
+                                        };
+
+                                        if (typeof currentSlaNotification.addEventListener === 'function') {
+                                            currentSlaNotification.addEventListener('action', function (event) {
+                                                try { window.focus(); } catch (err) { }
+                                                if (event.action === 'pause') {
+                                                    if (isCronosPlaying) {
+                                                        toggleCronosTimer();
+                                                    }
+                                                } else if (event.action === 'reset') {
+                                                    requestResetCronosTimer();
+                                                }
+                                                try { currentSlaNotification.close(); } catch (err) { }
+                                            });
+                                        }
+                                    }
+                                } catch (e) {
+                                    console.warn("[CRONOS SLA] new Notification() no pudo desplegarse:", e);
+                                }
+                            };
+
+                            if (Notification.permission === 'granted') {
+                                triggerNativeOSNotification();
+                            } else if (Notification.permission === 'default') {
+                                Notification.requestPermission().then(perm => {
+                                    updateSlaNotificationBellUI(perm);
+                                    if (perm === 'granted') {
+                                        triggerNativeOSNotification();
+                                    }
+                                }).catch(err => {
+                                    console.warn("[CRONOS SLA] Error solicitando permiso:", err);
+                                });
+                            } else {
+                                console.info(`[CRONOS SLA] Notification.permission es '${Notification.permission}'. En protocolo '${location.protocol}', Microsoft Edge restringe notificaciones push nativas al SO en orígenes file:///`);
+                            }
+                        }
+
+                        window.resetCronosTimer = resetCronosTimer;
+                        window.requestResetCronosTimer = requestResetCronosTimer;
+                        window.confirmResetCronosTimer = confirmResetCronosTimer;
+                        window.closeConfirmResetSlaModal = closeConfirmResetSlaModal;
+                        window.executeResetCronosTimer = executeResetCronosTimer;
+                        window.toggleCronosTimer = toggleCronosTimer;
+                        window.pauseCronosTimer = function () {
+                            if (isCronosPlaying) toggleCronosTimer();
+                        };
+                        window.resumeCronosTimer = function () {
+                            if (!isCronosPlaying) toggleCronosTimer();
+                        };
+                        window.requestSlaNotificationPermission = requestSlaNotificationPermission;
+                        window.sendSlaExternalNotification = sendSlaExternalNotification;
+                        window.closeSlaExternalNotifications = closeSlaExternalNotifications;
+                        window.updateSlaNotificationBellUI = updateSlaNotificationBellUI;
+                        window.isUserOutOfTab = isUserOutOfTab;
+                        window.startTitleFlashing = startTitleFlashing;
+                        window.stopTitleFlashing = stopTitleFlashing;
+
                         // Event Listeners
                         btnWaitPlayPause.addEventListener('click', toggleCronosTimer);
-                        btnWaitReset.addEventListener('click', resetCronosTimer);
+                        btnWaitReset.addEventListener('click', requestResetCronosTimer);
+
+                        const btnSlaNotifications = document.getElementById('btn-sla-notifications');
+                        if (btnSlaNotifications) {
+                            btnSlaNotifications.addEventListener('click', () => {
+                                requestSlaNotificationPermission(true);
+                            });
+                        }
 
                         if (cronosBtnCopySpeech) {
                             cronosBtnCopySpeech.addEventListener('click', () => {
@@ -2773,6 +3202,7 @@ Año:
 
                         // Inicialización
                         updateCronosUI();
+                        updateSlaNotificationBellUI();
                     </script>
                 </div>
 
@@ -4902,7 +5332,7 @@ Año:
                 class="text-zinc-300 flex items-center gap-2 flex-wrap justify-center md:justify-start font-medium text-[11px] sm:text-xs tracking-wide">
                 <span class="font-extrabold text-white tracking-wider">CRONOS FID</span>
                 <span class="text-zinc-500">•</span>
-                <span class="text-win-orange font-bold">JELI v5.2.0 • WIN OCT2026</span>
+                <span class="text-win-orange font-bold">JELI v5.2.1 • WIN OCT2026</span>
                 <span class="text-zinc-500">•</span>
                 <span>Diseñado y desarrollado por <strong class="text-white font-bold">Jhonny Leon
                         Illescas</strong></span>
@@ -6283,7 +6713,7 @@ Sr.(a) XXX , agradecemos su comunicación y de igual manera pedimos las disculpa
                     }, 1500);
                 }
             }).catch(() => {
-                showToast("No se pudo copiar automáticamente.", "error");
+                showToast("No fue posible copiar al portapapeles.", "error", "Permita los permisos de portapapeles o seleccione el guion y use Ctrl+C.");
             });
         }
 
@@ -6352,12 +6782,133 @@ Sr.(a) XXX , agradecemos su comunicación y de igual manera pedimos las disculpa
             });
         }
 
-        // Cerrar modal con tecla Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && elModalAcuerdo && !elModalAcuerdo.classList.contains('hidden')) {
-                closeAcuerdoModal();
+        // =========================================================================
+        // SPRINT 1 (H-04): MANEJADOR GLOBAL DE TECLA ESCAPE (ESC)
+        // Cierra modales, popups, paneles flotantes y ventanas auxiliares
+        // =========================================================================
+        function handleGlobalEscapeKey(e) {
+            if (e.key !== 'Escape') return;
+
+            // 1. Modal de Confirmación de Reinicio SLA (H-02)
+            const modalConfirmReset = document.getElementById('modal-confirm-reset-sla');
+            if (modalConfirmReset && !modalConfirmReset.classList.contains('hidden')) {
+                if (typeof closeConfirmResetSlaModal === 'function') closeConfirmResetSlaModal();
+                else modalConfirmReset.classList.add('hidden');
+                return;
             }
-        });
+
+            // 2. Modales de Gestión de Usuarios
+            const modalUserReset = document.getElementById('modal-user-reset-pwd');
+            if (modalUserReset && !modalUserReset.classList.contains('hidden')) {
+                if (typeof closeResetPasswordModal === 'function') closeResetPasswordModal();
+                else modalUserReset.classList.add('hidden');
+                return;
+            }
+            const modalUserEdit = document.getElementById('modal-user-edit');
+            if (modalUserEdit && !modalUserEdit.classList.contains('hidden')) {
+                if (typeof closeEditUserModal === 'function') closeEditUserModal();
+                else modalUserEdit.classList.add('hidden');
+                return;
+            }
+            const modalUserCreate = document.getElementById('modal-user-create');
+            if (modalUserCreate && !modalUserCreate.classList.contains('hidden')) {
+                if (typeof closeCreateUserModal === 'function') closeCreateUserModal();
+                else modalUserCreate.classList.add('hidden');
+                return;
+            }
+
+            // 3. Modal de Acuerdos de Voz
+            if (elModalAcuerdo && !elModalAcuerdo.classList.contains('hidden')) {
+                if (typeof closeAcuerdoModal === 'function') closeAcuerdoModal();
+                else elModalAcuerdo.classList.add('hidden');
+                return;
+            }
+
+            // 4. Modal Vista Ejecutiva 360°
+            const modal360 = document.getElementById('modal-executive-360');
+            if (modal360 && !modal360.classList.contains('hidden')) {
+                if (window.CronosExecutive360 && typeof window.CronosExecutive360.close === 'function') {
+                    window.CronosExecutive360.close();
+                } else {
+                    modal360.classList.add('hidden');
+                    document.body.classList.remove('overflow-hidden');
+                }
+                return;
+            }
+
+            // 5. Modal de Changelog
+            const modalChangelog = document.getElementById('modal-changelog');
+            if (modalChangelog && !modalChangelog.classList.contains('hidden')) {
+                if (window.CronosChangelog && typeof window.CronosChangelog.closeModal === 'function') {
+                    window.CronosChangelog.closeModal();
+                } else {
+                    modalChangelog.classList.add('hidden');
+                    document.body.classList.remove('overflow-hidden');
+                }
+                return;
+            }
+
+            // 6. Modal Centro de Exportaciones
+            const modalExport = document.getElementById('modal-centro-exportaciones');
+            if (modalExport && !modalExport.classList.contains('hidden')) {
+                if (typeof closeExportCenterModal === 'function') closeExportCenterModal();
+                else modalExport.classList.add('hidden');
+                return;
+            }
+
+            // 7. Modal Acerca de CRONOS FID
+            const modalAcercaDe = document.getElementById('modal-acerca-de');
+            if (modalAcercaDe && !modalAcercaDe.classList.contains('hidden')) {
+                if (typeof closeAboutModal === 'function') closeAboutModal();
+                else modalAcercaDe.classList.add('hidden');
+                return;
+            }
+
+            // 8. Modal Perfil de Usuario
+            const modalProfile = document.getElementById('modal-user-profile');
+            if (modalProfile && !modalProfile.classList.contains('hidden')) {
+                if (typeof closeUserProfileModal === 'function') closeUserProfileModal();
+                else modalProfile.classList.add('hidden');
+                return;
+            }
+
+            // 9. Modal Historial de Accesos
+            const modalAccess = document.getElementById('modal-access-history');
+            if (modalAccess && !modalAccess.classList.contains('hidden')) {
+                if (typeof closeAccessHistoryModal === 'function') closeAccessHistoryModal();
+                else modalAccess.classList.add('hidden');
+                return;
+            }
+
+            // 10. Modal Admin Users
+            const modalAdminUsers = document.getElementById('modal-admin-users');
+            if (modalAdminUsers && !modalAdminUsers.classList.contains('hidden')) {
+                if (typeof closeAdminUsersModal === 'function') closeAdminUsersModal();
+                else modalAdminUsers.classList.add('hidden');
+                return;
+            }
+
+            // 11. Ventana Flotante del Asistente Cronos AI
+            const assistantWindow = document.getElementById('cronos-assistant-window');
+            if (assistantWindow && !assistantWindow.classList.contains('hidden')) {
+                if (window.CronosAssistant && typeof window.CronosAssistant.close === 'function') {
+                    window.CronosAssistant.close();
+                } else {
+                    assistantWindow.classList.add('hidden');
+                }
+                return;
+            }
+
+            // 12. Menú Desplegable de Usuario (Header dropdown)
+            const dropdown = document.getElementById('user-dropdown-menu');
+            if (dropdown && !dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+                const chevron = document.getElementById('user-menu-chevron');
+                if (chevron) chevron.style.transform = 'rotate(0deg)';
+                return;
+            }
+        }
+        document.addEventListener('keydown', handleGlobalEscapeKey);
 
         // Sincronizar inputs
         elClientName.addEventListener('input', () => { updateMailPreview(); });
@@ -6457,9 +7008,9 @@ Sr.(a) XXX , agradecemos su comunicación y de igual manera pedimos las disculpa
                 if (navigator.clipboard) {
                     navigator.clipboard.writeText(textToCopy)
                         .then(() => showToast(successMsg, 'success'))
-                        .catch(() => showToast('Error al copiar.', 'error'));
+                        .catch(() => showToast('No fue posible copiar al portapapeles.', 'error', 'Permita los permisos de portapapeles en su navegador o use la combinación Ctrl+C.'));
                 } else {
-                    showToast('Error de compatibilidad.', 'error');
+                    showToast('Navegador no compatible con copiado automático.', 'error', 'Seleccione el contenido manualmente y presione Ctrl+C.');
                 }
             }
         }
@@ -6482,27 +7033,41 @@ Por favor, proporciona esta clave al asesor que te está atendiendo para que pod
 ¡Gracias por confiar en WIN!`;
         }
 
-        // Toasts
-        function showToast(message, type = 'success') {
+        // [SPRINT 1 - H-06] Notificaciones Toasts Accionables (Causa + Acción recomendada)
+        function showToast(message, type = 'success', actionSuggestion = null) {
             const toast = document.createElement('div');
-            toast.className = "toast-enter p-4 rounded-xl shadow-lg border text-sm font-semibold flex items-center gap-3 bg-white text-slate-800 border-slate-200 pointer-events-auto max-w-sm";
+            toast.className = "toast-enter p-3.5 rounded-xl shadow-xl border text-sm font-semibold flex items-start gap-3 bg-white text-slate-800 border-slate-200 pointer-events-auto max-w-md transition-all duration-300";
 
-            let icon = '<i class="fa-solid fa-circle-check text-emerald-500 text-lg"></i>';
+            let icon = '<i class="fa-solid fa-circle-check text-emerald-500 text-lg mt-0.5 shrink-0"></i>';
+            let duration = 4000;
             if (type === 'warning') {
-                icon = '<i class="fa-solid fa-triangle-exclamation text-amber-500 text-lg"></i>';
-                toast.classList.add('border-l-4', 'border-l-amber-500');
+                icon = '<i class="fa-solid fa-triangle-exclamation text-amber-500 text-lg mt-0.5 shrink-0"></i>';
+                toast.classList.add('border-l-4', 'border-l-amber-500', 'bg-amber-50/20');
+                duration = 5500;
             } else if (type === 'error') {
-                icon = '<i class="fa-solid fa-circle-exclamation text-red-500 text-lg"></i>';
-                toast.classList.add('border-l-4', 'border-l-red-500');
+                icon = '<i class="fa-solid fa-circle-exclamation text-red-500 text-lg mt-0.5 shrink-0"></i>';
+                toast.classList.add('border-l-4', 'border-l-red-500', 'bg-red-50/20');
+                duration = 6500;
+            } else if (type === 'info') {
+                icon = '<i class="fa-solid fa-circle-info text-blue-500 text-lg mt-0.5 shrink-0"></i>';
+                toast.classList.add('border-l-4', 'border-l-blue-500');
+                duration = 4500;
             } else {
                 toast.classList.add('border-l-4', 'border-l-emerald-500');
             }
 
             toast.innerHTML = `
                 ${icon}
-                <div class="flex-1">${message}</div>
-                <button class="text-slate-400 hover:text-slate-600 transition ml-2">
-                    <i class="fa-solid fa-xmark"></i>
+                <div class="flex-1 min-w-0">
+                    <div class="text-slate-800 text-xs sm:text-sm font-bold leading-snug">${message}</div>
+                    ${actionSuggestion ? `
+                    <div class="mt-1.5 text-[11px] text-slate-500 font-normal leading-relaxed flex items-center gap-1.5 pt-1.5 border-t border-slate-100">
+                        <i class="fa-solid fa-lightbulb text-amber-500 text-[10px] shrink-0"></i>
+                        <span>${actionSuggestion}</span>
+                    </div>` : ''}
+                </div>
+                <button class="text-slate-400 hover:text-slate-600 transition ml-2 mt-0.5 shrink-0" aria-label="Cerrar notificación">
+                    <i class="fa-solid fa-xmark text-xs"></i>
                 </button>
             `;
 
@@ -6510,7 +7075,7 @@ Por favor, proporciona esta clave al asesor que te está atendiendo para que pod
             setTimeout(() => { toast.classList.add('toast-visible'); }, 50);
 
             toast.querySelector('button').addEventListener('click', () => { removeToast(toast); });
-            setTimeout(() => { removeToast(toast); }, 4000);
+            setTimeout(() => { removeToast(toast); }, duration);
         }
 
         function removeToast(toast) {
@@ -6875,7 +7440,7 @@ Por favor, proporciona esta clave al asesor que te está atendiendo para que pod
         function copiarPlantilla() {
             const plantilla = elSysObservaciones ? elSysObservaciones.value.trim() : '';
             if (!plantilla) {
-                showToast('No hay contenido en la plantilla para copiar.', 'warning');
+                showToast('No hay contenido en la plantilla para copiar.', 'warning', 'Seleccione una tipificación o redacte observaciones antes de copiar.');
                 return;
             }
             copyToClipboard(plantilla, '¡Plantilla copiada correctamente!');
@@ -6940,6 +7505,9 @@ Por favor, proporciona esta clave al asesor que te está atendiendo para que pod
         // --- EVENT LISTENERS GENERALES ---
         elBtnGenerate.addEventListener('click', triggerNewKey);
 
+        // [SPRINT 1 - H-01] Corrección de captura global de barra espaciadora
+        // La tecla Spacebar ya NO genera claves ni cambia de módulo accidentalmente.
+        // Se preserva F9 para acceso rápido intencional al generador.
         document.addEventListener('keydown', (e) => {
             const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
             if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select' || (document.activeElement && document.activeElement.isContentEditable)) {
@@ -6947,10 +7515,6 @@ Por favor, proporciona esta clave al asesor que te está atendiendo para que pod
             }
 
             if (e.key === 'F9') {
-                e.preventDefault();
-                switchTab('generator');
-                triggerNewKey();
-            } else if (e.key === ' ' || e.key === 'Spacebar') {
                 e.preventDefault();
                 switchTab('generator');
                 triggerNewKey();
@@ -6976,7 +7540,7 @@ Por favor, proporciona esta clave al asesor que te está atendiendo para que pod
 
         elBtnCopyKeyOnly.addEventListener('click', () => {
             if (!secretKey) {
-                showToast('Primero genera una clave secreta.', 'error');
+                showToast('No hay ninguna clave generada.', 'warning', 'Haga clic en «Generar Clave» o presione la tecla F9 para crear una nueva clave.');
                 return;
             }
             copyToClipboard(secretKey, `¡Clave secreta "${secretKey}" copiada!`);
@@ -7107,7 +7671,7 @@ Por favor, proporciona esta clave al asesor que te está atendiendo para que pod
         if (drvBtnCopy) {
             drvBtnCopy.addEventListener('click', function () {
                 if (!drvPreview.value) {
-                    showToast('No hay plantilla para copiar.', 'warning');
+                    showToast('Plantilla de derivación vacía.', 'warning', 'Seleccione un tipo de derivación y complete los campos requeridos antes de copiar.');
                     return;
                 }
                 copyToClipboard(drvPreview.value, '¡Plantilla de derivación copiada!');
@@ -7576,7 +8140,7 @@ Por favor, proporciona esta clave al asesor que te está atendiendo para que pod
             // Copy Observaciones Button
             btnCopyObs.addEventListener('click', () => {
                 if (txtObservaciones.value.trim() === '') {
-                    showToast('No hay plantilla para copiar', 'warning');
+                    showToast('Plantilla de acuerdo vacía.', 'warning', 'Complete las observaciones del acuerdo antes de copiar.');
                     return;
                 }
                 copyToClipboard(txtObservaciones.value, '¡Plantilla copiada exitosamente!');
@@ -11642,7 +12206,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
         window.copyDirectorioCC = function () {
             if (!activeDirectorioEscenario) {
-                showToast('No existen escenarios registrados para esta área.', 'warning');
+                showToast('Sin escenario de escalamiento seleccionado.', 'warning', 'Seleccione una tipificación en el panel de Directorio.');
                 return;
             }
             const elCCBox = document.getElementById('dir-sim-cc-box');
@@ -11656,16 +12220,16 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
         window.copyDirectorioAsunto = function () {
             if (!activeDirectorioEscenario) {
-                showToast('No existen escenarios registrados para esta área.', 'warning');
+                showToast('Sin escenario de escalamiento seleccionado.', 'warning', 'Seleccione una tipificación en el panel de Directorio.');
                 return;
             }
             if (activeDirectorioEscenario.soloCoordinador) {
-                showToast('SOLO LO ENVÍA EL COORDINADOR (No aplica copiado de asunto)', 'warning');
+                showToast('Escalamiento exclusivo para Coordinador.', 'warning', 'Este caso debe ser transmitido por el Coordinador del turno.');
                 return;
             }
             const elAsunto = document.getElementById('dir-sim-asunto');
             if (!elAsunto || !elAsunto.textContent.trim()) {
-                showToast('No hay asunto para copiar', 'warning');
+                showToast('El asunto del correo se encuentra vacío.', 'warning', 'Verifique que el escenario contenga plantilla de asunto.');
                 return;
             }
             copyToClipboard(elAsunto.textContent.trim(), '¡Asunto copiado!');
@@ -11673,16 +12237,16 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
         window.copyDirectorioCuerpo = function () {
             if (!activeDirectorioEscenario) {
-                showToast('No existen escenarios registrados para esta área.', 'warning');
+                showToast('Sin escenario de escalamiento seleccionado.', 'warning', 'Seleccione una tipificación en el panel de Directorio.');
                 return;
             }
             if (activeDirectorioEscenario.soloCoordinador) {
-                showToast('SOLO LO ENVÍA EL COORDINADOR (No aplica copiado de cuerpo)', 'warning');
+                showToast('Escalamiento exclusivo para Coordinador.', 'warning', 'Este caso debe ser transmitido por el Coordinador del turno.');
                 return;
             }
             const elCuerpo = document.getElementById('dir-sim-cuerpo');
             if (!elCuerpo || !elCuerpo.textContent.trim()) {
-                showToast('No hay cuerpo de mensaje para copiar', 'warning');
+                showToast('El cuerpo del correo se encuentra vacío.', 'warning', 'Verifique los parámetros del escenario o redacte el mensaje.');
                 return;
             }
             copyToClipboard(elCuerpo.textContent.trim(), '¡Cuerpo del correo copiado!');
@@ -11690,11 +12254,11 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
         window.copyDirectorioPlantillaCompleta = function () {
             if (!activeDirectorioEscenario) {
-                showToast('No existen escenarios registrados para esta área.', 'warning');
+                showToast('Sin escenario de escalamiento seleccionado.', 'warning', 'Seleccione una tipificación en el panel de Directorio.');
                 return;
             }
             if (activeDirectorioEscenario.soloCoordinador) {
-                showToast('SOLO LO ENVÍA EL COORDINADOR (No aplica copiado de plantilla)', 'warning');
+                showToast('Escalamiento exclusivo para Coordinador.', 'warning', 'Este caso debe ser transmitido por el Coordinador del turno.');
                 return;
             }
             const correo = document.getElementById('dir-sim-correo')?.textContent.trim() || '';
@@ -16254,7 +16818,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
                     if (typeof updateTopHeader === 'function') updateTopHeader('exportaciones');
                     if (!hasPermission('exportExcel')) {
-                        showToast('Acceso denegado: Tu perfil no cuenta con permisos de exportación.', 'error');
+                        showToast('Acceso denegado para exportaciones.', 'error', 'Su perfil no cuenta con permisos de exportación. Solicite habilitación a un Administrador.');
                         return;
                     }
 
@@ -16278,7 +16842,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     console.log("Exportaciones abiertas correctamente");
                 } catch (error) {
                     console.error("Export Error:", error);
-                    showToast('Error al abrir exportaciones: ' + (error.message || error), 'error');
+                    showToast('No fue posible abrir el Centro de Exportaciones.', 'error', 'Compruebe su conexión de red o recargue la aplicación.');
                 }
             },
 
@@ -16443,7 +17007,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             async executeDownload() {
                 if (this.isProcessing) return;
                 if (!hasPermission('exportExcel')) {
-                    showToast('Acceso denegado: Tu perfil no cuenta con permisos de exportación.', 'error');
+                    showToast('Acceso denegado para exportación.', 'error', 'Su rol no posee el permiso exportExcel. Solicite habilitación a un Administrador.');
                     return;
                 }
 
@@ -16481,7 +17045,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     this.closeModal();
                 } catch (err) {
                     console.error("FIRESTORE ERROR [ExportCenter]:", err);
-                    showToast(`Error al generar exportación: ${err.message || 'Error desconocido'}`, 'error');
+                    showToast('No fue posible exportar el archivo.', 'error', 'Verifique su conexión de red o acorte el rango de fechas seleccionado y vuelva a intentarlo.');
                 } finally {
                     this.isProcessing = false;
                     if (btn) {
@@ -18888,16 +19452,26 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         window.CRONOS_VERSION_INFO = {
             proyecto: "CRONOS FID",
             nombreCompleto: "Centro de Recursos Operativos para Negociación y Fidelización",
-            version: "JELI v5.2.0 • WIN OCT2026",
+            version: "JELI v5.2.1 • WIN OCT2026",
             autor: "Jhonny Leon Illescas",
             roles: "Diseño Funcional, Arquitectura Operativa, Gestión de Procesos, Desarrollo Evolutivo",
             anio: 2026,
             descripcion: "Sistema integral de apoyo operativo, capacitación, tipificaciones, escalamientos, SLA, analítica y soporte a asesores. Proyecto desarrollado para la gestión operativa de campañas de fidelización.",
             changelog: [
                 {
+                    version: "v5.2.1",
+                    tag: "Sprint 1 & 1.5 - Control de Usuario y Notificaciones Externas SLA",
+                    items: [
+                        "CRN-0021: Sprint 1.5: Sistema de notificaciones nativas de escritorio del SO para CRONOS SLA con alertas preventivas (35s), críticas interactivas con acciones rápidas de Pausar y Reiniciar validado (45s) y máxima excedida (60s), operando fuera de la pestaña con sincronización de audio.",
+                        "CRN-0020: Sprint 1 de usabilidad heurística: eliminación de secuestro de barra espaciadora (H-01), modal de confirmación con cancelación de reset SLA (H-02), manejador global prioritario de tecla ESC (H-04), y mensajes de error y advertencia explicativos y accionables (H-06).",
+                        "CRN-0018: Corrección de adherencia sticky y offset vertical de CRONOS SLA durante el scroll para perfil Asesor."
+                    ]
+                },
+                {
                     version: "v5.2.0",
                     tag: "UX Asesor Dominante & Roles",
                     items: [
+                        "CRN-0019: Evaluación Heurística Integral de Usabilidad y Diagnóstico UX/UI (10 Heurísticas de Jakob Nielsen).",
                         "CRN-0017: Optimización y exclusividad del panel lateral CRONOS SLA para Asesor (exclusión de módulos no autorizados y aprovechamiento integral).",
                         "CRN-0016: Reubicación ergonómica fija de CRONOS SLA en barra lateral para perfil Asesor.",
                         "CRN-0015: Corrección de apertura de módulos administrativos y Vista Ejecutiva 360°."
@@ -19222,6 +19796,39 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         </div>
     </div>
 
+
+    <!-- ========================================================================= -->
+    <!-- SPRINT 1 (H-02): MODAL DE CONFIRMACIÓN PARA REINICIO DE CRONOS SLA        -->
+    <!-- ========================================================================= -->
+    <div id="modal-confirm-reset-sla"
+        class="hidden fixed inset-0 z-[130] flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm transition-all"
+        onclick="if(event.target === this) closeConfirmResetSlaModal()">
+        <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl border border-slate-200 p-6 flex flex-col gap-4 animate-pop">
+            <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl shrink-0 shadow-inner">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-base font-extrabold text-slate-800 tracking-tight">¿Desea reiniciar el temporizador SLA?</h3>
+                    <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Esta acción reiniciará el conteo actual.</p>
+                </div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-3 text-xs text-slate-600 flex items-center justify-between">
+                <span class="font-medium text-slate-500">Tiempo actual en curso:</span>
+                <span id="confirm-reset-current-time" class="font-mono font-bold text-slate-800 text-sm">00s</span>
+            </div>
+            <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-100">
+                <button type="button" id="btn-cancel-reset-sla" onclick="closeConfirmResetSlaModal()"
+                    class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-all cursor-pointer">
+                    Cancelar
+                </button>
+                <button type="button" id="btn-confirm-reset-sla" onclick="confirmResetCronosTimer()"
+                    class="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-extrabold shadow-md hover:shadow-rose-600/30 transition-all flex items-center gap-1.5 cursor-pointer">
+                    <i class="fa-solid fa-rotate-left text-xs"></i> Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- ========================================================================= -->
     <!-- FASE 4.0: MODAL CENTRO AVANZADO DE EXPORTACIONES HISTÓRICAS (FIRESTORE)   -->
