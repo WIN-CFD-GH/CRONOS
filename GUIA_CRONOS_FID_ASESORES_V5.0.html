@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Usuario para Asesores • CRONOS FID v5.0.0</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff6b00;
+            --primary-hover: #e05e00;
+            --primary-light: #fff7ed;
+            --primary-border: #fed7aa;
+            --dark-navy: #0b1329;
+            --navy-card: #111e38;
+            --navy-surface: #172545;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --text-light: #f8fafc;
+            --border-light: #e2e8f0;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-red: #ef4444;
+            --accent-blue: #0284c7;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.04);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* Top Header */
+        header.top-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(11, 19, 41, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid var(--primary);
+            color: #ffffff;
+            padding: 0.85rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand-badge {
+            background: linear-gradient(135deg, #ff6b00 0%, #ff8c33 100%);
+            color: white;
+            font-weight: 800;
+            font-size: 0.85rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(255, 107, 0, 0.4);
+        }
+
+        .brand-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-sub {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-print {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-print:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4);
+        }
+
+        .profile-pill {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #34d399;
+            padding: 0.35rem 0.85rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* Layout Structure */
+        .app-layout {
+            display: grid;
+            grid-template-columns: 290px 1fr;
+            min-height: calc(100vh - 65px);
+        }
+
+        /* Sidebar Navigation */
+        aside.sidebar-nav {
+            background: #ffffff;
+            border-right: 1px solid var(--border-light);
+            padding: 1.75rem 1.25rem;
+            position: sticky;
+            top: 65px;
+            height: calc(100vh - 65px);
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+
+        .nav-section-title {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            margin-bottom: 0.75rem;
+            margin-top: 1.25rem;
+            padding-left: 0.5rem;
+        }
+
+        .nav-section-title:first-child {
+            margin-top: 0;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .nav-item a {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0.55rem 0.75rem;
+            color: #334155;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.86rem;
+            font-weight: 500;
+            transition: all 0.15s ease;
+        }
+
+        .nav-item a:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+            transform: translateX(3px);
+        }
+
+        .nav-item a i {
+            width: 18px;
+            text-align: center;
+            font-size: 0.95rem;
+            color: #64748b;
+        }
+
+        .nav-item a:hover i {
+            color: var(--primary);
+        }
+
+        .nav-badge-alert {
+            margin-left: auto;
+            background: #fef2f2;
+            color: #dc2626;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.1rem 0.4rem;
+            border-radius: 6px;
+        }
+
+        /* Main Content Container */
+        main.main-content {
+            padding: 2.5rem 3rem 5rem 3rem;
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Banner Hero */
+        .hero-banner {
+            background: linear-gradient(135deg, #0b1329 0%, #172545 100%);
+            border-radius: var(--radius-lg);
+            padding: 2.25rem 2.5rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border-left: 6px solid var(--primary);
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255,107,0,0.18) 0%, rgba(255,107,0,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 107, 0, 0.2);
+            border: 1px solid rgba(255, 107, 0, 0.4);
+            color: #ff9d4d;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+        }
+
+        .hero-title {
+            font-size: 2.1rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.75rem;
+            line-height: 1.25;
+        }
+
+        .hero-title span {
+            color: var(--primary);
+        }
+
+        .hero-desc {
+            font-size: 1rem;
+            color: #cbd5e1;
+            max-width: 820px;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-metadata-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.12);
+            padding-top: 1.25rem;
+        }
+
+        .hero-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .hero-meta-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: #ff9d4d;
+        }
+
+        .hero-meta-text {
+            font-size: 0.78rem;
+            color: #94a3b8;
+        }
+
+        .hero-meta-val {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #f8fafc;
+        }
+
+        /* Scope & Restrictions Alert */
+        .scope-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 2.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .scope-box {
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+        }
+
+        .scope-box.included {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+        }
+
+        .scope-box.excluded {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+        }
+
+        .scope-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 0.92rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .scope-box.included .scope-header { color: #166534; }
+        .scope-box.excluded .scope-header { color: #991b1b; }
+
+        .scope-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+        }
+
+        .scope-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .scope-box.included .scope-list li { color: #15803d; }
+        .scope-box.excluded .scope-list li { color: #b91c1c; }
+
+        /* Guide Modules & Sections */
+        .guide-module {
+            margin-bottom: 4rem;
+            scroll-margin-top: 90px;
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 0.85rem;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 1.75rem;
+        }
+
+        .module-title-group {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .module-num {
+            background: var(--dark-navy);
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 1rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .module-title {
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: var(--dark-navy);
+            letter-spacing: -0.3px;
+        }
+
+        .module-tag {
+            background: #f1f5f9;
+            color: #475569;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+        }
+
+        .module-summary {
+            font-size: 0.95rem;
+            color: #475569;
+            margin-bottom: 1.75rem;
+            line-height: 1.6;
+        }
+
+        /* Step Card (Standardized Format) */
+        .step-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.2s ease;
+        }
+
+        .step-card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: #cbd5e1;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .step-badge {
+            background: var(--primary-light);
+            border: 1px solid var(--primary-border);
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 0.82rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .step-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--dark-navy);
+        }
+
+        /* Step Specifications Table / Flow */
+        .step-flow-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .flow-block {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 1rem 1.15rem;
+            border-left: 4px solid #cbd5e1;
+            position: relative;
+        }
+
+        .flow-block.click {
+            border-left-color: #0284c7;
+            background: #f0f9ff;
+        }
+
+        .flow-block.action {
+            border-left-color: #f59e0b;
+            background: #fffbeb;
+        }
+
+        .flow-block.result {
+            border-left-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .flow-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.35rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .flow-block.click .flow-label { color: #0369a1; }
+        .flow-block.action .flow-label { color: #b45309; }
+        .flow-block.result .flow-label { color: #15803d; }
+
+        .flow-text {
+            font-size: 0.86rem;
+            color: #1e293b;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* Step Screenshot Container */
+        .step-image-container {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 0.6rem;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            margin-top: 1rem;
+            position: relative;
+        }
+
+        .step-image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .image-caption {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 0.5rem 0.2rem 0.5rem;
+            color: #94a3b8;
+            font-size: 0.78rem;
+        }
+
+        .image-caption-text {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .image-caption-tag {
+            background: rgba(255, 107, 0, 0.2);
+            color: #ff9d4d;
+            font-weight: 700;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+        }
+
+        /* Note / Callout Boxes */
+        .callout-box {
+            padding: 1.15rem 1.35rem;
+            border-radius: 10px;
+            margin: 1.25rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.9rem;
+            font-size: 0.88rem;
+            line-height: 1.55;
+        }
+
+        .callout-box.tip {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+        }
+
+        .callout-box.warning {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            color: #92400e;
+        }
+
+        .callout-box.important {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+        }
+
+        .callout-icon {
+            font-size: 1.25rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        /* SLA Grid Layout */
+        .sla-timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .sla-card-stage {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sla-badge-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sla-stage-pill {
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.76rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stage-green { background: #dcfce7; color: #15803d; }
+        .stage-amber { background: #fef3c7; color: #b45309; }
+        .stage-red { background: #fee2e2; color: #b91c1c; }
+        .stage-critical { background: #7f1d1d; color: #ffffff; }
+
+        .sla-stage-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .sla-stage-desc {
+            font-size: 0.83rem;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        /* FAQ Accordion */
+        .faq-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .faq-question {
+            padding: 1.1rem 1.35rem;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--dark-navy);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            background: #ffffff;
+            transition: background 0.15s ease;
+        }
+
+        .faq-question:hover {
+            background: #f8fafc;
+        }
+
+        .faq-answer {
+            padding: 0 1.35rem 1.25rem 1.35rem;
+            font-size: 0.88rem;
+            color: #475569;
+            line-height: 1.6;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 0.9rem;
+        }
+
+        /* Best Practices Grid */
+        .practices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .practice-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.35rem;
+            box-shadow: var(--shadow-sm);
+            border-top: 4px solid var(--primary);
+        }
+
+        .practice-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            margin-bottom: 0.85rem;
+        }
+
+        .practice-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            color: var(--dark-navy);
+        }
+
+        .practice-desc {
+            font-size: 0.84rem;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer.guide-footer {
+            margin-top: 5rem;
+            border-top: 2px solid #e2e8f0;
+            padding-top: 2rem;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.82rem;
+        }
+
+        /* Print Specific Styling */
+        @media print {
+            header.top-header, aside.sidebar-nav, .btn-print {
+                display: none !important;
+            }
+
+            .app-layout {
+                display: block !important;
+            }
+
+            main.main-content {
+                padding: 0 !important;
+                max-width: 100% !important;
+            }
+
+            .hero-banner {
+                background: #0b1329 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                page-break-after: avoid;
+            }
+
+            .step-card {
+                page-break-inside: avoid;
+                box-shadow: none !important;
+                border: 1px solid #ccc !important;
+                margin-bottom: 1.5rem !important;
+            }
+
+            .step-image-container img {
+                max-width: 100% !important;
+                height: auto !important;
+            }
+
+            .guide-module {
+                page-break-before: auto;
+            }
+        }
+
+        /* Responsive Mobile */
+        @media (max-width: 992px) {
+            .app-layout {
+                grid-template-columns: 1fr;
+            }
+
+            aside.sidebar-nav {
+                display: none;
+            }
+
+            main.main-content {
+                padding: 1.5rem;
+            }
+
+            .step-flow-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .scope-card {
+                grid-template-columns: 1fr;
+            }
+
+            .sla-timeline-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Header Bar -->
+    <header class="top-header">
+        <div class="header-brand">
+            <span class="brand-badge">WIN OCT2026</span>
+            <div>
+                <div class="brand-title">CRONOS FID • MANUAL OFICIAL PARA ASESORES</div>
+                <div class="brand-sub">Versión JELI v5.0.0 • Sistema Integral de Retenciones y Fidelización</div>
+            </div>
+        </div>
+        <div class="header-actions">
+            <div class="profile-pill">
+                <i class="fa-solid fa-user-check"></i> ROL: ASESOR DE RETENCIONES
+            </div>
+            <button class="btn-print" onclick="window.print()">
+                <i class="fa-solid fa-print"></i> Imprimir / Guardar PDF
+            </button>
+        </div>
+    </header>
+
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar-nav">
+            <div class="nav-section-title">INTRODUCCIÓN Y ACCESO</div>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="#sec-inicio"><i class="fa-solid fa-right-to-bracket"></i> 1. Inicio de Sesión</a></li>
+                <li class="nav-item"><a href="#sec-principal"><i class="fa-solid fa-desktop"></i> 2. Pantalla Principal</a></li>
+            </ul>
+
+            <div class="nav-section-title">MÓDULOS OPERATIVOS DEL ASESOR</div>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="#sec-clave"><i class="fa-solid fa-key"></i> 3. Clave Secreta</a></li>
+                <li class="nav-item"><a href="#sec-tipificaciones"><i class="fa-solid fa-clipboard-check"></i> 4. Tipificaciones</a></li>
+                <li class="nav-item"><a href="#sec-tickets"><i class="fa-solid fa-ticket"></i> 5. Tickets Tecnológicos</a></li>
+                <li class="nav-item"><a href="#sec-derivaciones"><i class="fa-brands fa-discord"></i> 6. Derivaciones Discord</a></li>
+                <li class="nav-item"><a href="#sec-acuerdos"><i class="fa-solid fa-microphone-lines"></i> 7. Acuerdos de Voz</a></li>
+                <li class="nav-item"><a href="#sec-directorio"><i class="fa-solid fa-address-book"></i> 8. Directorio (Escalamiento)</a></li>
+            </ul>
+
+            <div class="nav-section-title">CONTROL Y TIEMPOS</div>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="#sec-sla"><i class="fa-solid fa-stopwatch"></i> 9. CRONOS SLA <span class="nav-badge-alert">70s</span></a></li>
+            </ul>
+
+            <div class="nav-section-title">SOPORTE Y GESTIÓN</div>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="#sec-practicas"><i class="fa-solid fa-star"></i> 10. Buenas Prácticas</a></li>
+                <li class="nav-item"><a href="#sec-faq"><i class="fa-solid fa-circle-question"></i> 11. Preguntas Frecuentes</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Body -->
+        <main class="main-content">
+
+            <!-- Hero Banner -->
+            <section class="hero-banner">
+                <div class="hero-tag">
+                    <i class="fa-solid fa-shield-halved"></i> GUÍA OFICIAL DE ENTRENAMIENTO Y OPERACIONES
+                </div>
+                <h1 class="hero-title">Manual de Acceso y Uso para <span>Asesores de Fidelización</span></h1>
+                <p class="hero-desc">
+                    Esta documentación paso a paso ha sido elaborada para guiar de manera estructurada a los asesores del área de Fidelizaciones y Retenciones de WIN. Explica de forma visual el uso de cada herramienta operativa integrada en <strong>CRONOS FID (Versión JELI v5.0.0)</strong>, garantizando estricto cumplimiento del tiempo de respuesta (SLA de 70 segundos), precisión en plantillas y protocolos de escalamiento.
+                </p>
+
+                <div class="hero-metadata-grid">
+                    <div class="hero-meta-item">
+                        <div class="hero-meta-icon"><i class="fa-solid fa-code-branch"></i></div>
+                        <div>
+                            <div class="hero-meta-text">Versión de Sistema</div>
+                            <div class="hero-meta-val">JELI v5.0.0 (Octubre 2026)</div>
+                        </div>
+                    </div>
+                    <div class="hero-meta-item">
+                        <div class="hero-meta-icon"><i class="fa-solid fa-user-tag"></i></div>
+                        <div>
+                            <div class="hero-meta-text">Perfil Asignado</div>
+                            <div class="hero-meta-val">Rol Asesor (Front-Office)</div>
+                        </div>
+                    </div>
+                    <div class="hero-meta-item">
+                        <div class="hero-meta-icon"><i class="fa-solid fa-stopwatch-20"></i></div>
+                        <div>
+                            <div class="hero-meta-text">Objetivo SLA Espera</div>
+                            <div class="hero-meta-val">Máx. 70 Segundos</div>
+                        </div>
+                    </div>
+                    <div class="hero-meta-item">
+                        <div class="hero-meta-icon"><i class="fa-solid fa-file-shield"></i></div>
+                        <div>
+                            <div class="hero-meta-text">Entorno Operativo</div>
+                            <div class="hero-meta-val">Producción Local / Web</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Scope & Restrictions Box -->
+            <section class="scope-card">
+                <div class="scope-box included">
+                    <div class="scope-header">
+                        <i class="fa-solid fa-circle-check"></i> MÓDULOS INCLUIDOS PARA ASESORES
+                    </div>
+                    <ul class="scope-list">
+                        <li><i class="fa-solid fa-check"></i> Inicio de Sesión seguro con credenciales corporativas</li>
+                        <li><i class="fa-solid fa-check"></i> Entorno de Trabajo Principal y Menú de Perfil</li>
+                        <li><i class="fa-solid fa-check"></i> Generador de Clave Secreta y token dinámico</li>
+                        <li><i class="fa-solid fa-check"></i> Tipificaciones, Calculadora y Matriz de Ajuste Económico</li>
+                        <li><i class="fa-solid fa-check"></i> Generación de Tickets Tecnológicos de Soporte</li>
+                        <li><i class="fa-solid fa-check"></i> Formatos de Derivaciones para canales Discord</li>
+                        <li><i class="fa-solid fa-check"></i> Catálogo de Acuerdos de Voz con Modales de Lectura</li>
+                        <li><i class="fa-solid fa-check"></i> Directorio con 63 Escenarios y Simulador de Correo</li>
+                        <li><i class="fa-solid fa-check"></i> Cronómetro CRONOS SLA con alertas sonoras</li>
+                    </ul>
+                </div>
+                <div class="scope-box excluded">
+                    <div class="scope-header">
+                        <i class="fa-solid fa-ban"></i> MÓDULOS EXCLUIDOS (SOLO ADMINISTRATIVOS)
+                    </div>
+                    <ul class="scope-list">
+                        <li><i class="fa-solid fa-xmark"></i> <strong>Dashboard Gerencial:</strong> Métricas ejecutivas consolidadas</li>
+                        <li><i class="fa-solid fa-xmark"></i> <strong>Módulo de Auditoría:</strong> Trazabilidad profunda de registros</li>
+                        <li><i class="fa-solid fa-xmark"></i> <strong>Analítica CRONOS SLA:</strong> Gráficos de dispersión y tendencias globales</li>
+                        <li><i class="fa-solid fa-xmark"></i> <strong>Gestión de Usuarios:</strong> Creación y reseteo de roles y cuentas</li>
+                        <li><i class="fa-solid fa-xmark"></i> <strong>Exportaciones Masivas:</strong> Descarga de bases de datos completas</li>
+                    </ul>
+                    <div style="margin-top: 0.6rem; font-size: 0.76rem; color: #7f1d1d; font-style: italic;">
+                        * Nota: Los módulos administrativos son accesibles exclusivamente por Coordinadores, Supervisores y Administradores.
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- 1. INICIO DE SESIÓN -->
+            <!-- ========================================== -->
+            <section id="sec-inicio" class="guide-module">
+                <div class="module-header">
+                    <div class="module-title-group">
+                        <div class="module-num">01</div>
+                        <h2 class="module-title">Inicio de Sesión en CRONOS FID</h2>
+                    </div>
+                    <span class="module-tag">Seguridad & Autenticación</span>
+                </div>
+                <p class="module-summary">
+                    El asesor debe autenticarse al comenzar su jornada laboral para cargar sus datos en las plantillas automáticas y habilitar el rastreo de acuerdos generados.
+                </p>
+
+                <!-- Paso 1: Pantalla de Login Limpia -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-badge"><i class="fa-solid fa-circle-dot"></i> PASO 1</span>
+                        <div class="step-title">Acceso a la Pantalla de Autenticación</div>
+                    </div>
+                    <div class="step-flow-grid">
+                        <div class="flow-block click">
+                            <div class="flow-label"><i class="fa-solid fa-arrow-pointer"></i> Dónde hacer clic</div>
+                            <div class="flow-text">Abrir la aplicación CRONOS FID (o navegador asignado) en el equipo de trabajo.</div>
+                        </div>
+                        <div class="flow-block action">
+                            <div class="flow-label"><i class="fa-solid fa-gears"></i> Qué realiza la opción</div>
+                            <div class="flow-text">Carga el portal corporativo WIN Fidelizaciones y verifica el estado de conexión local.</div>
+                        </div>
+                        <div class="flow-block result">
+                            <div class="flow-label"><i class="fa-solid fa-check-double"></i> Resultado esperado</div>
+                            <div class="flow-text">Aparición del formulario de acceso con los campos <em>Correo Corporativo</em> y <em>Contraseña</em>.</div>
+                        </div>
+                    </div>
+                    <div class="step-image-container">
+                        <img src="assets_guia/01_inicio_sesion.png" alt="Pantalla de Inicio de Sesión limpia">
+                        <div class="image-caption">
+                            <div class="image-caption-text"><i class="fa-solid fa-image"></i> Evidencia Real: Formulario de inicio de sesión inicial.</div>
+                            <span class="image-caption-tag">assets_guia/01_inicio_sesion.png</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 2: Introducción de Credenciales -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-badge"><i class="fa-solid fa-circle-dot"></i> PASO 2</span>
+                        <div class="step-title">Ingreso de Credenciales y Validación de Rol</div>
+                    </div>
+                    <div class="step-flow-grid">
+                        <div class="flow-block click">
+                            <div class="flow-label"><i class="fa-solid fa-arrow-pointer"></i> Dónde hacer clic</div>
+                            <div class="flow-text">Hacer clic en los campos de texto, digitar correo/contraseña y presionar el botón <strong>Iniciar Sesión</strong>.</div>
+                        </div>
+                        <div class="flow-block action">
+                            <div class="flow-label"><i class="fa-solid fa-gears"></i> Qué realiza la opción</div>
+                            <div class="flow-text">Verifica la identidad en la base de usuarios y valida que el perfil activo corresponda a <em>Asesor</em>.</div>
+                        </div>
+                        <div class="flow-block result">
+                            <div class="flow-label"><i class="fa-solid fa-check-double"></i> Resultado esperado</div>
+                            <div class="flow-text">Acceso concedido e ingreso automático a la interfaz operativa con datos preestablecidos.</div>
+                        </div>
+                    </div>
+                    <div class="step-image-container">
+                        <img src="assets_guia/02_login_credenciales.png" alt="Ingreso de credenciales de Asesor">
+                        <div class="image-caption">
+                            <div class="image-caption-text"><i class="fa-solid fa-image"></i> Evidencia Real: Credenciales ingresadas para perfil de Asesor de Fidelizaciones.</div>
+                            <span class="image-caption-tag">assets_guia/02_login_credenciales.png</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- 2. PANTALLA PRINCIPAL -->
+            <!-- ========================================== -->
+            <section id="sec-principal" class="guide-module">
+                <div class="module-header">
+                    <div class="module-title-group">
+                        <div class="module-num">02</div>
+                        <h2 class="module-title">Pantalla Principal del Asesor</h2>
+                    </div>
+                    <span class="module-tag">Entorno de Trabajo</span>
+                </div>
+                <p class="module-summary">
+                    Una vez dentro del sistema, el asesor cuenta con una barra de navegación superior intuitiva para cambiar de módulo con un solo clic y un widget integrado de CRONOS SLA permanente.
+                </p>
+
+                <!-- Paso 1: Interfaz Principal -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-badge"><i class="fa-solid fa-circle-dot"></i> PASO 1</span>
+                        <div class="step-title">Exploración de la Barra de Navegación y Pestañas</div>
+                    </div>
+                    <div class="step-flow-grid">
+                        <div class="flow-block click">
+                            <div class="flow-label"><i class="fa-solid fa-arrow-pointer"></i> Dónde hacer clic</div>
+                            <div class="flow-text">Hacer clic en cualquiera de las pestañas superiores (Clave Secreta, Tipificaciones, Tickets, etc.).</div>
+                        </div>
+                        <div class="flow-block action">
+                            <div class="flow-label"><i class="fa-solid fa-gears"></i> Qué realiza la opción</div>
+                            <div class="flow-text">Alterna la vista de trabajo en tiempo real sin recargar la página, manteniendo los datos intactos.</div>
+                        </div>
+                        <div class="flow-block result">
+                            <div class="flow-label"><i class="fa-solid fa-check-double"></i> Resultado esperado</div>
+                            <div class="flow-text">La pestaña seleccionada se resalta con fondo naranja WIN y despliega su área de trabajo.</div>
+                        </div>
+                    </div>
+                    <div class="step-image-container">
+                        <img src="assets_guia/03_pantalla_principal.png" alt="Pantalla Principal del Asesor">
+                        <div class="image-caption">
+                            <div class="image-caption-text"><i class="fa-solid fa-image"></i> Evidencia Real: Barra de herramientas superior con módulos autorizados para Asesores.</div>
+                            <span class="image-caption-tag">assets_guia/03_pantalla_principal.png</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 2: Menú de Usuario -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-badge"><i class="fa-solid fa-circle-dot"></i> PASO 2</span>
+                        <div class="step-title">Menú de Perfil y Cierre de Sesión Seguro</div>
+                    </div>
+                    <div class="step-flow-grid">
+                        <div class="flow-block click">
+                            <div class="flow-label"><i class="fa-solid fa-arrow-pointer"></i> Dónde hacer clic</div>
+                            <div class="flow-text">Hacer clic en el avatar con nombre del asesor en la esquina superior derecha.</div>
+                        </div>
+                        <div class="flow-block action">
+                            <div class="flow-label"><i class="fa-solid fa-gears"></i> Qué realiza la opción</div>
+                            <div class="flow-text">Despliega el panel de opciones de cuenta con nombre del usuario, correo corporativo y botón de cierre.</div>
+                        </div>
+                        <div class="flow-block result">
+                            <div class="flow-label"><i class="fa-solid fa-check-double"></i> Resultado esperado</div>
+                            <div class="flow-text">Visualización de credenciales activas y opción directa para "Cerrar Sesión".</div>
+                        </div>
+                    </div>
+                    <div class="step-image-container">
+                        <img src="assets_guia/04_menu_usuario_asesor.png" alt="Menú de Usuario Asesor">
+                        <div class="image-caption">
+                            <div class="image-caption-text"><i class="fa-solid fa-image"></i> Evidencia Real: Menú desplegable con información del perfil Asesor.</div>
+                            <span class="image-caption-tag">assets_guia/04_menu_usuario_asesor.png</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- 3. CLAVE SECRETA -->
+            <!-- ========================================== -->
+            <section id="sec-clave" class="guide-module">
+                <div class="module-header">
+                    <div class="module-title-group">
+                        <div class="module-num">03</div>
+                        <h2 class="module-title">Módulo: Generador de Clave Secreta</h2>
+                    </div>
+                    <span class="module-tag">Seguridad del Cliente</span>
+                </div>
+                <p class="module-summary">
+                    Permite generar una clave aleatoria segura y formatear de manera estandarizada la plantilla para el cliente durante llamadas o gestiones donde se requiera autenticación o registro de token.
+                </p>
+
+                <!-- Paso 1: Generación de Clave -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-badge"><i class="fa-solid fa-circle-dot"></i> PASO 1</span>
+                        <div class="step-title">Generación Dinámica de Nueva Clave Secreta</div>
+                    </div>
+                    <div class="step-flow-grid">
+                        <div class="flow-block click">
+                            <div class="flow-label"><i class="fa-solid fa-arrow-pointer"></i> Dónde hacer clic</div>
+                            <div class="flow-text">Pestaña <strong>Clave Secreta</strong> y presionar el botón <strong>Generar Clave</strong>.</div>
+                        </div>
+                        <div class="flow-block action">
+                            <div class="flow-label"><i class="fa-solid fa-gears"></i> Qué realiza la opción</div>
+                            <div class="flow-text">Genera un código alfanumérico seguro cumpliendo las directivas de seguridad de WIN.</div>
+                        </div>
+                        <div class="flow-block result">
+                            <div class="flow-label"><i class="fa-solid fa-check-double"></i> Resultado esperado</div>
+                            <div class="flow-text">La clave secreta se presenta en texto resaltado y se actualiza en el cuadro de plantilla.</div>
+                        </div>
+                    </div>
+                    <div class="step-image-container">
+                        <img src="assets_guia/05_clave_secreta_general.png" alt="Generador de Clave Secreta">
+                        <div class="image-caption">
+                            <div class="image-caption-text"><i class="fa-solid fa-image"></i> Evidencia Real: Interfaz del generador de clave secreta con token aleatorio.</div>
+                            <span class="image-caption-tag">assets_guia/05_clave_secreta_general.png</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 2: Personalización con Cliente -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-badge"><i class="fa-solid fa-circle-dot"></i> PASO 2</span>
+                        <div class="step-title">Personalización con Datos del Cliente y Copiado</div>
+                    </div>
+                    <div class="step-flow-grid">
+                        <div class="flow-block click">
+                            <div class="flow-label"><i class="fa-solid fa-arrow-pointer"></i> Dónde hacer clic</div>
+                            <div class="flow-text">Ingresar el nombre completo del titular en el campo <em>Nombre del Cliente</em> y pulsar <strong>Copiar Texto</strong>.</div>
+                        </div>
+                        <div class="flow-block action">
+                            <div class="flow-label"><i class="fa-solid fa-gears"></i> Qué realiza la opción</div>
+                            <div class="flow-text">Inserta dinámicamente el nombre y la clave en el formato oficial para envío o pegado en el CRM.</div>
+                        </div>
+                        <div class="flow-block result">
+                            <div class="flow-label"><i class="fa-solid fa-check-double"></i> Resultado esperado</div>
+                            <div class="flow-text">Mensaje emergente de confirmación <em>"¡Texto copiado al portapapeles!"</em>.</div>
+                        </div>
+                    </div>
+                    <div class="step-image-container">
+                        <img src="assets_guia/06_clave_secreta_personalizada.png" alt="Clave personalizada con cliente">
+                        <div class="image-caption">
+                            <div class="image-caption-text"><i class="fa-solid fa-image"></i> Evidencia Real: Plantilla estructurada con nombre del cliente lista para el portapapeles.</div>
+                            <span class="image-caption-tag">assets_guia/06_clave_secreta_personalizada.png</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- 4. TIPIFICACIONES -->
+            <!-- ========================================== -->
+            <section id="sec-tipificaciones" class="guide-module">
+                <div class="module-header">
+                    <div class="module-title-group">
+                        <div class="module-num">04</div>
+                        <h2 class="module-title">Módulo: Tipificaciones de Fidelización</h2>
+                    </div>
+                    <span class="module-tag">Operaciones & Retención</span>
+                </div>
+                <p class="module-summary">
+                    Es el módulo central de registro de llamadas. Incluye catálogo de motivos de baja, cálculo automático de retenciones y la matriz oficial de ajuste económico.
+                </p>
+
+                <!-- Paso 1: Vista General de Tipificaciones -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-badge"><i class="fa-solid fa-circle-dot"></i> PASO 1</span>
+                        <div class="step-title">Ingreso a la Pestaña de Tipificaciones</div>
+                    </div>
+                    <div class="step-flow-grid">
+                        <div class="flow-block click">
+                            <div class="flow-label"><i class="fa-solid fa-arrow-pointer"></i> Dónde hacer clic</div>
+                            <div class="flow-text">Hacer clic en la pestaña <strong>Tipificaciones</strong> de la barra superior.</div>
+                        </div>
+                        <div class="flow-block action">
+                            <div class="flow-label"><i class="fa-solid fa-gears"></i> Qué realiza la opción</div>
+                            <div class="flow-text">Inicializa el motor de tipificación rápida, buscador de categorías y formulario estructurado.</div>
+                        </div>
+                        <div class="flow-block result">
+                            <div class="flow-label"><i class="fa-solid fa-check-double"></i> Resultado esperado</div>
+                            <div class="flow-text">Despliegue del panel dividido: árbol de selección a la izquierda y formulario a la derecha.</div>
+                        </div>
+                    </div>
+                    <div class="step-image-container">
+                        <img src="assets_guia/07_tipificaciones_general.png" alt="Vista General Tipificaciones">
+                        <div class="image-caption">
+                            <div class="image-caption-text"><i class="fa-solid fa-image"></i> Evidencia Real: Pantalla principal del módulo de tipificaciones.</div>
+                            <span class="image-caption-tag">assets_guia/07_tipificaciones_general.png</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 2: Diligenciamiento de Formulario -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-badge"><i class="fa-solid fa-circle-dot"></i> PASO 2</span>
+                        <div class="step-title">Diligenciamiento de Datos del Cliente y Motivo</div>
+                    </div>
+                    <div class="step-flow-grid">
+                        <div class="flow-block click">
+                            <div class="flow-label"><i class="fa-solid fa-arrow-pointer"></i> Dónde hacer clic</div>
+                            <div class="flow-text">Ingresar DNI/RUC, teléfono de contacto y seleccionar Medio (Llamada) y Tipo (Reclamo/Retención).</div>
+                        </div>
+                        <div class="flow-block action">
+                            <div class="flow-label"><i class="fa-solid fa-gears"></i> Qué realiza la opción</div>
+                            <div class="flow-text">Asocia la gestión al expediente y valida el formato del número telefónico y documento.</div>
+                        </div>
+                        <div class="flow-block result">
+                            <div class="flow-label"><i class="fa-solid fa-check-double"></i> Resultado esperado</div>
+                            <div class="flow-text">Campos validados en color verde y listos para incorporar la propuesta de retención.</div>
+                        </div>
+                    </div>
+                    <div class="step-image-container">
+                        <img src="assets_guia/08_tipificaciones_formulario.png" alt="Formulario de Tipificación Diligenciado">
+                        <div class="image-caption">
+                            <div class="image-caption-text"><i class="fa-solid fa-image"></i> Evidencia Real: Formulario de tipificación con documento y teléfono validados.</div>
+                            <span class="image-caption-tag">assets_guia/08_tipificaciones_formulario.png</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 3: Calculadora de Retención -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-badge"><i class="fa-solid fa-circle-dot"></i> PASO 3</span>
+                        <div class="step-title">Cálculo de Descuentos con la Calculadora de Retención</div>
+                    </div>
+                    <div class="step-flow-grid">
+                        <div class="flow-block click">
+                            <div class="flow-label"><i class="fa-solid fa-arrow-pointer"></i> Dónde hacer clic</div>
+                            <div class="flow-text">Ingresar el % de descuento ofrecido (ej. 30%) y el monto de la factura del cliente (ej. S/. 139).</div>
+                        </div>
+                        <div class="flow-block action">
+                            <div class="flow-label"><i class="fa-solid fa-gears"></i> Qué realiza la opción</div>
+                            <div class="flow-text">Calcula al instante el monto neto mensual con descuento y el ahorro total que percibirá el cliente.</div>
+                        </div>
+                        <div class="flow-block result">
+                            <div class="flow-label"><i class="fa-solid fa-check-double"></i> Resultado esperado</div>
+                            <div class="flow-text">Visualización exacta de la nueva mensualidad calculada para el ofrecimiento telefónico.</div>
+                        </div>
+                    </div>
+                    <div class="step-image-container">
+                        <img src="assets_guia/09_tipificaciones_calculadora.png" alt="Calculadora de Retención">
+                        <div class="image-caption">
+                            <div class="image-caption-text"><i class="fa-solid fa-image"></i> Evidencia Real: Calculadora integrada de retención económica con valores en tiempo real.</div>
+                            <span class="image-caption-tag">assets_guia/09_tipificaciones_calculadora.png</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 4: Matriz de Ajuste Económico -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-badge"><i class="fa-solid fa-circle-dot"></i> PASO 4</span>
+                        <div class="step-title">Aplicación de la Matriz de Ajuste Económico</div>
+                    </div>
+                    <div class="step-flow-grid">
+                        <div class="flow-block click">
+                            <div class="flow-label"><i class="fa-solid fa-arrow-pointer"></i> Dónde hacer clic</div>
+                            <div class="flow-text">Sección <strong>Matriz de Ajuste</strong>: especificar % de devolución e importe base a compensar.</div>
+                        </div>
+                        <div class="flow-block action">
+                            <div class="flow-label"><i class="fa-solid fa-gears"></i> Qué realiza la opción</div>
+                            <div class="flow-text">Aplica las reglas financieras de WIN para generar notas de crédito o ajustes de facturación autorizados.</div>
+                        </div>
+                        <div class="flow-block result">
+                            <div class="flow-label"><i class="fa-solid fa-check-double"></i> Resultado esperado</div>
+                            <div class="flow-text">Generación de la glosa contable y texto de ajuste listo para inserción en el sistema de facturación.</div>
+                        </div>
+                    </div>
+                    <div class="step-image-container">
+                        <img src="assets_guia/10_tipificaciones_matriz_ajuste.png" alt="Matriz de Ajuste Económico">
+                        <div class="image-caption">
+                            <div class="image-caption-text"><i class="fa-solid fa-image"></i> Evidencia Real: Matriz de ajuste económico con cálculo de compensación.</div>
+                            <span class="image-caption-tag">assets_guia/10_tipificaciones_matriz_ajuste.png</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- 5. TICKETS TECNOLÓGICOS -->
+            <!-- ========================================== -->
+            <section id="sec-tickets" class="guide-module">
+                <div class="module-header">
+                    <div class="module-title-group">
+                        <div class="module-num">05</div>
+                        <h2 class="module-title">Módulo: Tickets de Soporte Tecnológico</h2>
+                    </div>
+                    <span class="module-tag">Soporte Técnico N1/N2</span>
+                </div>
+                <p class="module-summary">
+                    Estandariza los incidentes técnicos (problemas de router, pérdida de enlace, lentitud, degradación) para que el área técnica atienda sin demoras ni rebotes de información.
+                </p>
+
+                <!-- Paso 1: Acceso a Tickets -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-badge"><i class="fa-solid fa-circle-dot"></i> PASO 1</span>
+                        <div class="step-title">Ingreso al Generador de Tickets Tecnológicos</div>
+                    </div>
+                    <div class="step-flow-grid">
+                        <div class="flow-block click">
+                            <div class="flow-label"><i class="fa-solid fa-arrow-pointer"></i> Dónde hacer clic</div>
+                            <div class="flow-text">Hacer clic en la pestaña <strong>Tickets</strong> del menú superior.</div>
+                        </div>
+                        <div class="flow-block action">
+                            <div class="flow-label"><i class="fa-solid fa-gears"></i> Qué realiza la opción</div>
+                            <div class="flow-text">Habilita los selectores guiados de canal, tipo de avería, motivo y tipo de conexión.</div>
+                        </div>
+                        <div class="flow-block result">
+                            <div class="flow-label"><i class="fa-solid fa-check-double"></i> Resultado esperado</div>
+                            <div class="flow-text">Apertura del módulo de tickets técnicos en estado inicial listo para parametrizar.</div>
+                        </div>
+                    </div>
+                    <div class="step-image-container">
+                        <img src="assets_guia/11_tickets_tecnologicos.png" alt="Módulo Tickets Tecnológicos">
+                        <div class="image-caption">
+                            <div class="image-caption-text"><i class="fa-solid fa-image"></i> Evidencia Real: Vista inicial del generador de tickets tecnológicos.</div>
+                            <span class="image-caption-tag">assets_guia/11_tickets_tecnologicos.png</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 2: Selección y Formulario Generado -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-badge"><i class="fa-solid fa-circle-dot"></i> PASO 2</span>
+                        <div class="step-title">Parametrización del Incidente y Generación de Plantilla</div>
+                    </div>
+                    <div class="step-flow-grid">
+                        <div class="flow-block click">
+                            <div class="flow-label"><i class="fa-solid fa-arrow-pointer"></i> Dónde hacer clic</div>
+                            <div class="flow-text">Seleccionar Canal, Tipo de avería, Motivo y Tipo de Conexión en los menús desplegables.</div>
+                        </div>
+                        <div class="flow-block action">
+                            <div class="flow-label"><i class="fa-solid fa-gears"></i> Qué realiza la opción</div>
+                            <div class="flow-text">Arma automáticamente la plantilla con los encabezados técnicos reglamentarios del NOC / Soporte WIN.</div>
+                        </div>
+                        <div class="flow-block result">
+                            <div class="flow-label"><i class="fa-solid fa-check-double"></i> Resultado esperado</div>
+                            <div class="flow-text">Plantilla formateada con botón de copia inmediata para registrar en el CRM/Remedy.</div>
+                        </div>
+                    </div>
+                    <div class="step-image-container">
+                        <img src="assets_guia/12_tickets_formulario_generado.png" alt="Formulario de Ticket Generado">
+                        <div class="image-caption">
+                            <div class="image-caption-text"><i class="fa-solid fa-image"></i> Evidencia Real: Ticket estructurado generado con especificaciones técnicas completas.</div>
+                            <span class="image-caption-tag">assets_guia/12_tickets_formulario_generado.png</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- 6. DERIVACIONES DISCORD -->
+            <!-- ========================================== -->
+            <section id="sec-derivaciones" class="guide-module">
+                <div class="module-header">
+                    <div class="module-title-group">
+                        <div class="module-num">06</div>
+                        <h2 class="module-title">Módulo: Derivaciones a Canales Discord</h2>
+                    </div>
+                    <span class="module-tag">Comunicación Interna</span>
+                </div>
+                <p class="module-summary">
+                    Permite escalar casos en tiempo real hacia canales designados de Discord (Backoffice, Facturación, Supervisión) asegurando que el mensaje cuente con toda la información indispensable.
+                </p>
+
+                <!-- Paso 1: Vista General Derivaciones -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-badge"><i class="fa-solid fa-circle-dot"></i> PASO 1</span>
+                        <div class="step-title">Acceso al Formulario de Derivaciones</div>
+                    </div>
+                    <div class="step-flow-grid">
+                        <div class="flow-block click">
+                            <div class="flow-label"><i class="fa-solid fa-arrow-pointer"></i> Dónde hacer clic</div>
+                            <div class="flow-text">Pestaña <strong>Derivaciones</strong> en la barra de menú superior.</div>
+                        </div>
+                        <div class="flow-block action">
+                            <div class="flow-label"><i class="fa-solid fa-gears"></i> Qué realiza la opción</div>
+                            <div class="flow-text">Carga el selector de canales de Discord y los tipos de derivación aprobados por operaciones.</div>
+                        </div>
+                        <div class="flow-block result">
+                            <div class="flow-label"><i class="fa-solid fa-check-double"></i> Resultado esperado</div>
+                            <div class="flow-text">Visualización de la interfaz con los campos de número de servicio, caso y motivo.</div>
+                        </div>
+                    </div>
+                    <div class="step-image-container">
+                        <img src="assets_guia/13_derivaciones_discord.png" alt="Módulo Derivaciones Discord">
+                        <div class="image-caption">
+                            <div class="image-caption-text"><i class="fa-solid fa-image"></i> Evidencia Real: Vista de derivaciones para escalamiento interno por Discord.</div>
+                            <span class="image-caption-tag">assets_guia/13_derivaciones_discord.png</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 2: Selección y Plantilla Lista -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-badge"><i class="fa-solid fa-circle-dot"></i> PASO 2</span>
+                        <div class="step-title">Selección de Canal y Copia de Plantilla Discord</div>
+                    </div>
+                    <div class="step-flow-grid">
+                        <div class="flow-block click">
+                            <div class="flow-label"><i class="fa-solid fa-arrow-pointer"></i> Dónde hacer clic</div>
+                            <div class="flow-text">Elegir el tipo de derivación (ej. Soporte Avanzado / Retención) y pulsar <strong>Copiar Formato Discord</strong>.</div>
+                        </div>
+                        <div class="flow-block action">
+                            <div class="flow-label"><i class="fa-solid fa-gears"></i> Qué realiza la opción</div>
+                            <div class="flow-text">Aplica formato con etiquetas markdown de Discord (negritas, bloques de código, menciones).</div>
+                        </div>
+                        <div class="flow-block result">
+                            <div class="flow-label"><i class="fa-solid fa-check-double"></i> Resultado esperado</div>
+                            <div class="flow-text">Mensaje copiado y listo para pegar directamente con Ctrl+V en el canal respectivo de Discord.</div>
+                        </div>
+                    </div>
+                    <div class="step-image-container">
+                        <img src="assets_guia/14_derivaciones_plantilla_lista.png" alt="Plantilla de Derivación Lista">
+                        <div class="image-caption">
+                            <div class="image-caption-text"><i class="fa-solid fa-image"></i> Evidencia Real: Plantilla de Discord completada y formateada para el canal correspondiente.</div>
+                            <span class="image-caption-tag">assets_guia/14_derivaciones_plantilla_lista.png</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- 7. ACUERDOS DE VOZ -->
+            <!-- ========================================== -->
+            <section id="sec-acuerdos" class="guide-module">
+                <div class="module-header">
+                    <div class="module-title-group">
+                        <div class="module-num">07</div>
+                        <h2 class="module-title">Módulo: Acuerdos de Voz (Grabación Legal)</h2>
+                    </div>
+                    <span class="module-tag">Cumplimiento Normativo & Grabación</span>
+                </div>
+                <p class="module-summary">
+                    Contiene los speech reglamentarios que deben ser leídos palabra por palabra al cliente durante la grabación de llamada para formalizar un acuerdo de retención o beneficio comercial.
+                </p>
+
+                <!-- Paso 1: Catálogo de Acuerdos -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-badge"><i class="fa-solid fa-circle-dot"></i> PASO 1</span>
+                        <div class="step-title">Exploración del Catálogo de Acuerdos Comerciales</div>
+                    </div>
+                    <div class="step-flow-grid">
+                        <div class="flow-block click">
+                            <div class="flow-label"><i class="fa-solid fa-arrow-pointer"></i> Dónde hacer clic</div>
+                            <div class="flow-text">Pestaña <strong>Acuerdos de Voz</strong> en la barra superior.</div>
+                        </div>
+                        <div class="flow-block action">
+                            <div class="flow-label"><i class="fa-solid fa-gears"></i> Qué realiza la opción</div>
+                            <div class="flow-text">Presenta las tarjetas de cada plan promocional vigente, upgrades de velocidad y retenciones económicas.</div>
+                        </div>
+                        <div class="flow-block result">
+                            <div class="flow-label"><i class="fa-solid fa-check-double"></i> Resultado esperado</div>
+                            <div class="flow-text">Cuadrícula interactiva con los acuerdos disponibles y resumen del beneficio ofrecido.</div>
+                        </div>
+                    </div>
+                    <div class="step-image-container">
+                        <img src="assets_guia/15_acuerdos_voz_catalogo.png" alt="Catálogo de Acuerdos de Voz">
+                        <div class="image-caption">
+                            <div class="image-caption-text"><i class="fa-solid fa-image"></i> Evidencia Real: Catálogo interactivo de acuerdos de voz y retenciones vigentes.</div>
+                            <span class="image-caption-tag">assets_guia/15_acuerdos_voz_catalogo.png</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 2: Modal de Lectura Mandatoria -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-badge"><i class="fa-solid fa-circle-dot"></i> PASO 2</span>
+                        <div class="step-title">Apertura del Modal de Grabación y Lectura Mandatoria</div>
+                    </div>
+                    <div class="step-flow-grid">
+                        <div class="flow-block click">
+                            <div class="flow-label"><i class="fa-solid fa-arrow-pointer"></i> Dónde hacer clic</div>
+                            <div class="flow-text">Hacer clic sobre la tarjeta del acuerdo pactado con el cliente.</div>
+                        </div>
+                        <div class="flow-block action">
+                            <div class="flow-label"><i class="fa-solid fa-gears"></i> Qué realiza la opción</div>
+                            <div class="flow-text">Abre el modal en pantalla completa con el guión legal (speech), resaltando variables clave como precio, vigencia y penalidades.</div>
+                        </div>
+                        <div class="flow-block result">
+                            <div class="flow-label"><i class="fa-solid fa-check-double"></i> Resultado esperado</div>
+                            <div class="flow-text">Visualización clara y sin distracciones del texto que debe leerse textualmente en la llamada.</div>
+                        </div>
+                    </div>
+                    <div class="step-image-container">
+                        <img src="assets_guia/16_acuerdos_voz_modal_speech.png" alt="Modal de Grabación de Acuerdo">
+                        <div class="image-caption">
+                            <div class="image-caption-text"><i class="fa-solid fa-image"></i> Evidencia Real: Modal con speech legal para lectura textual obligatoria en grabación.</div>
+                            <span class="image-caption-tag">assets_guia/16_acuerdos_voz_modal_speech.png</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- 8. DIRECTORIO DE ESCALAMIENTO -->
+            <!-- ========================================== -->
+            <section id="sec-directorio" class="guide-module">
+                <div class="module-header">
+                    <div class="module-title-group">
+                        <div class="module-num">08</div>
+                        <h2 class="module-title">Módulo: Directorio de Escalamiento Operativo (63 Escenarios)</h2>
+                    </div>
+                    <span class="module-tag">Matriz Operativa de Escalamiento</span>
+                </div>
+                <p class="module-summary">
+                    Concentra los 63 escenarios normados de escalamiento hacia las áreas involucradas (NOC, Facturación, Logística, Terreno, Legal, Calidad). Incluye simulador de correo integrado.
+                </p>
+
+                <!-- Paso 1: Vista General Directorio -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-badge"><i class="fa-solid fa-circle-dot"></i> PASO 1</span>
+                        <div class="step-title">Ingreso al Directorio y Exploración de Escenarios</div>
+                    </div>
+                    <div class="flow-block click" style="margin-bottom:0.8rem">
+                        <div class="flow-label"><i class="fa-solid fa-arrow-pointer"></i> Dónde hacer clic</div>
+                        <div class="flow-text">Pestaña <strong>Directorio</strong> en el menú superior.</div>
+                    </div>
+                    <div class="flow-block action" style="margin-bottom:0.8rem">
+                        <div class="flow-label"><i class="fa-solid fa-gears"></i> Qué realiza la opción</div>
+                        <div class="flow-text">Carga la base completa con los 63 escenarios ordenados por Área, Tipo de Falla y Nivel de Prioridad.</div>
+                    </div>
+                    <div class="flow-block result">
+                        <div class="flow-label"><i class="fa-solid fa-check-double"></i> Resultado esperado</div>
+                        <div class="flow-text">Despliegue del buscador por palabras clave y filtros desplegables de área y escenario.</div>
+                    </div>
+                    <div class="step-image-container">
+                        <img src="assets_guia/17_directorio_escalamiento.png" alt="Directorio de Escalamiento General">
+                        <div class="image-caption">
+                            <div class="image-caption-text"><i class="fa-solid fa-image"></i> Evidencia Real: Vista panorámica del directorio con catálogo de escenarios.</div>
+                            <span class="image-caption-tag">assets_guia/17_directorio_escalamiento.png</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 2: Selección de Escenario -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-badge"><i class="fa-solid fa-circle-dot"></i> PASO 2</span>
+                        <div class="step-title">Filtrado y Selección del Escenario Exacto</div>
+                    </div>
+                    <div class="flow-block click" style="margin-bottom:0.8rem">
+                        <div class="flow-label"><i class="fa-solid fa-arrow-pointer"></i> Dónde hacer clic</div>
+                        <div class="flow-text">Seleccionar el Área en el primer desplegable y luego el Escenario específico en el segundo menú.</div>
+                    </div>
+                    <div class="flow-block action" style="margin-bottom:0.8rem">
+                        <div class="flow-label"><i class="fa-solid fa-gears"></i> Qué realiza la opción</div>
+                        <div class="flow-text">Recupera los correos destinatarios (Para / CC), el SLA del área resolutora y las pautas obligatorias.</div>
+                    </div>
+                    <div class="flow-block result">
+                        <div class="flow-label"><i class="fa-solid fa-check-double"></i> Resultado esperado</div>
+                        <div class="flow-text">Ficha detallada del escenario con requisitos para que la derivación no sea rechazada.</div>
+                    </div>
+                    <div class="step-image-container">
+                        <img src="assets_guia/18_directorio_escenario_seleccionado.png" alt="Escenario de Directorio Seleccionado">
+                        <div class="image-caption">
+                            <div class="image-caption-text"><i class="fa-solid fa-image"></i> Evidencia Real: Escenario filtrado mostrando destinatarios y SLA de resolución.</div>
+                            <span class="image-caption-tag">assets_guia/18_directorio_escenario_seleccionado.png</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 3: Simulador de Correo -->
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-badge"><i class="fa-solid fa-circle-dot"></i> PASO 3</span>
+                        <div class="step-title">Uso del Simulador de Correo de Escalamiento</div>
+                    </div>
+                    <div class="flow-block click" style="margin-bottom:0.8rem">
+                        <div class="flow-label"><i class="fa-solid fa-arrow-pointer"></i> Dónde hacer clic</div>
+                        <div class="flow-text">Deslizar hasta el <strong>Simulador de Correo</strong> y hacer clic en <strong>Copiar Todo</strong> o <strong>Abrir en Outlook</strong>.</div>
+                    </div>
+                    <div class="flow-block action" style="margin-bottom:0.8rem">
+                        <div class="flow-label"><i class="fa-solid fa-gears"></i> Qué realiza la opción</div>
+                        <div class="flow-text">Prepara el asunto exacto normado, cuerpo del correo con datos del cliente y direcciones de correo automáticas.</div>
+                    </div>
+                    <div class="flow-block result">
+                        <div class="flow-label"><i class="fa-solid fa-check-double"></i> Resultado esperado</div>
+                        <div class="flow-text">Correo listo para envío instantáneo sin riesgo de errores en destinatarios o asuntos.</div>
+                    </div>
+                    <div class="step-image-container">
+                        <img src="assets_guia/19_directorio_simulador_correo.png" alt="Simulador de Correo de Escalamiento">
+                        <div class="image-caption">
+                            <div class="image-caption-text"><i class="fa-solid fa-image"></i> Evidencia Real: Simulador de correo listo para redacción o copia a Outlook.</div>
+                            <span class="image-caption-tag">assets_guia/19_directorio_simulador_correo.png</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- 9. CRONOS SLA -->
+            <!-- ========================================== -->
+            <section id="sec-sla" class="guide-module">
+                <div class="module-header">
+                    <div class="module-title-group">
+                        <div class="module-num">09</div>
+                        <h2 class="module-title">Módulo: Temporizador y Semáforo CRONOS SLA</h2>
+                    </div>
+                    <span class="module-tag">Control de Tiempos en Espera (Hold)</span>
+                </div>
+                <p class="module-summary">
+                    El sistema CRONOS SLA monitorea el tiempo en espera del cliente (Hold). La norma institucional de WIN establece un <strong>límite estricto de 70 segundos</strong>. El temporizador advierte al asesor mediante cambios cromáticos y alertas acústicas para evitar exceder el límite.
+                </p>
+
+                <div class="callout-box tip">
+                    <i class="fa-solid fa-lightbulb callout-icon"></i>
+                    <div>
+                        <strong>¿Cómo usar el cronómetro?</strong> Al poner en espera al cliente, pulse <strong>"Iniciar"</strong> (o barra espaciadora si está configurado). Al retomar la comunicación con el cliente, pulse inmediatamente <strong>"Detener"</strong> o <strong>"Reiniciar"</strong>.
+                    </div>
+                </div>
+
+                <!-- 6 Estados Visuales del SLA -->
+                <div class="sla-timeline-grid">
+
+                    <!-- Estado 0s: Inicial -->
+                    <div class="sla-card-stage">
+                        <div class="sla-badge-header">
+                            <span class="sla-stage-pill stage-green">00s • Espera</span>
+                            <span style="font-size:0.75rem; color:#64748b; font-weight:600;">Estado 1</span>
+                        </div>
+                        <div class="sla-stage-title">Estado Inicial / Reposo</div>
+                        <div class="sla-stage-desc">El cronómetro se encuentra en 00:00 listo para iniciar la medición de espera. Indicador en verde neutro.</div>
+                        <div class="step-image-container">
+                            <img src="assets_guia/20_sla_estado_inicial_00.png" alt="SLA 00s Estado Inicial">
+                            <div class="image-caption">
+                                <span class="image-caption-tag">assets_guia/20_sla_estado_inicial_00.png</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Estado 15s: Activo Dentro de SLA -->
+                    <div class="sla-card-stage">
+                        <div class="sla-badge-header">
+                            <span class="sla-stage-pill stage-green">15s • En Rango</span>
+                            <span style="font-size:0.75rem; color:#64748b; font-weight:600;">Estado 2</span>
+                        </div>
+                        <div class="sla-stage-title">Atención Activa en Rango Óptimo</div>
+                        <div class="sla-stage-desc">Tiempo transcurriendo dentro del umbral ideal (0 a 39s). Barra verde de avance progresivo.</div>
+                        <div class="step-image-container">
+                            <img src="assets_guia/21_sla_activo_verde_15s.png" alt="SLA 15s Activo Verde">
+                            <div class="image-caption">
+                                <span class="image-caption-tag">assets_guia/21_sla_activo_verde_15s.png</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Estado 40s: Ámbar Preventivo -->
+                    <div class="sla-card-stage">
+                        <div class="sla-badge-header">
+                            <span class="sla-stage-pill stage-amber">40s • Aviso</span>
+                            <span style="font-size:0.75rem; color:#64748b; font-weight:600;">Estado 3</span>
+                        </div>
+                        <div class="sla-stage-title">Alerta Preventiva Ámbar (40s)</div>
+                        <div class="sla-stage-desc">Aviso visual preventivo. El asesor debe ir concluyendo la validación en sistemas para retomar la llamada.</div>
+                        <div class="step-image-container">
+                            <img src="assets_guia/22_sla_ambar_aviso_40s.png" alt="SLA 40s Ámbar Preventivo">
+                            <div class="image-caption">
+                                <span class="image-caption-tag">assets_guia/22_sla_ambar_aviso_40s.png</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Estado 45s: Rojo Acción Inmediata -->
+                    <div class="sla-card-stage">
+                        <div class="sla-badge-header">
+                            <span class="sla-stage-pill stage-red">45s • Alerta</span>
+                            <span style="font-size:0.75rem; color:#64748b; font-weight:600;">Estado 4</span>
+                        </div>
+                        <div class="sla-stage-title">Acción Inmediata (45s a 60s)</div>
+                        <div class="sla-stage-desc">Cambio de color a rojo y primer pitido sonoro. Se debe informar al cliente que continúa en línea.</div>
+                        <div class="step-image-container">
+                            <img src="assets_guia/23_sla_rojo_accion_inmediata_45s.png" alt="SLA 45s Rojo Acción Inmediata">
+                            <div class="image-caption">
+                                <span class="image-caption-tag">assets_guia/23_sla_rojo_accion_inmediata_45s.png</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Estado 65s: Crítico Sonoro -->
+                    <div class="sla-card-stage">
+                        <div class="sla-badge-header">
+                            <span class="sla-stage-pill stage-critical">65s • Crítico</span>
+                            <span style="font-size:0.75rem; color:#64748b; font-weight:600;">Estado 5</span>
+                        </div>
+                        <div class="sla-stage-title">Alerta Crítica Sonora (61s a 70s)</div>
+                        <div class="sla-stage-desc">Alerta acústica urgente. Restan menos de 5 segundos para que venza la meta máxima reglamentaria.</div>
+                        <div class="step-image-container">
+                            <img src="assets_guia/24_sla_critico_65s.png" alt="SLA 65s Crítico">
+                            <div class="image-caption">
+                                <span class="image-caption-tag">assets_guia/24_sla_critico_65s.png</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Estado 75s: SLA Excedido -->
+                    <div class="sla-card-stage">
+                        <div class="sla-badge-header">
+                            <span class="sla-stage-pill stage-critical" style="background:#000; color:#ff4d4d;">>70s • Excedido</span>
+                            <span style="font-size:0.75rem; color:#64748b; font-weight:600;">Estado 6</span>
+                        </div>
+                        <div class="sla-stage-title">SLA Excedido (>70 Segundos)</div>
+                        <div class="sla-stage-desc">El límite ha sido superado. Se genera un registro de desvío operativo para revisión de calidad.</div>
+                        <div class="step-image-container">
+                            <img src="assets_guia/25_sla_excedido_75s.png" alt="SLA 75s Excedido">
+                            <div class="image-caption">
+                                <span class="image-caption-tag">assets_guia/25_sla_excedido_75s.png</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- 10. BUENAS PRÁCTICAS -->
+            <!-- ========================================== -->
+            <section id="sec-practicas" class="guide-module">
+                <div class="module-header">
+                    <div class="module-title-group">
+                        <div class="module-num">10</div>
+                        <h2 class="module-title">Buenas Prácticas para Asesores</h2>
+                    </div>
+                    <span class="module-tag">Calidad & Excelencia</span>
+                </div>
+                <p class="module-summary">
+                    Pautas recomendadas para optimizar los tiempos de retención y mantener una tasa alta de acuerdos efectivos.
+                </p>
+
+                <div class="practices-grid">
+                    <div class="practice-card">
+                        <div class="practice-icon"><i class="fa-solid fa-headset"></i></div>
+                        <div class="practice-title">1. Retorno Verbal antes de los 45s</div>
+                        <div class="practice-desc">Si una consulta en sistemas demora más de 40 segundos, retome la línea para agradecer la espera al cliente. Esto evita que cuelgue y mantiene la satisfacción.</div>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-icon"><i class="fa-solid fa-copy"></i></div>
+                        <div class="practice-title">2. Copiado Rápido al Portapapeles</div>
+                        <div class="practice-desc">Utilice los botones integrados de copiado automático para evitar errores tipográficos en nombres de clientes, claves secretas o correos de escalamiento.</div>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-icon"><i class="fa-solid fa-calculator"></i></div>
+                        <div class="practice-title">3. Uso de la Calculadora de Retención</div>
+                        <div class="practice-desc">No calcule descuentos mentalmente. Ingrese el % y el importe en la calculadora de CRONOS FID para asegurar que la cifra comunicada al cliente sea exacta.</div>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-icon"><i class="fa-solid fa-microphone"></i></div>
+                        <div class="practice-title">4. Lectura Textual de Speech</div>
+                        <div class="practice-desc">Los acuerdos de voz son vinculantes legalmente. Al grabar, lea palabra por palabra el texto presentado en el modal sin omitir plazos ni montos.</div>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                        <div class="practice-title">5. Verificación de Destinatarios</div>
+                        <div class="practice-desc">En el Directorio, copie los correos directamente del simulador. Esto garantiza que el área responsable reciba el caso sin rebotes de correo.</div>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-icon"><i class="fa-solid fa-lock"></i></div>
+                        <div class="practice-title">6. Cierre de Sesión al Finalizar Turno</div>
+                        <div class="practice-desc">Cierre siempre su sesión desde el menú de usuario en la esquina superior derecha para salvaguardar la privacidad de sus registros y estadísticas.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- 11. PREGUNTAS FRECUENTES -->
+            <!-- ========================================== -->
+            <section id="sec-faq" class="guide-module">
+                <div class="module-header">
+                    <div class="module-title-group">
+                        <div class="module-num">11</div>
+                        <h2 class="module-title">Preguntas Frecuentes (FAQ)</h2>
+                    </div>
+                    <span class="module-tag">Resolución de Dudas</span>
+                </div>
+                <p class="module-summary">
+                    Respuestas directas a las situaciones más comunes que se presentan durante la operación diaria.
+                </p>
+
+                <div class="faq-card">
+                    <div class="faq-question">
+                        <span><i class="fa-solid fa-circle-question" style="color:var(--primary); margin-right:0.5rem;"></i> ¿Por qué no veo las pestañas de Dashboard o Auditoría en mi pantalla?</span>
+                        <i class="fa-solid fa-chevron-right" style="font-size:0.8rem; color:#94a3b8;"></i>
+                    </div>
+                    <div class="faq-answer">
+                        El sistema CRONOS FID aplica control de acceso por roles. Las pestañas de <strong>Dashboard, Auditoría, Analítica SLA, Gestión de Usuarios y Exportaciones</strong> corresponden a perfiles gerenciales y de supervisión. Su perfil de Asesor está optimizado para agilidad de atención sin elementos que sobrecarguen la pantalla.
+                    </div>
+                </div>
+
+                <div class="faq-card">
+                    <div class="faq-question">
+                        <span><i class="fa-solid fa-circle-question" style="color:var(--primary); margin-right:0.5rem;"></i> ¿Qué debo hacer si el temporizador SLA supera los 70 segundos?</span>
+                        <i class="fa-solid fa-chevron-right" style="font-size:0.8rem; color:#94a3b8;"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Si por la complejidad de la consulta superó los 70 segundos, retome la llamada de inmediato, pida disculpas por el tiempo de espera, concluya la atención y al reiniciar el cronómetro, agregue una breve observación en el campo de tipificación si la demora fue ocasionada por saturación en sistemas centrales.
+                    </div>
+                </div>
+
+                <div class="faq-card">
+                    <div class="faq-question">
+                        <span><i class="fa-solid fa-circle-question" style="color:var(--primary); margin-right:0.5rem;"></i> ¿Cómo recupero una clave secreta que acabo de generar si cerré la pestaña por error?</span>
+                        <i class="fa-solid fa-chevron-right" style="font-size:0.8rem; color:#94a3b8;"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Al volver a la pestaña "Clave Secreta", si no ha recargado el navegador con F5, los datos permanecen en memoria. Si la pantalla se reinició, simplemente ingrese nuevamente el nombre del cliente y presione "Generar Clave" para asignarle una nueva clave válida.
+                    </div>
+                </div>
+
+                <div class="faq-card">
+                    <div class="faq-question">
+                        <span><i class="fa-solid fa-circle-question" style="color:var(--primary); margin-right:0.5rem;"></i> ¿Es obligatorio leer todo el contenido del modal en Acuerdos de Voz?</span>
+                        <i class="fa-solid fa-chevron-right" style="font-size:0.8rem; color:#94a3b8;"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>Sí, es 100% obligatorio por normativa legal y de auditoría de calidad.</strong> Omitir cláusulas de vigencia, costo regular o penalidades invalida el acuerdo en caso de reclamos posteriores ante Osiptel o libro de reclamaciones.
+                    </div>
+                </div>
+
+                <div class="faq-card">
+                    <div class="faq-question">
+                        <span><i class="fa-solid fa-circle-question" style="color:var(--primary); margin-right:0.5rem;"></i> ¿Cómo puedo guardar o imprimir este manual para consultarlo sin internet?</span>
+                        <i class="fa-solid fa-chevron-right" style="font-size:0.8rem; color:#94a3b8;"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Haga clic en el botón azul superior <strong>"Imprimir / Guardar PDF"</strong> (o presione Ctrl+P). En el menú de impresión de su navegador, seleccione como destino <em>"Guardar como PDF"</em> para almacenar una copia digital en su escritorio.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="guide-footer">
+                <p><strong>CRONOS FID • Sistema de Gestión de Fidelizaciones y Retenciones WIN</strong></p>
+                <p>Documentación Oficial de Usuario • Versión JELI v5.0.0 • Octubre 2026</p>
+                <p style="margin-top: 0.5rem; color: #cbd5e1;">© WIN Telecomunicaciones. Todos los derechos reservados. Documento interno para uso exclusivo del personal de retenciones.</p>
+            </footer>
+
+        </main>
+    </div>
+
+</body>
+</html>
