@@ -3059,48 +3059,13 @@ Año:
                                             requireInteraction: true
                                         };
 
-                                        if (type === 'critical') {
-                                            options.actions = [
-                                                { action: 'pause', title: '⏸ Pausar SLA' },
-                                                { action: 'reset', title: '🔄 Reiniciar SLA' }
-                                            ];
-                                        }
-
-                                        try {
-                                            currentSlaNotification = new Notification(title, options);
-                                        } catch (optErr) {
-                                            const safeOptions = {
-                                                body: bodyText,
-                                                tag: "cronos-sla-alert-" + type,
-                                                renotify: true,
-                                                requireInteraction: true
-                                            };
-                                            currentSlaNotification = new Notification(title, safeOptions);
-                                        }
+                                        currentSlaNotification = new Notification(title, options);
 
                                         if (currentSlaNotification) {
-                                            currentSlaNotification.onclick = function (event) {
+                                            currentSlaNotification.onclick = function () {
                                                 try { window.focus(); } catch (err) { }
-                                                const clickedAction = (event && event.action) ? event.action : null;
-                                                if (clickedAction === 'pause') {
-                                                    if (isCronosPlaying) toggleCronosTimer();
-                                                } else if (clickedAction === 'reset') {
-                                                    requestResetCronosTimer();
-                                                }
                                                 try { currentSlaNotification.close(); } catch (err) { }
                                             };
-
-                                            if (typeof currentSlaNotification.addEventListener === 'function') {
-                                                currentSlaNotification.addEventListener('action', function (event) {
-                                                    try { window.focus(); } catch (err) { }
-                                                    if (event.action === 'pause') {
-                                                        if (isCronosPlaying) toggleCronosTimer();
-                                                    } else if (event.action === 'reset') {
-                                                        requestResetCronosTimer();
-                                                    }
-                                                    try { currentSlaNotification.close(); } catch (err) { }
-                                                });
-                                            }
                                         }
                                     } catch (e) {
                                         console.warn("[CRONOS SLA] new Notification():", e);
@@ -3109,15 +3074,6 @@ Año:
 
                                 if (Notification.permission === 'granted') {
                                     triggerNativeOSNotification();
-                                } else if (Notification.permission === 'default') {
-                                    Notification.requestPermission().then(perm => {
-                                        updateSlaNotificationBellUI(perm);
-                                        if (perm === 'granted') {
-                                            triggerNativeOSNotification();
-                                        }
-                                    }).catch(err => {
-                                        console.warn("[CRONOS SLA] Error solicitando permiso:", err);
-                                    });
                                 }
                             } catch (err) {
                                 console.warn("[CRONOS SLA] sendSlaExternalNotification:", err);
