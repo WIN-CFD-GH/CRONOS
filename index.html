@@ -13156,6 +13156,10 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 gestion_usuarios: true,
                 gestionUsuarios: true,
                 exportExcel: true,
+                vista_360: true,
+                executive360: true,
+                acerca_de: true,
+                acercaDe: true,
                 historialAccesos: true,
                 configuracion: true,
                 accesoTotal: true
@@ -13177,6 +13181,10 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 gestion_usuarios: true,
                 gestionUsuarios: true,
                 exportExcel: true,
+                vista_360: true,
+                executive360: true,
+                acerca_de: true,
+                acercaDe: true,
                 historialAccesos: true,
                 configuracion: true,
                 accesoTotal: true
@@ -13198,6 +13206,10 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 gestion_usuarios: false,
                 gestionUsuarios: false,
                 exportExcel: true,
+                vista_360: true,
+                executive360: true,
+                acerca_de: true,
+                acercaDe: true,
                 historialAccesos: true,
                 configuracion: false,
                 accesoTotal: false
@@ -13219,6 +13231,10 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 gestion_usuarios: false,
                 gestionUsuarios: false,
                 exportExcel: true,
+                vista_360: true,
+                executive360: true,
+                acerca_de: true,
+                acercaDe: true,
                 historialAccesos: true,
                 configuracion: false,
                 accesoTotal: false
@@ -13240,6 +13256,10 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 gestion_usuarios: false,
                 gestionUsuarios: false,
                 exportExcel: true,
+                vista_360: true,
+                executive360: true,
+                acerca_de: true,
+                acercaDe: true,
                 historialAccesos: true,
                 configuracion: false,
                 accesoTotal: false
@@ -13261,6 +13281,10 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 gestion_usuarios: false,
                 gestionUsuarios: false,
                 exportExcel: false,
+                vista_360: false,
+                executive360: false,
+                acerca_de: false,
+                acercaDe: false,
                 historialAccesos: false,
                 configuracion: false,
                 accesoTotal: false
@@ -13798,7 +13822,16 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     (typeof UserManager !== 'undefined' && UserManager.getCurrentRole ? UserManager.getCurrentRole() : 'Asesor');
                 const perms = currentUserPermissions(userRole);
                 if (!perms) return false;
-                if (perms.accesoTotal) return true;
+                if (permissionKey === 'vista_360' || permissionKey === 'executive360' || permissionKey === 'vistaEjecutiva360') {
+                    return Boolean(perms.vista_360 || perms.executive360 || perms.vistaEjecutiva360);
+                }
+                if (permissionKey === 'acerca_de' || permissionKey === 'acercaDe' || permissionKey === 'about') {
+                    return Boolean(perms.acerca_de || perms.acercaDe || perms.about);
+                }
+                if (perms.accesoTotal) {
+                    if (perms[permissionKey] === false) return false;
+                    return true;
+                }
                 return Boolean(perms[permissionKey]);
             } catch (err) {
                 console.warn('[hasPermission] Error al validar permiso:', permissionKey, err);
@@ -14667,7 +14700,28 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 // Permisos
                 const storedPerms = localStorage.getItem('cronos_custom_permissions');
                 if (storedPerms) {
-                    window.CRONOS_PERMISSIONS = JSON.parse(storedPerms);
+                    try {
+                        const parsed = JSON.parse(storedPerms);
+                        if (window.CRONOS_DEFAULT_PERMISSIONS) {
+                            for (const r in window.CRONOS_DEFAULT_PERMISSIONS) {
+                                if (!parsed[r]) {
+                                    parsed[r] = Object.assign({}, window.CRONOS_DEFAULT_PERMISSIONS[r]);
+                                } else {
+                                    if (parsed[r].vista_360 === undefined) {
+                                        parsed[r].vista_360 = window.CRONOS_DEFAULT_PERMISSIONS[r].vista_360;
+                                        parsed[r].executive360 = window.CRONOS_DEFAULT_PERMISSIONS[r].executive360;
+                                    }
+                                    if (parsed[r].acerca_de === undefined) {
+                                        parsed[r].acerca_de = window.CRONOS_DEFAULT_PERMISSIONS[r].acerca_de;
+                                        parsed[r].acercaDe = window.CRONOS_DEFAULT_PERMISSIONS[r].acercaDe;
+                                    }
+                                }
+                            }
+                        }
+                        window.CRONOS_PERMISSIONS = parsed;
+                    } catch (e) {
+                        window.CRONOS_PERMISSIONS = JSON.parse(JSON.stringify(window.CRONOS_DEFAULT_PERMISSIONS));
+                    }
                 } else {
                     savePermissionsToLocalStorage();
                 }
@@ -15377,12 +15431,24 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             const isAsesor = String(userRole).toLowerCase().includes('asesor');
             const isAdminOrSup = String(userRole).toLowerCase().includes('admin') || String(userRole).toLowerCase().includes('superv');
 
-            if (tabDash) tabDash.style.display = (!isAsesor && (permissions.dashboard || isAdminOrSup)) ? '' : 'none';
-            if (tabAud) tabAud.style.display = (!isAsesor && (permissions.auditoria || isAdminOrSup)) ? '' : 'none';
-            if (tabSLA) tabSLA.style.display = (!isAsesor && (permissions.analitica_sla || isAdminOrSup)) ? '' : 'none';
-            if (tabUsr) tabUsr.style.display = (!isAsesor && (permissions.gestion_usuarios || permissions.gestionUsuarios || isAdminOrSup)) ? '' : 'none';
+            const btnExp = document.getElementById('sidebar-btn-exports');
 
-            const hasAnyAdmin = !isAsesor && (permissions.dashboard || permissions.auditoria || permissions.analitica_sla || permissions.gestion_usuarios || permissions.gestionUsuarios || permissions.exportExcel || isAdminOrSup);
+            const canDash = Boolean(!isAsesor && (permissions.dashboard || isAdminOrSup));
+            const canAud = Boolean(!isAsesor && (permissions.auditoria || isAdminOrSup));
+            const canSLA = Boolean(!isAsesor && (permissions.analitica_sla || isAdminOrSup));
+            const canUsr = Boolean(!isAsesor && (permissions.gestion_usuarios || permissions.gestionUsuarios || isAdminOrSup));
+            const canExp = Boolean(!isAsesor && (permissions.exportExcel || isAdminOrSup));
+            const can360 = Boolean(permissions.vista_360 || permissions.executive360 || permissions.vistaEjecutiva360);
+            const canAbout = Boolean(permissions.acerca_de || permissions.acercaDe || permissions.about);
+
+            if (tabDash) tabDash.style.display = canDash ? '' : 'none';
+            if (tabAud) tabAud.style.display = canAud ? '' : 'none';
+            if (tabSLA) tabSLA.style.display = canSLA ? '' : 'none';
+            if (tabUsr) tabUsr.style.display = canUsr ? '' : 'none';
+            if (btnExp) btnExp.style.display = canExp ? '' : 'none';
+
+            const hasAnyAdminInCard = canDash || canAud || canSLA || canUsr || canExp || can360 || canAbout;
+            const hasAnyAdmin = hasAnyAdminInCard;
             const sidebarAdmin = document.getElementById('sidebar-admin-modules') || document.getElementById('sidebar-admin-section');
             const headerSlaSlot = document.getElementById('header-sla-container');
             const sidebarSlaSlot = document.getElementById('sidebar-sla-slot');
@@ -15414,24 +15480,24 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     sidebarSlaGuide.style.display = '';
                 }
 
-                // 3. EXCLUSIÓN TOTAL DE MÓDULOS NO AUTORIZADOS (Vista Ejecutiva 360° y Acerca de CRONOS FID)
+                // 3. Control modular según permisos asignados (Vista Ejecutiva 360° y Acerca de CRONOS FID)
                 if (sidebarAdminCard) {
-                    sidebarAdminCard.style.display = 'none';
+                    sidebarAdminCard.style.display = hasAnyAdminInCard ? '' : 'none';
                 }
                 if (sidebarBtnExecutive360) {
-                    sidebarBtnExecutive360.style.display = 'none';
+                    sidebarBtnExecutive360.style.display = can360 ? '' : 'none';
                 }
                 if (sidebarBtnAbout) {
-                    sidebarBtnAbout.style.display = 'none';
+                    sidebarBtnAbout.style.display = canAbout ? '' : 'none';
                 }
                 if (menuOptAbout) {
-                    menuOptAbout.style.display = 'none';
+                    menuOptAbout.style.display = canAbout ? '' : 'none';
                 }
                 if (footerBtnAbout) {
-                    footerBtnAbout.style.display = 'none';
+                    footerBtnAbout.style.display = canAbout ? '' : 'none';
                 }
                 if (footerSeparatorAbout) {
-                    footerSeparatorAbout.style.display = 'none';
+                    footerSeparatorAbout.style.display = canAbout ? '' : 'none';
                 }
             } else {
                 // ROLES ADMINISTRADOR / SUPERVISOR / OTROS:
@@ -15448,24 +15514,24 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     sidebarSlaGuide.style.display = 'none';
                 }
 
-                // 3. Módulos administrativos y de consulta 100% operativos e intactos
+                // 3. Módulos administrativos y de consulta controlados dinámicamente por la matriz de permisos
                 if (sidebarAdminCard) {
-                    sidebarAdminCard.style.display = '';
+                    sidebarAdminCard.style.display = hasAnyAdminInCard ? '' : 'none';
                 }
                 if (sidebarBtnExecutive360) {
-                    sidebarBtnExecutive360.style.display = '';
+                    sidebarBtnExecutive360.style.display = can360 ? '' : 'none';
                 }
                 if (sidebarBtnAbout) {
-                    sidebarBtnAbout.style.display = '';
+                    sidebarBtnAbout.style.display = canAbout ? '' : 'none';
                 }
                 if (menuOptAbout) {
-                    menuOptAbout.style.display = '';
+                    menuOptAbout.style.display = canAbout ? '' : 'none';
                 }
                 if (footerBtnAbout) {
-                    footerBtnAbout.style.display = '';
+                    footerBtnAbout.style.display = canAbout ? '' : 'none';
                 }
                 if (footerSeparatorAbout) {
-                    footerSeparatorAbout.style.display = '';
+                    footerSeparatorAbout.style.display = canAbout ? '' : 'none';
                 }
 
                 if (sidebarAdmin) {
@@ -17860,7 +17926,9 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 { key: 'auditoria', name: 'Auditoría' },
                 { key: 'analitica_sla', name: 'Analítica CRONOS SLA' },
                 { key: 'gestion_usuarios', name: 'Gestión Usuarios' },
-                { key: 'exportExcel', name: 'Exportación Excel' }
+                { key: 'exportExcel', name: 'Exportación Excel' },
+                { key: 'vista_360', name: 'Vista Ejecutiva 360°' },
+                { key: 'acerca_de', name: 'Acerca de CRONOS FID' }
             ];
 
             const roles = ["Administrador", "Formador", "Coordinador", "Supervisor", "Calidad", "Asesor"];
@@ -17873,7 +17941,11 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 `;
 
                 roles.forEach(rol => {
-                    const isChecked = window.CRONOS_PERMISSIONS[rol] && window.CRONOS_PERMISSIONS[rol][mod.key];
+                    const isChecked = window.CRONOS_PERMISSIONS[rol] && Boolean(
+                        window.CRONOS_PERMISSIONS[rol][mod.key] ||
+                        (mod.key === 'vista_360' && (window.CRONOS_PERMISSIONS[rol]['executive360'] || window.CRONOS_PERMISSIONS[rol]['vistaEjecutiva360'])) ||
+                        (mod.key === 'acerca_de' && (window.CRONOS_PERMISSIONS[rol]['acercaDe'] || window.CRONOS_PERMISSIONS[rol]['about']))
+                    );
                     const isAdmin = rol === 'Administrador' && mod.key === 'gestion_usuarios';
                     html += `
                         <td class="p-3 text-center">
@@ -17897,17 +17969,25 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             window.CRONOS_PERMISSIONS[rol][moduleKey] = checked;
             if (moduleKey === 'analitica_sla') window.CRONOS_PERMISSIONS[rol]['analiticaSLA'] = checked;
             if (moduleKey === 'gestion_usuarios') window.CRONOS_PERMISSIONS[rol]['gestionUsuarios'] = checked;
+            if (moduleKey === 'vista_360') {
+                window.CRONOS_PERMISSIONS[rol]['executive360'] = checked;
+                window.CRONOS_PERMISSIONS[rol]['vistaEjecutiva360'] = checked;
+            }
+            if (moduleKey === 'acerca_de') {
+                window.CRONOS_PERMISSIONS[rol]['acercaDe'] = checked;
+                window.CRONOS_PERMISSIONS[rol]['about'] = checked;
+            }
             savePermissionsToLocalStorage();
             logAuditEvent("Configuración de permisos", "Matriz de Permisos", `Permiso ${moduleKey} para ${rol}: ${checked ? 'Habilitado' : 'Deshabilitado'}`);
             showToast(`Permisos actualizados para el rol ${rol}.`, 'info');
-            applyRolePermissions(window.CRONOS_CURRENT_USER.rol);
+            applyRolePermissions(window.CRONOS_CURRENT_USER ? window.CRONOS_CURRENT_USER.rol : undefined);
         }
 
         function resetPermissionsToDefault() {
             window.CRONOS_PERMISSIONS = JSON.parse(JSON.stringify(window.CRONOS_DEFAULT_PERMISSIONS));
             savePermissionsToLocalStorage();
             renderPermissionsMatrix();
-            applyRolePermissions(window.CRONOS_CURRENT_USER.rol);
+            applyRolePermissions(window.CRONOS_CURRENT_USER ? window.CRONOS_CURRENT_USER.rol : undefined);
             logAuditEvent("Configuración de permisos", "Matriz de Permisos", "Restablecimiento a valores por defecto");
             showToast('Matriz de permisos restablecida a valores por defecto.', 'success');
         }
@@ -19477,9 +19557,8 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         };
 
         function openAboutModal() {
-            const isAsesor = window.CRONOS_CURRENT_USER && String(window.CRONOS_CURRENT_USER.rol).toLowerCase().includes('asesor');
-            if (isAsesor) {
-                if (typeof showToast === 'function') showToast('Módulo informativo exclusivo para perfiles Administrativos', 'warning');
+            if (typeof hasPermission === 'function' && !hasPermission('acerca_de')) {
+                if (typeof showToast === 'function') showToast('No cuentas con permisos asignados para acceder a Acerca de CRONOS FID', 'warning');
                 return;
             }
             const modal = document.getElementById('modal-acerca-de');
@@ -20286,9 +20365,8 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
     <script>
         // Funciones auxiliares para Acerca de CRONOS FID y Vista Ejecutiva 360°
         window.openExecutive360 = function () {
-            const isAsesor = window.CRONOS_CURRENT_USER && String(window.CRONOS_CURRENT_USER.rol).toLowerCase().includes('asesor');
-            if (isAsesor) {
-                if (typeof showToast === 'function') showToast('La Vista Ejecutiva 360° es exclusiva para perfiles Administrativos', 'warning');
+            if (typeof hasPermission === 'function' && !hasPermission('vista_360')) {
+                if (typeof showToast === 'function') showToast('No cuentas con permisos asignados para acceder a la Vista Ejecutiva 360°', 'warning');
                 return;
             }
             if (window.CronosExecutive360 && typeof window.CronosExecutive360.open === 'function') {
