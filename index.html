@@ -2757,6 +2757,7 @@ Año:
                                 stopAllSounds();
                                 stopTitleFlashing();
                                 closeSlaExternalNotifications();
+                                if (typeof hideSlaCenterAlert === 'function') hideSlaCenterAlert();
                                 isCronosPlaying = false;
                                 if (iconWaitPlayPause) iconWaitPlayPause.className = 'fa-solid fa-play text-xs';
                                 if (textWaitPlayPause) textWaitPlayPause.textContent = cronosSeconds === 0 ? 'Iniciar' : 'Reanudar';
@@ -2821,13 +2822,16 @@ Año:
                                         else if (typeof window.logSLAEvent === 'function') window.logSLAEvent('Superó 70s', 70);
                                     }
 
-                                    // Disparadores de Notificaciones Externas SLA (Sprint 1.5)
+                                    // Disparadores de Notificaciones SLA y Alertas Centradas
                                     if (cronosSeconds === 35) {
                                         sendSlaExternalNotification('preventive');
+                                        if (typeof showSlaCenterAlert === 'function') showSlaCenterAlert('preventive');
                                     } else if (cronosSeconds === 45) {
                                         sendSlaExternalNotification('critical');
+                                        if (typeof showSlaCenterAlert === 'function') showSlaCenterAlert('critical');
                                     } else if (cronosSeconds === 60) {
                                         sendSlaExternalNotification('maximum');
+                                        if (typeof showSlaCenterAlert === 'function') showSlaCenterAlert('maximum');
                                     }
 
                                     // Alertas sonoras garantizadas por rango
@@ -2858,6 +2862,7 @@ Año:
                             stopAllSounds();
                             stopTitleFlashing();
                             closeSlaExternalNotifications();
+                            if (typeof hideSlaCenterAlert === 'function') hideSlaCenterAlert();
                             isCronosPlaying = false;
                             cronosSeconds = 0;
 
@@ -3045,6 +3050,11 @@ Año:
                                     bodyText = "Gracias por su paciencia, en breve continuaré con su atención.";
                                 }
 
+                                // Alerta visual en el CENTRO DE LA PANTALLA sobre la aplicación
+                                if (typeof showSlaCenterAlert === 'function') {
+                                    showSlaCenterAlert(type);
+                                }
+
                                 // Alerta visual de pestaña en el navegador si está en otra pestaña/web (Power BI, Outlook, etc.)
                                 if (isOutOfTab) {
                                     if (type === 'preventive') startTitleFlashing('⚠️ [35s] ALERTA 1: RETOMA TU LLAMADA');
@@ -3110,6 +3120,121 @@ Año:
                                 console.warn("[CRONOS SLA] sendSlaExternalNotification:", err);
                             }
                         }
+
+                        // =========================================================================
+                        // ALERTAS DE RETOMA DE LLAMADA - CENTRO DE LA PANTALLA (35s, 45s, 60s)
+                        // =========================================================================
+                        let _slaCenterAlertTimeout = null;
+
+                        function showSlaCenterAlert(type) {
+                            try {
+                                const overlay = document.getElementById('cronos-sla-center-alert-overlay');
+                                const card = document.getElementById('cronos-sla-center-alert-card');
+                                const header = document.getElementById('sla-center-alert-header');
+                                const icon = document.getElementById('sla-center-alert-icon');
+                                const badge = document.getElementById('sla-center-alert-badge');
+                                const title = document.getElementById('sla-center-alert-title');
+                                const msgBox = document.getElementById('sla-center-alert-msg-box');
+                                const msgIcon = document.getElementById('sla-center-alert-msg-icon');
+                                const message = document.getElementById('sla-center-alert-message');
+
+                                if (!overlay || !card) return;
+
+                                let titleText = "";
+                                let bodyText = "";
+                                let badgeText = "";
+
+                                if (type === 'preventive' || type === 35) {
+                                    badgeText = "35 SEGUNDOS";
+                                    titleText = "ALERTA 1: RETOMA TU LLAMADA";
+                                    bodyText = "Permítame un momento más a la espera.";
+
+                                    card.className = "pointer-events-auto bg-white rounded-2xl shadow-[0_20px_60px_rgba(245,158,11,0.45)] border-4 border-amber-500 max-w-lg w-full overflow-hidden text-center transform transition-all animate-pop";
+                                    header.className = "p-4 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-slate-950 flex items-center justify-between font-black";
+                                    icon.className = "fa-solid fa-phone-volume text-slate-950 text-xl";
+                                    badge.className = "text-[9px] font-black uppercase px-2 py-0.5 rounded bg-slate-950 text-amber-400 tracking-wider";
+                                    msgBox.className = "rounded-xl p-4 border-2 border-amber-300 bg-amber-50/90 text-left flex items-start gap-3";
+                                    msgIcon.className = "fa-solid fa-quote-left text-lg shrink-0 mt-0.5 text-amber-600";
+                                } else if (type === 'critical' || type === 45) {
+                                    badgeText = "45 SEGUNDOS";
+                                    titleText = "ALERTA 2: MANTÉN EL CONTACTO";
+                                    bodyText = "Gracias por su espera, continúo validando la información.";
+
+                                    card.className = "pointer-events-auto bg-white rounded-2xl shadow-[0_20px_60px_rgba(234,88,12,0.5)] border-4 border-orange-500 max-w-lg w-full overflow-hidden text-center transform transition-all animate-pop";
+                                    header.className = "p-4 bg-gradient-to-r from-orange-600 via-orange-500 to-orange-600 text-white flex items-center justify-between font-black";
+                                    icon.className = "fa-solid fa-triangle-exclamation text-white text-xl";
+                                    badge.className = "text-[9px] font-black uppercase px-2 py-0.5 rounded bg-white text-orange-700 tracking-wider";
+                                    msgBox.className = "rounded-xl p-4 border-2 border-orange-300 bg-orange-50/90 text-left flex items-start gap-3";
+                                    msgIcon.className = "fa-solid fa-quote-left text-lg shrink-0 mt-0.5 text-orange-600";
+                                } else if (type === 'maximum' || type === 60) {
+                                    badgeText = "60 SEGUNDOS";
+                                    titleText = "ALERTA 3: RETÉN AL CLIENTE";
+                                    bodyText = "Gracias por su paciencia, en breve continuaré con su atención.";
+
+                                    card.className = "pointer-events-auto bg-white rounded-2xl shadow-[0_20px_70px_rgba(220,38,38,0.65)] border-4 border-red-600 max-w-lg w-full overflow-hidden text-center transform transition-all animate-pop";
+                                    header.className = "p-4 bg-gradient-to-r from-red-700 via-red-600 to-red-700 text-white flex items-center justify-between font-black";
+                                    icon.className = "fa-solid fa-bullhorn text-white text-xl animate-pulse";
+                                    badge.className = "text-[9px] font-black uppercase px-2 py-0.5 rounded bg-white text-red-700 tracking-wider";
+                                    msgBox.className = "rounded-xl p-4 border-2 border-red-300 bg-red-50/90 text-left flex items-start gap-3";
+                                    msgIcon.className = "fa-solid fa-quote-left text-lg shrink-0 mt-0.5 text-red-600";
+                                } else {
+                                    return;
+                                }
+
+                                if (badge) badge.textContent = badgeText;
+                                if (title) title.textContent = titleText;
+                                if (message) message.textContent = bodyText;
+
+                                overlay.classList.remove('hidden');
+
+                                if (_slaCenterAlertTimeout) clearTimeout(_slaCenterAlertTimeout);
+                                _slaCenterAlertTimeout = setTimeout(() => {
+                                    hideSlaCenterAlert();
+                                }, 8000);
+                            } catch (e) {
+                                console.warn("[CRONOS SLA] showSlaCenterAlert error:", e);
+                            }
+                        }
+
+                        function hideSlaCenterAlert() {
+                            try {
+                                if (_slaCenterAlertTimeout) {
+                                    clearTimeout(_slaCenterAlertTimeout);
+                                    _slaCenterAlertTimeout = null;
+                                }
+                                const overlay = document.getElementById('cronos-sla-center-alert-overlay');
+                                if (overlay) {
+                                    overlay.classList.add('hidden');
+                                }
+                            } catch (e) {
+                                console.warn("[CRONOS SLA] hideSlaCenterAlert error:", e);
+                            }
+                        }
+
+                        function copySlaCenterSpeech() {
+                            try {
+                                const msgEl = document.getElementById('sla-center-alert-message');
+                                const btnText = document.getElementById('text-copy-sla-center');
+                                const btnIcon = document.getElementById('icon-copy-sla-center');
+                                const text = msgEl ? msgEl.textContent.trim() : '';
+                                if (text && navigator.clipboard) {
+                                    navigator.clipboard.writeText(text).then(() => {
+                                        if (btnText) btnText.textContent = "¡Copiado!";
+                                        if (btnIcon) btnIcon.className = "fa-solid fa-check text-emerald-600";
+                                        setTimeout(() => {
+                                            if (btnText) btnText.textContent = "Copiar Speech";
+                                            if (btnIcon) btnIcon.className = "fa-regular fa-copy";
+                                        }, 1500);
+                                    });
+                                }
+                            } catch (e) {
+                                console.warn("[CRONOS SLA] copySlaCenterSpeech error:", e);
+                            }
+                        }
+
+                        window.showSlaCenterAlert = showSlaCenterAlert;
+                        window.hideSlaCenterAlert = hideSlaCenterAlert;
+                        window.copySlaCenterSpeech = copySlaCenterSpeech;
 
                         window.resetCronosTimer = resetCronosTimer;
                         window.requestResetCronosTimer = requestResetCronosTimer;
@@ -5999,6 +6124,10 @@ Año:
                 window.AuditManager.logModuleAccess(currentModName);
             } else if (typeof trackModuleAccess === 'function') {
                 trackModuleAccess(target);
+            }
+
+            if (typeof checkAndShowModuleReminder === 'function') {
+                checkAndShowModuleReminder(target);
             }
         }
 
@@ -18367,6 +18496,11 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 loginScreen.style.display = 'none';
             }
             console.log("Aplicación lista");
+            if (typeof checkAndShowWelcomeModal === 'function') {
+                setTimeout(() => {
+                    checkAndShowWelcomeModal();
+                }, 350);
+            }
         }
 
         function hideAppAndShowLogin() {
@@ -19411,6 +19545,11 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     window.openExportCenterModal();
                 }
             }
+
+            // Recordatorio de uso de CRONOS SLA al navegar a módulos distintos de CRONOS SLA
+            if (typeof checkAndShowModuleReminder === 'function') {
+                checkAndShowModuleReminder(target);
+            }
         }
 
         // Aliases para compatibilidad de invocación externa
@@ -19418,6 +19557,130 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         window.loadModule = switchTab;
         window.showSection = switchTab;
         window.changeView = switchTab;
+
+        // =========================================================================
+        // COMPAÑAMIENTO Y RECORDATORIOS: BIENVENIDA Y RECORDATORIO TIMER CRONOS SLA
+        // =========================================================================
+        window._pendingSlaModuleReminder = null;
+
+        function checkAndShowWelcomeModal() {
+            try {
+                if (sessionStorage.getItem('cronos_welcome_shown')) {
+                    return;
+                }
+                const currentUser = window.CRONOS_CURRENT_USER || (window.SessionManager && typeof window.SessionManager.getSession === 'function' ? window.SessionManager.getSession() : null);
+                if (!currentUser) return;
+
+                const welcomeModal = document.getElementById('modal-welcome-cronos');
+                if (welcomeModal) {
+                    welcomeModal.classList.remove('hidden');
+                }
+            } catch (e) {
+                console.warn('[Welcome Modal] Error:', e);
+            }
+        }
+
+        function closeWelcomeModal() {
+            try {
+                sessionStorage.setItem('cronos_welcome_shown', 'true');
+                const welcomeModal = document.getElementById('modal-welcome-cronos');
+                if (welcomeModal) {
+                    welcomeModal.classList.add('hidden');
+                }
+                if (window._pendingSlaModuleReminder) {
+                    const nextMod = window._pendingSlaModuleReminder;
+                    window._pendingSlaModuleReminder = null;
+                    setTimeout(() => {
+                        checkAndShowModuleReminder(nextMod);
+                    }, 250);
+                }
+            } catch (e) {
+                console.warn('[Close Welcome Modal] Error:', e);
+            }
+        }
+
+        function checkAndShowModuleReminder(target) {
+            try {
+                if (!target) return;
+                const normalized = String(target).trim().toLowerCase();
+
+                // Excluir si es el propio módulo CRONOS SLA
+                if (normalized === 'analitica-sla' || normalized === 'sla' || normalized === 'cronos-sla') {
+                    return;
+                }
+
+                // Módulos aplicables según requerimiento (mínimo: Clave Secreta, Tipificaciones, Tickets/Tecnología, Derivaciones/Discord, Acuerdos de Voz, Directorio)
+                const applicableModules = ['generator', 'tipificaciones', 'tickets', 'derivaciones', 'acuerdos-voz', 'directorio'];
+                if (!applicableModules.includes(normalized)) {
+                    return;
+                }
+
+                const storageKey = 'cronos_sla_reminded_' + normalized;
+                if (sessionStorage.getItem(storageKey)) {
+                    return; // Mostrar únicamente la primera vez que el usuario abra cada módulo durante la sesión
+                }
+
+                // Si el modal de bienvenida está visible o aún no se ha cerrado, encolar para mostrar al cerrar bienvenida
+                const welcomeModal = document.getElementById('modal-welcome-cronos');
+                const isWelcomeOpen = welcomeModal && !welcomeModal.classList.contains('hidden');
+                if (!sessionStorage.getItem('cronos_welcome_shown') || isWelcomeOpen) {
+                    window._pendingSlaModuleReminder = normalized;
+                    return;
+                }
+
+                // Marcar como recordado para no repetir continuamente
+                sessionStorage.setItem(storageKey, 'true');
+
+                const reminderModal = document.getElementById('modal-reminder-sla');
+                if (reminderModal) {
+                    reminderModal.classList.remove('hidden');
+                }
+            } catch (e) {
+                console.warn('[Module Reminder] Error:', e);
+            }
+        }
+
+        function closeReminderSlaModal() {
+            try {
+                const reminderModal = document.getElementById('modal-reminder-sla');
+                if (reminderModal) {
+                    reminderModal.classList.add('hidden');
+                }
+            } catch (e) {
+                console.warn('[Close Reminder Modal] Error:', e);
+            }
+        }
+
+        window.checkAndShowWelcomeModal = checkAndShowWelcomeModal;
+        window.closeWelcomeModal = closeWelcomeModal;
+        window.checkAndShowModuleReminder = checkAndShowModuleReminder;
+        window.closeReminderSlaModal = closeReminderSlaModal;
+
+        // Atajos de teclado para cerrar modales (Enter / Esc)
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' || e.key === 'Enter') {
+                const welcomeModal = document.getElementById('modal-welcome-cronos');
+                if (welcomeModal && !welcomeModal.classList.contains('hidden')) {
+                    e.preventDefault();
+                    closeWelcomeModal();
+                    return;
+                }
+                const reminderModal = document.getElementById('modal-reminder-sla');
+                if (reminderModal && !reminderModal.classList.contains('hidden')) {
+                    e.preventDefault();
+                    closeReminderSlaModal();
+                    return;
+                }
+                const centerAlert = document.getElementById('cronos-sla-center-alert-overlay');
+                if (centerAlert && !centerAlert.classList.contains('hidden')) {
+                    if (e.key === 'Escape') {
+                        e.preventDefault();
+                        if (typeof hideSlaCenterAlert === 'function') hideSlaCenterAlert();
+                        return;
+                    }
+                }
+            }
+        });
 
         function initAuthLayer() {
             loadSessionFromLocalStorage();
@@ -20347,6 +20610,123 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     class="px-5 py-2 bg-slate-900 hover:bg-slate-800 active:scale-95 text-white rounded-xl font-bold text-xs shadow-md transition cursor-pointer">
                     Entendido / Cerrar
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- MODAL 1: MENSAJE DE BIENVENIDA A CRONOS FID (UNA SOLA VEZ POR SESIÓN)     -->
+    <!-- ========================================================================= -->
+    <div id="modal-welcome-cronos" onclick="if(event.target === this) closeWelcomeModal()"
+        class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 hidden animate-pop">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-md w-full overflow-hidden text-center">
+            <div class="bg-gradient-to-r from-slate-900 via-[#1E1E24] to-slate-900 text-white p-6 relative">
+                <div
+                    class="w-16 h-16 mx-auto rounded-2xl bg-win-orange text-white flex items-center justify-center text-3xl font-black shadow-lg shadow-orange-500/30 mb-3 border-2 border-white/20">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+                <span
+                    class="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-900 inline-block mb-1">PLATAFORMA OFICIAL</span>
+                <h3 class="text-xl font-black tracking-wide text-white">BIENVENIDO A CRONOS FID</h3>
+                <p class="text-xs text-orange-200/90 font-medium mt-0.5">Centro de Recursos Operativos para Negociación y Fidelización</p>
+            </div>
+
+            <div class="p-6 space-y-4">
+                <div class="bg-orange-50/70 border border-orange-200/70 rounded-xl p-4 text-center">
+                    <p class="text-sm font-bold text-slate-800 leading-relaxed">
+                        Esta herramienta te ayudará a mejorar tu tiempo en llamada.
+                    </p>
+                </div>
+
+                <button type="button" onclick="closeWelcomeModal()"
+                    class="w-full py-3 px-6 bg-win-orange hover:bg-win-orangeHover text-white rounded-xl font-black text-sm uppercase tracking-wider shadow-lg shadow-orange-500/25 active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2">
+                    <span>Entendido</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- MODAL 2: RECORDATORIO DE USO DE CRONOS SLA (UNA VEZ POR MÓDULO POR SESIÓN) -->
+    <!-- ========================================================================= -->
+    <div id="modal-reminder-sla" onclick="if(event.target === this) closeReminderSlaModal()"
+        class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 hidden animate-pop">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-md w-full overflow-hidden text-center">
+            <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white p-5 relative border-b-2 border-win-orange">
+                <div
+                    class="w-14 h-14 mx-auto rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center text-2xl font-black shadow-lg shadow-amber-500/30 mb-2">
+                    <i class="fa-solid fa-stopwatch-20"></i>
+                </div>
+                <span
+                    class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-win-orange text-white inline-block mb-1">RECORDATORIO OPERATIVO</span>
+                <h3 class="text-lg font-black tracking-wide text-white">TIMER CRONOS SLA</h3>
+            </div>
+
+            <div class="p-6 space-y-4">
+                <div class="bg-amber-50 border-2 border-amber-300 rounded-xl p-4 text-center">
+                    <p class="text-xs sm:text-sm font-black text-amber-950 leading-relaxed tracking-wide uppercase">
+                        NO OLVIDES USAR EL TIMER: CRONOS SLA PARA MEJORAR TUS TIEMPOS EN ESPERA Y EVITAR PENALIZACIONES DE CALIDAD.
+                    </p>
+                </div>
+
+                <button type="button" onclick="closeReminderSlaModal()"
+                    class="w-full py-3 px-6 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-black text-sm uppercase tracking-wider shadow-md active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2">
+                    <span>Entendido</span>
+                    <i class="fa-solid fa-check text-xs text-emerald-400"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- MODAL 3: ALERTAS DE RETOMA DE LLAMADA SLA (CENTRO DE LA PANTALLA)         -->
+    <!-- ========================================================================= -->
+    <div id="cronos-sla-center-alert-overlay"
+        class="fixed inset-0 z-[9998] flex items-center justify-center p-4 pointer-events-none transition-all duration-300 hidden">
+        <div id="cronos-sla-center-alert-card"
+            class="pointer-events-auto bg-white rounded-2xl shadow-2xl border-4 max-w-lg w-full overflow-hidden text-center transform transition-all animate-pop">
+            <div id="sla-center-alert-header" class="p-4 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div id="sla-center-alert-icon-box"
+                        class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl font-bold">
+                        <i id="sla-center-alert-icon" class="fa-solid fa-phone-volume"></i>
+                    </div>
+                    <div class="text-left">
+                        <span id="sla-center-alert-badge"
+                            class="text-[9px] font-extrabold uppercase px-2 py-0.5 rounded bg-white/20 tracking-wider">35 SEGUNDOS</span>
+                        <h3 id="sla-center-alert-title" class="text-base sm:text-lg font-black tracking-wide leading-tight">
+                            ALERTA 1: RETOMA TU LLAMADA</h3>
+                    </div>
+                </div>
+                <button type="button" onclick="hideSlaCenterAlert()"
+                    class="text-white/80 hover:text-white text-lg p-1 transition cursor-pointer" title="Cerrar alerta">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-5 sm:p-6 space-y-4">
+                <div id="sla-center-alert-msg-box" class="rounded-xl p-4 border text-left flex items-start gap-3">
+                    <i id="sla-center-alert-msg-icon" class="fa-solid fa-quote-left text-lg shrink-0 mt-0.5"></i>
+                    <div class="flex-1">
+                        <p class="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 mb-0.5">Speech recomendado:</p>
+                        <p id="sla-center-alert-message" class="text-sm sm:text-base font-black text-slate-800 leading-snug">
+                            Permítame un momento más a la espera.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end gap-2.5 pt-1">
+                    <button type="button" id="btn-copy-sla-center-speech" onclick="copySlaCenterSpeech()"
+                        class="px-3.5 py-2 rounded-xl border border-slate-300 hover:bg-slate-100 text-slate-700 font-bold text-xs transition flex items-center gap-1.5 cursor-pointer">
+                        <i id="icon-copy-sla-center" class="fa-regular fa-copy"></i>
+                        <span id="text-copy-sla-center">Copiar Speech</span>
+                    </button>
+                    <button type="button" onclick="hideSlaCenterAlert()"
+                        class="px-5 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-black text-xs uppercase tracking-wider shadow-md transition active:scale-95 cursor-pointer">
+                        Entendido
+                    </button>
+                </div>
             </div>
         </div>
     </div>
