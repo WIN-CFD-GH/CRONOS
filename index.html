@@ -4493,20 +4493,21 @@ Año:
                                                                 <select id="ajuste-mes-inicio"
                                                                     class="w-full p-1 border border-transparent hover:border-slate-300 focus:border-blue-500 focus:outline-none bg-transparent text-slate-800">
                                                                     <option value=""></option>
-                                                                    <option value="Noviembre 2025">Noviembre 2025</option>
-                                                                    <option value="Diciembre 2025">Diciembre 2025</option>
-                                                                    <option value="Enero 2026">Enero 2026</option>
-                                                                    <option value="Febrero 2026">Febrero 2026</option>
-                                                                    <option value="Marzo 2026">Marzo 2026</option>
-                                                                    <option value="Abril 2026">Abril 2026</option>
-                                                                    <option value="Mayo 2026">Mayo 2026</option>
-                                                                    <option value="Junio 2026">Junio 2026</option>
-                                                                    <option value="Julio 2026">Julio 2026</option>
-                                                                    <option value="Agosto 2026">Agosto 2026</option>
-                                                                    <option value="Septiembre 2026">Septiembre 2026</option>
                                                                     <option value="Octubre 2026">Octubre 2026</option>
                                                                     <option value="Noviembre 2026">Noviembre 2026</option>
                                                                     <option value="Diciembre 2026">Diciembre 2026</option>
+                                                                    <option value="Enero 2027">Enero 2027</option>
+                                                                    <option value="Febrero 2027">Febrero 2027</option>
+                                                                    <option value="Marzo 2027">Marzo 2027</option>
+                                                                    <option value="Abril 2027">Abril 2027</option>
+                                                                    <option value="Mayo 2027">Mayo 2027</option>
+                                                                    <option value="Junio 2027">Junio 2027</option>
+                                                                    <option value="Julio 2027">Julio 2027</option>
+                                                                    <option value="Agosto 2027">Agosto 2027</option>
+                                                                    <option value="Septiembre 2027">Septiembre 2027</option>
+                                                                    <option value="Octubre 2027">Octubre 2027</option>
+                                                                    <option value="Noviembre 2027">Noviembre 2027</option>
+                                                                    <option value="Diciembre 2027">Diciembre 2027</option>
                                                                 </select>
                                                             </td>
                                                         </tr>
@@ -4569,13 +4570,13 @@ Año:
                                                                     <option>MAYRA GARCÍA</option>
                                                                     <option>EVELYN HURTADO</option>
                                                                     <option>HENRY PEZO</option>
-                                                                    <option>SAMANTHA SANCHEZ</option>
                                                                     <option>GIULIANA TATAJE</option>
                                                                     <option>JUAN DE LA TORRE</option>
-                                                                    <option>RICARDO CHUMPITAS</option>
                                                                     <option>WILLIAMS CLAROS</option>
                                                                     <option>JHONNY LEÓN (OJT)</option>
                                                                     <option>PEDRO HERRERA (OJT)</option>
+                                                                    <option>PAUL VALENCIA (OJT)</option>
+                                                                    <option>KAROL ROMERO</option>
                                                                 </select>
                                                             </td>
                                                         </tr>
@@ -22729,11 +22730,11 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
                     const spaceBelow = vh - rect.bottom;
                     const spaceAbove = rect.top;
-                    // Abrir hacia arriba si abajo queda poco espacio (< 230px) y arriba hay más espacio
-                    const preferUp = spaceBelow < 230 && spaceAbove > spaceBelow;
+                    // Abrir hacia arriba si abajo queda poco espacio (< 240px) y arriba hay más espacio
+                    const preferUp = (spaceBelow < 240 && spaceAbove > spaceBelow) || (spaceBelow < 120 && spaceAbove > 120);
 
                     const availableSpace = preferUp ? spaceAbove - 16 : spaceBelow - 16;
-                    const maxH = Math.min(280, Math.max(130, Math.floor(availableSpace)));
+                    const maxH = Math.min(320, Math.max(100, Math.floor(availableSpace)));
 
                     dropdown.style.maxHeight = maxH + 'px';
                     dropdown.style.overflowY = 'auto';
@@ -22741,7 +22742,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     dropdown.style.overscrollBehavior = 'contain';
 
                     // Ancho proporcional asegurando legibilidad sin desbordar viewport
-                    const desiredWidth = Math.min(Math.max(rect.width, 280), Math.min(480, vw - 24));
+                    const desiredWidth = Math.min(Math.max(rect.width, 300), Math.min(520, vw - 24));
                     dropdown.style.width = desiredWidth + 'px';
 
                     // Alineación horizontal dinámica para evitar corte con el borde de pantalla
@@ -22830,7 +22831,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                         const item = document.createElement('div');
                         const isSelected = opt.value === targetSelect.value;
                         item.className = 'combobox-option-item px-3 py-2 cursor-pointer transition flex items-center justify-between text-slate-700 font-medium group text-[11px] leading-snug ' +
-                            (isSelected ? 'bg-orange-100/90 text-win-orange font-bold border-l-4 border-win-orange' : 'hover:bg-orange-50 hover:text-win-orange');
+                            (isSelected ? 'combobox-option-selected bg-orange-100/90 text-win-orange font-bold border-l-4 border-win-orange' : 'hover:bg-orange-50 hover:text-win-orange');
                         item.title = opt.text;
 
                         // Resaltar coincidencias de búsqueda predictiva
@@ -22860,6 +22861,16 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
                     positionDropdown();
                     dropdown.classList.remove('hidden');
+
+                    // Si hay una opción seleccionada actualmente, auto-scroll hacia ella para visibilidad inmediata
+                    if (targetSelect.value) {
+                        const selEl = dropdown.querySelector('.combobox-option-selected');
+                        if (selEl) {
+                            setTimeout(() => {
+                                try { selEl.scrollIntoView({ block: 'nearest' }); } catch (e) { }
+                            }, 10);
+                        }
+                    }
                 }
 
                 function selectOption(opt) {
@@ -22881,13 +22892,20 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                         ? 'fa-solid fa-magnifying-glass absolute left-2 text-win-orange text-[10px] pointer-events-none transition-colors'
                         : 'fa-solid fa-magnifying-glass absolute left-3 text-win-orange text-xs pointer-events-none transition-colors';
                     syncInputFromSelect();
-                    renderDropdown(input.value);
+                    // Al abrir el desplegable mostrar todas las opciones y pre-seleccionar texto para permitir reemplazar escribiendo
+                    renderDropdown('');
+                    setTimeout(() => {
+                        try { input.select(); } catch (e) { }
+                    }, 40);
                 });
 
                 input.addEventListener('click', function () {
                     if (dropdown.classList.contains('hidden')) {
                         syncInputFromSelect();
-                        renderDropdown(input.value);
+                        renderDropdown('');
+                        setTimeout(() => {
+                            try { input.select(); } catch (e) { }
+                        }, 40);
                     }
                 });
 
