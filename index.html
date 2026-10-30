@@ -15,8 +15,7 @@ Proyecto:
 CRONOS FID
 (Centro de Recursos Operativos para Negociación y Fidelización)
 
-Año:
-2026
+Año02026
 =========================================================
 -->
 <!DOCTYPE html>
@@ -247,11 +246,13 @@ Año:
             box-shadow: 0 0 16px rgba(245, 158, 11, 0.25) !important;
             background-color: rgba(254, 243, 199, 0.25) !important;
         }
+
         .cronos-formador-highlight-capacitacion {
             border: 2px solid #6366f1 !important;
             box-shadow: 0 0 16px rgba(99, 102, 241, 0.25) !important;
             background-color: rgba(238, 242, 255, 0.25) !important;
         }
+
         .cronos-formador-highlight-refuerzo {
             border: 2px solid #10b981 !important;
             box-shadow: 0 0 16px rgba(16, 185, 129, 0.25) !important;
@@ -320,23 +321,28 @@ Año:
         .cronos-combobox-wrapper {
             position: relative;
         }
+
         .cronos-combobox-dropdown {
             scrollbar-width: thin;
             scrollbar-color: #cbd5e1 #f8fafc;
             overscroll-behavior: contain;
             box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.22), 0 10px 15px -5px rgba(0, 0, 0, 0.12);
         }
+
         .cronos-combobox-dropdown::-webkit-scrollbar {
             width: 6px;
         }
+
         .cronos-combobox-dropdown::-webkit-scrollbar-track {
             background: #f8fafc;
             border-radius: 8px;
         }
+
         .cronos-combobox-dropdown::-webkit-scrollbar-thumb {
             background: #cbd5e1;
             border-radius: 8px;
         }
+
         .cronos-combobox-dropdown::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
@@ -1026,17 +1032,21 @@ Año:
             scrollbar-width: thin;
             scrollbar-color: #CBD5E1 #F8FAFC;
         }
+
         .cronos-combobox-dropdown::-webkit-scrollbar {
             width: 6px;
         }
+
         .cronos-combobox-dropdown::-webkit-scrollbar-track {
             background: #F8FAFC;
             border-radius: 4px;
         }
+
         .cronos-combobox-dropdown::-webkit-scrollbar-thumb {
             background: #CBD5E1;
             border-radius: 4px;
         }
+
         .cronos-combobox-dropdown::-webkit-scrollbar-thumb:hover {
             background: #EA580C;
         }
@@ -1666,8 +1676,10 @@ Año:
                                     <i class="fa-solid fa-fire"></i>
                                 </div>
                                 <div>
-                                    <h3 id="sys-status-title-firebase" class="text-xs font-black text-slate-800">Firebase</h3>
-                                    <p id="sys-status-sub-firebase" class="text-[10px] text-slate-400">Cloud Firestore &amp; Auth</p>
+                                    <h3 id="sys-status-title-firebase" class="text-xs font-black text-slate-800">
+                                        Firebase</h3>
+                                    <p id="sys-status-sub-firebase" class="text-[10px] text-slate-400">Cloud Firestore
+                                        &amp; Auth</p>
                                 </div>
                             </div>
                             <span id="sys-status-badge-firebase"
@@ -1712,8 +1724,10 @@ Año:
                                     <i class="fa-brands fa-github"></i>
                                 </div>
                                 <div>
-                                    <h3 id="sys-status-title-github" class="text-xs font-black text-slate-800">GitHub Pages</h3>
-                                    <p id="sys-status-sub-github" class="text-[10px] text-slate-400">Despliegue &amp; Conectividad</p>
+                                    <h3 id="sys-status-title-github" class="text-xs font-black text-slate-800">GitHub
+                                        Pages</h3>
+                                    <p id="sys-status-sub-github" class="text-[10px] text-slate-400">Despliegue &amp;
+                                        Conectividad</p>
                                 </div>
                             </div>
                             <span id="sys-status-badge-github"
@@ -2279,7 +2293,8 @@ Año:
             </button>
 
             <!-- Pestaña Especializada: Formación y Calidad -->
-            <button id="tab-nav-formacion-calidad" onclick="if(window.CronosProfileUX && typeof window.CronosProfileUX.navigateToFormacionCalidad === 'function') window.CronosProfileUX.navigateToFormacionCalidad(); else switchTab('vista-360');"
+            <button id="tab-nav-formacion-calidad"
+                onclick="if(window.CronosProfileUX && typeof window.CronosProfileUX.navigateToFormacionCalidad === 'function') window.CronosProfileUX.navigateToFormacionCalidad(); else switchTab('vista-360');"
                 class="cronos-profile-tab flex items-center gap-2 bg-slate-100 hover:bg-purple-50 text-slate-700 hover:text-purple-700 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold shrink-0 transition-all cursor-pointer"
                 title="Gestión de Formación y Calidad">
                 <i class="fa-solid fa-list-check text-purple-600"></i>
@@ -2342,7 +2357,8 @@ Año:
                             </div>
                         </div>
                         <div class="flex items-center gap-2 self-end md:self-auto shrink-0">
-                            <button type="button" id="btn-supabase-acuerdos-voz" onclick="CronosOperationalSupabaseBridge.openParityModal()"
+                            <button type="button" id="btn-supabase-acuerdos-voz"
+                                onclick="CronosOperationalSupabaseBridge.openParityModal()"
                                 title="Auditoría de Paridad Supabase Fase 9.4 (Acuerdos de Voz)"
                                 class="cronos-tech-element text-xs bg-purple-700/50 hover:bg-purple-600 border border-purple-400/30 text-purple-100 px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition-all">
                                 <i class="fa-solid fa-server text-emerald-400"></i>
@@ -3272,7 +3288,8 @@ Año:
                                     aria-label="Ayuda contextual">
                                     <i class="fa-solid fa-circle-question text-emerald-400"></i> Ayuda
                                 </button>
-                                <button type="button" id="btn-supabase-derivaciones" onclick="CronosOperationalSupabaseBridge.openParityModal()"
+                                <button type="button" id="btn-supabase-derivaciones"
+                                    onclick="CronosOperationalSupabaseBridge.openParityModal()"
                                     class="cronos-tech-element bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-200 hover:text-white px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-indigo-400/30 transition-all"
                                     title="Auditoría de Paridad Supabase Fase 9.4 (Derivaciones)">
                                     <i class="fa-solid fa-server text-emerald-400"></i>
@@ -4276,7 +4293,8 @@ Año:
                                     aria-label="Ayuda contextual">
                                     <i class="fa-solid fa-circle-question text-orange-400"></i> Ayuda
                                 </button>
-                                <button type="button" id="btn-supabase-tipificaciones" onclick="CronosOperationalSupabaseBridge.openParityModal()"
+                                <button type="button" id="btn-supabase-tipificaciones"
+                                    onclick="CronosOperationalSupabaseBridge.openParityModal()"
                                     class="cronos-tech-element bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-200 hover:text-white px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-indigo-400/30 transition-all"
                                     title="Auditoría de Paridad Supabase Fase 9.4 (Tipificaciones)">
                                     <i class="fa-solid fa-server text-emerald-400"></i>
@@ -4494,8 +4512,10 @@ Año:
                                                                     class="w-full p-1 border border-transparent hover:border-slate-300 focus:border-blue-500 focus:outline-none bg-transparent text-slate-800">
                                                                     <option value=""></option>
                                                                     <option value="Octubre 2026">Octubre 2026</option>
-                                                                    <option value="Noviembre 2026">Noviembre 2026</option>
-                                                                    <option value="Diciembre 2026">Diciembre 2026</option>
+                                                                    <option value="Noviembre 2026">Noviembre 2026
+                                                                    </option>
+                                                                    <option value="Diciembre 2026">Diciembre 2026
+                                                                    </option>
                                                                     <option value="Enero 2027">Enero 2027</option>
                                                                     <option value="Febrero 2027">Febrero 2027</option>
                                                                     <option value="Marzo 2027">Marzo 2027</option>
@@ -4504,10 +4524,13 @@ Año:
                                                                     <option value="Junio 2027">Junio 2027</option>
                                                                     <option value="Julio 2027">Julio 2027</option>
                                                                     <option value="Agosto 2027">Agosto 2027</option>
-                                                                    <option value="Septiembre 2027">Septiembre 2027</option>
+                                                                    <option value="Septiembre 2027">Septiembre 2027
+                                                                    </option>
                                                                     <option value="Octubre 2027">Octubre 2027</option>
-                                                                    <option value="Noviembre 2027">Noviembre 2027</option>
-                                                                    <option value="Diciembre 2027">Diciembre 2027</option>
+                                                                    <option value="Noviembre 2027">Noviembre 2027
+                                                                    </option>
+                                                                    <option value="Diciembre 2027">Diciembre 2027
+                                                                    </option>
                                                                 </select>
                                                             </td>
                                                         </tr>
@@ -4528,8 +4551,10 @@ Año:
                                                                     class="w-full p-1 border border-transparent hover:border-slate-300 focus:border-blue-500 focus:outline-none bg-transparent text-slate-800">
                                                                     <option value=""></option>
                                                                     <option value="Ajuste Total">Ajuste Total</option>
-                                                                    <option value="Por Satisfacción">Por Satisfacción</option>
-                                                                    <option value="Por Error Detectable">Por Error Detectable</option>
+                                                                    <option value="Por Satisfacción">Por Satisfacción
+                                                                    </option>
+                                                                    <option value="Por Error Detectable">Por Error
+                                                                        Detectable</option>
                                                                     <option value="Por SAR">Por SAR</option>
                                                                     <option value="BOT">BOT</option>
                                                                     <option value="REC">REC</option>
@@ -5067,7 +5092,8 @@ Año:
                             </div>
                         </div>
                         <div class="flex items-center gap-2 flex-wrap z-10">
-                            <button id="btn-supabase-dashboard" onclick="CronosDashboardSupabaseBridge.openParityModal()"
+                            <button id="btn-supabase-dashboard"
+                                onclick="CronosDashboardSupabaseBridge.openParityModal()"
                                 class="cronos-tech-element bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-200 hover:text-white px-3 py-2 rounded-xl text-xs font-bold border border-indigo-400/40 transition-all flex items-center gap-1.5 cursor-pointer"
                                 title="Auditoría de Paridad y Benchmark de Latencia Fase 9.2">
                                 <i class="fa-solid fa-scale-balanced text-indigo-300"></i> Supabase 9.2
@@ -5617,7 +5643,8 @@ Año:
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <button type="button" id="btn-supabase-auditoria" onclick="CronosAuditSupabaseBridge.openParityModal()"
+                            <button type="button" id="btn-supabase-auditoria"
+                                onclick="CronosAuditSupabaseBridge.openParityModal()"
                                 class="cronos-tech-element bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-200 hover:text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-indigo-400/40 transition flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-sm"
                                 title="Auditoría de Paridad Supabase Fase 9.3">
                                 <i class="fa-solid fa-shield-halved text-indigo-300"></i>
@@ -5936,7 +5963,8 @@ Año:
 
                         <div class="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
                             <!-- Selector Visual Segmentado (Pills) -->
-                            <div class="inline-flex flex-wrap p-1 bg-slate-100 rounded-xl border border-slate-200 shadow-inner gap-0.5">
+                            <div
+                                class="inline-flex flex-wrap p-1 bg-slate-100 rounded-xl border border-slate-200 shadow-inner gap-0.5">
                                 <button type="button" id="sla-period-btn-dia" onclick="setSLAViewPeriod('dia')"
                                     class="px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all flex items-center gap-1.5 bg-purple-600 text-white shadow-sm cursor-pointer">
                                     <i class="fa-solid fa-sun text-[11px]"></i>
@@ -7925,6 +7953,8 @@ Sr.(a) XXX , agradecemos su comunicación y de igual manera pedimos las disculpa
                 } else {
                     modal360.classList.add('hidden');
                     document.body.classList.remove('overflow-hidden');
+                    const mb = document.getElementById('executive-360-body');
+                    if (mb) mb.innerHTML = '';
                 }
                 return;
             }
@@ -15576,13 +15606,30 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             lastMetrics: null,
             lastMetricsTs: 0,
 
+            slaPeriodCache: {}, // Caché temporal por período (Día, Semana, Mes, 3M, 6M - SPRINT 5.4)
             isValid(entry) {
                 return !!(entry && entry.data && (Date.now() - entry.ts < this.ttl));
+            },
+            getSLA(periodKey = 'full') {
+                if (!this.slaPeriodCache) this.slaPeriodCache = {};
+                const entry = this.slaPeriodCache[periodKey];
+                if (entry && entry.data && (Date.now() - entry.ts < this.ttl)) {
+                    return entry.data;
+                }
+                return null;
+            },
+            setSLA(periodKey = 'full', data) {
+                if (!this.slaPeriodCache) this.slaPeriodCache = {};
+                this.slaPeriodCache[periodKey] = { data, ts: Date.now() };
+                if (periodKey === 'full' || periodKey === '6meses') {
+                    this.slaEvents = { data, ts: Date.now() };
+                }
             },
             set(name, data, key = null) {
                 this[name] = { data, key, ts: Date.now() };
             },
             invalidateSLA() {
+                this.slaPeriodCache = {};
                 if (this.slaEvents) this.slaEvents.ts = 0;
                 if (this.adoptionMetrics) this.adoptionMetrics.ts = 0;
                 if (this.riskMatrix) this.riskMatrix.ts = 0;
@@ -15619,19 +15666,86 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             }
         };
 
-        // Helper para consultar eventos SLA desde Supabase con caché de 45s, deduplicación en vuelo
-        // paginación completa (sin truncamiento de 1000 filas) y respaldo histórico complementario.
-        async function fetchSupabaseSLAEvents(limit = 50000, startMsFilter = null, endMsFilter = null) {
-            const isFullRange = (startMsFilter === null && endMsFilter === null);
+        // Helper para resolver límites de período estándar (Día, Semana, Mes, 3 Meses, 6 Meses - SPRINT 5.3)
+        function getSLAPeriodBounds(period = 'dia') {
+            const now = new Date();
+            const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0).getTime();
+            const todayEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999).getTime();
+            const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0).getTime();
 
-            // PRIORIDAD 1: CACHÉ TEMPORAL (TTL 45s)
-            if (isFullRange && window.CronosPerfCache && window.CronosPerfCache.isValid(window.CronosPerfCache.slaEvents)) {
-                return window.CronosPerfCache.slaEvents.data;
+            let startMs = todayStart;
+            let endMs = todayEnd;
+            const p = String(period || 'dia').toLowerCase().trim();
+
+            if (p === 'dia' || p === 'hoy') {
+                startMs = todayStart;
+                endMs = todayEnd;
+            } else if (p === 'semana') {
+                startMs = todayStart - (7 * 24 * 60 * 60 * 1000);
+                endMs = todayEnd;
+            } else if (p === 'mes') {
+                startMs = Math.min(currentMonthStart, todayStart - (30 * 24 * 60 * 60 * 1000));
+                endMs = todayEnd;
+            } else if (p === '3meses') {
+                startMs = todayStart - (90 * 24 * 60 * 60 * 1000);
+                endMs = todayEnd;
+            } else if (p === '6meses' || p === 'full') {
+                startMs = todayStart - (180 * 24 * 60 * 60 * 1000);
+                endMs = todayEnd;
+            }
+            return { startMs, endMs, label: p };
+        }
+        window.getSLAPeriodBounds = getSLAPeriodBounds;
+
+        // Helper optimizado para consultar eventos SLA desde Supabase con caché de 45s por período,
+        // filtrado directo en query (Día, Semana, Mes, 3M, 6M), paginación concurrente Promise.all,
+        // y respaldo histórico no bloqueante (SPRINT 5).
+        async function fetchSupabaseSLAEvents(limit = 50000, startMsFilter = null, endMsFilter = null, periodName = null) {
+            // 1. Determinar rango efectivo y clave de caché (SPRINT 5.3)
+            let effectiveStartMs = null;
+            let effectiveEndMs = null;
+            let periodKey = periodName ? String(periodName).toLowerCase().trim() : null;
+
+            if (periodKey) {
+                const b = getSLAPeriodBounds(periodKey);
+                effectiveStartMs = b.startMs;
+                effectiveEndMs = b.endMs;
+            } else if (typeof startMsFilter === 'number' && startMsFilter > 0) {
+                effectiveStartMs = startMsFilter;
+                effectiveEndMs = (typeof endMsFilter === 'number' && endMsFilter > 0) ? endMsFilter : (Date.now() + 86400000);
+                // Determinar clave si coincide con un período estándar
+                const now = Date.now();
+                const diffDays = Math.round((now - effectiveStartMs) / (24 * 3600 * 1000));
+                if (diffDays <= 1) periodKey = 'dia';
+                else if (diffDays <= 8) periodKey = 'semana';
+                else if (diffDays <= 32) periodKey = 'mes';
+                else if (diffDays <= 95) periodKey = '3meses';
+                else if (diffDays <= 185) periodKey = '6meses';
+                else periodKey = `${Math.floor(effectiveStartMs / 60000)}_${Math.floor(effectiveEndMs / 60000)}`;
+            } else {
+                // Rango completo por defecto (retención 6 meses)
+                const sixMonthsAgoMs = Date.now() - (180 * 24 * 60 * 60 * 1000);
+                effectiveStartMs = sixMonthsAgoMs;
+                effectiveEndMs = Date.now() + 86400000;
+                periodKey = '6meses';
             }
 
-            // DEDUPLICACIÓN DE CONSULTAS EN VUELO (Evita consultas idénticas simultáneas)
-            if (isFullRange && window._slaFetchInFlightPromise) {
-                return await window._slaFetchInFlightPromise;
+            const isFullRange = (periodKey === '6meses' || periodKey === 'full');
+
+            // PRIORIDAD 1: CACHÉ TEMPORAL (TTL 45s por período consultado - SPRINT 5.4)
+            if (window.CronosPerfCache) {
+                if (typeof window.CronosPerfCache.getSLA === 'function') {
+                    const cached = window.CronosPerfCache.getSLA(periodKey);
+                    if (cached && Array.isArray(cached)) return cached;
+                } else if (isFullRange && window.CronosPerfCache.isValid(window.CronosPerfCache.slaEvents)) {
+                    return window.CronosPerfCache.slaEvents.data;
+                }
+            }
+
+            // DEDUPLICACIÓN DE CONSULTAS EN VUELO (Evita solicitudes idénticas concurrentes)
+            window._slaInFlightMap = window._slaInFlightMap || new Map();
+            if (window._slaInFlightMap.has(periodKey)) {
+                return await window._slaInFlightMap.get(periodKey);
             }
 
             const fetchExecution = (async () => {
@@ -15639,48 +15753,114 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     const maxLimit = (!limit || limit <= 1000) ? 50000 : limit;
                     const pageSize = 1000;
                     let allRows = [];
-                    const sixMonthsAgoMs = Date.now() - (180 * 24 * 60 * 60 * 1000);
-                    const effectiveStartMs = (typeof startMsFilter === 'number' && startMsFilter > 0) ? startMsFilter : sixMonthsAgoMs;
-                    const effectiveEndMs = (typeof endMsFilter === 'number' && endMsFilter > 0) ? endMsFilter : Date.now() + (24 * 60 * 60 * 1000);
 
-                    // 1. Consulta paginada a Supabase public.cronos_sla
-                    let offset = 0;
-                    let keepFetching = true;
-                    while (keepFetching && allRows.length < maxLimit) {
-                        let pageRows = [];
-                        if (window.supabaseClient) {
-                            const { data, error } = await window.supabaseClient
-                                .from('cronos_sla')
-                                .select('*')
-                                .order('created_at', { ascending: false })
-                                .range(offset, offset + pageSize - 1);
-                            if (error) throw error;
-                            pageRows = data || [];
-                        } else if (window.SUPABASE_CONFIG && window.SUPABASE_CONFIG.url) {
-                            const res = await fetch(`${window.SUPABASE_CONFIG.url}/rest/v1/cronos_sla?select=*&order=created_at.desc&limit=${pageSize}&offset=${offset}`, {
-                                method: 'GET',
-                                headers: {
-                                    'apikey': window.SUPABASE_CONFIG.key,
-                                    'Authorization': `Bearer ${window.SUPABASE_CONFIG.key}`,
-                                    'Range-Unit': 'items',
-                                    'Range': `${offset}-${offset + pageSize - 1}`
+                    // Parámetros ISO para filtrado directo en base de datos (SPRINT 5.3)
+                    const isoStart = new Date(effectiveStartMs).toISOString();
+                    const isoEnd = new Date(effectiveEndMs).toISOString();
+
+                    // Tarea 1: Consulta a Supabase public.cronos_sla con filtro de fechas indexado
+                    const supabaseTask = (async () => {
+                        let rows = [];
+                        try {
+                            if (window.supabaseClient) {
+                                const { data, error } = await window.supabaseClient
+                                    .from('cronos_sla')
+                                    .select('*')
+                                    .gte('created_at', isoStart)
+                                    .lte('created_at', isoEnd)
+                                    .order('created_at', { ascending: false })
+                                    .range(0, pageSize - 1);
+                                if (error) throw error;
+                                rows = data || [];
+                            } else if (window.SUPABASE_CONFIG && window.SUPABASE_CONFIG.url) {
+                                const filterParams = `&created_at=gte.${encodeURIComponent(isoStart)}&created_at=lte.${encodeURIComponent(isoEnd)}`;
+                                const res = await fetch(`${window.SUPABASE_CONFIG.url}/rest/v1/cronos_sla?select=*${filterParams}&order=created_at.desc&limit=${pageSize}&offset=0`, {
+                                    method: 'GET',
+                                    headers: {
+                                        'apikey': window.SUPABASE_CONFIG.key,
+                                        'Authorization': `Bearer ${window.SUPABASE_CONFIG.key}`,
+                                        'Range-Unit': 'items',
+                                        'Range': `0-${pageSize - 1}`
+                                    }
+                                });
+                                if (res.ok) {
+                                    rows = await res.json();
+                                }
+                            }
+                        } catch (sbErr) {
+                            console.warn('[Supabase SLA] Error en página inicial:', sbErr);
+                        }
+                        return Array.isArray(rows) ? rows : [];
+                    })();
+
+                    // Tarea 2: Respaldo histórico complementario Firestore (Ejecutado en paralelo vía Promise.all - SPRINT 5.2)
+                    const firestoreTask = (async () => {
+                        const firestoreDb = window.db || (typeof firebase !== 'undefined' && firebase.firestore ? firebase.firestore() : null);
+                        if (!firestoreDb) return [];
+                        try {
+                            // Aplicar filtro de fecha directo a Firestore para no escanear colecciones completas
+                            let fsQuery = firestoreDb.collection('cronos_sla');
+                            if (typeof effectiveStartMs === 'number' && effectiveStartMs > 0) {
+                                fsQuery = fsQuery.where('timestamp', '>=', effectiveStartMs);
+                            }
+                            if (typeof effectiveEndMs === 'number' && effectiveEndMs > 0) {
+                                fsQuery = fsQuery.where('timestamp', '<=', effectiveEndMs);
+                            }
+                            const fsSnap = await fsQuery.get();
+                            const fsDocs = [];
+                            if (fsSnap && !fsSnap.empty) {
+                                fsSnap.forEach(d => fsDocs.push({ ...d.data(), id: d.id }));
+                            }
+                            return fsDocs;
+                        } catch (fsErr) {
+                            // Fallback seguro si no existe índice compuesto en Firestore
+                            return [];
+                        }
+                    })();
+
+                    // Consultas concurrentes Supabase + Firestore (SPRINT 5.2)
+                    const [firstPageRows, firestoreRows] = await Promise.all([supabaseTask, firestoreTask]);
+                    allRows = allRows.concat(firstPageRows);
+
+                    // Paginación paralela en Supabase si el período excede 1000 filas (SPRINT 5.2)
+                    if (firstPageRows.length === pageSize && maxLimit > pageSize) {
+                        const maxPages = Math.min(Math.ceil(maxLimit / pageSize), 6);
+                        const pagePromises = [];
+                        for (let pageIdx = 1; pageIdx < maxPages; pageIdx++) {
+                            const offset = pageIdx * pageSize;
+                            if (window.supabaseClient) {
+                                pagePromises.push(
+                                    window.supabaseClient
+                                        .from('cronos_sla')
+                                        .select('*')
+                                        .gte('created_at', isoStart)
+                                        .lte('created_at', isoEnd)
+                                        .order('created_at', { ascending: false })
+                                        .range(offset, offset + pageSize - 1)
+                                        .then(r => r.data || [])
+                                        .catch(() => [])
+                                );
+                            } else if (window.SUPABASE_CONFIG && window.SUPABASE_CONFIG.url) {
+                                const filterParams = `&created_at=gte.${encodeURIComponent(isoStart)}&created_at=lte.${encodeURIComponent(isoEnd)}`;
+                                pagePromises.push(
+                                    fetch(`${window.SUPABASE_CONFIG.url}/rest/v1/cronos_sla?select=*${filterParams}&order=created_at.desc&limit=${pageSize}&offset=${offset}`, {
+                                        headers: {
+                                            'apikey': window.SUPABASE_CONFIG.key,
+                                            'Authorization': `Bearer ${window.SUPABASE_CONFIG.key}`,
+                                            'Range-Unit': 'items',
+                                            'Range': `${offset}-${offset + pageSize - 1}`
+                                        }
+                                    }).then(r => r.ok ? r.json() : []).catch(() => [])
+                                );
+                            }
+                        }
+                        if (pagePromises.length > 0) {
+                            const concurrentPages = await Promise.all(pagePromises);
+                            concurrentPages.forEach(pRows => {
+                                if (Array.isArray(pRows) && pRows.length > 0) {
+                                    allRows = allRows.concat(pRows);
                                 }
                             });
-                            if (!res.ok) {
-                                const errTxt = await res.text();
-                                throw new Error(`HTTP ${res.status}: ${errTxt}`);
-                            }
-                            pageRows = await res.json();
-                        }
-                        if (!Array.isArray(pageRows) || pageRows.length === 0) {
-                            keepFetching = false;
-                        } else {
-                            allRows = allRows.concat(pageRows);
-                            if (pageRows.length < pageSize) {
-                                keepFetching = false;
-                            } else {
-                                offset += pageSize;
-                            }
                         }
                     }
 
@@ -15713,35 +15893,32 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                         }
                     });
 
-                    // 2. Complementar con histórico en Firestore (colección cronos_sla) usando búsqueda O(1)
-                    const firestoreDb = window.db || (typeof firebase !== 'undefined' && firebase.firestore ? firebase.firestore() : null);
-                    if (firestoreDb) {
-                        try {
-                            const fsSnap = await firestoreDb.collection('cronos_sla').get();
-                            if (fsSnap && !fsSnap.empty) {
-                                fsSnap.forEach(doc => {
-                                    const norm = normalizeSLADoc(doc, doc.id);
-                                    const ts = norm.timestamp || parseDocTimestamp(norm);
-                                    if (ts >= effectiveStartMs && ts <= effectiveEndMs) {
-                                        const sigKey = `${norm.fecha}_${norm.hora}_${norm.correo || norm.usuario}_${norm.accion}_${norm.tiempoSegundos}`;
-                                        const bucketKey = `${Math.floor(ts / 2000)}_${norm.accion}_${norm.correo || norm.usuario}`;
-                                        if (!normalizedMap.has(String(doc.id)) && !normalizedMap.has(sigKey) && !fastTimeBuckets.has(bucketKey)) {
-                                            normalizedMap.set(sigKey, norm);
-                                            fastTimeBuckets.add(bucketKey);
-                                        }
-                                    }
-                                });
+                    // Complementar con resultados de Firestore previamente obtenidos en paralelo
+                    if (Array.isArray(firestoreRows) && firestoreRows.length > 0) {
+                        firestoreRows.forEach(doc => {
+                            const norm = normalizeSLADoc(doc, doc.id);
+                            const ts = norm.timestamp || parseDocTimestamp(norm);
+                            if (ts >= effectiveStartMs && ts <= effectiveEndMs) {
+                                const sigKey = `${norm.fecha}_${norm.hora}_${norm.correo || norm.usuario}_${norm.accion}_${norm.tiempoSegundos}`;
+                                const bucketKey = `${Math.floor(ts / 2000)}_${norm.accion}_${norm.correo || norm.usuario}`;
+                                if (!normalizedMap.has(String(doc.id)) && !normalizedMap.has(sigKey) && !fastTimeBuckets.has(bucketKey)) {
+                                    normalizedMap.set(sigKey, norm);
+                                    fastTimeBuckets.add(bucketKey);
+                                }
                             }
-                        } catch (fsErr) {
-                            console.warn('[SLA Historical Complement] Lectura complementaria de Firestore cronos_sla omitida:', fsErr);
-                        }
+                        });
                     }
 
                     const normalized = Array.from(normalizedMap.values());
                     normalized.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
-                    if (isFullRange && window.CronosPerfCache) {
-                        window.CronosPerfCache.set('slaEvents', normalized);
+                    // Guardar en caché con TTL de 45s (SPRINT 5.4)
+                    if (window.CronosPerfCache) {
+                        if (typeof window.CronosPerfCache.setSLA === 'function') {
+                            window.CronosPerfCache.setSLA(periodKey, normalized);
+                        } else {
+                            window.CronosPerfCache.set('slaEvents', normalized);
+                        }
                     }
 
                     return normalized;
@@ -15749,12 +15926,18 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     console.error('[Supabase] Error al consultar public.cronos_sla:', err);
                     return [];
                 } finally {
+                    if (window._slaInFlightMap) {
+                        window._slaInFlightMap.delete(periodKey);
+                    }
                     if (isFullRange) {
                         window._slaFetchInFlightPromise = null;
                     }
                 }
             })();
 
+            if (window._slaInFlightMap) {
+                window._slaInFlightMap.set(periodKey, fetchExecution);
+            }
             if (isFullRange) {
                 window._slaFetchInFlightPromise = fetchExecution;
             }
@@ -16310,17 +16493,32 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                         timestamp: now.getTime()
                     };
 
-                    await this.writeAudit(logData);
+                    // SPRINT 1: Proceso no bloqueante de escritura en segundo plano
+                    this.writeAudit(logData).catch(err => console.warn('[AuditManager] writeAudit background:', err));
 
                     if (!window.CRONOS_ACCESS_LOGS) window.CRONOS_ACCESS_LOGS = [];
                     window.CRONOS_ACCESS_LOGS.unshift(logData);
                     if (window.CRONOS_ACCESS_LOGS.length > 1000) {
                         window.CRONOS_ACCESS_LOGS = window.CRONOS_ACCESS_LOGS.slice(0, 1000);
                     }
-                    if (typeof renderAuditoriaStats === 'function') renderAuditoriaStats();
-                    if (typeof renderAuditoriaTable === 'function') renderAuditoriaTable();
-                    if (typeof renderAccessHistoryTable === 'function') renderAccessHistoryTable();
-                    if (typeof renderDashboard === 'function') renderDashboard();
+                    if (window.CronosPerfCache) window.CronosPerfCache.invalidateAudit();
+
+                    // SPRINT 1: Validación estricta de visibilidad antes de renderizar
+                    const audEl = document.getElementById('content-auditoria');
+                    if (audEl && !audEl.classList.contains('hidden')) {
+                        if (typeof renderAuditoriaStats === 'function') renderAuditoriaStats();
+                        if (typeof renderAuditoriaTable === 'function') renderAuditoriaTable();
+                    }
+
+                    const histModal = document.getElementById('modal-access-history');
+                    if (histModal && !histModal.classList.contains('hidden')) {
+                        if (typeof renderAccessHistoryTable === 'function') renderAccessHistoryTable();
+                    }
+
+                    const dashEl = document.getElementById('content-dashboard');
+                    if (dashEl && !dashEl.classList.contains('hidden')) {
+                        if (typeof renderDashboard === 'function') renderDashboard();
+                    }
                     return logData;
                 } catch (error) {
                     console.error("FIRESTORE ERROR [AuditManager]:", error);
@@ -18968,37 +19166,17 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
         function filterSLAEventsByPeriod(events, period = 'dia') {
             if (!events || !Array.isArray(events)) return [];
-            const now = new Date();
-            const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0).getTime();
-            const todayEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999).getTime();
-            const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0).getTime();
-
-            let startMs = todayStart;
-            let endMs = todayEnd;
-
-            if (period === 'dia' || period === 'hoy') {
-                // Día completo (00:00:00.000 a 23:59:59.999)
-                startMs = todayStart;
-            } else if (period === 'semana') {
-                // Semana completa (últimos 7 días)
-                startMs = todayStart - (7 * 24 * 60 * 60 * 1000);
-            } else if (period === 'mes') {
-                // Mes completo (cubre tanto el mes calendario actual como los últimos 30 días completos)
-                startMs = Math.min(currentMonthStart, todayStart - (30 * 24 * 60 * 60 * 1000));
-            } else if (period === '3meses') {
-                // 3 Meses completos (90 días)
-                startMs = todayStart - (90 * 24 * 60 * 60 * 1000);
-            } else if (period === '6meses') {
-                // 6 Meses completos (180 días - retención oficial)
-                startMs = todayStart - (180 * 24 * 60 * 60 * 1000);
-            }
+            const bounds = (typeof getSLAPeriodBounds === 'function') ? getSLAPeriodBounds(period) : null;
+            const startMs = bounds ? bounds.startMs : 0;
+            const endMs = bounds ? bounds.endMs : Date.now();
+            const now = Date.now();
 
             return events.filter(ev => {
-                const ms = parseDocTimestamp(ev);
+                const ms = (typeof parseDocTimestamp === 'function' ? parseDocTimestamp(ev) : (ev._parsedTs || ev.timestamp || 0));
                 if (ms <= 0) return false;
                 if (period === 'dia' || period === 'hoy') {
                     if (ms >= startMs && ms <= endMs) return true;
-                    if ((now.getTime() - ms) <= 24 * 60 * 60 * 1000) return true;
+                    if ((now - ms) <= 24 * 60 * 60 * 1000) return true;
                     return false;
                 }
                 return ms >= startMs && ms <= endMs;
@@ -19058,7 +19236,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         }
         window.calculateSLAMetricsForPeriod = calculateSLAMetricsForPeriod;
 
-        function setSLAViewPeriod(period) {
+        async function setSLAViewPeriod(period) {
             window.CRONOS_SLA_VIEW_PERIOD = period;
             window.CRONOS_SLA_PAGE = 1;
 
@@ -19112,8 +19290,34 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 if (tag) tag.textContent = "6 Meses (180 días)";
             }
 
-            renderSLAMetricsCards();
-            renderSLATable();
+            // Lazy load bajo demanda para períodos pesados (SPRINT 5.5)
+            const bounds = (typeof getSLAPeriodBounds === 'function') ? getSLAPeriodBounds(period) : { startMs: 0, endMs: Date.now() };
+            const tbody = document.getElementById("sla-events-tbody");
+
+            // Si ya tenemos en caché los eventos de este período, usarlos de inmediato (0 ms)
+            const cachedEvents = (window.CronosPerfCache && typeof window.CronosPerfCache.getSLA === 'function')
+                ? window.CronosPerfCache.getSLA(period)
+                : null;
+
+            if (cachedEvents && Array.isArray(cachedEvents)) {
+                window.CRONOS_SLA_EVENTS = cachedEvents;
+                renderSLAMetricsCards();
+                renderSLATable();
+            } else {
+                if (tbody) {
+                    tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-slate-400 font-medium"><i class="fa-solid fa-spinner fa-spin mr-2 text-purple-600"></i> Cargando período ${period.toUpperCase()} bajo demanda desde Supabase...</td></tr>`;
+                }
+                try {
+                    const fetched = await fetchSupabaseSLAEvents(50000, bounds.startMs, bounds.endMs, period);
+                    if (Array.isArray(fetched)) {
+                        window.CRONOS_SLA_EVENTS = fetched;
+                    }
+                } catch (fetchErr) {
+                    console.warn('[setSLAViewPeriod] Error al obtener datos bajo demanda:', fetchErr);
+                }
+                renderSLAMetricsCards();
+                renderSLATable();
+            }
         }
         window.setSLAViewPeriod = setSLAViewPeriod;
 
@@ -19131,27 +19335,23 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         window.changeSLAPageSize = changeSLAPageSize;
 
         async function renderSLAModule() {
+            const period = window.CRONOS_SLA_VIEW_PERIOD || 'dia';
+            const bounds = (typeof getSLAPeriodBounds === 'function') ? getSLAPeriodBounds(period) : { startMs: 0, endMs: Date.now() };
             const tbody = document.getElementById("sla-events-tbody");
             if (tbody && (!window.CRONOS_SLA_EVENTS || window.CRONOS_SLA_EVENTS.length === 0)) {
-                tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-slate-400 font-medium"><i class="fa-solid fa-spinner fa-spin mr-2 text-purple-600"></i> Consultando eventos CRONOS SLA en tiempo real desde Supabase...</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" class="p-6 text-center text-slate-400 font-medium"><i class="fa-solid fa-spinner fa-spin mr-2 text-purple-600"></i> Consultando eventos CRONOS SLA (${period.toUpperCase()}) en tiempo real desde Supabase...</td></tr>`;
             }
 
             try {
-                // ANALÍTICA CRONOS SLA: Leer desde Supabase con retención máxima de 6 meses (sin límite de 1000 filas)
-                console.log("[Analítica CRONOS SLA] Consultando desde Supabase con paginación completa (Retención: 6 meses)...");
-                const events = await fetchSupabaseSLAEvents(50000);
-
-                // Conservar exclusivamente eventos de hasta 6 meses (180 días)
-                const cutoff180d = Date.now() - (180 * 24 * 60 * 60 * 1000);
-                window.CRONOS_SLA_EVENTS = (events || []).filter(e => {
-                    const ts = parseDocTimestamp(e) || e.timestamp || 0;
-                    return ts >= cutoff180d;
-                });
+                // ANALÍTICA CRONOS SLA: Carga optimizada por período bajo demanda (Lazy Load SPRINT 5.5)
+                console.log(`[Analítica CRONOS SLA] Consultando desde Supabase período '${period}' (Lazy Load SPRINT 5.5)...`);
+                const events = await fetchSupabaseSLAEvents(50000, bounds.startMs, bounds.endMs, period);
+                window.CRONOS_SLA_EVENTS = events || [];
 
                 const totalRegistros = window.CRONOS_SLA_EVENTS.length;
                 const ultimaFecha = totalRegistros > 0 ? (window.CRONOS_SLA_EVENTS[0].fechaHora || window.CRONOS_SLA_EVENTS[0].fecha || (window.CRONOS_SLA_EVENTS[0].timestamp ? new Date(window.CRONOS_SLA_EVENTS[0].timestamp).toLocaleString("es-PE") : "—")) : "Ninguna";
 
-                console.log("Total registros cronos_sla (Supabase, retención 6 meses):", totalRegistros);
+                console.log(`Total registros cronos_sla (Supabase, período ${period}):`, totalRegistros);
                 console.log("Última fecha encontrada:", ultimaFecha);
                 console.log("Consulta Supabase SLA ejecutada con éxito");
             } catch (error) {
@@ -19420,61 +19620,47 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
             getPeriodDateRange(periodType, customStart, customEnd) {
                 const now = new Date();
-                const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0).getTime();
                 const todayEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999).getTime();
-                const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0).getTime();
 
-                let startMs = 0;
-                let endMs = todayEnd;
-                let label = "";
+                if (periodType === 'personalizado') {
+                    let startMs = 0;
+                    let endMs = todayEnd;
+                    if (customStart) {
+                        const s = new Date(customStart + "T00:00:00");
+                        startMs = !isNaN(s.getTime()) ? s.getTime() : 0;
+                    }
+                    if (customEnd) {
+                        const e = new Date(customEnd + "T23:59:59.999");
+                        endMs = !isNaN(e.getTime()) ? e.getTime() : todayEnd;
+                    }
+                    return { startMs, endMs, label: `Rango Personalizado (${customStart || 'Inicio'} al ${customEnd || 'Fin'})` };
+                }
+
+                // Sincronización 100% idéntica con el motor de visualización en pantalla (SPRINT 5.6)
+                const b = (typeof getSLAPeriodBounds === 'function') ? getSLAPeriodBounds(periodType) : null;
+                const startMs = b ? b.startMs : 0;
+                const endMs = b ? b.endMs : todayEnd;
+                let label = "Hoy";
 
                 switch (periodType) {
                     case 'hoy':
                     case 'dia':
-                        startMs = todayStart;
-                        endMs = todayEnd;
                         label = `Hoy (${now.toLocaleDateString('es-PE')})`;
                         break;
                     case 'semana':
-                        startMs = todayStart - (7 * 24 * 60 * 60 * 1000);
-                        endMs = todayEnd;
                         label = `Últimos 7 días (${new Date(startMs).toLocaleDateString('es-PE')} al ${now.toLocaleDateString('es-PE')})`;
                         break;
                     case 'mes':
-                        startMs = Math.min(currentMonthStart, todayStart - (30 * 24 * 60 * 60 * 1000));
-                        endMs = todayEnd;
                         label = `Mes Completo (${new Date(startMs).toLocaleDateString('es-PE')} al ${now.toLocaleDateString('es-PE')})`;
                         break;
                     case '3meses':
-                        startMs = todayStart - (90 * 24 * 60 * 60 * 1000);
-                        endMs = todayEnd;
                         label = `Últimos 3 meses (90 días: ${new Date(startMs).toLocaleDateString('es-PE')} al ${now.toLocaleDateString('es-PE')})`;
                         break;
                     case '6meses':
-                        // RETENCIÓN MÍNIMA REQUERIDA: 180 DÍAS (6 MESES)
-                        startMs = todayStart - (180 * 24 * 60 * 60 * 1000);
-                        endMs = todayEnd;
                         label = `Últimos 6 meses (180 días - Retención Oficial: ${new Date(startMs).toLocaleDateString('es-PE')} al ${now.toLocaleDateString('es-PE')})`;
                         break;
-                    case 'personalizado':
-                        if (customStart) {
-                            const s = new Date(customStart + "T00:00:00");
-                            startMs = !isNaN(s.getTime()) ? s.getTime() : 0;
-                        } else {
-                            startMs = 0;
-                        }
-                        if (customEnd) {
-                            const e = new Date(customEnd + "T23:59:59.999");
-                            endMs = !isNaN(e.getTime()) ? e.getTime() : todayEnd;
-                        } else {
-                            endMs = todayEnd;
-                        }
-                        label = `Rango Personalizado (${customStart || 'Inicio'} al ${customEnd || 'Fin'})`;
-                        break;
                     default:
-                        startMs = todayStart;
-                        endMs = todayEnd;
-                        label = "Hoy";
+                        label = `Hoy (${now.toLocaleDateString('es-PE')})`;
                 }
 
                 return { startMs, endMs, label };
@@ -22228,11 +22414,12 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             if (targetNorm === 'formacion-calidad' || targetNorm === 'formacion') {
                 targetNorm = 'vista-360';
                 target = 'vista-360';
+                window.CRONOS_360_ACTIVE_TAB = 'formacion-calidad';
                 setTimeout(() => {
                     if (window.CronosProfileUX && typeof window.CronosProfileUX.scrollToFormacionCalidad === 'function') {
                         window.CronosProfileUX.scrollToFormacionCalidad();
                     }
-                }, 250);
+                }, 100);
             }
 
             const currentUser = window.CRONOS_CURRENT_USER || (typeof UserManager !== 'undefined' && UserManager.getCurrentUser ? UserManager.getCurrentUser() : null);
@@ -38309,46 +38496,10 @@ Preparado para CRONOS AI INSIGHTS v4.0 Predictive Engine
                 }
             },
 
-            refreshRecommendationsGrid: function () {
-                const container = document.getElementById('ai-recommendations-grid');
-                if (!container) return;
-
-                const all = this.getRecommendations();
-                const filtered = all.filter(r => {
-                    const matchArea = (this.activeFilterArea === 'todas') || (r.area === this.activeFilterArea);
-                    const matchPrio = (this.activeFilterPriority === 'todas') || (r.prioridad === this.activeFilterPriority);
-                    return matchArea && matchPrio;
-                });
-
-                // Actualizar chips de área
-                ['todas', 'supervision', 'calidad', 'formacion', 'coordinacion', 'jefatura'].forEach(a => {
-                    const chip = document.getElementById(`ai-filter-area-${a}`);
-                    if (chip) {
-                        if (a === this.activeFilterArea) {
-                            chip.className = 'px-3 py-1.5 rounded-xl text-xs font-black bg-violet-600 text-white shadow-sm border border-violet-500 transition-all';
-                        } else {
-                            chip.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-900/60 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition-all';
-                        }
-                    }
-                });
-
-                // Actualizar chips de prioridad
-                ['todas', 'alta', 'media', 'baja'].forEach(p => {
-                    const chip = document.getElementById(`ai-filter-prio-${p}`);
-                    if (chip) {
-                        if (p === this.activeFilterPriority) {
-                            chip.className = 'px-2.5 py-1 rounded-xl text-[11px] font-black bg-indigo-600 text-white shadow-sm border border-indigo-500 transition-all';
-                        } else {
-                            chip.className = 'px-2.5 py-1 rounded-xl text-[11px] font-semibold bg-slate-900/60 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition-all';
-                        }
-                    }
-                });
-
-                const countEl = document.getElementById('ai-recommendations-count');
-                if (countEl) countEl.textContent = `${filtered.length} de ${all.length} recomendaciones`;
-
-                if (filtered.length === 0) {
-                    container.innerHTML = `
+            // Helper de renderizado de tarjetas de recomendación IA
+            renderRecommendationsCardsHtml: function (list) {
+                if (!list || list.length === 0) {
+                    return `
                         <div class="col-span-full p-8 text-center bg-slate-950/40 rounded-2xl border border-slate-800 text-slate-400">
                             <i class="fa-solid fa-filter-circle-xmark text-3xl mb-2 text-slate-500"></i>
                             <p class="font-bold">No se encontraron recomendaciones con los filtros aplicados.</p>
@@ -38357,11 +38508,9 @@ Preparado para CRONOS AI INSIGHTS v4.0 Predictive Engine
                             </button>
                         </div>
                     `;
-                    return;
                 }
-
-                container.innerHTML = filtered.map(r => `
-                    <div id="ai-card-${r.id}" class="p-5 rounded-2xl bg-gradient-to-br from-slate-950/80 via-slate-900/90 to-slate-950/80 border border-slate-800 hover:border-violet-500/40 shadow-lg space-y-4 transition-all">
+                return list.map(r => `
+                    <div id="ai-card-${r.id}" class="p-5 rounded-2xl bg-gradient-to-br from-slate-950/80 via-slate-900/90 to-slate-950/80 border border-slate-800 hover:border-violet-500/40 shadow-lg space-y-4 transition-all" data-area="${r.area}" data-priority="${r.prioridad}">
                         <!-- Top Meta Header -->
                         <div class="flex items-start justify-between gap-3">
                             <div class="flex items-center gap-2 flex-wrap">
@@ -38404,9 +38553,9 @@ Preparado para CRONOS AI INSIGHTS v4.0 Predictive Engine
                             </div>
 
                             <!-- RECOMENDACIÓN -->
-                            <div class="p-2.5 rounded-xl bg-violet-950/40 border-l-4 border-violet-500 text-violet-100 space-y-0.5">
-                                <div class="text-[9px] uppercase font-black tracking-wider text-violet-300 flex items-center gap-1.5">
-                                    <i class="fa-solid fa-lightbulb text-[10px]"></i> 3. RECOMENDACIÓN EJECUTIVA
+                            <div class="p-2.5 rounded-xl bg-slate-900/90 border-l-4 border-emerald-500 text-slate-300 space-y-0.5">
+                                <div class="text-[9px] uppercase font-black tracking-wider text-emerald-400 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-bullseye text-[10px]"></i> 3. RECOMENDACIÓN EJECUTIVA
                                 </div>
                                 <p class="text-[11px] font-semibold leading-relaxed">${r.recomendacion}</p>
                             </div>
@@ -38430,6 +38579,68 @@ Preparado para CRONOS AI INSIGHTS v4.0 Predictive Engine
                         </div>
                     </div>
                 `).join('');
+            },
+
+            // ACTUALIZACIÓN PARCIAL Y FILTRADO QUIRÚRGICO (Sin reconstrucción destructiva del DOM)
+            refreshRecommendationsGrid: function () {
+                const container = document.getElementById('ai-recommendations-grid');
+                if (!container) return;
+
+                const all = this.getRecommendations();
+                const filtered = all.filter(r => {
+                    const matchArea = (this.activeFilterArea === 'todas') || (r.area === this.activeFilterArea);
+                    const matchPrio = (this.activeFilterPriority === 'todas') || (r.prioridad === this.activeFilterPriority);
+                    return matchArea && matchPrio;
+                });
+
+                // Actualizar chips de área
+                ['todas', 'supervision', 'calidad', 'formacion', 'coordinacion', 'jefatura'].forEach(a => {
+                    const chip = document.getElementById(`ai-filter-area-${a}`);
+                    if (chip) {
+                        if (a === this.activeFilterArea) {
+                            chip.className = 'px-3 py-1.5 rounded-xl text-xs font-black bg-violet-600 text-white shadow-sm border border-violet-500 transition-all';
+                        } else {
+                            chip.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-900/60 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition-all';
+                        }
+                    }
+                });
+
+                // Actualizar chips de prioridad
+                ['todas', 'alta', 'media', 'baja'].forEach(p => {
+                    const chip = document.getElementById(`ai-filter-prio-${p}`);
+                    if (chip) {
+                        if (p === this.activeFilterPriority) {
+                            chip.className = 'px-2.5 py-1 rounded-xl text-[11px] font-black bg-indigo-600 text-white shadow-sm border border-indigo-500 transition-all';
+                        } else {
+                            chip.className = 'px-2.5 py-1 rounded-xl text-[11px] font-semibold bg-slate-900/60 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition-all';
+                        }
+                    }
+                });
+
+                const countEl = document.getElementById('ai-recommendations-count');
+                if (countEl) countEl.textContent = `${filtered.length} de ${all.length} recomendaciones`;
+
+                // ACTUALIZACIÓN PARCIAL QUIRÚRGICA: Alternar visibilidad de tarjetas existentes sin destruir nodos DOM
+                const existingCards = container.querySelectorAll('[id^="ai-card-"]');
+                if (existingCards && existingCards.length > 0) {
+                    let visibleCount = 0;
+                    all.forEach(r => {
+                        const card = document.getElementById(`ai-card-${r.id}`);
+                        if (card) {
+                            const match = filtered.some(f => f.id === r.id);
+                            card.style.display = match ? '' : 'none';
+                            if (match) visibleCount++;
+                        }
+                    });
+                    const emptyEl = document.getElementById('ai-recommendations-empty');
+                    if (emptyEl) {
+                        emptyEl.style.display = (visibleCount === 0) ? 'block' : 'none';
+                    }
+                    return;
+                }
+
+                // Fallback de inyección inicial si no existían en el DOM
+                container.innerHTML = this.renderRecommendationsCardsHtml(filtered);
             },
 
             // 10. Exportar Informe Ejecutivo en Texto
@@ -38731,9 +38942,16 @@ CRONOS AI INSIGHTS - SISTEMA CONSULTIVO NO DESTRUCTIVO
                             </div>
                         </div>
 
-                        <!-- Grid de Tarjetas de Recomendaciones con Explicabilidad -->
+                        <!-- Grid de Tarjetas de Recomendaciones con Explicabilidad (Renderizado Síncrono Inicial) -->
                         <div id="ai-recommendations-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <!-- Inyectado dinámicamente -->
+                            ${this.renderRecommendationsCardsHtml(this.getRecommendations())}
+                            <div id="ai-recommendations-empty" class="col-span-full p-8 text-center bg-slate-950/40 rounded-2xl border border-slate-800 text-slate-400" style="display:none;">
+                                <i class="fa-solid fa-filter-circle-xmark text-3xl mb-2 text-slate-500"></i>
+                                <p class="font-bold">No se encontraron recomendaciones con los filtros aplicados.</p>
+                                <button onclick="CronosAIInsights.setAreaFilter('todas'); CronosAIInsights.setPriorityFilter('todas');" class="mt-3 px-3 py-1.5 bg-violet-600 hover:bg-violet-500 text-white rounded-xl text-xs font-bold transition-all">
+                                    Restablecer Filtros
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -38869,12 +39087,10 @@ CRONOS AI INSIGHTS - SISTEMA CONSULTIVO NO DESTRUCTIVO
                 `;
             },
 
-            // 12. Inicialización reactiva
+            // 12. Inicialización reactiva (Síncrona y sin temporizadores diferidos)
             init: function () {
+                this._initialized = true;
                 console.log('%c[CRONOS FID] CRONOS AI Insights inicializado con éxito (Capa Final de Inteligencia)', 'color:#8b5cf6; font-weight:bold; font-size:12px;');
-                setTimeout(() => {
-                    this.refreshRecommendationsGrid();
-                }, 50);
             }
         };
 
@@ -39150,32 +39366,10 @@ CRONOS AI INSIGHTS - SISTEMA CONSULTIVO NO DESTRUCTIVO
                 const elSummary = document.getElementById('obs-executive-summary-text');
                 if (elSummary) elSummary.textContent = this.getExecutiveSummaryText(p);
 
-                // Actualizar Tabla de 14 Módulos
+                // Actualizar Tabla de 14 Módulos (Parcial)
                 const tableBody = document.getElementById('obs-modules-table-body');
                 if (tableBody) {
-                    tableBody.innerHTML = modules.map(m => `
-                        <tr class="hover:bg-teal-950/20 transition-colors">
-                            <td class="py-2.5 px-3 font-semibold text-white flex items-center gap-2">
-                                <i class="fa-solid ${m.icono} ${m.color} text-xs w-4 text-center"></i>
-                                <span>${m.nombre}</span>
-                            </td>
-                            <td class="py-2.5 px-3 text-right font-mono font-bold text-slate-300">${m.usuariosUnicos}</td>
-                            <td class="py-2.5 px-3 text-right font-mono font-bold text-teal-400">${Number(m.totalAccesos).toLocaleString('es-PE')}</td>
-                            <td class="py-2.5 px-3 text-center text-[10px] text-slate-400 font-mono">${m.ultimoAcceso}</td>
-                            <td class="py-2.5 px-3 text-center font-mono font-bold ${m.tendencia.startsWith('+') ? 'text-emerald-400' : 'text-rose-400'}">${m.tendencia}</td>
-                            <td class="py-2.5 px-3 text-center">
-                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${m.calor === 'alta' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : (m.calor === 'media' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'bg-rose-500/20 text-rose-300 border border-rose-500/30')}">
-                                    ${m.nivelAdopcion}
-                                </span>
-                            </td>
-                            <td class="py-2.5 px-3 text-center font-mono font-black text-teal-300">${m.bvi}</td>
-                            <td class="py-2.5 px-3 text-center">
-                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${m.valorBadge} border">
-                                    ${m.valor}
-                                </span>
-                            </td>
-                        </tr>
-                    `).join('');
+                    tableBody.innerHTML = this.renderModulesTableRowsHtml(modules);
                 }
 
                 // Actualizar Mapa de Calor
@@ -39201,42 +39395,47 @@ CRONOS AI INSIGHTS - SISTEMA CONSULTIVO NO DESTRUCTIVO
                 const elAiUtilityRate = document.getElementById('ai-adoption-utility-rate');
                 if (elAiUtilityRate) elAiUtilityRate.textContent = `${aiData.tasaRealUsoPct}%`;
 
-                // Actualizar Barras de Evolución (Top 6)
+                // Actualizar Barras de Evolución (Top 6 Parcial)
                 const chartBars = document.getElementById('obs-chart-bars-container');
                 if (chartBars) {
-                    chartBars.innerHTML = modules.slice(0, 6).map(m => {
-                        const pct = Math.min(100, Math.round((m.bvi / 100) * 100));
-                        return `
-                            <div class="space-y-1">
-                                <div class="flex items-center justify-between text-[11px]">
-                                    <span class="font-bold text-slate-200 truncate pr-2 flex items-center gap-1.5">
-                                        <i class="fa-solid ${m.icono} ${m.color} text-xs"></i>
-                                        <span>${m.nombre}</span>
-                                    </span>
-                                    <span class="font-mono font-bold text-teal-300">${Number(m.totalAccesos).toLocaleString('es-PE')} ops (${m.tendencia})</span>
-                                </div>
-                                <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
-                                    <div class="h-full bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full" style="width: ${pct}%"></div>
-                                </div>
-                            </div>
-                        `;
-                    }).join('');
+                    chartBars.innerHTML = this.renderChartBarsHtml(modules.slice(0, 6));
                 }
             },
 
-            // 13. Renderizar Tarjetas del Mapa de Calor
-            renderHeatmapCards: function () {
-                const container = document.getElementById('obs-heatmap-grid-container');
-                if (!container) return;
-                const modules = this.getModulesAdoption(this.activePeriod);
-                const filter = this.heatmapFilter || 'todos';
+            // Helpers de renderizado síncrono y actualización parcial para Observabilidad
+            renderModulesTableRowsHtml: function (modules) {
+                return (modules || []).map(m => `
+                    <tr class="hover:bg-teal-950/20 transition-colors">
+                        <td class="py-2.5 px-3 font-semibold text-white flex items-center gap-2">
+                            <i class="fa-solid ${m.icono} ${m.color} text-xs w-4 text-center"></i>
+                            <span>${m.nombre}</span>
+                        </td>
+                        <td class="py-2.5 px-3 text-right font-mono font-bold text-slate-300">${m.usuariosUnicos}</td>
+                        <td class="py-2.5 px-3 text-right font-mono font-bold text-teal-400">${Number(m.totalAccesos).toLocaleString('es-PE')}</td>
+                        <td class="py-2.5 px-3 text-center text-[10px] text-slate-400 font-mono">${m.ultimoAcceso}</td>
+                        <td class="py-2.5 px-3 text-center font-mono font-bold ${m.tendencia.startsWith('+') ? 'text-emerald-400' : 'text-rose-400'}">${m.tendencia}</td>
+                        <td class="py-2.5 px-3 text-center">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${m.calor === 'alta' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : (m.calor === 'media' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'bg-rose-500/20 text-rose-300 border border-rose-500/30')}">
+                                ${m.nivelAdopcion}
+                            </span>
+                        </td>
+                        <td class="py-2.5 px-3 text-center font-mono font-black text-teal-300">${m.bvi}</td>
+                        <td class="py-2.5 px-3 text-center">
+                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${m.valorBadge} border">
+                                ${m.valor}
+                            </span>
+                        </td>
+                    </tr>
+                `).join('');
+            },
 
-                const filtered = modules.filter(m => {
+            renderHeatmapCardsHtml: function (modules, filter = 'todos') {
+                const filtered = (modules || []).filter(m => {
                     if (filter === 'todos') return true;
                     return m.calor === filter;
                 });
 
-                container.innerHTML = filtered.map(m => {
+                return filtered.map(m => {
                     let borderClass = 'border-emerald-500/40 bg-emerald-950/20';
                     let badgeClass = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30';
                     let flameColor = 'text-emerald-400';
@@ -39265,21 +39464,50 @@ CRONOS AI INSIGHTS - SISTEMA CONSULTIVO NO DESTRUCTIVO
                                 <i class="fa-solid fa-fire-flame-curved ${flameColor} text-sm"></i>
                             </div>
                             <div class="space-y-1 pt-1">
-                                <div class="flex items-center justify-between text-[10px] text-slate-300">
-                                    <span>Adopción: <strong>${m.adopcionPct}%</strong></span>
-                                    <span class="font-mono text-teal-400 font-bold">${Number(m.totalAccesos).toLocaleString('es-PE')} ops</span>
+                                <div class="flex items-center justify-between text-[11px] font-mono">
+                                    <span class="text-slate-400">BVI: <strong class="text-teal-300">${m.bvi}</strong></span>
+                                    <span class="font-bold ${m.tendencia.startsWith('+') ? 'text-emerald-400' : 'text-rose-400'}">${m.tendencia}</span>
                                 </div>
                                 <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                                    <div class="h-full ${m.calor === 'alta' ? 'bg-emerald-400' : (m.calor === 'media' ? 'bg-amber-400' : 'bg-rose-400')} rounded-full" style="width: ${m.adopcionPct}%"></div>
+                                    <div class="h-full bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full" style="width: ${Math.min(100, m.bvi)}%"></div>
                                 </div>
                             </div>
-                            <div class="flex items-center justify-between pt-1 border-t border-slate-800/80">
-                                <span class="px-2 py-0.5 rounded-full text-[9px] font-bold ${badgeClass} border">${m.nivelAdopcion}</span>
-                                <span class="text-[10px] font-mono text-slate-400">BVI: <strong class="text-white">${m.bvi}</strong></span>
+                            <div class="pt-1 flex items-center justify-between">
+                                <span class="px-2 py-0.5 rounded-full text-[9px] font-bold border ${badgeClass}">${m.nivelAdopcion}</span>
+                                <span class="text-[10px] font-mono font-bold text-slate-300">${Number(m.totalAccesos).toLocaleString('es-PE')} ops</span>
                             </div>
                         </div>
                     `;
                 }).join('');
+            },
+
+            renderChartBarsHtml: function (modulesTop6) {
+                return (modulesTop6 || []).map(m => {
+                    const pct = Math.min(100, Math.round((m.bvi / 100) * 100));
+                    return `
+                        <div class="space-y-1">
+                            <div class="flex items-center justify-between text-[11px]">
+                                <span class="font-bold text-slate-200 truncate pr-2 flex items-center gap-1.5">
+                                    <i class="fa-solid ${m.icono} ${m.color} text-xs"></i>
+                                    <span>${m.nombre}</span>
+                                </span>
+                                <span class="font-mono font-bold text-teal-300">${Number(m.totalAccesos).toLocaleString('es-PE')} ops (${m.tendencia})</span>
+                            </div>
+                            <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full" style="width: ${pct}%"></div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            },
+
+            // 13. Renderizar Tarjetas del Mapa de Calor (Actualización Quirúrgica)
+            renderHeatmapCards: function () {
+                const container = document.getElementById('obs-heatmap-grid-container');
+                if (!container) return;
+                const modules = this.getModulesAdoption(this.activePeriod);
+                const filter = this.heatmapFilter || 'todos';
+                container.innerHTML = this.renderHeatmapCardsHtml(modules, filter);
             },
 
             // 14. Exportar Informe de Observabilidad y Adopción en Formato TXT
@@ -39405,6 +39633,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
 
                 const p = this.activePeriod;
                 const kpis = this.getKPIs(p);
+                const modules = this.getModulesAdoption(p);
                 const slaData = this.getSlaAdoptionDetailed(p);
                 const aiData = this.getAIInsightsAdoption(p);
                 const funnel = this.getFunnelData(p);
@@ -39566,7 +39795,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
 
                         <!-- Grilla del Mapa de Calor -->
                         <div id="obs-heatmap-grid-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3">
-                            <!-- Inyectado dinámicamente por renderHeatmapCards() -->
+                            ${this.renderHeatmapCardsHtml(modules, 'todos')}
                         </div>
                     </div>
 
@@ -39597,7 +39826,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                                             </tr>
                                         </thead>
                                         <tbody id="obs-modules-table-body" class="divide-y divide-slate-800/60 text-[11px]">
-                                            <!-- Inyectado dinámicamente -->
+                                            ${this.renderModulesTableRowsHtml(modules)}
                                         </tbody>
                                     </table>
                                 </div>
@@ -39615,7 +39844,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
 
                             <div class="p-4 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-3">
                                 <div id="obs-chart-bars-container" class="space-y-3">
-                                    <!-- Inyectado dinámicamente -->
+                                    ${this.renderChartBarsHtml(modules.slice(0, 6))}
                                 </div>
                                 <div class="pt-2 border-t border-slate-800 text-[10px] text-slate-400 leading-relaxed">
                                     <i class="fa-solid fa-circle-info text-teal-400"></i> <strong>Índice de Valor (BVI):</strong> Computa Frecuencia (35%) + Adopción (25%) + Impacto Operativo (25%) + Uso Recurrente (15%). Clasificación: 🟢 Alto Valor (≥85) | 🟡 Valor Medio (65-84) | 🔴 Bajo Valor (&lt;65).
@@ -39899,12 +40128,10 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                 `;
             },
 
-            // 16. Inicialización reactiva
+            // 16. Inicialización reactiva (Síncrona y sin temporizadores diferidos)
             init: function () {
+                this._initialized = true;
                 console.log('%c[CRONOS FID] Centro de Adopción y Valor de Negocio Activo', 'color:#14b8a6; font-weight:bold; font-size:12px;');
-                setTimeout(() => {
-                    this.updateDynamicUI();
-                }, 50);
             }
         };
 
@@ -39919,19 +40146,19 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
         // =========================================================================
         window.CronosOperationalOptimization = (function () {
             'use strict';
-        
+
             return {
                 version: '1.0.0 (Optimización Operativa)',
                 name: 'CRONOS Operational Optimization Center',
                 activePeriod: 'semana',
                 activeUnderutilizedFilter: 'todos',
-        
+
                 // 1. ANÁLISIS DE MÓDULOS SUBUTILIZADOS (Sección 2)
                 getUnderutilizedModules: function (period = 'semana') {
                     const p = period || this.activePeriod || 'semana';
                     const mult = p === 'dia' ? 0.22 : (p === 'mes' ? 3.8 : (p === '180dias' ? 18.5 : 1.0));
                     const totalAdvisors = 86;
-        
+
                     const allModules = [
                         { id: 'directorio', nombre: 'Directorio de Escalamiento', icono: 'fa-address-book', baseUsers: 16, baseOps: 142, tendencia: '-8.5%', clasificacion: 'baja', nivel: '🔴 Utilización Baja', color: 'text-rose-400', badgeClass: 'bg-rose-500/20 text-rose-300 border-rose-500/30', motivo: 'Módulo aislado en pestaña independiente; bajo tránsito en operación.', accion: 'Integrar accesos contextuales directamente en Derivaciones y Tickets.' },
                         { id: 'plantillas_bajas', nombre: 'Plantillas Bajas - Competencia', icono: 'fa-hand-fist', baseUsers: 19, baseOps: 124, tendencia: '-4.2%', clasificacion: 'baja', nivel: '🔴 Utilización Baja', color: 'text-rose-400', badgeClass: 'bg-rose-500/20 text-rose-300 border-rose-500/30', motivo: 'Desconocimiento de argumentos de retención rápida por precio.', accion: 'Desplegar microcápsula de 10 min y anclar acceso rápido en tipificaciones.' },
@@ -39950,7 +40177,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         { id: 'tipificaciones', nombre: 'Tipificaciones', icono: 'fa-list-check', baseUsers: 74, baseOps: 1248, tendencia: '+22.0%', clasificacion: 'alta', nivel: '🟢 Utilización Alta', color: 'text-emerald-400', badgeClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30', motivo: 'Registro fundamental para el CRM corporativo.', accion: 'Optimizar campos con mayor fricción detectada.' },
                         { id: 'generator', nombre: 'Clave Secreta', icono: 'fa-key', baseUsers: 78, baseOps: 1520, tendencia: '+18.2%', clasificacion: 'alta', nivel: '🟢 Utilización Alta', color: 'text-emerald-400', badgeClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30', motivo: 'Validación de titularidad obligatoria en toda llamada.', accion: 'Inyección directa al portapapeles sin salir de la vista.' }
                     ];
-        
+
                     return allModules.map(m => {
                         const u = Math.min(totalAdvisors, Math.max(4, Math.round(m.baseUsers * (p === 'dia' ? 0.65 : (p === '180dias' ? 1.0 : (p === 'mes' ? 0.95 : 0.88))))));
                         const ops = Math.max(8, Math.round(m.baseOps * mult));
@@ -39963,7 +40190,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         };
                     });
                 },
-        
+
                 // 2. ANÁLISIS DE CAMPOS CON MAYOR FRICCIÓN (Sección 3)
                 getFrictionFields: function () {
                     return [
@@ -40039,7 +40266,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         }
                     ];
                 },
-        
+
                 // 3. TIEMPO PROMEDIO POR MÓDULO (Sección 4 - 7 Módulos Requeridos)
                 getModuleTimes: function () {
                     return [
@@ -40052,7 +40279,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         { modulo: 'CRONOS SLA', icono: 'fa-stopwatch', color: 'text-violet-400', tiempoProm: '42.0s', tiempoMax: '1m 00s', tiempoMin: '15.0s', tendencia: '-18.5%', tendenciaColor: 'text-emerald-400', opsTotales: '892 ops', estado: '🟢 Cumplimiento 96.2%' }
                     ];
                 },
-        
+
                 // 4. RANKING DE PRODUCTIVIDAD OPERATIVA (Sección 5 - Informativo, NO disciplinario)
                 getProductivityRanking: function () {
                     return [
@@ -40097,7 +40324,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         }
                     ];
                 },
-        
+
                 // 5. IDENTIFICACIÓN DE PROCESOS REDUNDANTES (Sección 6)
                 getRedundantProcesses: function () {
                     return [
@@ -40139,7 +40366,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         }
                     ];
                 },
-        
+
                 // 6. OPORTUNIDADES DE SIMPLIFICACIÓN (Sección 7 - Motor AI Insights)
                 getSimplificationOpportunities: function () {
                     return [
@@ -40177,7 +40404,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         }
                     ];
                 },
-        
+
                 // 7. PANEL DE EFICIENCIA OPERATIVA (Sección 8 - KPIs Sintéticos)
                 getOperationalEfficiencyKPIs: function () {
                     return {
@@ -40198,7 +40425,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         ]
                     };
                 },
-        
+
                 // 8. MAPA DE FRICCIÓN (Sección 9 - Visual UX Friction Map)
                 getFrictionMapData: function () {
                     return [
@@ -40209,7 +40436,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         { etapa: '5. Escalamiento / Cierre', modulo: 'Derivaciones & Voz', duracion: '36.8s', abandono: '3.6%', nivel: 'media', calor: 'bg-amber-500/20 text-amber-300 border-amber-500/30', barra: 'w-[40%] bg-amber-500', detalle: 'Paso de pegado a canales de supervisión en Discord.' }
                     ];
                 },
-        
+
                 // 9. RECOMENDACIONES AUTOMÁTICAS SUSTENTADAS (Sección 10)
                 getAutomatedRecommendations: function () {
                     return [
@@ -40247,7 +40474,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         }
                     ];
                 },
-        
+
                 // 10. RESUMEN EJECUTIVO (Sección 11)
                 getExecutiveSummaryText: function (period = 'semana') {
                     const p = (period || this.activePeriod || 'semana').toUpperCase();
@@ -40260,7 +40487,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         '• Se recomienda optimizar prioritariamente el flujo de Tipificaciones mediante inyección automática del código de Clave Secreta e integrar los contactos del Directorio en contexto.'
                     ].join('\n');
                 },
-        
+
                 // 11. PREPARACIÓN PARA VERCEL (Sección 12 - Métricas e Indicadores Documentados)
                 getVercelMetricsDoc: function () {
                     return [
@@ -40296,7 +40523,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         }
                     ];
                 },
-        
+
                 // CAMBIO DE PERÍODO TEMPORAL
                 setPeriod: function (period) {
                     this.activePeriod = period;
@@ -40312,7 +40539,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     });
                     this.updateDynamicUI();
                 },
-        
+
                 // FILTRO DE MÓDULOS SUBUTILIZADOS
                 filterUnderutilized: function (cat) {
                     this.activeUnderutilizedFilter = cat;
@@ -40328,33 +40555,28 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     });
                     this.renderUnderutilizedList();
                 },
-        
+
                 // ACTUALIZACIÓN DINÁMICA DE LA INTERFAZ
                 updateDynamicUI: function () {
                     const p = this.activePeriod;
                     const summaryEl = document.getElementById('opt-executive-summary-text');
                     if (summaryEl) summaryEl.textContent = this.getExecutiveSummaryText(p);
-        
+
                     this.renderUnderutilizedList();
                 },
-        
-                // RENDERIZADO DINÁMICO DE MÓDULOS SUBUTILIZADOS
-                renderUnderutilizedList: function () {
-                    const container = document.getElementById('opt-underutilized-modules-container');
-                    if (!container) return;
-                    const modules = this.getUnderutilizedModules(this.activePeriod);
-                    const filter = this.activeUnderutilizedFilter || 'todos';
-        
-                    const filtered = modules.filter(m => {
+
+                // Helper de renderizado de lista de módulos subutilizados
+                renderUnderutilizedListHtml: function (modules, filter = 'todos') {
+                    const filtered = (modules || []).filter(m => {
                         if (filter === 'todos') return true;
                         return m.clasificacion === filter;
                     });
-        
-                    container.innerHTML = filtered.map(m => {
+
+                    return filtered.map(m => {
                         let borderClass = 'border-rose-500/40 bg-rose-950/20';
                         if (m.clasificacion === 'media') borderClass = 'border-amber-500/40 bg-amber-950/20';
                         if (m.clasificacion === 'alta') borderClass = 'border-emerald-500/40 bg-emerald-950/20';
-        
+
                         return `
                             <div class="p-3.5 rounded-2xl border ${borderClass} space-y-2 hover:scale-[1.01] transition-transform">
                                 <div class="flex items-start justify-between gap-2">
@@ -40386,7 +40608,16 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         `;
                     }).join('');
                 },
-        
+
+                // RENDERIZADO DINÁMICO DE MÓDULOS SUBUTILIZADOS (Actualización Quirúrgica)
+                renderUnderutilizedList: function () {
+                    const container = document.getElementById('opt-underutilized-modules-container');
+                    if (!container) return;
+                    const modules = this.getUnderutilizedModules(this.activePeriod);
+                    const filter = this.activeUnderutilizedFilter || 'todos';
+                    container.innerHTML = this.renderUnderutilizedListHtml(modules, filter);
+                },
+
                 // EXPORTAR INFORME OFICIAL DE OPTIMIZACIÓN OPERATIVA EN TXT
                 exportOptimizationReport: function () {
                     const p = this.activePeriod;
@@ -40401,7 +40632,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     const fMap = this.getFrictionMapData();
                     const recs = this.getAutomatedRecommendations();
                     const vercel = this.getVercelMetricsDoc();
-        
+
                     const text = `================================================================================
         CRONOS FID - INFORME OFICIAL DE OPTIMIZACIÓN OPERATIVA
         FECHA DE EMISIÓN: ${new Date().toLocaleString('es-PE')}
@@ -40486,7 +40717,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
         CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
         ================================================================================
         `;
-        
+
                     const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
@@ -40496,18 +40727,18 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     a.click();
                     document.body.removeChild(a);
                     URL.revokeObjectURL(url);
-        
+
                     if (typeof showToast === 'function') {
                         showToast('Informe Oficial de Optimización Operativa descargado con éxito.', 'success');
                     }
                 },
-        
+
                 // RENDERIZADOR OFICIAL EN VISTA EJECUTIVA 360°
                 renderUI: function () {
                     const currentUser = window.CRONOS_CURRENT_USER || (typeof UserManager !== 'undefined' && UserManager.getCurrentUser ? UserManager.getCurrentUser() : null);
                     const isAsesor = (typeof isRoleAsesor === 'function') ? isRoleAsesor(currentUser) : (currentUser ? String(currentUser.rol || '').toLowerCase().includes('asesor') : true);
                     if (isAsesor || (typeof hasPermission === 'function' && !hasPermission('vista_360'))) return '';
-        
+
                     const p = this.activePeriod;
                     const summary = this.getExecutiveSummaryText(p);
                     const friction = this.getFrictionFields();
@@ -40519,7 +40750,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     const fMap = this.getFrictionMapData();
                     const recs = this.getAutomatedRecommendations();
                     const vercel = this.getVercelMetricsDoc();
-        
+
                     return `
                     <!-- ========================================================================= -->
                     <!-- SECCIÓN: OPTIMIZACIÓN OPERATIVA (VISTA EJECUTIVA 360°)                     -->
@@ -40669,7 +40900,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                             </div>
         
                             <div id="opt-underutilized-modules-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-                                <!-- Se llena dinámicamente con renderUnderutilizedList() -->
+                                ${this.renderUnderutilizedListHtml(this.getUnderutilizedModules(p), 'todos')}
                             </div>
                         </div>
         
@@ -40976,19 +41207,17 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     </div>
                     `;
                 },
-        
-                // INICIALIZACIÓN
+
+                // INICIALIZACIÓN (Síncrona y sin temporizadores diferidos)
                 init: function () {
-                    setTimeout(() => {
-                        this.updateDynamicUI();
-                    }, 60);
+                    this._initialized = true;
                 }
             };
         })();
-        
 
 
-        function renderVistaEjecutiva360() {
+
+        function renderVistaEjecutiva360(targetOverride = null) {
             const currentUser = window.CRONOS_CURRENT_USER || (typeof UserManager !== 'undefined' && UserManager.getCurrentUser ? UserManager.getCurrentUser() : null);
             const isAsesor = (typeof isRoleAsesor === 'function') ? isRoleAsesor(currentUser) : (currentUser ? String(currentUser.rol || '').toLowerCase().includes('asesor') : true);
             if (isAsesor || (typeof hasPermission === 'function' && !hasPermission('vista_360'))) {
@@ -41002,19 +41231,44 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                 return;
             }
             const container = document.getElementById('executive-360-container') || document.getElementById('content-executive-360');
+            const modal = document.getElementById('modal-executive-360');
             const modalBody = document.getElementById('executive-360-body');
-            if (!container && !modalBody) {
-                console.warn("[renderVistaEjecutiva360] No se encontró contenedor válido para Vista Ejecutiva 360°");
+
+            // Determinar estados de visualización (Vista principal vs Modal)
+            const isModalOpen = (window.CronosExecutive360 && window.CronosExecutive360.isOpen) || 
+                                (modal && !modal.classList.contains('hidden') && modal.style.display !== 'none');
+            const contentExec = document.getElementById('content-executive-360');
+            const isViewActive = (window.activeModule === 'vista-360' || window.currentView === 'vista-360') ||
+                                 (contentExec && !contentExec.classList.contains('hidden') && contentExec.style.display !== 'none');
+
+            // DETERMINACIÓN DEL CONTENEDOR DESTINO ÚNICO (Eliminación de doble inyección)
+            let targetEl = targetOverride;
+            if (!targetEl) {
+                if (isModalOpen && modalBody) {
+                    targetEl = modalBody;
+                } else if (isViewActive && container) {
+                    targetEl = container;
+                } else if (container && !container.classList.contains('hidden')) {
+                    targetEl = container;
+                }
+            }
+
+            // GESTIÓN DE MODALES: Si el modal está cerrado, liberar referencias y limpiar contenido duplicado
+            if (!isModalOpen && modalBody && modalBody.innerHTML !== '') {
+                modalBody.innerHTML = '';
+            }
+
+            // CONDICIÓN ESTRICTA: Si ni la vista principal está activa ni el modal está abierto, NO construir ni renderizar en el DOM
+            if (!targetEl) {
                 return;
             }
 
-            // Asegurar que el contenedor principal sea visible si estamos en la vista
-            const contentExec = document.getElementById('content-executive-360');
-            if (contentExec && (window.activeModule === 'vista-360' || window.currentView === 'vista-360')) {
-                contentExec.classList.remove('hidden');
-                contentExec.style.display = 'block';
-            }
-            if (container) {
+            // Si el destino es la vista principal, asegurar visibilidad del contenedor
+            if (targetEl === container) {
+                if (contentExec && isViewActive) {
+                    contentExec.classList.remove('hidden');
+                    contentExec.style.display = 'block';
+                }
                 container.classList.remove('hidden');
                 if (container.style.display === 'none') container.style.display = 'block';
             }
@@ -41205,28 +41459,18 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
             // =====================================================================
             // CÓMPUTO: MATRIZ DE RIESGO OPERATIVO (SUPERVISIÓN, CALIDAD Y FORMACIÓN)
             // =====================================================================
-            const riskData = window.CronosRiskMatrix ? window.CronosRiskMatrix.getData() : {
-                advisors: [], totalEvaluados: 0, countBajo: 0, countMedio: 0, countAlto: 0,
-                pctBajo: 0, pctMedio: 0, pctAlto: 0, alerts: [], trainingList: [], supervisors: [], roles: []
-            };
-            const riskFiltered = window.CronosRiskMatrix ? window.CronosRiskMatrix.getFilteredAdvisors() : {
-                list: riskData.advisors, summary: riskData
-            };
+            // Variables de riesgo y alertas inicializadas como nulas (Cálculo diferido bajo demanda - SPRINT 2)
+            let riskData = null;
+            let riskFiltered = null;
+            let proactiveData = null;
+            let proactiveFiltered = null;
 
-            // =====================================================================
-            // CÓMPUTO: CENTRO DE ALERTAS PROACTIVAS (SUPERVISIÓN, CALIDAD Y FORMACIÓN)
-            // =====================================================================
-            const proactiveData = window.CronosProactiveAlerts ? window.CronosProactiveAlerts.getData() : {
-                alerts: [], distinctSupervisors: []
-            };
-            const proactiveFiltered = window.CronosProactiveAlerts ? window.CronosProactiveAlerts.getFilteredAlerts() : {
-                list: proactiveData.alerts || [],
-                total: (proactiveData.alerts || []).length,
-                summary: { totalOriginal: (proactiveData.alerts || []).length, criticas: 5, atencion: 4, informativas: 3 },
-                distinctSupervisors: proactiveData.distinctSupervisors || ['LEÓN ILLESCAS JHONNY']
-            };
+            
+            // SPRINT 2: MODULARIZACIÓN POR PESTAÑAS EJECUTIVAS EN VISTA 360°
+            window.CRONOS_360_ACTIVE_TAB = window.CRONOS_360_ACTIVE_TAB || 'general';
+            const active360Tab = window.CRONOS_360_ACTIVE_TAB;
 
-            const htmlContent = `
+            const headerBannerHtml = `
                 <!-- Encabezado del Módulo Ejecutivo 360° -->
                 <div class="bg-gradient-to-r from-slate-950 via-[#1E1E24] to-slate-900 text-white p-6 rounded-2xl shadow-xl border border-orange-500/30 flex flex-col md:flex-row items-center justify-between gap-4 relative overflow-hidden">
                     <div class="absolute -right-12 -top-12 w-64 h-64 bg-win-orange/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -41359,7 +41603,45 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     </div>
                 </div>
 
-                <!-- 1. Tarjetas KPI de los 6 Módulos Fuente -->
+                `;
+
+            // Barra de Pestañas Ejecutivas Modularizada (SPRINT 2)
+            const tabNavHtml = `
+                <div class="bg-white rounded-2xl p-2.5 sm:p-3 shadow-xs border border-slate-200/90 my-4">
+                    <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
+                        <button type="button" onclick="setVista360Tab('general')" id="btn-vista360-tab-general"
+                            class="px-4 py-2.5 rounded-xl font-extrabold flex items-center gap-2 transition cursor-pointer shrink-0 ${active360Tab === 'general' ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'}">
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>1. GENERAL</span>
+                        </button>
+                        <button type="button" onclick="setVista360Tab('riesgo')" id="btn-vista360-tab-riesgo"
+                            class="px-4 py-2.5 rounded-xl font-extrabold flex items-center gap-2 transition cursor-pointer shrink-0 ${active360Tab === 'riesgo' ? 'bg-gradient-to-r from-rose-600 to-red-600 text-white shadow-md shadow-rose-600/20' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'}">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <span>2. RIESGO OPERATIVO</span>
+                        </button>
+                        <button type="button" onclick="setVista360Tab('formacion-calidad')" id="btn-vista360-tab-formacion-calidad"
+                            class="px-4 py-2.5 rounded-xl font-extrabold flex items-center gap-2 transition cursor-pointer shrink-0 ${active360Tab === 'formacion-calidad' ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-600/20' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'}">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            <span>3. FORMACIÓN Y CALIDAD</span>
+                        </button>
+                        <button type="button" onclick="setVista360Tab('objetivos')" id="btn-vista360-tab-objetivos"
+                            class="px-4 py-2.5 rounded-xl font-extrabold flex items-center gap-2 transition cursor-pointer shrink-0 ${active360Tab === 'objetivos' ? 'bg-gradient-to-r from-teal-600 to-emerald-600 text-white shadow-md shadow-teal-600/20' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'}">
+                            <i class="fa-solid fa-bullseye"></i>
+                            <span>4. OBJETIVOS Y CUMPLIMIENTO</span>
+                        </button>
+                        <button type="button" onclick="setVista360Tab('ia-analitica')" id="btn-vista360-tab-ia-analitica"
+                            class="px-4 py-2.5 rounded-xl font-extrabold flex items-center gap-2 transition cursor-pointer shrink-0 ${active360Tab === 'ia-analitica' ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md shadow-indigo-600/20' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'}">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>5. IA Y ANALÍTICA</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // REGLA SPRINT 2: Solo renderizar la pestaña activa en el DOM
+            let activeTabContentHtml = '';
+            if (active360Tab === 'general') {
+                activeTabContentHtml = `<!-- 1. Tarjetas KPI de los 6 Módulos Fuente -->
                 <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-4">
                     <div class="flex items-center justify-between flex-wrap gap-2">
                         <span class="font-black uppercase tracking-wider text-slate-800 text-xs flex items-center gap-2">
@@ -41396,46 +41678,6 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                 <!-- SECCIÓN: CENTRO DE INTELIGENCIA OPERATIVA                                 -->
                 <!-- ========================================================================= -->
                 ${window.CronosOperationalIntelligence ? window.CronosOperationalIntelligence.renderUI(intelData) : ''}
-
-                <!-- ========================================================================= -->
-                <!-- SECCIÓN: GESTIÓN DE FORMACIÓN Y CALIDAD (VISTA EJECUTIVA 360°)             -->
-                <!-- ========================================================================= -->
-                ${window.CronosTrainingQualityManager ? window.CronosTrainingQualityManager.renderUI() : ''}
-
-                <!-- ========================================================================= -->
-                <!-- SECCIÓN: DESEMPEÑO Y EFECTIVIDAD OPERATIVA (VISTA EJECUTIVA 360°)          -->
-                <!-- ========================================================================= -->
-                ${window.CronosPerformanceEffectiveness ? window.CronosPerformanceEffectiveness.renderUI() : ''}
-
-                <!-- ========================================================================= -->
-                <!-- SECCIÓN: COMPROMISOS Y CUMPLIMIENTO (VISTA EJECUTIVA 360°)                 -->
-                <!-- ========================================================================= -->
-                ${window.CronosCommitmentCompliance ? window.CronosCommitmentCompliance.renderUI() : ''}
-
-                <!-- ========================================================================= -->
-                <!-- SECCIÓN: OBJETIVOS Y CUMPLIMIENTO ESTRATÉGICO (VISTA EJECUTIVA 360°)       -->
-                <!-- ========================================================================= -->
-                ${window.CronosStrategicObjectives ? window.CronosStrategicObjectives.renderUI() : ''}
-
-                <!-- ========================================================================= -->
-                <!-- SECCIÓN: ANALÍTICA PREDICTIVA OPERATIVA (VISTA EJECUTIVA 360°)             -->
-                <!-- ========================================================================= -->
-                ${window.CronosPredictiveAnalytics ? window.CronosPredictiveAnalytics.renderUI() : ''}
-
-                <!-- ========================================================================= -->
-                <!-- SECCIÓN: CRONOS AI INSIGHTS (VISTA EJECUTIVA 360°)                        -->
-                <!-- ========================================================================= -->
-                ${window.CronosAIInsights ? window.CronosAIInsights.renderUI() : ''}
-
-                <!-- ========================================================================= -->
-                <!-- SECCIÓN: OBSERVABILIDAD Y ADOPCIÓN (VISTA EJECUTIVA 360°)                 -->
-                <!-- ========================================================================= -->
-                ${window.CronosObservability ? window.CronosObservability.renderUI() : ''}
-
-                <!-- ========================================================================= -->
-                <!-- SECCIÓN: OPTIMIZACIÓN OPERATIVA & EFICIENCIA (VISTA EJECUTIVA 360°)       -->
-                <!-- ========================================================================= -->
-                ${window.CronosOperationalOptimization ? window.CronosOperationalOptimization.renderUI() : ''}
 
                 <!-- ========================================================================= -->
                 <!-- SECCIÓN: DASHBOARD DE ADOPCIÓN OPERATIVA EN VISTA EJECUTIVA 360°            -->
@@ -41932,7 +42174,134 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     </div>
                 </div>
 
-                <!-- ========================================================================= -->
+                <!-- 2. Comparativo de Variaciones y Cumplimiento SLA -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                    <!-- Tarjeta SLA General -->
+                    <div class="bg-gradient-to-br from-purple-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-6 border border-purple-500/30 shadow-md space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="font-black uppercase tracking-wider text-xs text-purple-200 flex items-center gap-1.5">
+                                <i class="fa-solid fa-stopwatch text-amber-400"></i> SLA Institucional (Supabase)
+                            </span>
+                            <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full ${sla.cumplimiento >= 95 ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/30' : 'bg-amber-500/20 text-amber-300 border border-amber-400/30'}">
+                                ${sla.cumplimiento >= 95 ? 'Objetivo Cumplido' : 'En Observación'}
+                            </span>
+                        </div>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-4xl font-black font-mono text-emerald-400">${sla.cumplimiento}%</span>
+                            <span class="text-xs text-purple-200 font-medium">Cumplimiento &lt;45s</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 pt-2 border-t border-white/10 text-center text-[10px]">
+                            <div class="bg-white/5 p-2 rounded-xl border border-white/5">
+                                <div class="text-slate-400">Total SLA</div>
+                                <div class="font-mono font-bold text-xs text-white">${sla.total || 0}</div>
+                            </div>
+                            <div class="bg-white/5 p-2 rounded-xl border border-white/5">
+                                <div class="text-slate-400">Alertas 45s</div>
+                                <div class="font-mono font-bold text-xs text-amber-300">${sla.alertas45 || 0}</div>
+                            </div>
+                            <div class="bg-white/5 p-2 rounded-xl border border-white/5">
+                                <div class="text-slate-400">Alertas &gt;70s</div>
+                                <div class="font-mono font-bold text-xs text-rose-400">${sla.alertas70 || 0}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Heatmap de Distribución Horaria de Atención -->
+                    <div class="lg:col-span-2 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="font-black uppercase tracking-wider text-xs text-slate-800 flex items-center gap-1.5">
+                                <i class="fa-solid fa-fire-flame-curved text-win-orange"></i>
+                                Heatmap Operativo (Carga de Asesores por Franja Horaria)
+                            </span>
+                            <span class="text-[10px] text-slate-400 font-medium">Horario Hábil 08:00 - 21:00</span>
+                        </div>
+                        <div class="grid grid-cols-6 sm:grid-cols-12 gap-1.5 text-center">
+                            ${[
+                    { h: '08h', v: 12 }, { h: '09h', v: 45 }, { h: '10h', v: 88 }, { h: '11h', v: 95 },
+                    { h: '12h', v: 76 }, { h: '13h', v: 62 }, { h: '14h', v: 70 }, { h: '15h', v: 85 },
+                    { h: '16h', v: 92 }, { h: '17h', v: 100 }, { h: '18h', v: 84 }, { h: '19h', v: 55 }
+                ].map(item => `
+                                <div class="p-2 rounded-xl border border-slate-200/60 flex flex-col items-center justify-center ${item.v >= 90 ? 'bg-orange-500 text-white font-black shadow-xs' : (item.v >= 70 ? 'bg-orange-100 text-orange-950 font-bold' : 'bg-slate-50 text-slate-700')}">
+                                    <span class="text-[9px] opacity-80">${item.h}</span>
+                                    <span class="text-xs font-mono">${item.v}%</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1">
+                            <span><span class="inline-block w-2 h-2 rounded-full bg-slate-300 mr-1"></span>Baja demanda (&lt;50%)</span>
+                            <span><span class="inline-block w-2 h-2 rounded-full bg-orange-300 mr-1"></span>Demanda balanceada (50-75%)</span>
+                            <span class="text-win-orange font-bold"><span class="inline-block w-2 h-2 rounded-full bg-orange-500 mr-1"></span>Pico de carga (&gt;85%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Rankings de Tipificaciones e Incidencias Técnicas -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- Ranking Tipificaciones -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                            <span class="font-black uppercase tracking-wider text-xs text-slate-800 flex items-center gap-1.5">
+                                <i class="fa-solid fa-list-ol text-blue-600"></i> Top Tipificaciones Comerciales
+                            </span>
+                            <span class="text-[10px] font-bold text-slate-400">Mayor Frecuencia</span>
+                        </div>
+                        <div class="space-y-3 pt-1">
+                            ${topTipificaciones.map(t => `
+                                <div class="space-y-1">
+                                    <div class="flex items-center justify-between text-xs">
+                                        <span class="font-bold text-slate-800 truncate pr-2">${t.motivo}</span>
+                                        <span class="font-mono font-bold text-indigo-700 shrink-0">${t.cantidad} (${t.pct})</span>
+                                    </div>
+                                    <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                                        <div class="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full" style="width: ${t.pct}"></div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Ranking Tickets Tecnológicos -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                            <span class="font-black uppercase tracking-wider text-xs text-slate-800 flex items-center gap-1.5">
+                                <i class="fa-solid fa-triangle-exclamation text-rose-500"></i> Top Incidencias Técnicas
+                            </span>
+                            <span class="text-[10px] font-bold text-slate-400">Mayor Impacto</span>
+                        </div>
+                        <div class="space-y-3 pt-1">
+                            ${topTickets.map(t => `
+                                <div class="space-y-1">
+                                    <div class="flex items-center justify-between text-xs">
+                                        <span class="font-bold text-slate-800 truncate pr-2">${t.incidencia}</span>
+                                        <span class="font-mono font-bold text-rose-700 shrink-0">${t.cantidad} (${t.pct})</span>
+                                    </div>
+                                    <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                                        <div class="h-full bg-gradient-to-r from-rose-500 to-red-600 rounded-full" style="width: ${t.pct}"></div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>`;
+            } else if (active360Tab === 'riesgo') {
+                // CÓMPUTO BAJO DEMANDA: Solo se ejecuta al abrir la Pestaña 2 (Riesgo Operativo)
+                riskData = window.CronosRiskMatrix ? window.CronosRiskMatrix.getData() : {
+                    advisors: [], totalEvaluados: 0, countBajo: 0, countMedio: 0, countAlto: 0,
+                    pctBajo: 0, pctMedio: 0, pctAlto: 0, alerts: [], trainingList: [], supervisors: [], roles: []
+                };
+                riskFiltered = window.CronosRiskMatrix ? window.CronosRiskMatrix.getFilteredAdvisors() : {
+                    list: riskData.advisors, summary: riskData
+                };
+                proactiveData = window.CronosProactiveAlerts ? window.CronosProactiveAlerts.getData() : {
+                    alerts: [], distinctSupervisors: []
+                };
+                proactiveFiltered = window.CronosProactiveAlerts ? window.CronosProactiveAlerts.getFilteredAlerts() : {
+                    list: proactiveData.alerts || [],
+                    total: (proactiveData.alerts || []).length,
+                    summary: { totalOriginal: (proactiveData.alerts || []).length, criticas: 5, atencion: 4, informativas: 3 },
+                    distinctSupervisors: proactiveData.distinctSupervisors || ['LEÓN ILLESCAS JHONNY']
+                };
+                activeTabContentHtml = `<!-- ========================================================================= -->
                 <!-- SECCIÓN: CENTRO DE ALERTAS PROACTIVAS (SUPERVISIÓN, CALIDAD Y FORMACIÓN)  -->
                 <!-- ========================================================================= -->
                 <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-6 relative overflow-hidden" id="section-centro-alertas-proactivas">
@@ -42543,6 +42912,587 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     </div>
                 </div>
 
+                `;
+            } else if (active360Tab === 'formacion-calidad') {
+                activeTabContentHtml = `<!-- ========================================================================= -->
+                <!-- SECCIÓN: GESTIÓN DE FORMACIÓN Y CALIDAD (VISTA EJECUTIVA 360°)             -->
+                <!-- ========================================================================= -->
+                ${window.CronosTrainingQualityManager ? window.CronosTrainingQualityManager.renderUI() : ''}
+
+                <!-- ========================================================================= -->
+                <!-- SECCIÓN: DESEMPEÑO Y EFECTIVIDAD OPERATIVA (VISTA EJECUTIVA 360°)          -->
+                <!-- ========================================================================= -->
+                ${window.CronosPerformanceEffectiveness ? window.CronosPerformanceEffectiveness.renderUI() : ''}
+
+                <!-- ========================================================================= -->
+                <!-- SECCIÓN: COMPROMISOS Y CUMPLIMIENTO (VISTA EJECUTIVA 360°)                 -->
+                <!-- ========================================================================= -->
+                ${window.CronosCommitmentCompliance ? window.CronosCommitmentCompliance.renderUI() : ''}
+
+                `;
+            } else if (active360Tab === 'objetivos') {
+                activeTabContentHtml = `<!-- ========================================================================= -->
+                <!-- SECCIÓN: OBJETIVOS Y CUMPLIMIENTO ESTRATÉGICO (VISTA EJECUTIVA 360°)       -->
+                <!-- ========================================================================= -->
+                ${window.CronosStrategicObjectives ? window.CronosStrategicObjectives.renderUI() : ''}
+
+                <!-- ========================================================================= -->
+                <!-- SECCIÓN: OPTIMIZACIÓN OPERATIVA & EFICIENCIA (VISTA EJECUTIVA 360°)       -->
+                <!-- ========================================================================= -->
+                ${window.CronosOperationalOptimization ? window.CronosOperationalOptimization.renderUI() : ''}
+
+                `;
+            } else if (active360Tab === 'ia-analitica') {
+                activeTabContentHtml = `<!-- ========================================================================= -->
+                <!-- SECCIÓN: CRONOS AI INSIGHTS (VISTA EJECUTIVA 360°)                        -->
+                <!-- ========================================================================= -->
+                ${window.CronosAIInsights ? window.CronosAIInsights.renderUI() : ''}
+
+                <!-- ========================================================================= -->
+                <!-- SECCIÓN: ANALÍTICA PREDICTIVA OPERATIVA (VISTA EJECUTIVA 360°)             -->
+                <!-- ========================================================================= -->
+                ${window.CronosPredictiveAnalytics ? window.CronosPredictiveAnalytics.renderUI() : ''}
+
+                <!-- ========================================================================= -->
+                <!-- SECCIÓN: OBSERVABILIDAD Y ADOPCIÓN (VISTA EJECUTIVA 360°)                 -->
+                <!-- ========================================================================= -->
+                ${window.CronosObservability ? window.CronosObservability.renderUI() : ''}
+
+                `;
+            } else {
+                activeTabContentHtml = `<!-- 1. Tarjetas KPI de los 6 Módulos Fuente -->
+                <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-4">
+                    <div class="flex items-center justify-between flex-wrap gap-2">
+                        <span class="font-black uppercase tracking-wider text-slate-800 text-xs flex items-center gap-2">
+                            <i class="fa-solid fa-cubes text-win-orange"></i>
+                            Métricas Consolidadas por Módulo Fuente (Periodo: ${period.toUpperCase()})
+                        </span>
+                        <span class="text-xs font-bold text-slate-500 bg-slate-50 px-3 py-1 rounded-lg border border-slate-200">
+                            Total Operativo Consolidado: <strong class="text-slate-900">${(totalGestiones || 0).toLocaleString()}</strong> interacciones
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
+                        ${modules.map(m => `
+                            <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200/90 shadow-2xs space-y-2 hover:border-orange-300 hover:shadow-sm transition-all">
+                                <div class="flex items-center justify-between">
+                                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br ${m.color} text-white flex items-center justify-center text-sm shadow-sm">
+                                        <i class="fa-solid ${m.icon}"></i>
+                                    </div>
+                                    <span class="text-[10px] font-bold text-slate-400 font-mono">#${m.count}</span>
+                                </div>
+                                <div>
+                                    <div class="font-extrabold text-slate-900 text-xs truncate" title="${m.nombre}">${m.nombre}</div>
+                                    <div class="text-[10px] text-slate-500 leading-tight">${m.desc}</div>
+                                </div>
+                                <div class="text-lg font-black text-slate-900 font-mono pt-1 border-t border-slate-200/60">
+                                    ${Number(m.count || 0).toLocaleString()}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <!-- ========================================================================= -->
+                <!-- SECCIÓN: CENTRO DE INTELIGENCIA OPERATIVA                                 -->
+                <!-- ========================================================================= -->
+                ${window.CronosOperationalIntelligence ? window.CronosOperationalIntelligence.renderUI(intelData) : ''}
+
+                <!-- ========================================================================= -->
+                <!-- SECCIÓN: DASHBOARD DE ADOPCIÓN OPERATIVA EN VISTA EJECUTIVA 360°            -->
+                <!-- ========================================================================= -->
+                <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 space-y-6 relative overflow-hidden" id="dashboard-adopcion-sla">
+                    <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-purple-600 via-indigo-600 to-win-orange"></div>
+
+                    <!-- Encabezado de la Sección de Adopción -->
+                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-600 to-indigo-700 text-white flex items-center justify-center text-xl shadow-md shadow-purple-500/20 shrink-0">
+                                <i class="fa-solid fa-users-gear"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2.5 flex-wrap">
+                                    <h3 class="font-black text-slate-900 text-base md:text-lg tracking-wide uppercase">
+                                        DASHBOARD DE ADOPCIÓN OPERATIVA - CRONOS SLA
+                                    </h3>
+                                    <span class="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-700 border border-purple-200">
+                                        Vista Ejecutiva 360°
+                                    </span>
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
+                                        <i class="fa-solid fa-shield-halved text-emerald-600"></i> Datos 100% Reales
+                                    </span>
+                                </div>
+                                <p class="text-xs text-slate-500 mt-0.5">
+                                    Supervisión 360° del nivel de adopción, adherencia operativa y rankings de uso de CRONOS SLA por asesor.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Selector de Periodo y Actualización Horaria -->
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <div class="inline-flex p-1 bg-slate-100 rounded-xl border border-slate-200 flex-wrap gap-0.5" role="group">
+                                <button type="button" onclick="setExecutiveSLAPeriod('dia')"
+                                    class="px-3 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer ${currentSlaPeriod === 'dia' ? 'bg-purple-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200'}">
+                                    <i class="fa-regular fa-sun mr-1"></i> Día
+                                </button>
+                                <button type="button" onclick="setExecutiveSLAPeriod('semana')"
+                                    class="px-3 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer ${currentSlaPeriod === 'semana' ? 'bg-purple-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200'}">
+                                    <i class="fa-regular fa-calendar-days mr-1"></i> Semana
+                                </button>
+                                <button type="button" onclick="setExecutiveSLAPeriod('mes')"
+                                    class="px-3 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer ${currentSlaPeriod === 'mes' ? 'bg-purple-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200'}">
+                                    <i class="fa-regular fa-calendar mr-1"></i> Mes
+                                </button>
+                                <button type="button" onclick="setExecutiveSLAPeriod('3meses')"
+                                    class="px-3 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer ${currentSlaPeriod === '3meses' ? 'bg-purple-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200'}">
+                                    <i class="fa-solid fa-calendar-week mr-1"></i> 3 Meses
+                                </button>
+                                <button type="button" onclick="setExecutiveSLAPeriod('6meses')"
+                                    class="px-3 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer ${currentSlaPeriod === '6meses' ? 'bg-purple-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200'}">
+                                    <i class="fa-solid fa-layer-group mr-1"></i> 6 Meses
+                                </button>
+                            </div>
+
+                            <div class="flex items-center gap-2 pl-2 border-l border-slate-200">
+                                <div class="text-right">
+                                    <div class="text-[9px] font-black uppercase text-slate-400">Actualización Horaria</div>
+                                    <div class="text-[11px] font-mono font-bold text-slate-700">${slaAdoption.lastUpdate}</div>
+                                </div>
+                                <button type="button" onclick="loadExecutive360()" title="Actualizar datos (actualización automática cada hora)"
+                                    class="w-8 h-8 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 flex items-center justify-center text-xs transition cursor-pointer">
+                                    <i class="fa-solid fa-arrows-rotate"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 8. ALERTA EJECUTIVA (Si adopción es menor a 70%) -->
+                    ${slaAdoption.adoptionRate < 70 ? `
+                        <div class="bg-gradient-to-r from-rose-950 via-red-900 to-rose-950 border-2 border-rose-500/80 rounded-2xl p-5 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-4 relative overflow-hidden">
+                            <div class="absolute -right-10 -bottom-10 w-44 h-44 bg-rose-500/20 rounded-full blur-2xl pointer-events-none"></div>
+                            <div class="flex items-center gap-4 z-10">
+                                <div class="w-12 h-12 rounded-xl bg-rose-600 text-white flex items-center justify-center text-2xl shadow-lg shadow-rose-600/40 shrink-0">
+                                    <i class="fa-solid fa-triangle-exclamation animate-pulse"></i>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2.5 flex-wrap">
+                                        <h4 class="font-black text-sm md:text-base tracking-wider text-white uppercase">ALERTA OPERATIVA</h4>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-rose-500/40 text-rose-200 border border-rose-400/50">
+                                            Adopción: ${slaAdoption.adoptionRate}% (&lt; 70%)
+                                        </span>
+                                    </div>
+                                    <p class="text-xs md:text-sm text-rose-100 font-medium mt-1">
+                                        La adopción de CRONOS SLA se encuentra por debajo del nivel recomendado. Se recomienda realizar acciones de capacitación y seguimiento.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="shrink-0 z-10 flex items-center gap-2">
+                                <span class="text-xs font-black uppercase px-3.5 py-2 rounded-xl bg-rose-600 text-white shadow-md flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-white animate-ping"></span> ESTADO: 🔴 RIESGO
+                                </span>
+                            </div>
+                        </div>
+                    ` : ''}
+
+                    <!-- 1. INDICADOR GENERAL DE ADOPCIÓN SLA Y 2. SEMAFORIZACIÓN -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- Tarjeta Principal: Nivel de Adopción & Semaforización -->
+                        <div class="p-5 rounded-2xl border transition-all shadow-sm ${slaAdoption.semaforoBg} flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between text-xs font-black uppercase tracking-wider mb-2">
+                                    <span>Nivel de Adopción SLA</span>
+                                    <span class="text-[10px] font-mono px-2 py-0.5 rounded-full ${slaAdoption.semaforoPill}">
+                                        ${slaAdoption.semaforoLabel}
+                                    </span>
+                                </div>
+                                <div class="flex items-baseline gap-2 mt-1">
+                                    <span class="text-4xl sm:text-5xl font-black font-mono tracking-tight">${slaAdoption.adoptionRate}%</span>
+                                    <span class="text-xs font-bold opacity-80">adopción general</span>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-200/60 flex items-center justify-between text-xs font-bold">
+                                <span>Estado: <strong>${slaAdoption.semaforoLabel}</strong></span>
+                                <span class="text-[10px] font-mono opacity-70">1h auto-refresh</span>
+                            </div>
+                        </div>
+
+                        <!-- Tarjeta: Total Asesores Activos -->
+                        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-2xs hover:bg-slate-100/60 transition-all flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-2">
+                                    <span class="uppercase tracking-wider">Asesores Activos</span>
+                                    <span class="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center text-xs">
+                                        <i class="fa-solid fa-users"></i>
+                                    </span>
+                                </div>
+                                <div class="flex items-baseline gap-2 mt-1">
+                                    <span class="text-4xl font-black font-mono text-slate-900">${slaAdoption.totalAdvisors}</span>
+                                    <span class="text-xs font-bold text-slate-500">asesores activos</span>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-200/60 text-[11px] text-slate-500 font-medium flex items-center gap-1.5">
+                                <i class="fa-solid fa-id-badge text-blue-600"></i>
+                                <span>Nómina activa de CRONOS FID</span>
+                            </div>
+                        </div>
+
+                        <!-- Tarjeta: Usuarios CRONOS SLA -->
+                        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-2xs hover:bg-slate-100/60 transition-all flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-2">
+                                    <span class="uppercase tracking-wider">Usuarios SLA</span>
+                                    <span class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs">
+                                        <i class="fa-solid fa-user-check"></i>
+                                    </span>
+                                </div>
+                                <div class="flex items-baseline gap-2 mt-1">
+                                    <span class="text-4xl font-black font-mono text-emerald-600">${slaAdoption.slaUsersCount}</span>
+                                    <span class="text-xs font-bold text-slate-500">utilizan la herramienta</span>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-200/60 text-[11px] text-emerald-700 font-bold flex items-center gap-1.5">
+                                <i class="fa-solid fa-check-double"></i>
+                                <span>${slaAdoption.adoptionRate}% de adherencia registrada</span>
+                            </div>
+                        </div>
+
+                        <!-- Tarjeta: No Usuarios CRONOS SLA -->
+                        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-2xs hover:bg-slate-100/60 transition-all flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-2">
+                                    <span class="uppercase tracking-wider">No Usuarios SLA</span>
+                                    <span class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center text-xs">
+                                        <i class="fa-solid fa-user-xmark"></i>
+                                    </span>
+                                </div>
+                                <div class="flex items-baseline gap-2 mt-1">
+                                    <span class="text-4xl font-black font-mono text-rose-600">${slaAdoption.noSlaUsersCount}</span>
+                                    <span class="text-xs font-bold text-slate-500">sin adopción activa</span>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-200/60 text-[11px] text-rose-700 font-bold flex items-center gap-1.5">
+                                <i class="fa-solid fa-bullseye"></i>
+                                <span>Foco de formación y seguimiento</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. CLASIFICACIÓN DE USUARIOS & 6. CRUCE CON CALIDAD -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                        <!-- 4. CLASIFICACIÓN DE USUARIOS (7 cols) -->
+                        <div class="lg:col-span-7 bg-slate-50 p-5 rounded-2xl border border-slate-200/90 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black uppercase text-slate-800 tracking-wider flex items-center gap-2">
+                                    <i class="fa-solid fa-layer-group text-purple-600"></i>
+                                    Clasificación de Usuarios por Volumen de Uso SLA
+                                </span>
+                                <span class="text-[10px] font-bold text-slate-500">Segmentación automática</span>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <!-- Usuario Frecuente -->
+                                <div class="bg-white p-4 rounded-xl border border-emerald-200 shadow-2xs space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800">
+                                            🟢 Frecuente
+                                        </span>
+                                        <span class="text-[10px] font-bold text-slate-400 font-mono">&gt; 20 usos</span>
+                                    </div>
+                                    <div class="text-2xl font-black font-mono text-emerald-700">
+                                        ${slaAdoption.clasificacionCounts.frecuentes}
+                                    </div>
+                                    <div class="text-[11px] text-slate-500 leading-tight">
+                                        Asesores con más de 20 usos registrados de CRONOS SLA.
+                                    </div>
+                                </div>
+
+                                <!-- Usuario Ocasional -->
+                                <div class="bg-white p-4 rounded-xl border border-amber-200 shadow-2xs space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-100 text-amber-800">
+                                            🟡 Ocasional
+                                        </span>
+                                        <span class="text-[10px] font-bold text-slate-400 font-mono">5 - 20 usos</span>
+                                    </div>
+                                    <div class="text-2xl font-black font-mono text-amber-700">
+                                        ${slaAdoption.clasificacionCounts.ocasionales}
+                                    </div>
+                                    <div class="text-[11px] text-slate-500 leading-tight">
+                                        Asesores con uso entre 5 y 20 gestiones registradas.
+                                    </div>
+                                </div>
+
+                                <!-- Usuario Sin Adopción -->
+                                <div class="bg-white p-4 rounded-xl border border-rose-200 shadow-2xs space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-100 text-rose-800">
+                                            🔴 Sin Adopción
+                                        </span>
+                                        <span class="text-[10px] font-bold text-slate-400 font-mono">&lt; 5 usos</span>
+                                    </div>
+                                    <div class="text-2xl font-black font-mono text-rose-700">
+                                        ${slaAdoption.clasificacionCounts.sinAdopcion}
+                                    </div>
+                                    <div class="text-[11px] text-slate-500 leading-tight">
+                                        Menos de 5 usos o sin uso registrado en el sistema.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 6. CRUCE CON CALIDAD (5 cols) -->
+                        <div class="lg:col-span-5 bg-gradient-to-br from-slate-900 via-[#1E1E24] to-slate-950 text-white p-5 rounded-2xl border border-slate-800 shadow-md flex flex-col justify-between space-y-3">
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[11px] font-black uppercase tracking-wider text-amber-300 flex items-center gap-2">
+                                        <i class="fa-solid fa-shield-halved text-win-orange"></i>
+                                        IMPACTO POTENCIAL EN CALIDAD
+                                    </span>
+                                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-white/10 text-slate-300">
+                                        Auditoría SLA
+                                    </span>
+                                </div>
+
+                                <!-- Comparativa SLA vs Sin SLA -->
+                                <div class="grid grid-cols-3 gap-2 mt-3 pt-2 border-t border-white/10 text-center">
+                                    <div class="bg-white/5 p-2 rounded-xl border border-white/5">
+                                        <div class="text-[10px] text-slate-400">Usuarios SLA</div>
+                                        <div class="text-lg font-black font-mono text-emerald-400">${slaAdoption.slaUsersCount}</div>
+                                    </div>
+                                    <div class="bg-white/5 p-2 rounded-xl border border-white/5">
+                                        <div class="text-[10px] text-slate-400">Sin SLA</div>
+                                        <div class="text-lg font-black font-mono text-rose-400">${slaAdoption.noSlaUsersCount}</div>
+                                    </div>
+                                    <div class="bg-white/5 p-2 rounded-xl border border-white/5">
+                                        <div class="text-[10px] text-slate-400">Adopción %</div>
+                                        <div class="text-lg font-black font-mono text-amber-300">${slaAdoption.adoptionRate}%</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Indicador Crítico de Calidad -->
+                            <div class="bg-amber-500/10 rounded-xl p-3 border border-amber-500/20 text-xs text-amber-100 leading-relaxed">
+                                <div class="font-extrabold text-amber-300 flex items-center gap-1.5 mb-1 text-[11px] uppercase tracking-wide">
+                                    <i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Correlación Operativa Clave
+                                </div>
+                                <p class="italic text-[11px]">
+                                    "A menor adopción de CRONOS SLA existe mayor riesgo de incremento en tiempos de espera (TE) y observaciones de calidad."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 7. TENDENCIA DE ADOPCIÓN (180 DÍAS) -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200/90 space-y-3">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <div>
+                                <div class="text-xs font-black uppercase text-slate-800 tracking-wider flex items-center gap-2">
+                                    <i class="fa-solid fa-chart-simple text-purple-600"></i>
+                                    TENDENCIA DE ADOPCIÓN (${selectedPeriodLabel})
+                                </div>
+                                <div class="text-[11px] text-slate-500">
+                                    Evolución de uso de CRONOS SLA durante los últimos 180 días.
+                                </div>
+                            </div>
+                            <span class="text-[10px] font-black uppercase px-2.5 py-1 rounded-full bg-purple-100 text-purple-700 border border-purple-200 font-mono">
+                                ${slaAdoption.totalInteractions} gestiones analizadas
+                            </span>
+                        </div>
+
+                        <!-- Barras de Tendencia Visual -->
+                        <div class="grid ${trendBars.length === 7 ? 'grid-cols-7' : (trendBars.length <= 4 ? 'grid-cols-4' : 'grid-cols-6')} gap-2.5 items-end h-36 pt-4 px-2">
+                            ${trendBars.map(b => `
+                                <div class="flex flex-col items-center gap-1 h-full justify-end group">
+                                    <span class="text-[10px] font-mono font-bold text-slate-600 group-hover:text-purple-700 transition">${b.val}</span>
+                                    <div class="w-full bg-slate-200 rounded-t-lg overflow-hidden flex items-end" style="height: 100%;">
+                                        <div class="w-full bg-gradient-to-t from-purple-700 to-indigo-500 group-hover:from-purple-600 group-hover:to-win-orange transition-all rounded-t-lg shadow-xs"
+                                             style="height: ${Math.max(12, Math.min(100, b.pct))}%;"
+                                             title="${b.label}: ${b.val} gestiones SLA (${b.pct}%)">
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] font-bold text-slate-600 truncate w-full text-center" title="${b.label}">${b.label}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div class="flex items-center justify-between text-[10px] text-slate-500 pt-2 border-t border-slate-200">
+                            <span><span class="inline-block w-2 h-2 rounded-full bg-purple-600 mr-1"></span>Volumen de uso en ${selectedPeriodLabel}</span>
+                            <span>Ventana histórica activa: <strong class="text-slate-800">180 días de retención</strong></span>
+                            <span class="text-purple-700 font-bold">Frecuencia horaria</span>
+                        </div>
+                    </div>
+
+                    <!-- 3. RANKING DE USO DE CRONOS SLA (TOP 10 Y BOTTOM 10) -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                        <!-- TOP 10 ASESORES CON MAYOR USO -->
+                        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-2xs space-y-3">
+                            <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-black">
+                                        <i class="fa-solid fa-trophy"></i>
+                                    </span>
+                                    <h4 class="font-black text-xs md:text-sm text-slate-900 uppercase">TOP 10 - Mayor Uso CRONOS SLA</h4>
+                                </div>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold">
+                                    Líderes de Adopción
+                                </span>
+                            </div>
+
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-xs text-slate-700">
+                                    <thead class="bg-slate-50 text-[10px] font-black uppercase text-slate-500 tracking-wider">
+                                        <tr>
+                                            <th class="py-2 px-2.5 rounded-l-lg">#</th>
+                                            <th class="py-2 px-2.5">Asesor</th>
+                                            <th class="py-2 px-2.5">Usuario</th>
+                                            <th class="py-2 px-2.5 text-center">Usos SLA</th>
+                                            <th class="py-2 px-2.5 text-center">Clasificación</th>
+                                            <th class="py-2 px-2.5 text-right rounded-r-lg">Último Uso</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100 font-medium">
+                                        ${slaAdoption.top10.map((u, idx) => `
+                                            <tr class="hover:bg-slate-50/80 transition-colors">
+                                                <td class="py-2 px-2.5 font-mono font-bold text-slate-400">${idx + 1}</td>
+                                                <td class="py-2 px-2.5 font-bold text-slate-900 truncate max-w-[130px]" title="${u.nombre}">
+                                                    ${u.nombre}
+                                                </td>
+                                                <td class="py-2 px-2.5 font-mono text-[11px] text-slate-500">${u.usuario}</td>
+                                                <td class="py-2 px-2.5 text-center font-mono font-black text-purple-700">${u.usosSla}</td>
+                                                <td class="py-2 px-2.5 text-center">
+                                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-black border ${u.clasificacionColor}">
+                                                        ${u.clasificacionBadge}
+                                                    </span>
+                                                </td>
+                                                <td class="py-2 px-2.5 text-right font-mono text-[11px] text-slate-500">${u.ultimoUsoStr}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- BOTTOM 10 ASESORES CON MENOR USO -->
+                        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-2xs space-y-3">
+                            <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center text-xs font-black">
+                                        <i class="fa-solid fa-arrow-down-short-wide"></i>
+                                    </span>
+                                    <h4 class="font-black text-xs md:text-sm text-slate-900 uppercase">BOTTOM 10 - Menor Uso CRONOS SLA</h4>
+                                </div>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200 font-bold">
+                                    Prioridad de Refuerzo
+                                </span>
+                            </div>
+
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-xs text-slate-700">
+                                    <thead class="bg-slate-50 text-[10px] font-black uppercase text-slate-500 tracking-wider">
+                                        <tr>
+                                            <th class="py-2 px-2.5 rounded-l-lg">#</th>
+                                            <th class="py-2 px-2.5">Asesor</th>
+                                            <th class="py-2 px-2.5">Usuario</th>
+                                            <th class="py-2 px-2.5 text-center">Usos SLA</th>
+                                            <th class="py-2 px-2.5 text-center">Clasificación</th>
+                                            <th class="py-2 px-2.5 text-right rounded-r-lg">Último Uso</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100 font-medium">
+                                        ${slaAdoption.bottom10.map((u, idx) => `
+                                            <tr class="hover:bg-slate-50/80 transition-colors">
+                                                <td class="py-2 px-2.5 font-mono font-bold text-slate-400">${idx + 1}</td>
+                                                <td class="py-2 px-2.5 font-bold text-slate-900 truncate max-w-[130px]" title="${u.nombre}">
+                                                    ${u.nombre}
+                                                </td>
+                                                <td class="py-2 px-2.5 font-mono text-[11px] text-slate-500">${u.usuario}</td>
+                                                <td class="py-2 px-2.5 text-center font-mono font-black ${u.usosSla === 0 ? 'text-rose-600' : 'text-slate-700'}">${u.usosSla}</td>
+                                                <td class="py-2 px-2.5 text-center">
+                                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-black border ${u.clasificacionColor}">
+                                                        ${u.clasificacionBadge}
+                                                    </span>
+                                                </td>
+                                                <td class="py-2 px-2.5 text-right font-mono text-[11px] text-slate-500">${u.ultimoUsoStr}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. LISTADO DE ASESORES SIN USO DE SLA -->
+                    <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200/90 space-y-4">
+                        <div class="flex items-center justify-between flex-wrap gap-2 pb-2 border-b border-slate-200">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-7 h-7 rounded-lg bg-rose-600 text-white flex items-center justify-center text-xs font-black shadow-xs">
+                                        <i class="fa-solid fa-user-slash"></i>
+                                    </span>
+                                    <h4 class="font-black text-xs md:text-sm text-slate-900 uppercase">
+                                        ASESORES SIN USO DE CRONOS SLA
+                                    </h4>
+                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-100 text-rose-800 border border-rose-300">
+                                        ${slaAdoption.sinUsoList.length} Asesores Identificados
+                                    </span>
+                                </div>
+                                <p class="text-[11px] text-slate-500 mt-0.5">
+                                    Nómina operativa de asesores activos sin registros de uso de CRONOS SLA. Foco estratégico para <strong class="text-slate-700">Calidad, Formación y Supervisión</strong>.
+                                </p>
+                            </div>
+
+                            <span class="text-[10px] font-bold text-slate-500 bg-white px-3 py-1 rounded-lg border border-slate-200">
+                                Gestión de Adherencia Operativa
+                            </span>
+                        </div>
+
+                        ${slaAdoption.sinUsoList.length === 0 ? `
+                            <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center text-xs font-bold text-emerald-800 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-circle-check text-emerald-600 text-base"></i>
+                                <span>¡Excelente! El 100% de los asesores activos cuenta con uso registrado de CRONOS SLA.</span>
+                            </div>
+                        ` : `
+                            <div class="overflow-x-auto bg-white rounded-xl border border-slate-200">
+                                <table class="w-full text-left text-xs text-slate-700">
+                                    <thead class="bg-slate-100 text-[10px] font-black uppercase text-slate-500 tracking-wider">
+                                        <tr>
+                                            <th class="py-2.5 px-3 rounded-l-lg">Nombre del Asesor</th>
+                                            <th class="py-2.5 px-3">Correo Institucional</th>
+                                            <th class="py-2.5 px-3">Supervisor a Cargo</th>
+                                            <th class="py-2.5 px-3">Último Acceso a CRONOS FID</th>
+                                            <th class="py-2.5 px-3 text-center rounded-r-lg">Estado de Uso SLA</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100 font-medium">
+                                        ${slaAdoption.sinUsoList.map(u => `
+                                            <tr class="hover:bg-rose-50/40 transition-colors">
+                                                <td class="py-2.5 px-3 font-bold text-slate-900 flex items-center gap-2">
+                                                    <span class="w-6 h-6 rounded-full bg-rose-100 text-rose-700 font-black text-[10px] flex items-center justify-center shrink-0">
+                                                        ${(u.nombre || 'A').charAt(0).toUpperCase()}
+                                                    </span>
+                                                    <span>${u.nombre}</span>
+                                                </td>
+                                                <td class="py-2.5 px-3 font-mono text-[11px] text-slate-600">${u.correo}</td>
+                                                <td class="py-2.5 px-3 text-slate-700 font-bold">${u.supervisor}</td>
+                                                <td class="py-2.5 px-3 font-mono text-[11px] text-slate-500">${u.ultimoAccesoStr}</td>
+                                                <td class="py-2.5 px-3 text-center">
+                                                    <span class="px-2.5 py-1 rounded-full text-[10px] font-black bg-rose-100 text-rose-800 border border-rose-300">
+                                                        🔴 Sin Adopción
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-[10px] text-slate-500 flex items-center justify-between pt-1">
+                                <span>* Esta información será utilizada por: <strong>Calidad</strong>, <strong>Formación</strong> y <strong>Supervisión</strong>.</span>
+                                <span class="font-mono text-purple-700">Actualización automática cada hora</span>
+                            </div>
+                        `}
+                    </div>
+                </div>
+
                 <!-- 2. Comparativo de Variaciones y Cumplimiento SLA -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
                     <!-- Tarjeta SLA General -->
@@ -42651,42 +43601,31 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                             `).join('')}
                         </div>
                     </div>
-                </div>
-            `;
-
-            if (container) {
-                container.innerHTML = htmlContent;
-            }
-            if (modalBody) {
-                modalBody.innerHTML = htmlContent;
+                </div>`;
             }
 
-            // Renderizar contenido dinámico de Alertas Proactivas
-            if (window.CronosObservability && typeof window.CronosObservability.init === 'function') {
-                try {
-                    window.CronosObservability.init();
-                } catch (eObs) {
-                    console.warn('[CronosObservability] Error en init:', eObs);
+            // Caché de contenido por pestaña para transiciones instantáneas sin re-renderizado
+            window._vista360TabCache = window._vista360TabCache || {};
+            window._vista360TabCache[active360Tab] = activeTabContentHtml;
+
+            const existingTabContent = targetEl.querySelector('#vista-360-tab-content');
+            if (existingTabContent) {
+                // REUTILIZACIÓN DE CONTENEDOR: Solo actualizar el contenedor interior sin reconstruir el banner (0 ms)
+                existingTabContent.innerHTML = activeTabContentHtml;
+                if (active360Tab === 'riesgo' && window.CronosProactiveAlerts && typeof window.CronosProactiveAlerts.renderUI === 'function') {
+                    try { window.CronosProactiveAlerts.renderUI(); } catch (e) {}
                 }
+                return activeTabContentHtml;
             }
 
-            if (window.CronosOperationalOptimization && typeof window.CronosOperationalOptimization.init === 'function') {
-                try {
-                    window.CronosOperationalOptimization.init();
-                } catch (eOpt) {
-                    console.warn('[CronosOperationalOptimization] Error en init:', eOpt);
-                }
-            }
+            // Montaje inicial de la vista con contenedor modular independiente en el destino visible
+            const finalHtmlContent = headerBannerHtml + tabNavHtml + `<div id="vista-360-tab-content">${activeTabContentHtml}</div>`;
 
-            if (window.CronosAIInsights && typeof window.CronosAIInsights.init === 'function') {
-                try {
-                    window.CronosAIInsights.init();
-                } catch (eAI) {
-                    console.warn('[CronosAIInsights] Error en init:', eAI);
-                }
-            }
+            // INYECCIÓN ÚNICA Y EXCLUSIVA EN EL CONTENEDOR VISIBLE (Doble inyección eliminada)
+            targetEl.innerHTML = finalHtmlContent;
 
-            if (window.CronosProactiveAlerts && typeof window.CronosProactiveAlerts.renderUI === 'function') {
+            // SPRINT 4: Renderizado reactivo directo sin timeouts destructivos
+            if (active360Tab === 'riesgo' && window.CronosProactiveAlerts && typeof window.CronosProactiveAlerts.renderUI === 'function') {
                 try {
                     window.CronosProactiveAlerts.renderUI();
                 } catch (e) {
@@ -42694,15 +43633,50 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                 }
             }
 
-            return htmlContent;
+            return finalHtmlContent;
         }
+
+        // Selector global de pestaña para Vista Ejecutiva 360° con Transición Instantánea y Reutilización de Datos
+        window.setVista360Tab = function (tabId) {
+            window.CRONOS_360_ACTIVE_TAB = tabId;
+            const contentEl = document.getElementById('vista-360-tab-content');
+            if (!contentEl) {
+                renderVistaEjecutiva360();
+                return;
+            }
+
+            // Actualizar estilo visual de botones de pestañas instantáneamente (0 ms)
+            const tabsDef = [
+                { id: 'general', btnId: 'btn-vista360-tab-general', activeClass: 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20' },
+                { id: 'riesgo', btnId: 'btn-vista360-tab-riesgo', activeClass: 'bg-gradient-to-r from-rose-600 to-red-600 text-white shadow-md shadow-rose-600/20' },
+                { id: 'formacion-calidad', btnId: 'btn-vista360-tab-formacion-calidad', activeClass: 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-600/20' },
+                { id: 'objetivos', btnId: 'btn-vista360-tab-objetivos', activeClass: 'bg-gradient-to-r from-teal-600 to-emerald-600 text-white shadow-md shadow-teal-600/20' },
+                { id: 'ia-analitica', btnId: 'btn-vista360-tab-ia-analitica', activeClass: 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md shadow-indigo-600/20' }
+            ];
+            const inactiveClass = 'bg-slate-100 hover:bg-slate-200 text-slate-700';
+            tabsDef.forEach(t => {
+                const b = document.getElementById(t.btnId);
+                if (b) {
+                    b.className = `px-4 py-2.5 rounded-xl font-extrabold flex items-center gap-2 transition cursor-pointer shrink-0 ${t.id === tabId ? t.activeClass : inactiveClass}`;
+                }
+            });
+
+            // REUTILIZACIÓN DE DATOS: Si la pestaña ya fue cargada, utilizar información existente (0 ms)
+            window._vista360TabCache = window._vista360TabCache || {};
+            if (window._vista360TabCache[tabId]) {
+                contentEl.innerHTML = window._vista360TabCache[tabId];
+                if (tabId === 'riesgo' && window.CronosProactiveAlerts && typeof window.CronosProactiveAlerts.renderUI === 'function') {
+                    try { window.CronosProactiveAlerts.renderUI(); } catch (e) {}
+                }
+            } else {
+                renderVistaEjecutiva360();
+            }
+        };
 
         // Aliases globales para compatibilidad total
         window.renderVistaEjecutiva360 = renderVistaEjecutiva360;
         window.renderExecutive360 = renderVistaEjecutiva360;
-
-        // Generador Oficial de Reporte PDF 360° (Con KPIs, Gráficos Visuales, Adopción SLA, Matriz de Riesgo e IA)
-        window.CronosPDFGenerator = window.CronosPDFGenerator || {};
+window.CronosPDFGenerator = window.CronosPDFGenerator || {};
         window.CronosPDFGenerator.generateExecutiveReport = function (rangeOverride) {
             const activePeriod = String(rangeOverride || window.CRONOS_EXECUTIVE_SLA_PERIOD || (window.CronosGlobalFilter && window.CronosGlobalFilter.currentPeriod) || 'mes').toLowerCase();
             const periodLabels = {
@@ -42802,13 +43776,13 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
     <div class="section-title">2. Gráfico de Distribución Operativa por Módulo</div>
     <div class="chart-box">
         ${[
-            { label: 'Clave Secreta', val: mc.generator || 0 },
-            { label: 'Tipificaciones', val: mc.tipificaciones || 0 },
-            { label: 'Tickets (Tecnología)', val: mc.tickets || 0 },
-            { label: 'Derivaciones (Discord)', val: mc.derivaciones || 0 },
-            { label: 'Acuerdos de Voz', val: mc.acuerdos_voz || 0 },
-            { label: 'CRONOS SLA', val: mc.cronos_sla || 0 }
-        ].map(item => `
+                    { label: 'Clave Secreta', val: mc.generator || 0 },
+                    { label: 'Tipificaciones', val: mc.tipificaciones || 0 },
+                    { label: 'Tickets (Tecnología)', val: mc.tickets || 0 },
+                    { label: 'Derivaciones (Discord)', val: mc.derivaciones || 0 },
+                    { label: 'Acuerdos de Voz', val: mc.acuerdos_voz || 0 },
+                    { label: 'CRONOS SLA', val: mc.cronos_sla || 0 }
+                ].map(item => `
             <div class="bar-row">
                 <div class="bar-label">${item.label}</div>
                 <div class="bar-track"><div class="bar-fill" style="width:${Math.max(2, Math.round((item.val / maxModCount) * 100))}%"></div></div>
@@ -42899,7 +43873,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
             }
         };
 
-        // Instancia global CronosExecutive360
+        // Instancia global CronosExecutive360 con Renderizado Condicional y Gestión de Ciclo de Vida del Modal
         window.CronosExecutive360 = {
             isOpen: false,
             open() {
@@ -42911,19 +43885,39 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     }
                     return;
                 }
-                if (typeof switchTab === 'function') {
-                    switchTab('vista-360');
-                }
-                this.isOpen = true;
-                if (typeof loadExecutive360 === 'function') {
-                    loadExecutive360();
-                } else if (typeof renderVistaEjecutiva360 === 'function') {
-                    renderVistaEjecutiva360();
+                const modal = document.getElementById('modal-executive-360');
+                const modalBody = document.getElementById('executive-360-body');
+                if (modal && modalBody) {
+                    modal.classList.remove('hidden');
+                    document.body.classList.add('overflow-hidden');
+                    this.isOpen = true;
+                    // Render condicional: Renderizar contenido del modal únicamente al abrirse
+                    renderVistaEjecutiva360(modalBody);
+                } else {
+                    if (typeof switchTab === 'function') {
+                        switchTab('vista-360');
+                    }
+                    this.isOpen = true;
+                    if (typeof loadExecutive360 === 'function') {
+                        loadExecutive360();
+                    } else if (typeof renderVistaEjecutiva360 === 'function') {
+                        renderVistaEjecutiva360();
+                    }
                 }
             },
             close() {
                 this.isOpen = false;
-                if (typeof switchTab === 'function') {
+                const modal = document.getElementById('modal-executive-360');
+                const modalBody = document.getElementById('executive-360-body');
+                if (modal) {
+                    modal.classList.add('hidden');
+                    document.body.classList.remove('overflow-hidden');
+                }
+                // GESTIÓN DE MODALES: Liberar referencias y evitar mantener contenido duplicado
+                if (modalBody) {
+                    modalBody.innerHTML = '';
+                }
+                if (typeof switchTab === 'function' && window.activeModule === 'vista-360' && modal) {
                     switchTab('dashboard');
                 }
             },
