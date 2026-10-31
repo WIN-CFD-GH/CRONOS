@@ -17047,7 +17047,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             }
 
             // Inclusión de asesores
-            if (email === 'ajibaja@win.pe' || email === 'bsilva@win.pe') {
+            if (email === 'bsilva@win.pe') {
                 return true;
             }
 
@@ -25115,22 +25115,49 @@ version: "JELI v6.0.0 • WIN OCT2026",
             const cutoff180d = nowMs - (180 * 24 * 60 * 60 * 1000);
 
             // 1. Obtener lista de asesores activos reales de CRONOS FID
-            // Base registrada oficial del sistema
+            // Base registrada oficial del sistema (Dotación Oficial Octubre 2026 - 41 Asesores)
             const SYSTEM_REGISTERED_ADVISORS = [
-                { nombre: 'MERCEDES ALCANTARA TABOADA', correo: 'malcantara@win.pe', usuario: 'malcantara', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                { nombre: 'JOAN HAROLD ALDAVE MEDINA', correo: 'jaldave@win.pe', usuario: 'jaldave', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                { nombre: 'CRIST LISBETH ATAHUAMAN ARIAS', correo: 'catahuaman@win.pe', usuario: 'catahuaman', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                { nombre: 'JULIO ANDERSON BACA DEL BUENO', correo: 'jbaca@win.pe', usuario: 'jbaca', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                { nombre: 'DORKAS MERCEDES CORDOVA BALLENA', correo: 'dcordovab@win.pe', usuario: 'dcordovab', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                { nombre: 'EMANUEL TEODORO CORREA LOYOLA', correo: 'ecorrea@win.pe', usuario: 'ecorrea', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                { nombre: 'CINDY GELEN GONZALES VILLACORTA', correo: 'cgonzalesv@win.pe', usuario: 'cgonzalesv', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                { nombre: 'ANDRE MALEK JIBAJA SALAS', correo: 'ajibaja@win.pe', usuario: 'ajibaja', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                { nombre: 'JOANA MILAGROS LOLI DE LA JARA', correo: 'jloli@win.pe', usuario: 'jloli', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                { nombre: 'GLORIA PAMELA MANRIQUE PAIVA', correo: 'gmanrique@win.pe', usuario: 'gmanrique', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                { nombre: 'IRMA ESTEFANY MOGOLLON AMAYA', correo: 'imogollon@win.pe', usuario: 'imogollon', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                { nombre: 'ORLANDO RAMIREZ SORIA', correo: 'oramirezs@win.pe', usuario: 'oramirezs', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                { nombre: 'BILLY WILSON SILVA URCIA', correo: 'bsilva@win.pe', usuario: 'bsilva', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                { nombre: 'SAMANTHA ESTEFANI SANCHEZ SAMAME', correo: 'ssanchezs@win.pe', usuario: 'ssanchezs', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' }
+                { nombre: 'ALDAVE MEDINA JOAN HAROLD', correo: 'jaldave@win.pe', usuario: 'jaldave', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                { nombre: 'BALCAZAR MEDINA JONATAN ESTEBAN', correo: 'jbalcazar@win.pe', usuario: 'jbalcazar', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                { nombre: 'BALCAZAR SANTOS DANIEL JOSUE', correo: 'dbalcazar@win.pe', usuario: 'dbalcazar', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                { nombre: 'BALTAZAR PRIETO MARCO ANTONIO', correo: 'mbaltazar@win.pe', usuario: 'mbaltazar', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                { nombre: 'DURAND ALEGRE ANGELINA EVA', correo: 'adurand@win.pe', usuario: 'adurand', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                { nombre: 'FLORES REATEGUI MARILU', correo: 'mfloresr@win.pe', usuario: 'mfloresr', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                { nombre: 'GAMARRA ESPINOZA JHONATAN RODOLFO', correo: 'jgamarrae@win.pe', usuario: 'jgamarrae', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                { nombre: 'PILLCO ARRIETA ROBERTHA ROSA', correo: 'rpillco@win.pe', usuario: 'rpillco', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                { nombre: 'SANTILLANA SARMIENTO MARIA ISABEL', correo: 'msantillana@win.pe', usuario: 'msantillana', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                { nombre: 'VILLAFUERTE SALAZAR LIZ LUCERO', correo: 'lvillafuertes@win.pe', usuario: 'lvillafuertes', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                { nombre: 'CASTILLO DIOSES MILTON CHARLES', correo: 'mcastillod@win.pe', usuario: 'mcastillod', rol: 'Asesor', estado: 'Activo', supervisor: 'HENRY PEZO PIZANGO' },
+                { nombre: 'CORDOVA MARTINEZ JOHANNES OMAR', correo: 'jcordovam@win.pe', usuario: 'jcordovam', rol: 'Asesor', estado: 'Activo', supervisor: 'HENRY PEZO PIZANGO' },
+                { nombre: 'CORREA LOYOLA EMANUEL TEODORO', correo: 'ecorrea@win.pe', usuario: 'ecorrea', rol: 'Asesor', estado: 'Activo', supervisor: 'HENRY PEZO PIZANGO' },
+                { nombre: 'GONZALES GUZMAN JHANCARLOS MANUEL', correo: 'jgonzalesg@win.pe', usuario: 'jgonzalesg', rol: 'Asesor', estado: 'Activo', supervisor: 'HENRY PEZO PIZANGO' },
+                { nombre: 'PARI CUELLAR ANA MARIA', correo: 'mparic@win.pe', usuario: 'mparic', rol: 'Asesor', estado: 'Activo', supervisor: 'HENRY PEZO PIZANGO' },
+                { nombre: 'ROSAS MORENO MILAGRO DESSIRE', correo: 'mrosas@win.pe', usuario: 'mrosas', rol: 'Asesor', estado: 'Activo', supervisor: 'HENRY PEZO PIZANGO' },
+                { nombre: 'VERONA CHICOMA JOANNA MEDALIT', correo: 'jveronac@win.pe', usuario: 'jveronac', rol: 'Asesor', estado: 'Activo', supervisor: 'HENRY PEZO PIZANGO' },
+                { nombre: 'ALVINO SIFUENTES CYNTHIA ELISA CAROLINA', correo: 'calvino@win.pe', usuario: 'calvino', rol: 'Asesor', estado: 'Activo', supervisor: 'JUAN JOSE DE LA TORRE CHONTA' },
+                { nombre: 'BURGOS MONTERO MAX', correo: 'mburgosm@win.pe', usuario: 'mburgosm', rol: 'Asesor', estado: 'Activo', supervisor: 'JUAN JOSE DE LA TORRE CHONTA' },
+                { nombre: 'CORDOVA DIAZ RAY ANGEL', correo: 'rcordova@win.pe', usuario: 'rcordova', rol: 'Asesor', estado: 'Activo', supervisor: 'JUAN JOSE DE LA TORRE CHONTA' },
+                { nombre: 'GALVAN REYES FABIOLA EDITH', correo: 'fgalvan@win.pe', usuario: 'fgalvan', rol: 'Asesor', estado: 'Activo', supervisor: 'JUAN JOSE DE LA TORRE CHONTA' },
+                { nombre: 'JORDAN VILCHEZ MARIA ESMERALDA', correo: 'mjordan@win.pe', usuario: 'mjordan', rol: 'Asesor', estado: 'Activo', supervisor: 'JUAN JOSE DE LA TORRE CHONTA' },
+                { nombre: 'LEANDRO SANDOVAL PAMELA IVONNE', correo: 'pleandro@win.pe', usuario: 'pleandro', rol: 'Asesor', estado: 'Activo', supervisor: 'JUAN JOSE DE LA TORRE CHONTA' },
+                { nombre: 'SANDOVAL BENITES VANESSA', correo: 'vsandoval@win.pe', usuario: 'vsandoval', rol: 'Asesor', estado: 'Activo', supervisor: 'JUAN JOSE DE LA TORRE CHONTA' },
+                { nombre: 'SILVA URCIA BILLY WILSON', correo: 'bsilva@win.pe', usuario: 'bsilva', rol: 'Asesor', estado: 'Activo', supervisor: 'JUAN JOSE DE LA TORRE CHONTA' },
+                { nombre: 'BACA DEL BUENO JULIO ANDERSON', correo: 'jbaca@win.pe', usuario: 'jbaca', rol: 'Asesor', estado: 'Activo', supervisor: 'KAROL JOSSELYN ROMERO RUIZ' },
+                { nombre: 'BADOS GUTARRA PIERO ANDRES', correo: 'pbados@win.pe', usuario: 'pbados', rol: 'Asesor', estado: 'Activo', supervisor: 'KAROL JOSSELYN ROMERO RUIZ' },
+                { nombre: 'CASTRO FUENTES JENNY DEL ROCIO', correo: 'jrcastro@win.pe', usuario: 'jrcastro', rol: 'Asesor', estado: 'Activo', supervisor: 'KAROL JOSSELYN ROMERO RUIZ' },
+                { nombre: 'DONATO FERRO MAYRA ALEJANDRA', correo: 'mdonatof@win.pe', usuario: 'mdonatof', rol: 'Asesor', estado: 'Activo', supervisor: 'KAROL JOSSELYN ROMERO RUIZ' },
+                { nombre: 'DUEÑAS VELA MANUEL ENRIQUE', correo: 'mduenas@win.pe', usuario: 'mduenas', rol: 'Asesor', estado: 'Activo', supervisor: 'KAROL JOSSELYN ROMERO RUIZ' },
+                { nombre: 'FERROÑAN VILLEGAS SANTIAGO ENRRIQUE', correo: 'sferronan@win.pe', usuario: 'sferronan', rol: 'Asesor', estado: 'Activo', supervisor: 'KAROL JOSSELYN ROMERO RUIZ' },
+                { nombre: 'GONZALEZ MIRANDA JOSE EDUARDO', correo: 'jgonzalezm@win.pe', usuario: 'jgonzalezm', rol: 'Asesor', estado: 'Activo', supervisor: 'KAROL JOSSELYN ROMERO RUIZ' },
+                { nombre: 'QUISPE QUISPE JHONAYKER', correo: 'jquispeq@win.pe', usuario: 'jquispeq', rol: 'Asesor', estado: 'Activo', supervisor: 'KAROL JOSSELYN ROMERO RUIZ' },
+                { nombre: 'CABEZUDO GONZALES KAREN GABRIELA', correo: 'kcabezudo@win.pe', usuario: 'kcabezudo', rol: 'Asesor', estado: 'Activo', supervisor: 'WILLIAMS MARTIN CLAROS VILCA' },
+                { nombre: 'CACERES CASTILLO GERALDINE SAYURI', correo: 'gcaceres@win.pe', usuario: 'gcaceres', rol: 'Asesor', estado: 'Activo', supervisor: 'WILLIAMS MARTIN CLAROS VILCA' },
+                { nombre: 'INFANTE CASANOVA CAMILA LORENA', correo: 'cinfante@win.pe', usuario: 'cinfante', rol: 'Asesor', estado: 'Activo', supervisor: 'WILLIAMS MARTIN CLAROS VILCA' },
+                { nombre: 'JUSCAMAITA FLORES FELIX RICARDO', correo: 'rjuscamaitaf@win.pe', usuario: 'rjuscamaitaf', rol: 'Asesor', estado: 'Activo', supervisor: 'WILLIAMS MARTIN CLAROS VILCA' },
+                { nombre: 'LEON VELARDE OCMIN MAX ROLDAN', correo: 'oleon@win.pe', usuario: 'oleon', rol: 'Asesor', estado: 'Activo', supervisor: 'WILLIAMS MARTIN CLAROS VILCA' },
+                { nombre: 'RAMIREZ SORIA ORLANDO', correo: 'oramirezs@win.pe', usuario: 'oramirezs', rol: 'Asesor', estado: 'Activo', supervisor: 'WILLIAMS MARTIN CLAROS VILCA' },
+                { nombre: 'VALDEZ PAITAN LUIS ALBERTO', correo: 'lvaldezp@win.pe', usuario: 'lvaldezp', rol: 'Asesor', estado: 'Activo', supervisor: 'WILLIAMS MARTIN CLAROS VILCA' },
+                { nombre: 'ZACONETA MENDOZA KARINA MILUSKA', correo: 'kzaconetam@win.pe', usuario: 'kzaconetam', rol: 'Asesor', estado: 'Activo', supervisor: 'WILLIAMS MARTIN CLAROS VILCA' }
             ];
 
             const advisorsMap = new Map();
@@ -25568,22 +25595,49 @@ version: "JELI v6.0.0 • WIN OCT2026",
                 const now = new Date();
                 const nowMs = now.getTime();
 
-                // Base oficial registrada de asesores
+                // Base oficial registrada de asesores (Dotación Oficial Octubre 2026 - 41 Asesores)
                 const SYSTEM_REGISTERED_ADVISORS = [
-                    { nombre: 'MERCEDES ALCANTARA TABOADA', correo: 'malcantara@win.pe', usuario: 'malcantara', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                    { nombre: 'JOAN HAROLD ALDAVE MEDINA', correo: 'jaldave@win.pe', usuario: 'jaldave', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                    { nombre: 'CRIST LISBETH ATAHUAMAN ARIAS', correo: 'catahuaman@win.pe', usuario: 'catahuaman', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                    { nombre: 'JULIO ANDERSON BACA DEL BUENO', correo: 'jbaca@win.pe', usuario: 'jbaca', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                    { nombre: 'DORKAS MERCEDES CORDOVA BALLENA', correo: 'dcordovab@win.pe', usuario: 'dcordovab', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                    { nombre: 'EMANUEL TEODORO CORREA LOYOLA', correo: 'ecorrea@win.pe', usuario: 'ecorrea', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                    { nombre: 'CINDY GELEN GONZALES VILLACORTA', correo: 'cgonzalesv@win.pe', usuario: 'cgonzalesv', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                    { nombre: 'ANDRE MALEK JIBAJA SALAS', correo: 'ajibaja@win.pe', usuario: 'ajibaja', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                    { nombre: 'JOANA MILAGROS LOLI DE LA JARA', correo: 'jloli@win.pe', usuario: 'jloli', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                    { nombre: 'GLORIA PAMELA MANRIQUE PAIVA', correo: 'gmanrique@win.pe', usuario: 'gmanrique', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                    { nombre: 'IRMA ESTEFANY MOGOLLON AMAYA', correo: 'imogollon@win.pe', usuario: 'imogollon', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                    { nombre: 'ORLANDO RAMIREZ SORIA', correo: 'oramirezs@win.pe', usuario: 'oramirezs', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                    { nombre: 'BILLY WILSON SILVA URCIA', correo: 'bsilva@win.pe', usuario: 'bsilva', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' },
-                    { nombre: 'SAMANTHA ESTEFANI SANCHEZ SAMAME', correo: 'ssanchezs@win.pe', usuario: 'ssanchezs', rol: 'Asesor', estado: 'Activo', supervisor: 'LEÓN ILLESCAS JHONNY' }
+                    { nombre: 'ALDAVE MEDINA JOAN HAROLD', correo: 'jaldave@win.pe', usuario: 'jaldave', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                    { nombre: 'BALCAZAR MEDINA JONATAN ESTEBAN', correo: 'jbalcazar@win.pe', usuario: 'jbalcazar', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                    { nombre: 'BALCAZAR SANTOS DANIEL JOSUE', correo: 'dbalcazar@win.pe', usuario: 'dbalcazar', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                    { nombre: 'BALTAZAR PRIETO MARCO ANTONIO', correo: 'mbaltazar@win.pe', usuario: 'mbaltazar', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                    { nombre: 'DURAND ALEGRE ANGELINA EVA', correo: 'adurand@win.pe', usuario: 'adurand', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                    { nombre: 'FLORES REATEGUI MARILU', correo: 'mfloresr@win.pe', usuario: 'mfloresr', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                    { nombre: 'GAMARRA ESPINOZA JHONATAN RODOLFO', correo: 'jgamarrae@win.pe', usuario: 'jgamarrae', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                    { nombre: 'PILLCO ARRIETA ROBERTHA ROSA', correo: 'rpillco@win.pe', usuario: 'rpillco', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                    { nombre: 'SANTILLANA SARMIENTO MARIA ISABEL', correo: 'msantillana@win.pe', usuario: 'msantillana', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                    { nombre: 'VILLAFUERTE SALAZAR LIZ LUCERO', correo: 'lvillafuertes@win.pe', usuario: 'lvillafuertes', rol: 'Asesor', estado: 'Activo', supervisor: 'GUILIANA TATAJE RISSO' },
+                    { nombre: 'CASTILLO DIOSES MILTON CHARLES', correo: 'mcastillod@win.pe', usuario: 'mcastillod', rol: 'Asesor', estado: 'Activo', supervisor: 'HENRY PEZO PIZANGO' },
+                    { nombre: 'CORDOVA MARTINEZ JOHANNES OMAR', correo: 'jcordovam@win.pe', usuario: 'jcordovam', rol: 'Asesor', estado: 'Activo', supervisor: 'HENRY PEZO PIZANGO' },
+                    { nombre: 'CORREA LOYOLA EMANUEL TEODORO', correo: 'ecorrea@win.pe', usuario: 'ecorrea', rol: 'Asesor', estado: 'Activo', supervisor: 'HENRY PEZO PIZANGO' },
+                    { nombre: 'GONZALES GUZMAN JHANCARLOS MANUEL', correo: 'jgonzalesg@win.pe', usuario: 'jgonzalesg', rol: 'Asesor', estado: 'Activo', supervisor: 'HENRY PEZO PIZANGO' },
+                    { nombre: 'PARI CUELLAR ANA MARIA', correo: 'mparic@win.pe', usuario: 'mparic', rol: 'Asesor', estado: 'Activo', supervisor: 'HENRY PEZO PIZANGO' },
+                    { nombre: 'ROSAS MORENO MILAGRO DESSIRE', correo: 'mrosas@win.pe', usuario: 'mrosas', rol: 'Asesor', estado: 'Activo', supervisor: 'HENRY PEZO PIZANGO' },
+                    { nombre: 'VERONA CHICOMA JOANNA MEDALIT', correo: 'jveronac@win.pe', usuario: 'jveronac', rol: 'Asesor', estado: 'Activo', supervisor: 'HENRY PEZO PIZANGO' },
+                    { nombre: 'ALVINO SIFUENTES CYNTHIA ELISA CAROLINA', correo: 'calvino@win.pe', usuario: 'calvino', rol: 'Asesor', estado: 'Activo', supervisor: 'JUAN JOSE DE LA TORRE CHONTA' },
+                    { nombre: 'BURGOS MONTERO MAX', correo: 'mburgosm@win.pe', usuario: 'mburgosm', rol: 'Asesor', estado: 'Activo', supervisor: 'JUAN JOSE DE LA TORRE CHONTA' },
+                    { nombre: 'CORDOVA DIAZ RAY ANGEL', correo: 'rcordova@win.pe', usuario: 'rcordova', rol: 'Asesor', estado: 'Activo', supervisor: 'JUAN JOSE DE LA TORRE CHONTA' },
+                    { nombre: 'GALVAN REYES FABIOLA EDITH', correo: 'fgalvan@win.pe', usuario: 'fgalvan', rol: 'Asesor', estado: 'Activo', supervisor: 'JUAN JOSE DE LA TORRE CHONTA' },
+                    { nombre: 'JORDAN VILCHEZ MARIA ESMERALDA', correo: 'mjordan@win.pe', usuario: 'mjordan', rol: 'Asesor', estado: 'Activo', supervisor: 'JUAN JOSE DE LA TORRE CHONTA' },
+                    { nombre: 'LEANDRO SANDOVAL PAMELA IVONNE', correo: 'pleandro@win.pe', usuario: 'pleandro', rol: 'Asesor', estado: 'Activo', supervisor: 'JUAN JOSE DE LA TORRE CHONTA' },
+                    { nombre: 'SANDOVAL BENITES VANESSA', correo: 'vsandoval@win.pe', usuario: 'vsandoval', rol: 'Asesor', estado: 'Activo', supervisor: 'JUAN JOSE DE LA TORRE CHONTA' },
+                    { nombre: 'SILVA URCIA BILLY WILSON', correo: 'bsilva@win.pe', usuario: 'bsilva', rol: 'Asesor', estado: 'Activo', supervisor: 'JUAN JOSE DE LA TORRE CHONTA' },
+                    { nombre: 'BACA DEL BUENO JULIO ANDERSON', correo: 'jbaca@win.pe', usuario: 'jbaca', rol: 'Asesor', estado: 'Activo', supervisor: 'KAROL JOSSELYN ROMERO RUIZ' },
+                    { nombre: 'BADOS GUTARRA PIERO ANDRES', correo: 'pbados@win.pe', usuario: 'pbados', rol: 'Asesor', estado: 'Activo', supervisor: 'KAROL JOSSELYN ROMERO RUIZ' },
+                    { nombre: 'CASTRO FUENTES JENNY DEL ROCIO', correo: 'jrcastro@win.pe', usuario: 'jrcastro', rol: 'Asesor', estado: 'Activo', supervisor: 'KAROL JOSSELYN ROMERO RUIZ' },
+                    { nombre: 'DONATO FERRO MAYRA ALEJANDRA', correo: 'mdonatof@win.pe', usuario: 'mdonatof', rol: 'Asesor', estado: 'Activo', supervisor: 'KAROL JOSSELYN ROMERO RUIZ' },
+                    { nombre: 'DUEÑAS VELA MANUEL ENRIQUE', correo: 'mduenas@win.pe', usuario: 'mduenas', rol: 'Asesor', estado: 'Activo', supervisor: 'KAROL JOSSELYN ROMERO RUIZ' },
+                    { nombre: 'FERROÑAN VILLEGAS SANTIAGO ENRRIQUE', correo: 'sferronan@win.pe', usuario: 'sferronan', rol: 'Asesor', estado: 'Activo', supervisor: 'KAROL JOSSELYN ROMERO RUIZ' },
+                    { nombre: 'GONZALEZ MIRANDA JOSE EDUARDO', correo: 'jgonzalezm@win.pe', usuario: 'jgonzalezm', rol: 'Asesor', estado: 'Activo', supervisor: 'KAROL JOSSELYN ROMERO RUIZ' },
+                    { nombre: 'QUISPE QUISPE JHONAYKER', correo: 'jquispeq@win.pe', usuario: 'jquispeq', rol: 'Asesor', estado: 'Activo', supervisor: 'KAROL JOSSELYN ROMERO RUIZ' },
+                    { nombre: 'CABEZUDO GONZALES KAREN GABRIELA', correo: 'kcabezudo@win.pe', usuario: 'kcabezudo', rol: 'Asesor', estado: 'Activo', supervisor: 'WILLIAMS MARTIN CLAROS VILCA' },
+                    { nombre: 'CACERES CASTILLO GERALDINE SAYURI', correo: 'gcaceres@win.pe', usuario: 'gcaceres', rol: 'Asesor', estado: 'Activo', supervisor: 'WILLIAMS MARTIN CLAROS VILCA' },
+                    { nombre: 'INFANTE CASANOVA CAMILA LORENA', correo: 'cinfante@win.pe', usuario: 'cinfante', rol: 'Asesor', estado: 'Activo', supervisor: 'WILLIAMS MARTIN CLAROS VILCA' },
+                    { nombre: 'JUSCAMAITA FLORES FELIX RICARDO', correo: 'rjuscamaitaf@win.pe', usuario: 'rjuscamaitaf', rol: 'Asesor', estado: 'Activo', supervisor: 'WILLIAMS MARTIN CLAROS VILCA' },
+                    { nombre: 'LEON VELARDE OCMIN MAX ROLDAN', correo: 'oleon@win.pe', usuario: 'oleon', rol: 'Asesor', estado: 'Activo', supervisor: 'WILLIAMS MARTIN CLAROS VILCA' },
+                    { nombre: 'RAMIREZ SORIA ORLANDO', correo: 'oramirezs@win.pe', usuario: 'oramirezs', rol: 'Asesor', estado: 'Activo', supervisor: 'WILLIAMS MARTIN CLAROS VILCA' },
+                    { nombre: 'VALDEZ PAITAN LUIS ALBERTO', correo: 'lvaldezp@win.pe', usuario: 'lvaldezp', rol: 'Asesor', estado: 'Activo', supervisor: 'WILLIAMS MARTIN CLAROS VILCA' },
+                    { nombre: 'ZACONETA MENDOZA KARINA MILUSKA', correo: 'kzaconetam@win.pe', usuario: 'kzaconetam', rol: 'Asesor', estado: 'Activo', supervisor: 'WILLIAMS MARTIN CLAROS VILCA' }
                 ];
 
                 const advisorsMap = new Map();
