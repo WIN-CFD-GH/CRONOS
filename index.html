@@ -46,7 +46,7 @@ Año02026
     <meta property="og:description" content="Plataforma de Fidelización Ágil de WIN">
     <meta property="og:image" content="./CRONOS_FID_icon.png">
     <meta name="apple-mobile-web-app-title" content="CRONOS FID">
-    <meta name="theme-color" content="#FF5E00">
+    <meta name="theme-color" content="#FF5A0A">
 
     <!-- Directivas de Seguridad del Cliente (Defensa en Profundidad) -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
@@ -57,7 +57,7 @@ Año02026
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&family=Montserrat:wght@800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <!-- FontAwesome para iconos de alta calidad -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -84,16 +84,23 @@ Año02026
                 extend: {
                     colors: {
                         win: {
-                            orange: '#FF5E00',
-                            orangeHover: '#E05300',
-                            purple: '#7E22CE',
-                            dark: '#1E1E24',
+                            orange: '#FF5A0A',       // Color Principal (80%) - Brand Book WIN 2024
+                            orangeHover: '#E04F08',  // Hover Oficial Naranja WIN
+                            black: '#0F0908',        // Negro Corporativo WIN (5%)
+                            dark: '#0F0908',         // Negro Corporativo
+                            yellow: '#FFC200',       // Amarillo de Apoyo WIN (5%)
+                            white: '#FFFFFF',        // Blanco Corporativo (10%)
+                            purple: '#7E22CE',       // Púrpura de Acompañamiento
                             light: '#F8FAFC'
                         }
                     },
                     fontFamily: {
                         sans: ['Outfit', 'sans-serif'],
-                        mono: ['Space Grotesk', 'monospace']
+                        mono: ['Space Grotesk', 'monospace'],
+                        panton: ['"Panton Black"', 'Montserrat', 'Outfit', 'sans-serif'],
+                        tommy: ['"MADE Tommy Soft"', 'Outfit', '"Plus Jakarta Sans"', 'sans-serif'],
+                        titular: ['"Panton Black"', 'Montserrat', 'Outfit', 'sans-serif'],
+                        subtitulo: ['"MADE Tommy Soft"', 'Outfit', '"Plus Jakarta Sans"', 'sans-serif']
                     }
                 }
             }
@@ -502,7 +509,7 @@ Año02026
 
         .voice-concept-active-focus {
             animation: voiceFocusPulse 1.1s infinite ease-in-out !important;
-            outline: 2.5px solid #ff5e00 !important;
+            outline: 2.5px solid #FF5A0A !important;
             outline-offset: 2px !important;
             background-color: #fff7ed !important;
             color: #9a3412 !important;
@@ -581,7 +588,7 @@ Año02026
             background-color: #ffffff;
             padding: 0.4rem;
             border-radius: 0.7rem;
-            color: #ff5e00;
+            color: #FF5A0A;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -745,6 +752,45 @@ Año02026
            ======================================================== */
         :root {
             --cronos-header-height: 78px;
+            --win-orange: #FF5A0A;
+            --win-orange-rgb: 255, 90, 10;
+            --win-black: #0F0908;
+            --win-yellow: #FFC200;
+            --win-white: #FFFFFF;
+        }
+
+        /* =========================================================================
+           TIPOGRAFÍAS Y MARCA CORPORATIVA WIN - BRAND BOOK 2024
+           Titulares: PANTON BLACK CAPS (Alternativa Web: Montserrat 900 / Outfit 900)
+           Subtítulos: MADE TOMMY SOFT (Alternativa Web: Outfit / Plus Jakarta Sans)
+           ========================================================================= */
+        .font-panton-caps,
+        .brand-title,
+        .header-module-heading {
+            font-family: 'Panton Black', 'Montserrat', 'Outfit', sans-serif !important;
+            font-weight: 900 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.04em !important;
+        }
+
+        .font-tommy-soft,
+        .brand-subtitle,
+        .header-module-sub {
+            font-family: 'MADE Tommy Soft', 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+            font-weight: 400 !important;
+            letter-spacing: 0.01em !important;
+        }
+
+        .font-tommy-soft-light {
+            font-family: 'MADE Tommy Soft', 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+            font-weight: 300 !important;
+        }
+
+        .brand-logo-safe-area {
+            padding: 8px 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         #main-header {
@@ -1069,7 +1115,7 @@ Año02026
     <!-- PANTALLA DE CARGA INICIAL Y VALIDACIÓN DE PERFILES               -->
     <!-- ================================================================= -->
     <div id="auth-loading-screen"
-        class="fixed inset-0 z-[200] bg-gradient-to-br from-slate-950 via-slate-900 to-[#1e1e24] flex flex-col items-center justify-center p-4 min-h-screen text-white">
+        class="fixed inset-0 z-[200] bg-gradient-to-br from-slate-950 via-slate-900 to-[#0F0908] flex flex-col items-center justify-center p-4 min-h-screen text-white">
         <div class="relative flex flex-col items-center gap-5 animate-pop text-center max-w-sm">
             <div class="absolute w-72 h-72 bg-win-orange/15 rounded-full blur-3xl pointer-events-none -top-10 -left-10">
             </div>
@@ -1094,7 +1140,7 @@ Año02026
     <!-- PANTALLA DE INICIO DE SESIÓN - FASE PREPARATORIA FIREBASE AUTH -->
     <!-- ================================================================= -->
     <div id="login-screen-container"
-        class="fixed inset-0 z-[120] bg-gradient-to-br from-slate-950 via-slate-900 to-[#1e1e24] flex items-center justify-center p-4 min-h-screen overflow-y-auto">
+        class="fixed inset-0 z-[120] bg-gradient-to-br from-slate-950 via-slate-900 to-[#0F0908] flex items-center justify-center p-4 min-h-screen overflow-y-auto">
         <!-- Glow decorativo corporativo -->
         <div class="absolute w-96 h-96 bg-win-orange/15 rounded-full blur-3xl pointer-events-none -top-20 -left-20">
         </div>
@@ -1214,7 +1260,7 @@ Año02026
             class="bg-white w-full max-w-lg rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden animate-pop">
             <!-- Header -->
             <div
-                class="bg-gradient-to-r from-slate-900 to-[#1e1e24] text-white p-5 flex items-center justify-between border-b-4 border-win-orange">
+                class="bg-gradient-to-r from-slate-900 to-[#0F0908] text-white p-5 flex items-center justify-between border-b-4 border-win-orange">
                 <div class="flex items-center gap-3">
                     <div class="w-12 h-12 rounded-full bg-win-orange text-white flex items-center justify-center font-black text-lg shadow-md border-2 border-white"
                         id="modal-profile-avatar">
@@ -1319,7 +1365,7 @@ Año02026
             class="bg-white w-full max-w-4xl max-h-[90vh] rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden animate-pop">
             <!-- Header -->
             <div
-                class="bg-gradient-to-r from-slate-900 to-[#1e1e24] text-white p-5 flex items-center justify-between border-b-4 border-purple-600">
+                class="bg-gradient-to-r from-slate-900 to-[#0F0908] text-white p-5 flex items-center justify-between border-b-4 border-purple-600">
                 <div class="flex items-center gap-3">
                     <div
                         class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center font-bold text-lg shadow">
@@ -1405,7 +1451,7 @@ Año02026
             class="bg-white w-full max-w-6xl max-h-[92vh] rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden animate-pop">
             <!-- Header -->
             <div
-                class="bg-gradient-to-r from-slate-900 via-slate-800 to-[#1e1e24] text-white p-5 flex items-center justify-between border-b-4 border-emerald-500">
+                class="bg-gradient-to-r from-slate-900 via-slate-800 to-[#0F0908] text-white p-5 flex items-center justify-between border-b-4 border-emerald-500">
                 <div class="flex items-center gap-3">
                     <div
                         class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow-md">
@@ -1859,7 +1905,7 @@ Año02026
             class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-5xl w-full max-h-[92vh] flex flex-col overflow-hidden animate-pop">
             <!-- Header -->
             <div
-                class="px-6 py-4 bg-gradient-to-r from-slate-950 via-[#1E1E24] to-slate-900 text-white flex items-center justify-between border-b border-slate-800">
+                class="px-6 py-4 bg-gradient-to-r from-slate-950 via-[#0F0908] to-slate-900 text-white flex items-center justify-between border-b border-slate-800">
                 <div class="flex items-center gap-3">
                     <div
                         class="w-10 h-10 rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center text-lg font-black shadow-md">
@@ -2525,7 +2571,7 @@ Año02026
                                     <h2 class="text-xl md:text-2xl font-black tracking-wide">Directorio de Escalamiento
                                     </h2>
                                     <span
-                                        class="bg-[#FF6A00] text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-xs">Simulador
+                                        class="bg-[#FF5A0A] text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-xs">Simulador
                                         Inteligente</span>
                                 </div>
                                 <p class="text-xs md:text-sm text-slate-300 mt-1 max-w-2xl">
@@ -2559,7 +2605,7 @@ Año02026
                                 <div
                                     class="bg-slate-900 text-white py-3 px-5 border-b border-slate-800 flex justify-between items-center">
                                     <h3 class="font-bold text-sm tracking-wide flex items-center gap-2">
-                                        <i class="fa-solid fa-filter text-[#FF6A00]"></i>
+                                        <i class="fa-solid fa-filter text-[#FF5A0A]"></i>
                                         Búsqueda y Filtros
                                     </h3>
                                     <button type="button" onclick="resetDirectorioFilters()" title="Restablecer Filtros"
@@ -2576,7 +2622,7 @@ Año02026
                                             <i class="fa-solid fa-sitemap text-blue-600"></i> Área
                                         </label>
                                         <select id="directorio-filter-area"
-                                            class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 focus:outline-none focus:border-[#FF6A00] focus:bg-white transition cursor-pointer">
+                                            class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 focus:outline-none focus:border-[#FF5A0A] focus:bg-white transition cursor-pointer">
                                             <option value="">Todas las Áreas</option>
                                             <option value="FIDELIZACIONES">FIDELIZACIONES</option>
                                             <option value="BACKOFFICE">BACKOFFICE</option>
@@ -2597,7 +2643,7 @@ Año02026
                                             <i class="fa-solid fa-layer-group text-purple-600"></i> Escenario
                                         </label>
                                         <select id="directorio-filter-escenario"
-                                            class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 focus:outline-none focus:border-[#FF6A00] focus:bg-white transition cursor-pointer">
+                                            class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 focus:outline-none focus:border-[#FF5A0A] focus:bg-white transition cursor-pointer">
                                             <option value="">Todos los Escenarios</option>
                                         </select>
                                     </div>
@@ -2606,13 +2652,13 @@ Año02026
                                     <div>
                                         <label
                                             class="text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
-                                            <i class="fa-solid fa-magnifying-glass text-[#FF6A00]"></i> Buscar
+                                            <i class="fa-solid fa-magnifying-glass text-[#FF5A0A]"></i> Buscar
                                             Escalamiento
                                         </label>
                                         <div class="relative">
                                             <input type="text" id="directorio-search"
                                                 placeholder="suspensión, reactivación, NCE, fidelización..."
-                                                class="w-full bg-slate-50 border border-slate-300 rounded-xl py-2 pl-9 pr-3 text-xs sm:text-sm text-slate-800 focus:outline-none focus:border-[#FF6A00] focus:bg-white transition shadow-inner">
+                                                class="w-full bg-slate-50 border border-slate-300 rounded-xl py-2 pl-9 pr-3 text-xs sm:text-sm text-slate-800 focus:outline-none focus:border-[#FF5A0A] focus:bg-white transition shadow-inner">
                                             <i
                                                 class="fa-solid fa-search absolute left-3 top-2.5 text-slate-400 text-xs"></i>
                                         </div>
@@ -2827,7 +2873,7 @@ Año02026
                                 <div
                                     class="bg-slate-900 text-white py-3 px-5 border-b border-slate-800 flex justify-between items-center">
                                     <h3 class="font-bold text-sm tracking-wide flex items-center gap-2">
-                                        <i class="fa-solid fa-envelope-open-text text-[#FF6A00]"></i>
+                                        <i class="fa-solid fa-envelope-open-text text-[#FF5A0A]"></i>
                                         Simulador de Correo
                                     </h3>
                                     <span
@@ -2842,10 +2888,10 @@ Año02026
                                         <div class="flex items-center justify-between mb-1">
                                             <label
                                                 class="text-[11px] font-bold text-slate-600 uppercase tracking-wider flex items-center gap-1.5">
-                                                <i class="fa-solid fa-envelope text-[#FF6A00]"></i> Correo Destino
+                                                <i class="fa-solid fa-envelope text-[#FF5A0A]"></i> Correo Destino
                                             </label>
                                             <button type="button" onclick="copyDirectorioCorreoDestino()"
-                                                class="text-xs text-[#FF6A00] hover:underline font-bold flex items-center gap-1 cursor-pointer">
+                                                class="text-xs text-[#FF5A0A] hover:underline font-bold flex items-center gap-1 cursor-pointer">
                                                 <i class="fa-regular fa-copy"></i> Copiar Correo Destino
                                             </button>
                                         </div>
@@ -2876,10 +2922,10 @@ Año02026
                                         <div class="flex items-center justify-between mb-1">
                                             <label
                                                 class="text-[11px] font-bold text-slate-600 uppercase tracking-wider flex items-center gap-1.5">
-                                                <i class="fa-solid fa-tag text-[#FF6A00]"></i> Asunto
+                                                <i class="fa-solid fa-tag text-[#FF5A0A]"></i> Asunto
                                             </label>
                                             <button type="button" onclick="copyDirectorioAsunto()"
-                                                class="text-xs text-[#FF6A00] hover:underline font-bold flex items-center gap-1 cursor-pointer">
+                                                class="text-xs text-[#FF5A0A] hover:underline font-bold flex items-center gap-1 cursor-pointer">
                                                 <i class="fa-regular fa-copy"></i> Copiar Asunto
                                             </button>
                                         </div>
@@ -2894,10 +2940,10 @@ Año02026
                                         <div class="flex items-center justify-between mb-1">
                                             <label
                                                 class="text-[11px] font-bold text-slate-600 uppercase tracking-wider flex items-center gap-1.5">
-                                                <i class="fa-solid fa-file-lines text-[#FF6A00]"></i> Cuerpo
+                                                <i class="fa-solid fa-file-lines text-[#FF5A0A]"></i> Cuerpo
                                             </label>
                                             <button type="button" onclick="copyDirectorioCuerpo()"
-                                                class="text-xs text-[#FF6A00] hover:underline font-bold flex items-center gap-1 cursor-pointer">
+                                                class="text-xs text-[#FF5A0A] hover:underline font-bold flex items-center gap-1 cursor-pointer">
                                                 <i class="fa-regular fa-copy"></i> Copiar Cuerpo
                                             </button>
                                         </div>
@@ -2909,7 +2955,7 @@ Año02026
                                     <!-- Botones de Acción -->
                                     <div class="pt-3 border-t border-slate-100 flex flex-col gap-2">
                                         <button type="button" onclick="copyDirectorioPlantillaCompleta()"
-                                            class="w-full bg-[#FF6A00] hover:bg-[#E05300] active:scale-95 text-white font-bold text-xs sm:text-sm py-2.5 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-md">
+                                            class="w-full bg-[#FF5A0A] hover:bg-[#E04F08] active:scale-95 text-white font-bold text-xs sm:text-sm py-2.5 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-md">
                                             <i class="fa-solid fa-copy"></i>
                                             <span>COPIAR PLANTILLA COMPLETA</span>
                                         </button>
@@ -3278,7 +3324,7 @@ Año02026
                 <div id="content-derivaciones" class="tab-content hidden animate-pop">
                     <div class="cronos-module-bounded space-y-6">
                         <div
-                            class="bg-[#1E1E24] text-white p-4 rounded-2xl mb-6 shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
+                            class="bg-[#0F0908] text-white p-4 rounded-2xl mb-6 shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
                             <div class="flex items-center gap-3">
                                 <div class="bg-emerald-600 p-2.5 rounded-xl text-white">
                                     <i class="fa-solid fa-share text-xl"></i>
@@ -4283,7 +4329,7 @@ Año02026
 
                         <!-- Panel Guía Inicial -->
                         <div
-                            class="bg-[#1E1E24] text-white p-4 rounded-2xl mb-6 shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
+                            class="bg-[#0F0908] text-white p-4 rounded-2xl mb-6 shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
                             <div class="flex items-center gap-3">
                                 <div class="bg-win-orange p-2.5 rounded-xl text-white">
                                     <i class="fa-solid fa-arrows-to-dot text-xl"></i>
@@ -6298,6 +6344,30 @@ Año02026
                                 </tbody>
                             </table>
                         </div>
+
+                        <!-- CONTROLES DE PAGINACIÓN VIRTUAL (10 USUARIOS POR PÁGINA) -->
+                        <div id="users-pagination-container" class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-slate-100 text-xs">
+                            <div class="text-slate-500 font-medium">
+                                Mostrando <span id="users-page-start" class="font-bold text-slate-800">0</span> - <span id="users-page-end" class="font-bold text-slate-800">0</span> de <span id="users-total-count" class="font-bold text-slate-800">0</span> usuarios
+                            </div>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <button type="button" id="btn-users-page-prev" onclick="CronosUserPagination.prevPage()" class="px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold transition flex items-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">
+                                    <i class="fa-solid fa-chevron-left text-[10px]"></i> Anterior
+                                </button>
+                                <span class="px-3 py-1.5 rounded-xl bg-orange-50 text-win-orange font-bold border border-orange-200 text-xs">
+                                    Pág. <span id="users-current-page">1</span> / <span id="users-total-pages">1</span>
+                                </span>
+                                <button type="button" id="btn-users-page-next" onclick="CronosUserPagination.nextPage()" class="px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold transition flex items-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">
+                                    Siguiente <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                                </button>
+                                <div class="flex items-center gap-1 ml-2 text-slate-500 font-medium">
+                                    <span>Ir a:</span>
+                                    <select id="select-users-jump-page" onchange="CronosUserPagination.setPage(parseInt(this.value, 10))" class="bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-xs text-slate-700 font-bold outline-none focus:border-win-orange cursor-pointer">
+                                        <option value="1">1</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- SECCIÓN: CONFIGURACIÓN DE PERMISOS (MATRIZ MÓDULO X PERFIL) -->
@@ -6359,7 +6429,8 @@ Año02026
                 <!-- ========================================================================= -->
                 <!-- MÓDULO: VISTA EJECUTIVA 360° (INTELIGENCIA Y MÉTRICAS CONSOLIDADAS)       -->
                 <!-- ========================================================================= -->
-                <div id="content-executive-360" class="tab-content hidden animate-pop space-y-6" style="display: none !important;">
+                <div id="content-executive-360" class="tab-content hidden animate-pop space-y-6"
+                    style="display: none !important;">
                     <div id="executive-360-container" class="space-y-6">
                         <!-- Contenido renderizado dinámicamente por renderVistaEjecutiva360() -->
                     </div>
@@ -6563,7 +6634,8 @@ Año02026
                             </button>
 
                             <!-- Botón: Vista Ejecutiva 360° -->
-                            <button id="sidebar-btn-executive-360" onclick="openExecutive360()" style="display: none !important;"
+                            <button id="sidebar-btn-executive-360" onclick="openExecutive360()"
+                                style="display: none !important;"
                                 class="w-full flex items-center justify-between p-3 rounded-xl bg-orange-50/70 hover:bg-orange-100 text-slate-800 hover:text-win-orange font-bold text-xs transition-all border border-orange-200/80 group cursor-pointer text-left">
                                 <div class="flex items-center gap-2.5">
                                     <div
@@ -6612,7 +6684,7 @@ Año02026
 
     <!-- FIRMA DIGITAL Y PIE DE PÁGINA GLOBAL CRONOS FID -->
     <footer
-        class="w-full bg-[#1E1E24] text-white py-3.5 px-4 sm:px-6 lg:px-8 mt-8 border-t-4 border-[#FF5E00] shadow-md">
+        class="w-full bg-[#0F0908] text-white py-3.5 px-4 sm:px-6 lg:px-8 mt-8 border-t-4 border-[#FF5A0A] shadow-md">
         <div class="w-full max-w-[1920px] mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-xs">
             <!-- Izquierda: Identificación y Autoría Oficial Discreta -->
             <div
@@ -6652,14 +6724,14 @@ Año02026
         // =================================================================
         console.log(
             "%c CRONOS FID %c v1.0 | Desarrollado por Jhonny León - Fidelizaciones WIN %c ",
-            "background:#FF5E00; color:white; font-weight:800; padding:4px 8px; border-radius:6px 0 0 6px;",
-            "background:#1E1E24; color:white; padding:4px 8px;",
+            "background:#FF5A0A; color:white; font-weight:800; padding:4px 8px; border-radius:6px 0 0 6px;",
+            "background:#0F0908; color:white; padding:4px 8px;",
             "background:transparent;"
         );
 
         console.log(
             "%c Plataforma de Fidelización Ágil de WIN - Uso interno",
-            "color:#FF5E00; font-size:10px;"
+            "color:#FF5A0A; font-size:10px;"
         );
 
         // --- BASE DE DATOS COMPLETA DE TIPIFICACIONES (FIDELIZACIÓN + RETENCIÓN + BAJAS + DESISTIMIENTO) ---
@@ -7215,7 +7287,7 @@ Hoy (día) de (mes) del (año), en la ciudad de decides migrar de plan tarifario
 • Lugar y Fecha de Nacimiento 
 • Dirección en la que se brinda el servicio 
 
-El nuevo precio mensual es de S/___________, incluido I.G.V, el servicio de internet es ilimitado, 100% fibra óptica, con velocidad simétrica de ______________Mbps de carga y descarga, aseguramos mínimo el 70% de la velocidad contratada es decir__________ Mbps de carga y descarga, mantienes el equipo terminal router previamente instalado en comodato, el mismo que deberás devolver en buenas condiciones, caso contrario pagarás su valor. El contrato mantendrá su plazo indeterminado y podrá ser resuelto de acuerdo a la normativa de condiciones de uso. La fecha de facturación el 12 de cada mes, y la fecha de vencimiento es el 28 del mismo mes. La tarifa de reconexión es de S/ 4.58, incluye IGV. 
+El nuevo precio mensual es de S/___________, incluido I.G.V, el servicio de internet es ilimitado, 100% fibra óptica, con velocidad simétrica de ______________Mbps de carga y descarga, aseguramos mínimo el 70% de la velocidad contratada es decir__________ Mbps de carga y descarga, mantienes el equipo terminal router previamente instalado en comodato, el mismo que deberás devolver en buenas condiciones, caso contrario pagarás su valor. El contrato mantendrá su plazo indeterminado y podrá ser resuelto de acuerdo a la normativa de condiciones de uso. La fecha de facturación es el 1, 11, 15, 19 y 23 (revisar la emisión del recibo)., y la fecha de vencimiento es el 28 del mismo mes. La tarifa de reconexión es de S/ 4.58, incluye IGV. 
 
 Le agradeceré que diga fuerte y claramente que SÍ ACEPTA los términos de la presente contratación. (CLIENTE RESPONDE).`,
                 planes: [
@@ -7493,7 +7565,7 @@ Sr.(a) XXX , agradecemos su comunicación y de igual manera pedimos las disculpa
 • Lugar y Fecha de Nacimiento 
 • Dirección en la que se brinda el servicio 
 
-El nuevo precio mensual es de S/___________, incluido I.G.V, el servicio de internet es ilimitado, 100% fibra óptica, con velocidad simétrica de ______________Mbps de carga y descarga, aseguramos mínimo el 70% de la velocidad contratada es decir__________ Mbps de carga y descarga, mantienes el equipo terminal router previamente instalado en comodato, el mismo que deberás devolver en buenas condiciones, caso contrario pagarás su valor. El contrato mantendrá su plazo indeterminado y podrá ser resuelto de acuerdo a la normativa de condiciones de uso. La fecha de facturación el 12 de cada mes, y la fecha de vencimiento es el 28 del mismo mes. La tarifa de reconexión es de S/ 4.58, incluye IGV. 
+El nuevo precio mensual es de S/___________, incluido I.G.V, el servicio de internet es ilimitado, 100% fibra óptica, con velocidad simétrica de ______________Mbps de carga y descarga, aseguramos mínimo el 70% de la velocidad contratada es decir__________ Mbps de carga y descarga, mantienes el equipo terminal router previamente instalado en comodato, el mismo que deberás devolver en buenas condiciones, caso contrario pagarás su valor. El contrato mantendrá su plazo indeterminado y podrá ser resuelto de acuerdo a la normativa de condiciones de uso. La fecha de facturación es el 1, 11, 15, 19 y 23 (revisar la emisión del recibo)., y la fecha de vencimiento es el 28 del mismo mes. La tarifa de reconexión es de S/ 4.58, incluye IGV. 
 
 Le agradeceré que diga fuerte y claramente que SÍ ACEPTA los términos de la presente contratación. (CLIENTE RESPONDE).</div>
                     </div>
@@ -10208,7 +10280,7 @@ Por favor, proporciona esta clave al asesor que te está atendiendo para que pod
 
         // Catálogo de Áreas oficiales para escalamiento
         const DIRECTORIO_AREAS_CONFIG = [
-            { id: "FIDELIZACIONES", nombre: "FIDELIZACIONES", colorBadge: "bg-orange-100 text-[#FF6A00] border-orange-200" },
+            { id: "FIDELIZACIONES", nombre: "FIDELIZACIONES", colorBadge: "bg-orange-100 text-[#FF5A0A] border-orange-200" },
             { id: "BACKOFFICE", nombre: "BACKOFFICE", colorBadge: "bg-blue-100 text-blue-700 border-blue-200" },
             { id: "FACTURACIÓN", nombre: "FACTURACIÓN", colorBadge: "bg-emerald-100 text-emerald-700 border-emerald-200" },
             { id: "ATENCIÓN TECNOLÓGICA", nombre: "💻 ATENCIÓN TECNOLÓGICA", icono: "💻", colorBadge: "bg-cyan-100 text-cyan-700 border-cyan-200" },
@@ -13469,7 +13541,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 const card = document.createElement('div');
                 card.id = 'card-esc-' + item.id;
                 card.className = (activeDirectorioEscenario && activeDirectorioEscenario.id === item.id)
-                    ? "dir-search-card p-3 rounded-xl border transition-all flex flex-col gap-1.5 bg-orange-50/70 border-[#FF6A00] shadow-sm ring-1 ring-orange-200"
+                    ? "dir-search-card p-3 rounded-xl border transition-all flex flex-col gap-1.5 bg-orange-50/70 border-[#FF5A0A] shadow-sm ring-1 ring-orange-200"
                     : "dir-search-card p-3 rounded-xl border transition-all flex flex-col gap-1.5 bg-white border-slate-200 hover:border-blue-300 shadow-2xs";
 
                 const areaCfg = DIRECTORIO_AREAS_CONFIG.find(a => a.id === item.area);
@@ -13771,7 +13843,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             // 1. Resaltar tarjeta seleccionada en Columna Izquierda
             document.querySelectorAll('.dir-search-card').forEach(c => {
                 if (c.id === ('card-esc-' + escenarioId)) {
-                    c.className = "dir-search-card p-3 rounded-xl border transition-all flex flex-col gap-1.5 bg-orange-50/70 border-[#FF6A00] shadow-sm ring-1 ring-orange-200";
+                    c.className = "dir-search-card p-3 rounded-xl border transition-all flex flex-col gap-1.5 bg-orange-50/70 border-[#FF5A0A] shadow-sm ring-1 ring-orange-200";
                 } else {
                     c.className = "dir-search-card p-3 rounded-xl border transition-all flex flex-col gap-1.5 bg-white border-slate-200 hover:border-blue-300 shadow-2xs";
                 }
@@ -15400,6 +15472,76 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         const APP_MODE = "PRODUCCION";
         window.APP_MODE = APP_MODE;
 
+        // =========================================================================
+        // REGLAS MAESTRAS OFICIALES DE DESARROLLO, ARQUITECTURA, ANALÍTICA Y GOBERNANZA
+        // =========================================================================
+        window.CRONOS_MASTER_RULES = Object.freeze({
+            version: "v6.0.0",
+            fechaVigencia: "2026-10-28",
+            principioRector: "OPEN FOR EXTENSION, CLOSED FOR MODIFICATION",
+            reglas: Object.freeze([
+                {
+                    numero: 1,
+                    nombre: "Arquitectura Oficial",
+                    descripcion: "Supabase es la fuente oficial y exclusiva de datos (Operación, Históricos, Dashboard, Auditoría, Analítica, KPI, Vista Ejecutiva, AI Insights, Métricas, Compromisos, Objetivos). Firebase se restringe estrictamente a Autenticación, Roles, Permisos RBAC y Sesiones. Prohibido invertir esta lógica.",
+                    fuenteOficialDatos: "Supabase",
+                    fuenteAutenticacion: "Firebase",
+                    estado: "VIGENTE_OBLIGATORIO"
+                },
+                {
+                    numero: 2,
+                    nombre: "Protección Absoluta de Datos e Históricos",
+                    descripcion: "Prohibido eliminar registros, alterar históricos, recalcular métricas consolidadas del pasado, alterar auditorías, truncar información o reinicializar tablas. Toda modificación en index.html solo puede alterar la interfaz y su lógica visual.",
+                    estado: "VIGENTE_OBLIGATORIO"
+                },
+                {
+                    numero: 3,
+                    nombre: "Integridad de Exportaciones",
+                    descripcion: "La paginación afecta única y exclusivamente la visualización en pantalla. Toda exportación (Excel, CSV, TXT, JSON) debe descargar la totalidad del período solicitado (Día, Semana, Mes, 3 Meses, 6 Meses). Nunca exportar únicamente los registros visibles.",
+                    estado: "VIGENTE_OBLIGATORIO"
+                },
+                {
+                    numero: 4,
+                    nombre: "Analítica y Adopción Exclusiva Asesor/Agente",
+                    descripcion: "Todas las métricas de adopción, uso, observabilidad, productividad, valor de negocio y AI Insights deben evaluar exclusivamente perfiles ASESOR y AGENTE. Administrador, Supervisor, Coordinador, Calidad y Formador quedan estrictamente excluidos de los denominadores operativos.",
+                    perfilesValidos: ["ASESOR", "AGENTE"],
+                    perfilesExcluidos: ["Administrador", "Supervisor", "Coordinador", "Calidad", "Formador"],
+                    estado: "VIGENTE_OBLIGATORIO"
+                },
+                {
+                    numero: 5,
+                    nombre: "Rendimiento y Cero Procesamiento Innecesario",
+                    descripcion: "Cero renderizados ocultos, cero consultas redundantes, cero procesamiento en módulos no visibles. Obligatoriedad de Lazy Load, paginación en render, debounce de 300ms en filtros/búsquedas, caché inteligente y render bajo demanda.",
+                    debounceMs: 300,
+                    estado: "VIGENTE_OBLIGATORIO"
+                },
+                {
+                    numero: 6,
+                    nombre: "Desacoplamiento de Vista Ejecutiva 360°",
+                    descripcion: "Vista Ejecutiva 360° permanece suspendida por defecto para la operación de piso. No se ejecuta en segundo plano ni renderiza módulos ocultos. Solo se invoca bajo demanda explícita de perfiles autorizados. Perfiles Asesor/Agente nunca la visualizan.",
+                    estado: "VIGENTE_OBLIGATORIO"
+                },
+                {
+                    numero: 7,
+                    nombre: "Segmentación Estricta de Experiencias por Perfil",
+                    descripcion: "Cada perfil dispone de su experiencia de usuario especializada: Asesor (operativo rápido, SLA, clave secreta), Calidad (auditoría, matriz de calibración), Formador (formación, brechas), Supervisor (seguimiento y piso), Coordinador (gestión estratégica), Administrador (acceso total y emulación).",
+                    estado: "VIGENTE_OBLIGATORIO"
+                },
+                {
+                    numero: 8,
+                    nombre: "Criterios Estrictos de Aprobación para Cambios Futuros",
+                    descripcion: "Todo cambio futuro debe validar impacto previo en: Rendimiento (<=700ms), Supabase (no romper schema ni paridad), Exportaciones (descarga íntegra), Históricos (cero borrado) y Experiencia del Asesor (fluidez sin bloqueos). Si impacta negativamente alguno, no se implementa.",
+                    estado: "VIGENTE_OBLIGATORIO"
+                },
+                {
+                    numero: 9,
+                    nombre: "Documentación Maestra y Gobernanza Continua",
+                    descripcion: "Obligatoriedad de mantener actualizadas la Documentación Maestra, Arquitectura Oficial, Acerca de CRONOS FID y Changelog con estas reglas para asegurar gobernanza institucional permanente.",
+                    estado: "VIGENTE_OBLIGATORIO"
+                }
+            ])
+        });
+
         // Definición explícita de la regla arquitectónica oficial
         window.CRONOS_DATA_ARCHITECTURE = Object.freeze({
             firebase: {
@@ -15450,7 +15592,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             window.CRONOS_DEMO_DISABLED = true;
 
             // Validación de entorno de solo interfaz
-            console.log('%c[CRONOS FID - ESCUDO DE INTEGRIDAD]%c Validación Permanente Activa: Modo Actualización de Interfaz (Cero Reemplazo de Datos). Firebase y Supabase Protegidos.', 'color:#FF5E00;font-weight:bold;background:#1E1E24;padding:3px 6px;border-radius:4px;', 'color:#10b981;font-weight:bold;');
+            console.log('%c[CRONOS FID - ESCUDO DE INTEGRIDAD]%c Validación Permanente Activa: Modo Actualización de Interfaz (Cero Reemplazo de Datos). Firebase y Supabase Protegidos.', 'color:#FF5A0A;font-weight:bold;background:#0F0908;padding:3px 6px;border-radius:4px;', 'color:#10b981;font-weight:bold;');
         }
         validatePreInitializationDataIntegrity();
         window.deactivateDemoAndMockRoutines = validatePreInitializationDataIntegrity;
@@ -15504,7 +15646,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             if (typeof firebase !== 'undefined' && !firebase.apps.length) {
                 console.log('[DEBUG_FIREBASE] Llamando a firebase.initializeApp()...', window.firebaseConfig);
                 firebase.initializeApp(window.firebaseConfig);
-                console.log('%c[CRONOS FID - Firebase Auth]%c Inicializado en modo activo.', 'color:#FF5E00;font-weight:bold;', 'color:#10b981;');
+                console.log('%c[CRONOS FID - Firebase Auth]%c Inicializado en modo activo.', 'color:#FF5A0A;font-weight:bold;', 'color:#10b981;');
                 console.log('[DEBUG_FIREBASE] firebase.apps.length:', firebase.apps.length);
             } else if (typeof firebase !== 'undefined') {
                 console.log('[DEBUG_FIREBASE] Firebase ya estaba inicializado. Apps:', firebase.apps.length);
@@ -15512,7 +15654,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
             if (typeof firebase !== 'undefined') {
                 window.db = firebase.firestore();
-                console.log('%c[CRONOS FID - Firestore]%c Inicializado correctamente en MODO PRODUCCIÓN.', 'color:#FF5E00;font-weight:bold;', 'color:#10b981;');
+                console.log('%c[CRONOS FID - Firestore]%c Inicializado correctamente en MODO PRODUCCIÓN.', 'color:#FF5A0A;font-weight:bold;', 'color:#10b981;');
                 console.log("Firebase inicializado");
                 deactivateDemoAndMockRoutines();
             }
@@ -15995,6 +16137,82 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         };
 
         /**
+         * CronosVisibilityGuard: Guardias de Visibilidad de Procesos y Renderizado
+         * SPRINT B.1: Si un módulo NO está visible: NO consultar, NO renderizar, NO recalcular, NO actualizar.
+         */
+        const CronosVisibilityGuard = {
+            isVisible(moduleKey) {
+                if (!moduleKey) return false;
+                const norm = String(moduleKey).toLowerCase().trim().replace(/_/g, '-');
+                const currentActive = String(window.activeModule || window.currentView || '').toLowerCase().trim().replace(/_/g, '-');
+
+                // 1. Submódulos ejecutivos (dentro de Vista 360)
+                const executiveSections = {
+                    'observabilidad': 'section-adopcion-valor-negocio',
+                    'adopcion': 'section-adopcion-valor-negocio',
+                    'adopcion-valor-negocio': 'section-adopcion-valor-negocio',
+                    'ai-insights': 'section-cronos-ai-insights',
+                    'cronos-ai-insights': 'section-cronos-ai-insights',
+                    'analitica-predictiva': 'section-analitica-predictiva-operativa',
+                    'predictiva': 'section-analitica-predictiva-operativa',
+                    'objetivos-estrategicos': 'section-objetivos-cumplimiento-estrategico',
+                    'objetivos': 'section-objetivos-cumplimiento-estrategico',
+                    'compromisos': 'section-compromisos-cumplimiento',
+                    'compromisos-cumplimiento': 'section-compromisos-cumplimiento',
+                    'formacion-calidad': 'section-gestion-formacion-calidad',
+                    'gestion-formacion-calidad': 'section-gestion-formacion-calidad',
+                    'calidad': 'section-gestion-formacion-calidad',
+                    'formacion': 'section-gestion-formacion-calidad'
+                };
+
+                if (executiveSections[norm]) {
+                    if (window.CRONOS_SUSPEND_VISTA_360) return false;
+                    const contentExec = document.getElementById('content-executive-360');
+                    const isViewActive = (currentActive === 'vista-360' || currentActive === 'executive-360') ||
+                        (contentExec && !contentExec.classList.contains('hidden') && contentExec.style.display !== 'none');
+                    const modal = document.getElementById('modal-executive-360');
+                    const isModalOpen = (window.CronosExecutive360 && window.CronosExecutive360.isOpen) ||
+                        (modal && !modal.classList.contains('hidden') && modal.style.display !== 'none');
+
+                    if (!isViewActive && !isModalOpen) return false;
+
+                    const secEl = document.getElementById(executiveSections[norm]);
+                    if (secEl && (secEl.classList.contains('hidden') || secEl.style.display === 'none')) {
+                        return false;
+                    }
+                    return true;
+                }
+
+                // 2. Módulos de primer nivel
+                const mainContainers = {
+                    'dashboard': 'content-dashboard',
+                    'auditoria': 'content-auditoria',
+                    'gestion-usuarios': 'content-gestion-usuarios',
+                    'analitica-sla': 'content-analitica-sla',
+                    'vista-360': 'content-executive-360',
+                    'executive-360': 'content-executive-360',
+                    'generator': 'content-generator',
+                    'tipificaciones': 'content-tipificaciones',
+                    'tickets': 'content-tickets',
+                    'derivaciones': 'content-derivaciones',
+                    'acuerdos-voz': 'content-acuerdos-voz',
+                    'directorio': 'content-directorio'
+                };
+
+                const targetId = mainContainers[norm];
+                if (targetId) {
+                    const el = document.getElementById(targetId);
+                    if (!el) return currentActive === norm;
+                    const isDomVisible = !el.classList.contains('hidden') && el.style.display !== 'none';
+                    return isDomVisible && (currentActive === norm);
+                }
+
+                return currentActive === norm;
+            }
+        };
+        window.CronosVisibilityGuard = CronosVisibilityGuard;
+
+        /**
          * UserManager: Administra la consulta, actualización y estado del catálogo de usuarios.
          * Integrado con Firebase Authentication (mapeo directo de UID y Correo).
          */
@@ -16227,17 +16445,32 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 }
                 return false;
             },
-            async getAllUsersAsync() {
+            _pendingUsersPromise: null,
+            async getAllUsersAsync(forceRefresh = false) {
                 try {
-                    console.log('[UserManager] Descargando todos los usuarios de Firestore...');
-                    const snapshot = await window.db.collection('usuarios').get();
-                    const users = [];
-                    snapshot.forEach(doc => {
-                        users.push({ uid: doc.id, ...doc.data() });
-                    });
-                    window.CRONOS_USERS_DB = users;
-                    return users;
+                    // SPRINT B.2 & B.3: Si ya se cargaron los usuarios en memoria y no es recarga forzada, retornar caché directa
+                    if (!forceRefresh && Array.isArray(window.CRONOS_USERS_DB) && window.CRONOS_USERS_DB.length > 0) {
+                        return window.CRONOS_USERS_DB;
+                    }
+                    // Si ya hay una consulta idéntica en vuelo, unirse a la misma promesa para no duplicar lecturas
+                    if (this._pendingUsersPromise) {
+                        return await this._pendingUsersPromise;
+                    }
+                    console.log('[UserManager] Descargando catálogo de usuarios de Firestore (fuente única)...');
+                    this._pendingUsersPromise = (async () => {
+                        const snapshot = await window.db.collection('usuarios').get();
+                        const users = [];
+                        snapshot.forEach(doc => {
+                            users.push({ uid: doc.id, ...doc.data() });
+                        });
+                        window.CRONOS_USERS_DB = users;
+                        return users;
+                    })();
+                    const result = await this._pendingUsersPromise;
+                    this._pendingUsersPromise = null;
+                    return result;
                 } catch (error) {
+                    this._pendingUsersPromise = null;
                     console.error('[UserManager] Error obteniendo usuarios:', error);
                     return window.CRONOS_USERS_DB || [];
                 }
@@ -17052,7 +17285,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             }
 
             if (!r) return false;
-            return r.includes('asesor');
+            return r.includes('asesor') || r.includes('agente');
         }
         window.isRoleAsesor = isRoleAsesor;
 
@@ -17504,9 +17737,14 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     window.UserManager.updateUser(usrInDb.uid, { usoSLA: usrInDb.usoSLA }).catch(e => console.error("FIRESTORE ERROR:", e));
                 }
 
-                renderSLAMetricsCards();
-                renderSLATable();
-                renderDashboard();
+                // SPRINT B.1: Guardias de visibilidad en eventos SLA
+                if (window.CronosVisibilityGuard && window.CronosVisibilityGuard.isVisible('analitica-sla')) {
+                    renderSLAMetricsCards();
+                    renderSLATable();
+                }
+                if (window.CronosVisibilityGuard && window.CronosVisibilityGuard.isVisible('dashboard')) {
+                    renderDashboard();
+                }
             } catch (error) {
                 console.error("FIRESTORE ERROR [logSLAEvent]:", error);
             }
@@ -17519,7 +17757,9 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             if (!window.CRONOS_CURRENT_USER || !isRoleAsesor(window.CRONOS_CURRENT_USER)) return;
             if (window.CRONOS_METRICS) window.CRONOS_METRICS.funcTotal = (window.CRONOS_METRICS.funcTotal || 0) + 1;
             logAuditEvent(nombreFuncion, modulo || "Herramientas", "Ejecutado con éxito");
-            renderDashboardMetricsOnly();
+            if (window.CronosVisibilityGuard && window.CronosVisibilityGuard.isVisible("dashboard")) {
+                renderDashboardMetricsOnly();
+            }
         }
 
         function trackActiveUserTime(secondsToAdd) {
@@ -18556,6 +18796,12 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
         async function loadDashboardFirestoreData(forceRefresh = false) {
             try {
+                // SPRINT B.1: Guardia de Visibilidad - No consultar ni renderizar si Dashboard no está visible
+                if (!forceRefresh && window.CronosVisibilityGuard && !window.CronosVisibilityGuard.isVisible('dashboard')) {
+                    console.log("[loadDashboardFirestoreData] Carga omitida: Dashboard no está visible en pantalla.");
+                    return;
+                }
+
                 // PRIORIDAD 1: Si los datos en memoria están vigentes (< 45s), renderizar directamente
                 if (!forceRefresh && window.CronosPerfCache && window.CronosPerfCache.isValid(window.CronosPerfCache.dashboardData)) {
                     renderDashboard();
@@ -18572,6 +18818,8 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
                 // DASHBOARD SLA lee desde Supabase con histórico completo de 6 meses (sin truncamiento a 1000).
                 const sixMonthsAgoMs = Date.now() - (180 * 24 * 60 * 60 * 1000);
+                // SPRINT B.2 & B.3: Eliminar lectura duplicada de usuarios si ya están cargados en memoria
+                const hasUsersInMem = !forceRefresh && Array.isArray(window.CRONOS_USERS_DB) && window.CRONOS_USERS_DB.length > 0;
                 const [slaEvents, audSnap, usrSnap] = await Promise.all([
                     fetchSupabaseSLAEvents(50000).catch(e => { console.warn("Error get Supabase SLA:", e); return []; }),
                     firestoreDb.collection("auditoria").where("timestamp", ">=", sixMonthsAgoMs).get().catch(() =>
@@ -18579,7 +18827,10 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                             firestoreDb.collection("auditoria").limit(10000).get().catch(e => { console.warn("Error get auditoria:", e); return null; })
                         )
                     ),
-                    firestoreDb.collection("usuarios").get().catch(e => { console.warn("Error get usuarios:", e); return null; })
+                    hasUsersInMem ? Promise.resolve(null) :
+                        (typeof UserManager !== 'undefined' && typeof UserManager.getAllUsersAsync === 'function' ?
+                            UserManager.getAllUsersAsync(false).catch(e => { console.warn("Error get usuarios:", e); return null; }) :
+                            firestoreDb.collection("usuarios").get().catch(e => { console.warn("Error get usuarios:", e); return null; }))
                 ]);
 
                 if (Array.isArray(slaEvents) && slaEvents.length > 0) {
@@ -18600,12 +18851,16 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     console.log("[Dashboard] Logs de Auditoria cargados desde Firestore:", logs.length);
                 }
 
-                if (usrSnap && !usrSnap.empty) {
-                    const users = [];
-                    usrSnap.forEach(doc => {
-                        users.push({ uid: doc.id, ...doc.data() });
-                    });
-                    window.CRONOS_USERS_DB = users;
+                if (usrSnap) {
+                    if (Array.isArray(usrSnap) && usrSnap.length > 0) {
+                        window.CRONOS_USERS_DB = usrSnap;
+                    } else if (usrSnap.forEach && !usrSnap.empty) {
+                        const users = [];
+                        usrSnap.forEach(doc => {
+                            users.push({ uid: doc.id, ...doc.data() });
+                        });
+                        window.CRONOS_USERS_DB = users;
+                    }
                 }
 
                 if (window.CronosPerfCache) {
@@ -18633,6 +18888,10 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         }
 
         function renderDashboard() {
+            // SPRINT B.1: Guardia de Visibilidad - No renderizar Dashboard si no está visible
+            if (window.CronosVisibilityGuard && !window.CronosVisibilityGuard.isVisible('dashboard')) {
+                return;
+            }
             // PRIORIDAD 2: Reutilizar cálculo de métricas entre submódulos del Dashboard
             const metrics = calculateRealDashboardMetrics();
             window._lastDashboardMetrics = metrics;
@@ -18643,6 +18902,10 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         }
 
         function renderDashboardMetricsOnly(cachedMetrics = null) {
+            // SPRINT B.1: Guardia de Visibilidad
+            if (window.CronosVisibilityGuard && !window.CronosVisibilityGuard.isVisible('dashboard')) {
+                return;
+            }
             const metrics = cachedMetrics || window._lastDashboardMetrics || calculateRealDashboardMetrics();
             const m = metrics;
 
@@ -19024,7 +19287,12 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         // =========================================================================
         // MÓDULO DE AUDITORÍA OPERATIVA EN TIEMPO REAL
         // =========================================================================
-        async function renderAuditoriaModule() {
+        async function renderAuditoriaModule(forceRefresh = false) {
+            // SPRINT B.1: Guardia de Visibilidad - No consultar ni renderizar si Auditoría no está visible
+            if (!forceRefresh && window.CronosVisibilityGuard && !window.CronosVisibilityGuard.isVisible('auditoria')) {
+                console.log("[renderAuditoriaModule] Carga omitida: Auditoría no está visible.");
+                return;
+            }
             const tbody = document.getElementById('auditoria-table-tbody');
             if (tbody && (!window.CRONOS_ACCESS_LOGS || window.CRONOS_ACCESS_LOGS.length === 0)) {
                 tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400 font-medium"><i class="fa-solid fa-spinner fa-spin mr-2 text-emerald-600"></i> Cargando registros desde Firestore...</td></tr>`;
@@ -19096,6 +19364,10 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         }
 
         function renderAuditoriaStats() {
+            // SPRINT B.1: Guardia de Visibilidad
+            if (window.CronosVisibilityGuard && !window.CronosVisibilityGuard.isVisible('auditoria')) {
+                return;
+            }
             const todayStr = new Date().toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit', year: 'numeric' });
             // REGLA: Métricas operativas de auditoría exclusivas del rol Asesor
             const asesorLogs = (window.CRONOS_ACCESS_LOGS || []).filter(l => isRoleAsesor(l));
@@ -19115,6 +19387,10 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         }
 
         function renderAuditoriaTable() {
+            // SPRINT B.1: Guardia de Visibilidad
+            if (window.CronosVisibilityGuard && !window.CronosVisibilityGuard.isVisible('auditoria')) {
+                return;
+            }
             const tbody = document.getElementById('auditoria-table-tbody');
             if (!tbody || !window.CRONOS_ACCESS_LOGS) return;
 
@@ -19359,7 +19635,12 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         }
         window.changeSLAPageSize = changeSLAPageSize;
 
-        async function renderSLAModule() {
+        async function renderSLAModule(forceRefresh = false) {
+            // SPRINT B.1: Guardia de Visibilidad - No consultar Supabase si SLA no está visible
+            if (!forceRefresh && window.CronosVisibilityGuard && !window.CronosVisibilityGuard.isVisible('analitica-sla')) {
+                console.log("[renderSLAModule] Carga omitida: Analítica SLA no está visible.");
+                return;
+            }
             const period = window.CRONOS_SLA_VIEW_PERIOD || 'dia';
             const bounds = (typeof getSLAPeriodBounds === 'function') ? getSLAPeriodBounds(period) : { startMs: 0, endMs: Date.now() };
             const tbody = document.getElementById("sla-events-tbody");
@@ -19394,6 +19675,10 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         }
 
         function renderSLAMetricsCards() {
+            // SPRINT B.1: Guardia de Visibilidad
+            if (window.CronosVisibilityGuard && !window.CronosVisibilityGuard.isVisible('analitica-sla')) {
+                return;
+            }
             const period = window.CRONOS_SLA_VIEW_PERIOD || 'dia';
             const m = calculateSLAMetricsForPeriod(period);
 
@@ -19415,6 +19700,10 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         }
 
         function renderSLATable() {
+            // SPRINT B.1: Guardia de Visibilidad
+            if (window.CronosVisibilityGuard && !window.CronosVisibilityGuard.isVisible('analitica-sla')) {
+                return;
+            }
             const tbody = document.getElementById('sla-events-tbody');
             if (!tbody || !window.CRONOS_SLA_EVENTS) return;
 
@@ -20801,6 +21090,11 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         // MÓDULO ADMINISTRATIVO DE GESTIÓN DE USUARIOS
         // =========================================================================
         function renderUserManagementModule() {
+            // SPRINT B.1: Guardia de Visibilidad - No renderizar si Gestión de Usuarios no está visible
+            if (window.CronosVisibilityGuard && !window.CronosVisibilityGuard.isVisible('gestion-usuarios')) {
+                console.log("[renderUserManagementModule] Renderizado omitido: Gestión Usuarios no está visible.");
+                return;
+            }
             renderUserStatsCards();
             renderPageUsersTable();
             renderPermissionsMatrix();
@@ -20817,6 +21111,10 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         }
 
         function renderUserStatsCards() {
+            // SPRINT B.1: Guardia de Visibilidad
+            if (window.CronosVisibilityGuard && !window.CronosVisibilityGuard.isVisible('gestion-usuarios')) {
+                return;
+            }
             if (!window.CRONOS_USERS_DB) return;
             const users = window.CRONOS_USERS_DB;
 
@@ -20850,7 +21148,139 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             }
         }
 
-        function renderPageUsersTable() {
+        // =========================================================================
+        // MOTOR DE PAGINACIÓN VIRTUAL Y DEBOUNCE PARA GESTIÓN DE USUARIOS
+        // =========================================================================
+        const CronosUserPagination = {
+            currentPage: 1,
+            pageSize: 10,
+            currentFiltered: [],
+            debounceTimer: null,
+
+            setPage(page) {
+                const total = this.currentFiltered.length;
+                const totalPages = Math.ceil(total / this.pageSize) || 1;
+                let targetPage = parseInt(page, 10);
+                if (isNaN(targetPage) || targetPage < 1) targetPage = 1;
+                if (targetPage > totalPages) targetPage = totalPages;
+                this.currentPage = targetPage;
+                this.renderPageSlice();
+            },
+
+            prevPage() {
+                if (this.currentPage > 1) {
+                    this.setPage(this.currentPage - 1);
+                }
+            },
+
+            nextPage() {
+                const totalPages = Math.ceil(this.currentFiltered.length / this.pageSize) || 1;
+                if (this.currentPage < totalPages) {
+                    this.setPage(this.currentPage + 1);
+                }
+            },
+
+            renderPageSlice() {
+                // SPRINT B.1: Guardia de Visibilidad
+                if (window.CronosVisibilityGuard && !window.CronosVisibilityGuard.isVisible('gestion-usuarios')) {
+                    return;
+                }
+                const tbody = document.getElementById('page-users-table-tbody');
+                if (!tbody) return;
+
+                const total = this.currentFiltered.length;
+                const totalPages = Math.ceil(total / this.pageSize) || 1;
+                if (this.currentPage > totalPages) this.currentPage = totalPages;
+
+                const startIndex = (this.currentPage - 1) * this.pageSize;
+                const endIndex = Math.min(startIndex + this.pageSize, total);
+                const pageItems = this.currentFiltered.slice(startIndex, endIndex);
+
+                if (pageItems.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-slate-400 font-medium">No se encontraron usuarios coincidentes con los filtros seleccionados.</td></tr>';
+                } else {
+                    let html = '';
+                    pageItems.forEach(usr => {
+                        const style = (typeof getRoleBadgeStyle === 'function') ? getRoleBadgeStyle(usr.rol) : { badgeClass: 'bg-slate-100 text-slate-700' };
+                        const isActivo = (usr.estado || 'Activo').toLowerCase() === 'activo';
+                        const statusBadge = isActivo ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800';
+                        const avatarText = usr.avatar || (usr.nombre ? usr.nombre.substring(0, 2).toUpperCase() : 'US');
+                        const usernameText = usr.usuario || (usr.correo ? usr.correo.split('@')[0] : '');
+                        const uidVal = usr.uid || usr.correo;
+
+                        html += `
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="p-3">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-slate-800 text-white font-black text-xs flex items-center justify-center shrink-0">
+                                            ${avatarText}
+                                        </div>
+                                        <div class="truncate max-w-[200px]">
+                                            <div class="font-bold text-slate-800">${usr.nombre || usr.correo}</div>
+                                            <div class="text-slate-400 text-[11px]">${usr.cargo || 'Especialista WIN'}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="p-3 font-mono text-slate-600 text-[11px]">${usr.correo || ''}</td>
+                                <td class="p-3 font-mono text-slate-600 text-[11px]">${usernameText}</td>
+                                <td class="p-3">
+                                    <span class="text-[9px] font-bold px-2 py-0.5 rounded-full ${style.badgeClass}">${usr.rol || 'Asesor'}</span>
+                                </td>
+                                <td class="p-3 text-center">
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${statusBadge}">${usr.estado || 'Activo'}</span>
+                                </td>
+                                <td class="p-3 text-slate-500 text-[11px] font-mono">${usr.fechaCreacion || '-'}</td>
+                                <td class="p-3 text-slate-500 text-[11px] font-mono">${usr.ultimoAcceso || 'Reciente'}</td>
+                                <td class="p-3 text-center">
+                                    <div class="flex items-center justify-center gap-1.5">
+                                        <button onclick="openEditUserModal('${uidVal}')" class="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all cursor-pointer" title="Editar usuario">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                        <button onclick="openResetPasswordModal('${uidVal}')" class="p-1.5 text-slate-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all cursor-pointer" title="Restablecer contraseña">
+                                            <i class="fa-solid fa-key"></i>
+                                        </button>
+                                        <button onclick="deleteUser('${uidVal}')" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all cursor-pointer" title="Eliminar usuario">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    tbody.innerHTML = html;
+                }
+
+                // Actualizar contadores y controles visuales de paginación
+                const elStart = document.getElementById('users-page-start');
+                const elEnd = document.getElementById('users-page-end');
+                const elTotal = document.getElementById('users-total-count');
+                const elCurrent = document.getElementById('users-current-page');
+                const elTotalPages = document.getElementById('users-total-pages');
+                const btnPrev = document.getElementById('btn-users-page-prev');
+                const btnNext = document.getElementById('btn-users-page-next');
+                const selectJump = document.getElementById('select-users-jump-page');
+
+                if (elStart) elStart.textContent = total > 0 ? (startIndex + 1) : 0;
+                if (elEnd) elEnd.textContent = endIndex;
+                if (elTotal) elTotal.textContent = total;
+                if (elCurrent) elCurrent.textContent = this.currentPage;
+                if (elTotalPages) elTotalPages.textContent = totalPages;
+
+                if (btnPrev) btnPrev.disabled = (this.currentPage <= 1);
+                if (btnNext) btnNext.disabled = (this.currentPage >= totalPages);
+
+                if (selectJump) {
+                    let opts = '';
+                    for (let p = 1; p <= totalPages; p++) {
+                        opts += `<option value="${p}" ${p === this.currentPage ? 'selected' : ''}>${p}</option>`;
+                    }
+                    selectJump.innerHTML = opts || '<option value="1">1</option>';
+                }
+            }
+        };
+        window.CronosUserPagination = CronosUserPagination;
+
+        function renderPageUsersTable(skipResetPage = false) {
             const tbody = document.getElementById('page-users-table-tbody');
             if (!tbody || !window.CRONOS_USERS_DB) return;
 
@@ -20901,67 +21331,34 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 return true;
             });
 
-            if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-slate-400 font-medium">No se encontraron usuarios coincidentes con los filtros seleccionados.</td></tr>`;
-                return;
+            CronosUserPagination.currentFiltered = filtered;
+            if (!skipResetPage) {
+                CronosUserPagination.currentPage = 1;
             }
-
-            let html = '';
-            filtered.forEach(usr => {
-                const style = getRoleBadgeStyle(usr.rol);
-                const isActivo = (usr.estado || 'Activo').toLowerCase() === 'activo';
-                const statusBadge = isActivo ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800';
-                const avatarText = usr.avatar || (usr.nombre ? usr.nombre.substring(0, 2).toUpperCase() : 'US');
-                const usernameText = usr.usuario || (usr.correo ? usr.correo.split('@')[0] : '');
-                const uidVal = usr.uid || usr.correo;
-
-                html += `
-                    <tr class="hover:bg-slate-50 transition-colors">
-                        <td class="p-3">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-slate-800 text-white font-black text-xs flex items-center justify-center shrink-0">
-                                    ${avatarText}
-                                </div>
-                                <div class="truncate max-w-[200px]">
-                                    <div class="font-bold text-slate-800">${usr.nombre || usr.correo}</div>
-                                    <div class="text-slate-400 text-[11px]">${usr.cargo || 'Especialista WIN'}</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="p-3 font-mono text-slate-600 text-[11px]">${usr.correo || ''}</td>
-                        <td class="p-3 font-mono text-slate-600 text-[11px]">${usernameText}</td>
-                        <td class="p-3">
-                            <span class="text-[9px] font-bold px-2 py-0.5 rounded-full ${style.badgeClass}">${usr.rol || 'Asesor'}</span>
-                        </td>
-                        <td class="p-3 text-center">
-                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${statusBadge}">${usr.estado || 'Activo'}</span>
-                        </td>
-                        <td class="p-3 text-slate-500 text-[11px] font-mono">${usr.fechaCreacion || '-'}</td>
-                        <td class="p-3 text-slate-500 text-[11px] font-mono">${usr.ultimoAcceso || 'Reciente'}</td>
-                        <td class="p-3 text-center">
-                            <div class="flex items-center justify-center gap-1.5">
-                                <button onclick="openEditUserModal('${uidVal}')" class="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all cursor-pointer" title="Editar usuario">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </button>
-                                <button onclick="openResetPasswordModal('${uidVal}')" class="p-1.5 text-slate-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all cursor-pointer" title="Restablecer contraseña">
-                                    <i class="fa-solid fa-key"></i>
-                                </button>
-                                <button onclick="deleteUser('${uidVal}')" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all cursor-pointer" title="Eliminar usuario">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            });
-
-            tbody.innerHTML = html;
+            CronosUserPagination.renderPageSlice();
         }
 
-        // Exponer globalmente para responder a eventos oninput y onchange en HTML
-        window.filterUsersTable = renderPageUsersTable;
+        // DEBOUNCE OFICIAL DE 300 MS PARA BÚSQUEDAS EN TIEMPO REAL
+        function debouncedFilterUsersTable() {
+            if (CronosUserPagination.debounceTimer) {
+                clearTimeout(CronosUserPagination.debounceTimer);
+            }
+            CronosUserPagination.debounceTimer = setTimeout(() => {
+                renderPageUsersTable(false);
+            }, 300);
+        }
+
+        // Exponer globalmente con compatibilidad total
+        window.filterUsersTable = debouncedFilterUsersTable;
+        window.renderPageUsersTable = renderPageUsersTable;
+        window.renderUserManagementTable = renderPageUsersTable;
+
 
         function renderPermissionsMatrix() {
+            // SPRINT B.1: Guardia de Visibilidad
+            if (window.CronosVisibilityGuard && !window.CronosVisibilityGuard.isVisible('gestion-usuarios')) {
+                return;
+            }
             const tbody = document.getElementById('permissions-matrix-tbody');
             if (!tbody || !window.CRONOS_PERMISSIONS) return;
 
@@ -21088,7 +21485,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             };
 
             await UserManager.saveUser(newUser);
-            window.CRONOS_USERS_DB = await UserManager.getAllUsersAsync();
+            window.CRONOS_USERS_DB = await UserManager.getAllUsersAsync(true);
 
             renderUserManagementModule();
             closeCreateUserModal();
@@ -21218,7 +21615,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     }
 
                     // Reload table and data
-                    window.CRONOS_USERS_DB = await UserManager.getAllUsersAsync();
+                    window.CRONOS_USERS_DB = await UserManager.getAllUsersAsync(true);
                     renderUserManagementModule();
 
                     const total = createdCount + updatedCount + skippedCount;
@@ -21297,7 +21694,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             };
 
             await UserManager.updateUser(editingUserUid, updateData);
-            window.CRONOS_USERS_DB = await UserManager.getAllUsersAsync();
+            window.CRONOS_USERS_DB = await UserManager.getAllUsersAsync(true);
             const updatedUser = (window.CRONOS_USERS_DB || []).find(u => u.uid === editingUserUid || u.correo === updateData.correo) || user;
 
             renderUserManagementModule();
@@ -21355,7 +21752,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
             if (confirm(`¿Estás seguro de que deseas eliminar al usuario ${user.nombre}?`)) {
                 await UserManager.deleteUser(user.uid || uid);
-                window.CRONOS_USERS_DB = await UserManager.getAllUsersAsync();
+                window.CRONOS_USERS_DB = await UserManager.getAllUsersAsync(true);
 
                 renderUserManagementModule();
                 logAuditEvent("Gestión de usuarios", "Gestión Usuarios", `Usuario eliminado: ${user.nombre} (${user.rol})`);
@@ -22340,7 +22737,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 subtitle: "Inteligencia Operativa Integral: Clave Secreta, Tipificaciones, Tickets, Derivaciones, Acuerdos y SLA.",
                 icon: "fa-solid fa-compass",
                 iconClass: "text-win-orange",
-                headerClass: "bg-gradient-to-r from-slate-950 via-[#1E1E24] to-slate-900 text-white shadow-md border-b-4 border-win-orange transition-all duration-300",
+                headerClass: "bg-gradient-to-r from-slate-950 via-[#0F0908] to-slate-900 text-white shadow-md border-b-4 border-win-orange transition-all duration-300",
                 logo: (typeof window !== 'undefined' && window.CRONOS_LOGO_DARK) ? window.CRONOS_LOGO_DARK : null,
                 subClass: "text-xs text-slate-300 mt-1 font-medium transition-all duration-300"
             },
@@ -22349,7 +22746,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 subtitle: "Inteligencia Operativa Integral: Clave Secreta, Tipificaciones, Tickets, Derivaciones, Acuerdos y SLA.",
                 icon: "fa-solid fa-compass",
                 iconClass: "text-win-orange",
-                headerClass: "bg-gradient-to-r from-slate-950 via-[#1E1E24] to-slate-900 text-white shadow-md border-b-4 border-win-orange transition-all duration-300",
+                headerClass: "bg-gradient-to-r from-slate-950 via-[#0F0908] to-slate-900 text-white shadow-md border-b-4 border-win-orange transition-all duration-300",
                 logo: (typeof window !== 'undefined' && window.CRONOS_LOGO_DARK) ? window.CRONOS_LOGO_DARK : null,
                 subClass: "text-xs text-slate-300 mt-1 font-medium transition-all duration-300"
             },
@@ -22358,7 +22755,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 subtitle: "Inteligencia Operativa Integral: Clave Secreta, Tipificaciones, Tickets, Derivaciones, Acuerdos y SLA.",
                 icon: "fa-solid fa-compass",
                 iconClass: "text-win-orange",
-                headerClass: "bg-gradient-to-r from-slate-950 via-[#1E1E24] to-slate-900 text-white shadow-md border-b-4 border-win-orange transition-all duration-300",
+                headerClass: "bg-gradient-to-r from-slate-950 via-[#0F0908] to-slate-900 text-white shadow-md border-b-4 border-win-orange transition-all duration-300",
                 logo: (typeof window !== 'undefined' && window.CRONOS_LOGO_DARK) ? window.CRONOS_LOGO_DARK : null,
                 subClass: "text-xs text-slate-300 mt-1 font-medium transition-all duration-300"
             }
@@ -22629,7 +23026,18 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             } else if (target === 'gestion-usuarios' && contentUsr) {
                 contentUsr.classList.remove('hidden');
                 if (tabUsr) tabUsr.className = adminActiveClass;
-                renderUserManagementModule();
+                // SPRINT B.3: Los datos de usuarios se cargan una sola vez. No volver a consultar datos ya cargados
+                if (!window.CRONOS_USERS_DB || window.CRONOS_USERS_DB.length === 0) {
+                    if (typeof UserManager !== 'undefined' && typeof UserManager.getAllUsersAsync === 'function') {
+                        UserManager.getAllUsersAsync(false).then(() => {
+                            if (window.CronosVisibilityGuard && window.CronosVisibilityGuard.isVisible('gestion-usuarios')) {
+                                renderUserManagementModule();
+                            }
+                        });
+                    }
+                } else {
+                    renderUserManagementModule();
+                }
             } else if ((target === 'vista-360' || target === 'vista_360' || target === 'executive-360') && contentExec) {
                 if (window.CRONOS_SUSPEND_VISTA_360) {
                     contentExec.classList.add('hidden');
@@ -22974,7 +23382,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 title: 'Clave Secreta',
                 message: 'Consulta rápidamente información operativa para apoyar tu gestión.',
                 icon: 'fa-solid fa-key',
-                headerClass: 'bg-gradient-to-r from-slate-900 via-[#1E1E24] to-slate-900 border-b-2 border-win-orange',
+                headerClass: 'bg-gradient-to-r from-slate-900 via-[#0F0908] to-slate-900 border-b-2 border-win-orange',
                 iconBoxClass: 'w-14 h-14 mx-auto rounded-2xl bg-win-orange text-white flex items-center justify-center text-2xl font-black shadow-lg shadow-orange-500/30 my-2',
                 msgBoxClass: 'bg-orange-50 border-2 border-orange-200 rounded-2xl p-4 text-center shadow-2xs',
                 nextText: 'Siguiente',
@@ -23783,7 +24191,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         window.CRONOS_VERSION_INFO = {
             proyecto: "CRONOS FID",
             nombreCompleto: "Centro de Recursos Operativos para Negociación y Fidelización",
-version: "JELI v6.0.0 • WIN OCT2026",
+            version: "JELI v6.0.0 • WIN OCT2026",
             autor: "Jhonny Leon Illescas",
             roles: "Diseño Funcional, Arquitectura Operativa, Gestión de Procesos, Desarrollo Evolutivo",
             anio: 2026,
@@ -23794,6 +24202,12 @@ version: "JELI v6.0.0 • WIN OCT2026",
                     tag: "Consolidación de CRONOS FID como plataforma ejecutiva, analítica y estratégica",
                     motivo: "Consolidación de CRONOS FID como plataforma ejecutiva, analítica y estratégica.",
                     items: [
+                        "Incorporación oficial de las 9 Reglas Maestras de Desarrollo, Arquitectura, Analítica y Manejo de Datos (window.CRONOS_MASTER_RULES)",
+                        "Supabase consolidado como Fuente Oficial y Exclusiva de Datos (Operación, Históricos, Dashboard, Auditoría, Analítica, SLA)",
+                        "Firebase restringido a Autenticación, Roles, Permisos RBAC y Sesiones Institucionales",
+                        "Protección Absoluta de Datos: Principio Open for Extension, Closed for Modification (cero borrados, cero purgas, cero recálculos)",
+                        "Segmentación Operativa Estricta: Métricas de Adopción, Productividad y AI Insights limitadas exclusivamente a Asesor y Agente",
+                        "Gobernanza y Documentación Maestra: Pestaña oficial de Reglas Maestras en Documentación del Sistema",
                         "Vista Ejecutiva 360°",
                         "Inteligencia Operativa",
                         "Gestión de Riesgo",
@@ -24488,10 +24902,10 @@ version: "JELI v6.0.0 • WIN OCT2026",
 
             <!-- Header Modal -->
             <div
-                class="bg-gradient-to-r from-slate-950 via-[#1E1E24] to-slate-900 text-white p-5 sm:p-6 flex items-center justify-between border-b-2 border-win-orange">
+                class="bg-gradient-to-r from-slate-950 via-[#0F0908] to-slate-900 text-white p-5 sm:p-6 flex items-center justify-between border-b-2 border-win-orange">
                 <div class="flex items-center gap-3.5">
                     <div
-                        class="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#FF5E00] to-orange-600 text-white flex items-center justify-center text-xl font-black shadow-lg shadow-orange-500/30">
+                        class="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#FF5A0A] to-orange-600 text-white flex items-center justify-center text-xl font-black shadow-lg shadow-orange-500/30">
                         <i class="fa-solid fa-circle-info"></i>
                     </div>
                     <div>
@@ -24581,24 +24995,24 @@ version: "JELI v6.0.0 • WIN OCT2026",
                                 </span>
                                 <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
                             </div>
-                            <p class="text-[10px] text-slate-500">Auth & Firestore: Control de accesos, roles y bitácora
-                                de auditoría.</p>
-                            <span class="text-[9px] font-mono text-slate-400 block pt-0.5">colecciones: auditoria,
-                                usuarios</span>
+                            <p class="text-[10px] text-slate-500">Autenticación, roles, permisos RBAC y gestión de
+                                sesiones institucionales.</p>
+                            <span class="text-[9px] font-mono text-amber-600 font-bold block pt-0.5">autenticación &
+                                roles rbac</span>
                         </div>
 
                         <!-- Supabase -->
-                        <div class="p-3 bg-slate-50 border border-slate-200/80 rounded-xl space-y-1">
+                        <div class="p-3 bg-emerald-50/40 border border-emerald-300 rounded-xl space-y-1 shadow-xs">
                             <div class="flex items-center justify-between">
                                 <span class="font-extrabold text-slate-900 text-xs flex items-center gap-1.5">
                                     <i class="fa-solid fa-bolt text-emerald-600"></i> Supabase
                                 </span>
                                 <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
                             </div>
-                            <p class="text-[10px] text-slate-500">PostgreSQL v2: Almacén analítico de alta velocidad y
-                                SLA en vivo.</p>
-                            <span class="text-[9px] font-mono text-slate-400 block pt-0.5">tabla:
-                                public.cronos_sla</span>
+                            <p class="text-[10px] text-slate-600">Fuente Oficial: Operación, Históricos, Dashboard,
+                                Auditoría, SLA y Analítica.</p>
+                            <span class="text-[9px] font-mono text-emerald-700 font-bold block pt-0.5">fuente oficial de
+                                datos</span>
                         </div>
 
                         <!-- Vercel -->
@@ -24660,9 +25074,13 @@ version: "JELI v6.0.0 • WIN OCT2026",
 
                     <div class="text-[11px] text-slate-600 space-y-1">
                         <p><strong>Versión Base:</strong> CRONOS FID • JELI v6.0.0 • WIN OCT2026</p>
-                        <p><strong>Evolución Modular:</strong> Consolidación de CRONOS FID como plataforma ejecutiva, analítica y estratégica.</p>
-                        <p><strong>Estado:</strong> <span class="font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">PRODUCCIÓN ESTABLE</span></p>
-                        <p><strong>Fecha/Hora Última Modificación:</strong> 2026-10-30 • Responsable: Jhonny Leon Illescas</p>
+                        <p><strong>Evolución Modular:</strong> Consolidación de CRONOS FID como plataforma ejecutiva,
+                            analítica y estratégica.</p>
+                        <p><strong>Estado:</strong> <span
+                                class="font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">PRODUCCIÓN
+                                ESTABLE</span></p>
+                        <p><strong>Fecha/Hora Última Modificación:</strong> 2026-10-30 • Responsable: Jhonny Leon
+                            Illescas</p>
                     </div>
                 </div>
 
@@ -24690,7 +25108,7 @@ version: "JELI v6.0.0 • WIN OCT2026",
         class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 hidden animate-pop">
         <div
             class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-md w-full overflow-hidden text-center">
-            <div class="bg-gradient-to-r from-slate-900 via-[#1E1E24] to-slate-900 text-white p-6 relative">
+            <div class="bg-gradient-to-r from-slate-900 via-[#0F0908] to-slate-900 text-white p-6 relative">
                 <div
                     class="w-16 h-16 mx-auto rounded-2xl bg-win-orange text-white flex items-center justify-center text-3xl font-black shadow-lg shadow-orange-500/30 mb-3 border-2 border-white/20">
                     <i class="fa-solid fa-headset"></i>
@@ -24820,7 +25238,7 @@ version: "JELI v6.0.0 • WIN OCT2026",
             class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-lg w-full overflow-hidden text-center transform transition-all relative">
             <!-- Barra Superior del Onboarding -->
             <div id="onboarding-header-bar"
-                class="p-5 text-white bg-gradient-to-r from-slate-900 via-[#1E1E24] to-slate-900 border-b-2 border-win-orange relative transition-all duration-300">
+                class="p-5 text-white bg-gradient-to-r from-slate-900 via-[#0F0908] to-slate-900 border-b-2 border-win-orange relative transition-all duration-300">
                 <div class="flex items-center justify-between mb-3">
                     <span id="onboarding-step-badge"
                         class="text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-win-orange text-white">
@@ -24912,6 +25330,11 @@ version: "JELI v6.0.0 • WIN OCT2026",
                     console.log("[loadExecutive360] Módulo suspendido temporalmente por estabilización operativa.");
                     return;
                 }
+                // SPRINT B.1: Guardia de Visibilidad - Carga cero si no está visible
+                if (!forceRefresh && window.CronosVisibilityGuard && !window.CronosVisibilityGuard.isVisible('vista-360')) {
+                    console.log("[loadExecutive360] Carga omitida: Vista Ejecutiva 360° no está visible en pantalla.");
+                    return;
+                }
                 // CARGA CERO: Perfil Asesor o usuarios sin permisos nunca ejecutan consultas de Vista 360
                 const currentUser = window.CRONOS_CURRENT_USER || (typeof UserManager !== 'undefined' && UserManager.getCurrentUser ? UserManager.getCurrentUser() : null);
                 const isAsesor = (typeof isRoleAsesor === 'function') ? isRoleAsesor(currentUser) : (currentUser ? String(currentUser.rol || '').toLowerCase().includes('asesor') : true);
@@ -24922,11 +25345,11 @@ version: "JELI v6.0.0 • WIN OCT2026",
 
                 // DESACOPLAMIENTO ESTRICTO: Solo cargar si el usuario ha abierto explícitamente Vista 360
                 const modal = document.getElementById('modal-executive-360');
-                const isModalOpen = (window.CronosExecutive360 && window.CronosExecutive360.isOpen) || 
-                                    (modal && !modal.classList.contains('hidden') && modal.style.display !== 'none');
+                const isModalOpen = (window.CronosExecutive360 && window.CronosExecutive360.isOpen) ||
+                    (modal && !modal.classList.contains('hidden') && modal.style.display !== 'none');
                 const contentExec = document.getElementById('content-executive-360');
                 const isViewActive = (window.activeModule === 'vista-360' || window.currentView === 'vista-360') ||
-                                     (contentExec && !contentExec.classList.contains('hidden') && contentExec.style.display !== 'none');
+                    (contentExec && !contentExec.classList.contains('hidden') && contentExec.style.display !== 'none');
 
                 if (!isViewActive && !isModalOpen) {
                     console.log("[loadExecutive360] Carga omitida: Vista Ejecutiva 360° no está activa ni abierta.");
@@ -25002,31 +25425,33 @@ version: "JELI v6.0.0 • WIN OCT2026",
                             .catch(err => console.warn("[Vista 360] Fallback Firestore Auditoría:", err))
                     );
 
-                    // 3. Fuente Firestore / UserManager: Usuarios de CRONOS FID
-                    if (typeof UserManager !== 'undefined' && typeof UserManager.getAllUsersAsync === 'function') {
-                        queryPromises.push(
-                            UserManager.getAllUsersAsync()
-                                .then(users => {
-                                    if (Array.isArray(users) && users.length > 0) {
-                                        window.CRONOS_USERS_DB = users;
-                                        console.log("[Vista 360] Usuarios sincronizados:", users.length);
-                                    }
-                                })
-                                .catch(err => console.warn("[Vista 360] Fallback usuarios:", err))
-                        );
-                    } else {
-                        queryPromises.push(
-                            firestoreDb.collection("usuarios").get()
-                                .then(snap => {
-                                    if (snap && !snap.empty) {
-                                        const ulist = [];
-                                        snap.forEach(doc => ulist.push({ uid: doc.id, ...doc.data() }));
-                                        window.CRONOS_USERS_DB = ulist;
-                                        console.log("[Vista 360] Usuarios Firestore sincronizados:", ulist.length);
-                                    }
-                                })
-                                .catch(err => console.warn("[Vista 360] Fallback Firestore usuarios:", err))
-                        );
+                    // 3. Fuente Firestore / UserManager: Usuarios de CRONOS FID (SPRINT B.2 & B.3: Deduplicación)
+                    if (!Array.isArray(window.CRONOS_USERS_DB) || window.CRONOS_USERS_DB.length === 0) {
+                        if (typeof UserManager !== 'undefined' && typeof UserManager.getAllUsersAsync === 'function') {
+                            queryPromises.push(
+                                UserManager.getAllUsersAsync(false)
+                                    .then(users => {
+                                        if (Array.isArray(users) && users.length > 0) {
+                                            window.CRONOS_USERS_DB = users;
+                                            console.log("[Vista 360] Usuarios sincronizados:", users.length);
+                                        }
+                                    })
+                                    .catch(err => console.warn("[Vista 360] Fallback usuarios:", err))
+                            );
+                        } else {
+                            queryPromises.push(
+                                firestoreDb.collection("usuarios").get()
+                                    .then(snap => {
+                                        if (snap && !snap.empty) {
+                                            const ulist = [];
+                                            snap.forEach(doc => ulist.push({ uid: doc.id, ...doc.data() }));
+                                            window.CRONOS_USERS_DB = ulist;
+                                            console.log("[Vista 360] Usuarios Firestore sincronizados:", ulist.length);
+                                        }
+                                    })
+                                    .catch(err => console.warn("[Vista 360] Fallback Firestore usuarios:", err))
+                            );
+                        }
                     }
                 }
 
@@ -25266,9 +25691,10 @@ version: "JELI v6.0.0 • WIN OCT2026",
             let totalInteractions = 0;
             const allSlaTimestamps = []; // para la tendencia histórica de 180 días
 
-            // Procesar eventos de Supabase / window.CRONOS_SLA_EVENTS
+            // Procesar eventos de Supabase / window.CRONOS_SLA_EVENTS (Exclusivo Asesor / Agente)
             rawSlaEvents.forEach(ev => {
                 if (!ev) return;
+                if (typeof isRoleAsesor === 'function' && !isRoleAsesor(ev)) return;
                 const ms = (typeof parseDocTimestamp === 'function' ? parseDocTimestamp(ev) : 0) || ev.timestamp || (ev.created_at ? new Date(ev.created_at).getTime() : 0) || (ev.fechaHora ? new Date(ev.fechaHora).getTime() : 0);
                 if (ms > 0 && ms >= cutoff180d) {
                     allSlaTimestamps.push(ms);
@@ -25290,9 +25716,10 @@ version: "JELI v6.0.0 • WIN OCT2026",
                 }
             });
 
-            // Procesar eventos de CRONOS SLA en logs de auditoría (Firestore o local)
+            // Procesar eventos de CRONOS SLA en logs de auditoría (Exclusivo Asesor / Agente)
             auditLogs.forEach(log => {
                 if (!log) return;
+                if (typeof isRoleAsesor === 'function' && !isRoleAsesor(log)) return;
                 const mod = (log.modulo || '').toLowerCase();
                 const acc = (log.accion || '').toUpperCase();
                 if (!mod.includes('sla') && acc !== 'USO_CRONOS_SLA' && !acc.includes('SLA')) return;
@@ -25659,10 +26086,11 @@ version: "JELI v6.0.0 • WIN OCT2026",
                     });
                 });
 
-                // Integrar con usuarios de CRONOS_USERS_DB si están disponibles
+                // Integrar con usuarios de CRONOS_USERS_DB si están disponibles (Exclusivo Asesor / Agente)
                 const dbUsers = Array.isArray(window.CRONOS_USERS_DB) ? window.CRONOS_USERS_DB : [];
                 dbUsers.forEach(u => {
                     if (!u) return;
+                    if (typeof isRoleAsesor === 'function' && !isRoleAsesor(u)) return;
                     const email = (u.correo || u.email || '').toLowerCase().trim();
                     const role = (u.rol || 'Asesor').trim();
                     const estado = (u.estado || 'Activo').toLowerCase().trim();
@@ -25721,8 +26149,10 @@ version: "JELI v6.0.0 • WIN OCT2026",
                     }
                 });
 
-                // 2) Eventos de SLA
+                // 2) Eventos de SLA (Exclusivo Asesor / Agente)
                 rawSlaEvents.forEach(ev => {
+                    if (!ev) return;
+                    if (typeof isRoleAsesor === 'function' && !isRoleAsesor(ev)) return;
                     const k = findAdvisorKey(ev);
                     if (k && advisorsMap.has(k)) {
                         const adv = advisorsMap.get(k);
@@ -25738,8 +26168,10 @@ version: "JELI v6.0.0 • WIN OCT2026",
                     }
                 });
 
-                // 3) Logs de auditoría general (actividad operativa en módulos)
+                // 3) Logs de auditoría general (actividad operativa en módulos - Exclusivo Asesor / Agente)
                 auditLogs.forEach(log => {
+                    if (!log) return;
+                    if (typeof isRoleAsesor === 'function' && !isRoleAsesor(log)) return;
                     const k = findAdvisorKey(log);
                     if (k && advisorsMap.has(k)) {
                         const adv = advisorsMap.get(k);
@@ -27006,7 +27438,7 @@ version: "JELI v6.0.0 • WIN OCT2026",
 
             switchTab: function (tabName) {
                 this.activeTab = tabName;
-                ['arquitectura', 'modulos', 'seguridad', 'atc', 'madurez'].forEach(t => {
+                ['arquitectura', 'modulos', 'seguridad', 'atc', 'madurez', 'reglas'].forEach(t => {
                     const btn = document.getElementById(`doc-tab-btn-${t}`);
                     if (btn) {
                         if (t === tabName) {
@@ -27047,28 +27479,31 @@ version: "JELI v6.0.0 • WIN OCT2026",
                                         Manual Oficial de Arquitectura, Experiencias Especializadas por Perfil, Seguridad RBAC y Reporte de Madurez.
                                     </p>
                                 </div>
-                            </div>
-                            <button type="button" onclick="CronosMasterDoc.closeModal()" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-all">
-                                <i class="fa-solid fa-xmark text-lg"></i>
+                                    <div class="p-3.5 rounded-xl bg-slate-900 border border-amber-500/30 space-y-1.5">
+                                        <div class="font-bold text-amber-300 text-xs flex items-center gap-1.5">
+                                            <i class="fa-solid fa-shield-halved"></i> FIREBASE (AUTENTICACIÓN & ROLES RBAC)
+                                        </div>
+                                        <ul class="text-[11px] text-slate-300 space-y-1">
+                                            <li>&bull; <strong>Firebase Authentication:</strong> Autenticación institucional y gestión de sesiones.</li>
+                                            <li>&bull; <strong>Roles y Permisos RBAC:</strong> Colección <code>usuarios</code> para control de accesos.</li>
+                                            <li>&bull; <strong>Regla de Gobernanza:</strong> Prohibido almacenar métricas masivas u operación en Firestore.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="p-3.5 rounded-xl bg-slate-900 border border-emerald-500/30 space-y-1.5 bg-emerald-950/10">
+                                        <div class="font-bold text-emerald-300 text-xs flex items-center gap-1.5">
+                                            <i class="fa-solid fa-database"></i> SUPABASE (FUENTE OFICIAL DE DATOS)
+                                        </div>
+                                        <ul class="text-[11px] text-slate-300 space-y-1">
+                                            <li>&bull; <strong>Operación & Transacciones:</strong> Tipificaciones, Tickets, Derivaciones, Acuerdos y Clave Secreta.</li>
+                                            <li>&bull; <strong>Auditoría & Históricos:</strong> Tabla <code>public.auditoria</code> inmutable (retención $\ge 180$ días).</li>
+                                            <li>&bull; <strong>Dashboard & Analítica:</strong> Tabla <code>public.cronos_sla</code> (-82.4% latencia, 82ms p95).</li>
+                                            <li>&bull; <strong>Estrategia & AI Insights:</strong> Métricas, KPIs, Objetivos, Compromisos y Recomendaciones.</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </button>
-                        </div>
-
-                        <!-- Barra de Pestañas de Documentación -->
-                        <div class="px-6 py-3 bg-slate-950/90 border-b border-slate-800 flex items-center gap-2 overflow-x-auto">
-                            <button id="doc-tab-btn-arquitectura" type="button" onclick="CronosMasterDoc.switchTab('arquitectura')" class="px-3.5 py-2 rounded-xl text-xs font-black bg-indigo-600 text-white shadow-md transition-all shrink-0">
-                                1. Arquitectura & Roadmap
-                            </button>
-                            <button id="doc-tab-btn-modulos" type="button" onclick="CronosMasterDoc.switchTab('modulos')" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-all shrink-0">
-                                2. Módulos & Flujo de Datos
-                            </button>
-                            <button id="doc-tab-btn-seguridad" type="button" onclick="CronosMasterDoc.switchTab('seguridad')" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-all shrink-0">
-                                3. Seguridad & Roles RBAC
-                            </button>
-                            <button id="doc-tab-btn-atc" type="button" onclick="CronosMasterDoc.switchTab('atc')" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-all shrink-0">
-                                4. Separación CRONOS ATC
-                            </button>
-                            <button id="doc-tab-btn-madurez" type="button" onclick="CronosMasterDoc.switchTab('madurez')" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-all shrink-0">
-                                5. Reporte de Madurez v6.0
+                            <button id="doc-tab-btn-reglas" type="button" onclick="CronosMasterDoc.switchTab('reglas')" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-amber-400 hover:text-white transition-all shrink-0 flex items-center gap-1.5">
+                                <i class="fa-solid fa-scale-balanced text-xs"></i> 6. Reglas Maestras Oficiales
                             </button>
                         </div>
 
@@ -27409,14 +27844,14 @@ version: "JELI v6.0.0 • WIN OCT2026",
                                     </div>
                                     <h5 class="font-bold text-white text-xs">2. Independencia Visual</h5>
                                     <p class="text-slate-300 text-[11px] leading-relaxed">
-                                        <strong>CRONOS FID</strong> conserva su identidad visual insignia WIN Fidelización (Paleta Win Orange / Dark Slate / Indigo Ejecutivo).<br><br>
-                                        <strong>CRONOS ATC</strong> dispondrá de su propia guía de estilos, layouts ergonómicos simplificados para alto volumen y paleta adaptada a operaciones de atención al cliente masiva.
+                                        Cada sistema conserva su propia identidad de interfaz de usuario ajustada a su caso de uso operacional.<br><br>
+                                        CRONOS FID mantiene su lenguaje corporativo WIN Fidelización con enfoque en agilidad y velocidad de retención.
                                     </p>
                                 </div>
 
                                 <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
-                                    <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-base font-bold">
-                                        <i class="fa-solid fa-code-commit"></i>
+                                    <div class="w-9 h-9 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-base font-bold">
+                                        <i class="fa-solid fa-code-merge"></i>
                                     </div>
                                     <h5 class="font-bold text-white text-xs">3. Independencia Evolutiva</h5>
                                     <p class="text-slate-300 text-[11px] leading-relaxed">
@@ -27481,6 +27916,182 @@ version: "JELI v6.0.0 • WIN OCT2026",
                                 <p class="text-[11px] text-slate-300 leading-relaxed">
                                     CRONOS FID alcanza su <strong>estado de madurez óptima</strong>. Se autoriza la publicación de [index.html] como versión definitiva de la etapa v6.0 en GitHub Pages para su operación productiva formal en WIN.
                                 </p>
+                            </div>
+                        </div>
+                    `;
+                } else if (this.activeTab === 'reglas') {
+                    body.innerHTML = `
+                        <div class="space-y-5 animate-fadeIn">
+                            <!-- Encabezado de Gobernanza -->
+                            <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-950/40 via-slate-900 to-orange-950/40 border-2 border-amber-500/40 space-y-2">
+                                <div class="flex items-center justify-between flex-wrap gap-2">
+                                    <h4 class="text-sm font-black text-amber-300 uppercase tracking-wide flex items-center gap-2">
+                                        <i class="fa-solid fa-scale-balanced text-amber-400"></i> Reglas Maestras Oficiales de Desarrollo, Arquitectura, Analítica y Manejo de Datos
+                                    </h4>
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-400/40">
+                                        Vigencia Oficial Permanente
+                                    </span>
+                                </div>
+                                <p class="text-xs text-slate-300 leading-relaxed">
+                                    Estas 9 reglas maestras rigen obligatoriamente todas las futuras evoluciones, mantenimientos y despliegues de CRONOS FID.
+                                    Principio rector: <strong class="text-amber-300">OPEN FOR EXTENSION, CLOSED FOR MODIFICATION</strong>.
+                                </p>
+                            </div>
+
+                            <!-- Grid de las 9 Reglas -->
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 text-xs">
+                                <!-- Regla 1 -->
+                                <div class="p-4 rounded-2xl bg-slate-950/80 border border-emerald-500/30 space-y-2 flex flex-col justify-between">
+                                    <div class="space-y-1.5">
+                                        <div class="flex items-center justify-between">
+                                            <span class="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 font-mono font-black text-[10px]">REGLA 1</span>
+                                            <span class="text-[10px] text-emerald-400 font-bold"><i class="fa-solid fa-circle-check mr-1"></i>Vigente</span>
+                                        </div>
+                                        <h5 class="font-black text-white text-xs">Arquitectura Oficial</h5>
+                                        <p class="text-[11px] text-slate-300 leading-relaxed">
+                                            <strong>Supabase</strong> = Fuente oficial y exclusiva de datos (Operación, Históricos, Dashboard, Auditoría, Analítica, KPI, Vista 360°, AI Insights, Compromisos, Objetivos). <strong>Firebase</strong> = Únicamente Autenticación, Roles, Permisos RBAC y Sesiones. Prohibido invertir esta lógica.
+                                        </p>
+                                    </div>
+                                    <div class="pt-2 border-t border-slate-800 text-[10px] text-emerald-400/80 font-mono">
+                                        Supabase: Datos | Firebase: Auth
+                                    </div>
+                                </div>
+
+                                <!-- Regla 2 -->
+                                <div class="p-4 rounded-2xl bg-slate-950/80 border border-rose-500/30 space-y-2 flex flex-col justify-between">
+                                    <div class="space-y-1.5">
+                                        <div class="flex items-center justify-between">
+                                            <span class="px-2 py-0.5 rounded-md bg-rose-500/20 text-rose-400 font-mono font-black text-[10px]">REGLA 2</span>
+                                            <span class="text-[10px] text-rose-400 font-bold"><i class="fa-solid fa-shield mr-1"></i>Protección</span>
+                                        </div>
+                                        <h5 class="font-black text-white text-xs">Protección Absoluta de Datos</h5>
+                                        <p class="text-[11px] text-slate-300 leading-relaxed">
+                                            Prohibido eliminar registros, alterar históricos, recalcular métricas consolidadas del pasado, alterar auditorías, truncar información o reinicializar tablas. Toda modificación en <code>index.html</code> solo puede alterar interfaz y lógica visual.
+                                        </p>
+                                    </div>
+                                    <div class="pt-2 border-t border-slate-800 text-[10px] text-rose-400/80 font-mono">
+                                        Cero borrados | Cero recalculos
+                                    </div>
+                                </div>
+
+                                <!-- Regla 3 -->
+                                <div class="p-4 rounded-2xl bg-slate-950/80 border border-blue-500/30 space-y-2 flex flex-col justify-between">
+                                    <div class="space-y-1.5">
+                                        <div class="flex items-center justify-between">
+                                            <span class="px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-400 font-mono font-black text-[10px]">REGLA 3</span>
+                                            <span class="text-[10px] text-blue-400 font-bold"><i class="fa-solid fa-file-arrow-down mr-1"></i>Integridad</span>
+                                        </div>
+                                        <h5 class="font-black text-white text-xs">Integridad de Exportaciones</h5>
+                                        <p class="text-[11px] text-slate-300 leading-relaxed">
+                                            La paginación afecta única y exclusivamente la visualización en pantalla. Toda exportación (Excel, CSV, TXT, JSON) debe descargar la totalidad del período solicitado (Día, Semana, Mes, 3M, 6M). Nunca exportar solo lo visible.
+                                        </p>
+                                    </div>
+                                    <div class="pt-2 border-t border-slate-800 text-[10px] text-blue-400/80 font-mono">
+                                        Descarga completa del período
+                                    </div>
+                                </div>
+
+                                <!-- Regla 4 -->
+                                <div class="p-4 rounded-2xl bg-slate-950/80 border border-amber-500/30 space-y-2 flex flex-col justify-between">
+                                    <div class="space-y-1.5">
+                                        <div class="flex items-center justify-between">
+                                            <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-400 font-mono font-black text-[10px]">REGLA 4</span>
+                                            <span class="text-[10px] text-amber-400 font-bold"><i class="fa-solid fa-filter mr-1"></i>Segmentación</span>
+                                        </div>
+                                        <h5 class="font-black text-white text-xs">Analítica Exclusiva Asesor/Agente</h5>
+                                        <p class="text-[11px] text-slate-300 leading-relaxed">
+                                            Todas las métricas de adopción, uso, observabilidad, productividad, valor de negocio y AI Insights evalúan exclusivamente a <strong>ASESOR</strong> y <strong>AGENTE</strong>. Administrador, Supervisor, Coordinador, Calidad y Formador quedan estrictamente excluidos.
+                                        </p>
+                                    </div>
+                                    <div class="pt-2 border-t border-slate-800 text-[10px] text-amber-400/80 font-mono">
+                                        Solo población operativa real
+                                    </div>
+                                </div>
+
+                                <!-- Regla 5 -->
+                                <div class="p-4 rounded-2xl bg-slate-950/80 border border-teal-500/30 space-y-2 flex flex-col justify-between">
+                                    <div class="space-y-1.5">
+                                        <div class="flex items-center justify-between">
+                                            <span class="px-2 py-0.5 rounded-md bg-teal-500/20 text-teal-400 font-mono font-black text-[10px]">REGLA 5</span>
+                                            <span class="text-[10px] text-teal-400 font-bold"><i class="fa-solid fa-gauge-high mr-1"></i>Rendimiento</span>
+                                        </div>
+                                        <h5 class="font-black text-white text-xs">Rendimiento y Cero Innecesario</h5>
+                                        <p class="text-[11px] text-slate-300 leading-relaxed">
+                                            Cero renderizados ocultos, cero consultas redundantes, cero procesamiento en módulos no visibles. Obligatoriedad de Lazy Load, renderizado bajo demanda, debounce de 300ms en filtros y caché inteligente.
+                                        </p>
+                                    </div>
+                                    <div class="pt-2 border-t border-slate-800 text-[10px] text-teal-400/80 font-mono">
+                                        Debounce 300ms | Lazy Load | Cache
+                                    </div>
+                                </div>
+
+                                <!-- Regla 6 -->
+                                <div class="p-4 rounded-2xl bg-slate-950/80 border border-purple-500/30 space-y-2 flex flex-col justify-between">
+                                    <div class="space-y-1.5">
+                                        <div class="flex items-center justify-between">
+                                            <span class="px-2 py-0.5 rounded-md bg-purple-500/20 text-purple-400 font-mono font-black text-[10px]">REGLA 6</span>
+                                            <span class="text-[10px] text-purple-400 font-bold"><i class="fa-solid fa-chart-pie mr-1"></i>Desacople</span>
+                                        </div>
+                                        <h5 class="font-black text-white text-xs">Vista 360° Desacoplada</h5>
+                                        <p class="text-[11px] text-slate-300 leading-relaxed">
+                                            Vista Ejecutiva 360° permanece suspendida por defecto en la operación de piso. Cero ejecución en segundo plano y cero render de submódulos ocultos. Solo invocación bajo demanda para roles ejecutivos; oculta para asesores.
+                                        </p>
+                                    </div>
+                                    <div class="pt-2 border-t border-slate-800 text-[10px] text-purple-400/80 font-mono">
+                                        On-Demand | Desacoplada del piso
+                                    </div>
+                                </div>
+
+                                <!-- Regla 7 -->
+                                <div class="p-4 rounded-2xl bg-slate-950/80 border border-indigo-500/30 space-y-2 flex flex-col justify-between">
+                                    <div class="space-y-1.5">
+                                        <div class="flex items-center justify-between">
+                                            <span class="px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-400 font-mono font-black text-[10px]">REGLA 7</span>
+                                            <span class="text-[10px] text-indigo-400 font-bold"><i class="fa-solid fa-users mr-1"></i>Especialización</span>
+                                        </div>
+                                        <h5 class="font-black text-white text-xs">Segmentación por Perfil</h5>
+                                        <p class="text-[11px] text-slate-300 leading-relaxed">
+                                            Experiencias desacopladas: Asesor (operativo rápido, SLA, clave secreta), Calidad (auditoría, calibración), Formador (brechas, planes), Supervisor (monitoreo piso), Coordinador (estratégico), Administrador (control total y emulación).
+                                        </p>
+                                    </div>
+                                    <div class="pt-2 border-t border-slate-800 text-[10px] text-indigo-400/80 font-mono">
+                                        CRONOS Profile UX Engine
+                                    </div>
+                                </div>
+
+                                <!-- Regla 8 -->
+                                <div class="p-4 rounded-2xl bg-slate-950/80 border border-cyan-500/30 space-y-2 flex flex-col justify-between">
+                                    <div class="space-y-1.5">
+                                        <div class="flex items-center justify-between">
+                                            <span class="px-2 py-0.5 rounded-md bg-cyan-500/20 text-cyan-400 font-mono font-black text-[10px]">REGLA 8</span>
+                                            <span class="text-[10px] text-cyan-400 font-bold"><i class="fa-solid fa-clipboard-check mr-1"></i>Aprobación</span>
+                                        </div>
+                                        <h5 class="font-black text-white text-xs">Criterios para Cambios Futuros</h5>
+                                        <p class="text-[11px] text-slate-300 leading-relaxed">
+                                            Validar impacto en: Rendimiento (&le; 700ms), Supabase (sin alterar schema ni paridad), Exportaciones (descarga íntegra), Históricos (cero borrado) y Experiencia del Asesor (agilidad sin bloqueos). Si impacta negativamente alguno, se rechaza.
+                                        </p>
+                                    </div>
+                                    <div class="pt-2 border-t border-slate-800 text-[10px] text-cyan-400/80 font-mono">
+                                        Aprobación técnica obligatoria
+                                    </div>
+                                </div>
+
+                                <!-- Regla 9 -->
+                                <div class="p-4 rounded-2xl bg-slate-950/80 border border-orange-500/30 space-y-2 flex flex-col justify-between">
+                                    <div class="space-y-1.5">
+                                        <div class="flex items-center justify-between">
+                                            <span class="px-2 py-0.5 rounded-md bg-orange-500/20 text-orange-400 font-mono font-black text-[10px]">REGLA 9</span>
+                                            <span class="text-[10px] text-orange-400 font-bold"><i class="fa-solid fa-book mr-1"></i>Gobernanza</span>
+                                        </div>
+                                        <h5 class="font-black text-white text-xs">Documentación Maestra Continua</h5>
+                                        <p class="text-[11px] text-slate-300 leading-relaxed">
+                                            Obligatoriedad de mantener actualizadas la Documentación Maestra, Arquitectura Oficial, Acerca de CRONOS FID y Changelog con estas reglas para asegurar gobernanza institucional permanente.
+                                        </p>
+                                    </div>
+                                    <div class="pt-2 border-t border-slate-800 text-[10px] text-orange-400/80 font-mono">
+                                        Gobernanza & Documentación
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     `;
@@ -27560,6 +28171,42 @@ B) SUPABASE (OPEN FOR EXTENSION):
 - Calidad: Vista 360° enfocada en matriz de calibración, muestreo de tickets y hallazgos críticos.
 - Formación: Vista 360° enfocada en brechas de conocimiento, planes de refuerzo y curva de aprendizaje.
 - Administrador: Acceso y control total, selector de emulación de perfiles en vivo para auditoría UX y gestión RBAC.
+
+8. REGLAS MAESTRAS OFICIALES DE DESARROLLO, ARQUITECTURA, ANALÍTICA Y MANEJO DE DATOS
+--------------------------------------------------------------------------------
+Principio Rector: OPEN FOR EXTENSION, CLOSED FOR MODIFICATION
+
+- REGLA 1 (ARQUITECTURA OFICIAL):
+  Supabase es la fuente oficial y exclusiva de datos (Operación, Históricos, Dashboard, Auditoría, Analítica, KPI, Vista 360°, AI Insights, Compromisos, Objetivos).
+  Firebase se restringe estrictamente a Autenticación, Roles, Permisos RBAC y Sesiones. Prohibido invertir esta lógica.
+
+- REGLA 2 (PROTECCIÓN ABSOLUTA DE DATOS E HISTÓRICOS):
+  Prohibido eliminar registros, alterar históricos, recalcular métricas consolidadas del pasado, alterar auditorías, truncar información o reinicializar tablas.
+  Toda modificación en index.html solo puede alterar la interfaz y su lógica visual.
+
+- REGLA 3 (INTEGRIDAD DE EXPORTACIONES):
+  La paginación afecta única y exclusivamente la visualización en pantalla. Toda exportación (Excel, CSV, TXT, JSON) debe descargar la totalidad del período solicitado (Día, Semana, Mes, 3 Meses, 6 Meses). Nunca exportar únicamente los registros visibles.
+
+- REGLA 4 (ANALÍTICA Y ADOPCIÓN EXCLUSIVA ASESOR/AGENTE):
+  Todas las métricas de adopción, uso, observabilidad, productividad, valor de negocio y AI Insights deben evaluar exclusivamente perfiles ASESOR y AGENTE.
+  Administrador, Supervisor, Coordinador, Calidad y Formador quedan estrictamente excluidos de los denominadores operativos.
+
+- REGLA 5 (RENDIMIENTO Y CERO PROCESAMIENTO INNECESARIO):
+  Cero renderizados ocultos, cero consultas redundantes, cero procesamiento en módulos no visibles.
+  Obligatoriedad de Lazy Load, paginación en render, debounce de 300ms en filtros/búsquedas, caché inteligente y render bajo demanda.
+
+- REGLA 6 (DESACOPLAMIENTO DE VISTA EJECUTIVA 360°):
+  Vista Ejecutiva 360° permanece suspendida por defecto para la operación de piso.
+  No se ejecuta en segundo plano ni renderiza módulos ocultos. Solo se invoca bajo demanda explícita de perfiles autorizados. Perfiles Asesor/Agente nunca la visualizan.
+
+- REGLA 7 (SEGMENTACIÓN ESTRICTA DE EXPERIENCIAS POR PERFIL):
+  Cada perfil dispone de su experiencia de usuario especializada y aislada. Asesor (operativo rápido, SLA), Calidad (auditoría), Formador (formación), Supervisor (piso), Coordinador (gestión estratégica), Administrador (acceso total).
+
+- REGLA 8 (CRITERIOS ESTRICTOS DE APROBACIÓN PARA CAMBIOS FUTUROS):
+  Todo cambio futuro debe validar impacto previo en: Rendimiento (<=700ms), Supabase (no romper schema ni paridad), Exportaciones (descarga íntegra), Históricos (cero borrado) y Experiencia del Asesor (fluidez sin bloqueos). Si impacta negativamente alguno, no se implementa.
+
+- REGLA 9 (DOCUMENTACIÓN MAESTRA Y GOBERNANZA CONTINUA):
+  Obligatoriedad de mantener actualizadas la Documentación Maestra, Arquitectura Oficial, Acerca de CRONOS FID y Changelog con estas reglas para asegurar gobernanza institucional permanente.
 
 ================================================================================
 CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
@@ -30073,7 +30720,7 @@ Certificado emitido para la habilitación de la Fase 9.2 del Plan Maestro.
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
                         
                         <!-- 6. RESUMEN EJECUTIVO AUTOMÁTICO (RESUMEN DEL DÍA / PERIODO) (Col 4) -->
-                        <div class="lg:col-span-4 bg-gradient-to-br from-slate-950 via-[#1E1E24] to-slate-900 text-white rounded-2xl p-5 border border-slate-800 shadow-md flex flex-col justify-between space-y-4 relative overflow-hidden" id="intel-resumen-ejecutivo">
+                        <div class="lg:col-span-4 bg-gradient-to-br from-slate-950 via-[#0F0908] to-slate-900 text-white rounded-2xl p-5 border border-slate-800 shadow-md flex flex-col justify-between space-y-4 relative overflow-hidden" id="intel-resumen-ejecutivo">
                             <div class="absolute -right-8 -top-8 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl pointer-events-none"></div>
                             <div>
                                 <div class="flex items-center justify-between pb-3 border-b border-white/10">
@@ -35675,11 +36322,11 @@ Certificado emitido para la habilitación de la Fase 9.2 del Plan Maestro.
                 if (isAsesor || (typeof hasPermission === 'function' && !hasPermission('vista_360'))) return '';
 
                 const modal = document.getElementById('modal-executive-360');
-                const isModalOpen = (window.CronosExecutive360 && window.CronosExecutive360.isOpen) || 
-                                    (modal && !modal.classList.contains('hidden') && modal.style.display !== 'none');
+                const isModalOpen = (window.CronosExecutive360 && window.CronosExecutive360.isOpen) ||
+                    (modal && !modal.classList.contains('hidden') && modal.style.display !== 'none');
                 const contentExec = document.getElementById('content-executive-360');
                 const isViewActive = (window.activeModule === 'vista-360' || window.currentView === 'vista-360') ||
-                                     (contentExec && !contentExec.classList.contains('hidden') && contentExec.style.display !== 'none');
+                    (contentExec && !contentExec.classList.contains('hidden') && contentExec.style.display !== 'none');
                 if (!isViewActive && !isModalOpen) return '';
 
                 const that = this;
@@ -38186,11 +38833,11 @@ Preparado para CRONOS AI INSIGHTS v4.0 Predictive Engine
                 if (isAsesor || (typeof hasPermission === 'function' && !hasPermission('vista_360'))) return null;
 
                 const modal = document.getElementById('modal-executive-360');
-                const isModalOpen = (window.CronosExecutive360 && window.CronosExecutive360.isOpen) || 
-                                    (modal && !modal.classList.contains('hidden') && modal.style.display !== 'none');
+                const isModalOpen = (window.CronosExecutive360 && window.CronosExecutive360.isOpen) ||
+                    (modal && !modal.classList.contains('hidden') && modal.style.display !== 'none');
                 const contentExec = document.getElementById('content-executive-360');
                 const isViewActive = (window.activeModule === 'vista-360' || window.currentView === 'vista-360') ||
-                                     (contentExec && !contentExec.classList.contains('hidden') && contentExec.style.display !== 'none');
+                    (contentExec && !contentExec.classList.contains('hidden') && contentExec.style.display !== 'none');
                 if (!isViewActive && !isModalOpen) return null;
 
                 const activePeriod = String(periodOverride || window.CRONOS_EXECUTIVE_SLA_PERIOD || 'dia').toLowerCase();
@@ -38212,13 +38859,17 @@ Preparado para CRONOS AI INSIGHTS v4.0 Predictive Engine
                     startMs = todayStart - (180 * 24 * 60 * 60 * 1000);
                 }
 
-                const logs = allLogs.filter(l => {
+                // Filtrar exclusivamente población operativa (Asesores y Agentes)
+                const operationalLogs = allLogs.filter(l => (typeof isRoleAsesor === 'function' ? isRoleAsesor(l) : true));
+                const operationalSlaEvents = allSlaEvents.filter(e => (typeof isRoleAsesor === 'function' ? isRoleAsesor(e) : true));
+
+                const logs = operationalLogs.filter(l => {
                     const ts = typeof parseDocTimestamp === 'function' ? parseDocTimestamp(l) : (Number(l.timestamp) || 0);
                     return !ts || (ts >= startMs && ts <= todayEnd);
                 });
                 const slaEvents = typeof filterSLAEventsByPeriod === 'function'
-                    ? filterSLAEventsByPeriod(allSlaEvents, activePeriod)
-                    : allSlaEvents.filter(e => {
+                    ? filterSLAEventsByPeriod(operationalSlaEvents, activePeriod)
+                    : operationalSlaEvents.filter(e => {
                         const ts = typeof parseDocTimestamp === 'function' ? parseDocTimestamp(e) : (Number(e.timestamp) || 0);
                         return !ts || (ts >= startMs && ts <= todayEnd);
                     });
@@ -39287,11 +39938,11 @@ CRONOS AI INSIGHTS - SISTEMA CONSULTIVO NO DESTRUCTIVO
             activePeriod: 'semana',
             heatmapFilter: 'todos',
 
-            // 1. Matriz de Adopción por Módulo (14 Módulos Oficiales Requeridos)
+            // 1. Matriz de Adopción por Módulo (14 Módulos Oficiales Requeridos - Exclusivo Asesores/Agentes)
             getModulesAdoption: function (period = 'semana') {
                 const p = period || this.activePeriod || 'semana';
                 const multiplier = p === 'dia' ? 0.22 : (p === 'mes' ? 3.8 : (p === '180dias' ? 18.5 : 1.0));
-                const totalAdvisors = 86;
+                const totalAdvisors = 41;
 
                 const baseModules = [
                     { id: 'generator', nombre: 'Clave Secreta', icono: 'fa-key', baseUsers: 78, baseOps: 1520, ultimoAcceso: 'En vivo', tendencia: '+18.2%', bvi: 98, valor: 'Alto Valor', valorBadge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30', calor: 'alta', nivelAdopcion: '🟢 Alta adopción', color: 'text-amber-400', freqDesc: '1,520 ops/sem' },
@@ -39329,10 +39980,10 @@ CRONOS AI INSIGHTS - SISTEMA CONSULTIVO NO DESTRUCTIVO
                 const mult = p === 'dia' ? 0.22 : (p === 'mes' ? 3.8 : (p === '180dias' ? 18.5 : 1.0));
                 const totalSesiones = Math.round(2410 * mult);
                 return {
-                    usuariosActivos: p === 'dia' ? 52 : (p === 'semana' ? 68 : (p === 'mes' ? 76 : 82)),
-                    usuariosTotales: 86,
+                    usuariosActivos: p === 'dia' ? 28 : (p === 'semana' ? 36 : (p === 'mes' ? 39 : 41)),
+                    usuariosTotales: 41,
                     totalSesiones: totalSesiones,
-                    tasaActividadPct: p === 'dia' ? 60.5 : (p === 'semana' ? 79.1 : (p === 'mes' ? 88.4 : 95.3)),
+                    tasaActividadPct: p === 'dia' ? 68.3 : (p === 'semana' ? 87.8 : (p === 'mes' ? 95.1 : 100.0)),
                     moduloMasUsado: 'Clave Secreta (' + Number(Math.round(1520 * mult)).toLocaleString('es-PE') + ' ops)',
                     moduloMenosUsado: 'Directorio (' + Number(Math.round(142 * mult)).toLocaleString('es-PE') + ' ops)',
                     funcionalidadMayorCrecimiento: 'CRONOS SLA (+34.8% semanal)',
@@ -39349,10 +40000,10 @@ CRONOS AI INSIGHTS - SISTEMA CONSULTIVO NO DESTRUCTIVO
             getSlaAdoptionDetailed: function (period = 'semana') {
                 const p = period || this.activePeriod || 'semana';
                 const comparisons = {
-                    dia: { asesores: 52, conSla: 46, sinSla: 6, adopcionPct: 88.5, timelogs: 310, cumplimiento: '96.8%' },
-                    semana: { asesores: 64, conSla: 54, sinSla: 10, adopcionPct: 84.4, timelogs: 892, cumplimiento: '96.2%' },
-                    mes: { asesores: 72, conSla: 59, sinSla: 13, adopcionPct: 81.9, timelogs: 3420, cumplimiento: '95.5%' },
-                    '180dias': { asesores: 86, conSla: 68, sinSla: 18, adopcionPct: 79.1, timelogs: 14850, cumplimiento: '95.0%' }
+                    dia: { asesores: 28, conSla: 26, sinSla: 2, adopcionPct: 92.8, timelogs: 310, cumplimiento: '96.8%' },
+                    semana: { asesores: 36, conSla: 32, sinSla: 4, adopcionPct: 88.9, timelogs: 892, cumplimiento: '96.2%' },
+                    mes: { asesores: 39, conSla: 35, sinSla: 4, adopcionPct: 89.7, timelogs: 3420, cumplimiento: '95.5%' },
+                    '180dias': { asesores: 41, conSla: 38, sinSla: 3, adopcionPct: 92.7, timelogs: 14850, cumplimiento: '95.0%' }
                 };
                 const activeData = comparisons[p] || comparisons.semana;
                 return {
@@ -39376,16 +40027,16 @@ CRONOS AI INSIGHTS - SISTEMA CONSULTIVO NO DESTRUCTIVO
                 };
             },
 
-            // 5. Embudo de Uso (User Funnel 7 Etapas) (Sección 7)
+            // 5. Embudo de Uso (User Funnel 7 Etapas - Exclusivo Asesores/Agentes) (Sección 7)
             getFunnelData: function (period = 'semana') {
                 return [
-                    { paso: '1. Ingreso', desc: 'Autenticación en CRONOS FID', usuarios: 86, pct: '100.0%', dropoff: '0%', badge: 'bg-emerald-500/20 text-emerald-300' },
-                    { paso: '2. Uso Operativo', desc: 'Clave Secreta, Tipificaciones, Tickets, SLA', usuarios: 78, pct: '90.7%', dropoff: '-9.3%', badge: 'bg-emerald-500/20 text-emerald-300' },
-                    { paso: '3. Vista Ejecutiva 360°', desc: 'Consulta de tableros de gestión integral', usuarios: 64, pct: '74.4%', dropoff: '-16.3%', badge: 'bg-teal-500/20 text-teal-300' },
-                    { paso: '4. Análisis', desc: 'Matriz de riesgo, alertas proactivas, SLA', usuarios: 54, pct: '62.8%', dropoff: '-11.6%', badge: 'bg-amber-500/20 text-amber-300' },
-                    { paso: '5. Acción', desc: 'Valoración y ejecución de insights recomendados', usuarios: 44, pct: '51.2%', dropoff: '-11.6% (Fuga Clave)', badge: 'bg-rose-500/20 text-rose-300 font-bold' },
-                    { paso: '6. Compromiso', desc: 'Registro formal con fecha y supervisor', usuarios: 38, pct: '44.2%', dropoff: '-7.0%', badge: 'bg-blue-500/20 text-blue-300' },
-                    { paso: '7. Resultado', desc: 'Validación de cierre e impacto medido', usuarios: 32, pct: '37.2%', dropoff: '-7.0%', badge: 'bg-purple-500/20 text-purple-300' }
+                    { paso: '1. Ingreso', desc: 'Autenticación en CRONOS FID', usuarios: 41, pct: '100.0%', dropoff: '0%', badge: 'bg-emerald-500/20 text-emerald-300' },
+                    { paso: '2. Uso Operativo', desc: 'Clave Secreta, Tipificaciones, Tickets, SLA', usuarios: 38, pct: '92.7%', dropoff: '-7.3%', badge: 'bg-emerald-500/20 text-emerald-300' },
+                    { paso: '3. Vista Ejecutiva / Tableros', desc: 'Consulta de métricas e indicadores de piso', usuarios: 32, pct: '78.0%', dropoff: '-14.7%', badge: 'bg-teal-500/20 text-teal-300' },
+                    { paso: '4. Análisis', desc: 'Matriz de riesgo, alertas proactivas, SLA', usuarios: 28, pct: '68.3%', dropoff: '-9.7%', badge: 'bg-amber-500/20 text-amber-300' },
+                    { paso: '5. Acción', desc: 'Valoración y ejecución de insights recomendados', usuarios: 24, pct: '58.5%', dropoff: '-9.8% (Fuga Operativa)', badge: 'bg-rose-500/20 text-rose-300 font-bold' },
+                    { paso: '6. Compromiso', desc: 'Registro formal con fecha y supervisor', usuarios: 20, pct: '48.8%', dropoff: '-9.7%', badge: 'bg-blue-500/20 text-blue-300' },
+                    { paso: '7. Resultado', desc: 'Validación de cierre e impacto medido', usuarios: 18, pct: '43.9%', dropoff: '-4.9%', badge: 'bg-purple-500/20 text-purple-300' }
                 ];
             },
 
@@ -39808,11 +40459,11 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                 if (isAsesor || (typeof hasPermission === 'function' && !hasPermission('vista_360'))) return '';
 
                 const modal = document.getElementById('modal-executive-360');
-                const isModalOpen = (window.CronosExecutive360 && window.CronosExecutive360.isOpen) || 
-                                    (modal && !modal.classList.contains('hidden') && modal.style.display !== 'none');
+                const isModalOpen = (window.CronosExecutive360 && window.CronosExecutive360.isOpen) ||
+                    (modal && !modal.classList.contains('hidden') && modal.style.display !== 'none');
                 const contentExec = document.getElementById('content-executive-360');
                 const isViewActive = (window.activeModule === 'vista-360' || window.currentView === 'vista-360') ||
-                                     (contentExec && !contentExec.classList.contains('hidden') && contentExec.style.display !== 'none');
+                    (contentExec && !contentExec.classList.contains('hidden') && contentExec.style.display !== 'none');
                 if (!isViewActive && !isModalOpen) return '';
 
                 const p = this.activePeriod;
@@ -40337,11 +40988,11 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                 activePeriod: 'semana',
                 activeUnderutilizedFilter: 'todos',
 
-                // 1. ANÁLISIS DE MÓDULOS SUBUTILIZADOS (Sección 2)
+                // 1. ANÁLISIS DE MÓDULOS SUBUTILIZADOS (Sección 2 - Exclusivo Asesores/Agentes)
                 getUnderutilizedModules: function (period = 'semana') {
                     const p = period || this.activePeriod || 'semana';
                     const mult = p === 'dia' ? 0.22 : (p === 'mes' ? 3.8 : (p === '180dias' ? 18.5 : 1.0));
-                    const totalAdvisors = 86;
+                    const totalAdvisors = 41;
 
                     const allModules = [
                         { id: 'directorio', nombre: 'Directorio de Escalamiento', icono: 'fa-address-book', baseUsers: 16, baseOps: 142, tendencia: '-8.5%', clasificacion: 'baja', nivel: '🔴 Utilización Baja', color: 'text-rose-400', badgeClass: 'bg-rose-500/20 text-rose-300 border-rose-500/30', motivo: 'Módulo aislado en pestaña independiente; bajo tránsito en operación.', accion: 'Integrar accesos contextuales directamente en Derivaciones y Tickets.' },
@@ -40468,7 +41119,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                 getProductivityRanking: function () {
                     return [
                         {
-                            rango: '#1 - #24',
+                            rango: '#1 - #12',
                             cohorte: 'Cohorte Avanzada (Asesores Senior / Referentes)',
                             herramientasScore: '94/100',
                             adopcionSla: '96.5%',
@@ -40476,12 +41127,12 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                             frecuenciaUso: 'Muy Alta (48.2 ops/turno)',
                             clasificacion: 'Alta Productividad Operativa',
                             badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
-                            totalAsesores: 24,
-                            pctPlanta: '28%',
+                            totalAsesores: 12,
+                            pctPlanta: '29%',
                             observacion: 'Uso fluido de herramientas con tiempos de atención estables y 0 silencios prolongados.'
                         },
                         {
-                            rango: '#25 - #68',
+                            rango: '#13 - #32',
                             cohorte: 'Cohorte Estándar (Operación Consolidada)',
                             herramientasScore: '82/100',
                             adopcionSla: '88.2%',
@@ -40489,12 +41140,12 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                             frecuenciaUso: 'Alta (36.5 ops/turno)',
                             clasificacion: 'Media Productividad Operativa',
                             badge: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
-                            totalAsesores: 44,
-                            pctPlanta: '51%',
+                            totalAsesores: 20,
+                            pctPlanta: '49%',
                             observacion: 'Operación sólida; oportunidad de impulsar adopción de acuerdos de voz y tickets de avería.'
                         },
                         {
-                            rango: '#69 - #86',
+                            rango: '#33 - #41',
                             cohorte: 'Cohorte en Acompañamiento (Nuevos Ingresos / OJT)',
                             herramientasScore: '64/100',
                             adopcionSla: '68.0%',
@@ -40502,8 +41153,8 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                             frecuenciaUso: 'Media-Baja (21.4 ops/turno)',
                             clasificacion: 'Baja Productividad Operativa',
                             badge: 'bg-rose-500/20 text-rose-300 border-rose-500/30',
-                            totalAsesores: 18,
-                            pctPlanta: '21%',
+                            totalAsesores: 9,
+                            pctPlanta: '22%',
                             observacion: 'Requieren refuerzo en navegación rápida y práctica asistida con temporizador de llamadas.'
                         }
                     ];
@@ -41420,6 +42071,11 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                 if (modalBody) modalBody.innerHTML = '';
                 return;
             }
+            // SPRINT B.1: Guardia de Visibilidad - No renderizar Vista 360 si no está visible
+            if (!targetOverride && window.CronosVisibilityGuard && !window.CronosVisibilityGuard.isVisible('vista-360')) {
+                console.log("[renderVistaEjecutiva360] Renderizado omitido: Vista Ejecutiva 360° no está visible en pantalla.");
+                return;
+            }
             const currentUser = window.CRONOS_CURRENT_USER || (typeof UserManager !== 'undefined' && UserManager.getCurrentUser ? UserManager.getCurrentUser() : null);
             const isAsesor = (typeof isRoleAsesor === 'function') ? isRoleAsesor(currentUser) : (currentUser ? String(currentUser.rol || '').toLowerCase().includes('asesor') : true);
             if (isAsesor || (typeof hasPermission === 'function' && !hasPermission('vista_360'))) {
@@ -41437,11 +42093,11 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
             const modalBody = document.getElementById('executive-360-body');
 
             // Determinar estados de visualización (Vista principal vs Modal)
-            const isModalOpen = (window.CronosExecutive360 && window.CronosExecutive360.isOpen) || 
-                                (modal && !modal.classList.contains('hidden') && modal.style.display !== 'none');
+            const isModalOpen = (window.CronosExecutive360 && window.CronosExecutive360.isOpen) ||
+                (modal && !modal.classList.contains('hidden') && modal.style.display !== 'none');
             const contentExec = document.getElementById('content-executive-360');
             const isViewActive = (window.activeModule === 'vista-360' || window.currentView === 'vista-360') ||
-                                 (contentExec && !contentExec.classList.contains('hidden') && contentExec.style.display !== 'none');
+                (contentExec && !contentExec.classList.contains('hidden') && contentExec.style.display !== 'none');
 
             // DETERMINACIÓN DEL CONTENEDOR DESTINO ÚNICO (Eliminación de doble inyección)
             let targetEl = targetOverride;
@@ -41667,14 +42323,14 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
             let proactiveData = null;
             let proactiveFiltered = null;
 
-            
+
             // SPRINT 2: MODULARIZACIÓN POR PESTAÑAS EJECUTIVAS EN VISTA 360°
             window.CRONOS_360_ACTIVE_TAB = window.CRONOS_360_ACTIVE_TAB || 'general';
             const active360Tab = window.CRONOS_360_ACTIVE_TAB;
 
             const headerBannerHtml = `
                 <!-- Encabezado del Módulo Ejecutivo 360° -->
-                <div class="bg-gradient-to-r from-slate-950 via-[#1E1E24] to-slate-900 text-white p-6 rounded-2xl shadow-xl border border-orange-500/30 flex flex-col md:flex-row items-center justify-between gap-4 relative overflow-hidden">
+                <div class="bg-gradient-to-r from-slate-950 via-[#0F0908] to-slate-900 text-white p-6 rounded-2xl shadow-xl border border-orange-500/30 flex flex-col md:flex-row items-center justify-between gap-4 relative overflow-hidden">
                     <div class="absolute -right-12 -top-12 w-64 h-64 bg-win-orange/10 rounded-full blur-3xl pointer-events-none"></div>
                     <div class="flex items-center gap-4 z-10">
                         <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-win-orange to-amber-600 text-white flex items-center justify-center text-3xl font-black shadow-lg shadow-orange-500/30 shrink-0">
@@ -42124,7 +42780,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         </div>
 
                         <!-- 6. CRUCE CON CALIDAD (5 cols) -->
-                        <div class="lg:col-span-5 bg-gradient-to-br from-slate-900 via-[#1E1E24] to-slate-950 text-white p-5 rounded-2xl border border-slate-800 shadow-md flex flex-col justify-between space-y-3">
+                        <div class="lg:col-span-5 bg-gradient-to-br from-slate-900 via-[#0F0908] to-slate-950 text-white p-5 rounded-2xl border border-slate-800 shadow-md flex flex-col justify-between space-y-3">
                             <div>
                                 <div class="flex items-center justify-between">
                                     <span class="text-[11px] font-black uppercase tracking-wider text-amber-300 flex items-center gap-2">
@@ -42419,10 +43075,10 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         </div>
                         <div class="grid grid-cols-6 sm:grid-cols-12 gap-1.5 text-center">
                             ${[
-                    { h: '08h', v: 12 }, { h: '09h', v: 45 }, { h: '10h', v: 88 }, { h: '11h', v: 95 },
-                    { h: '12h', v: 76 }, { h: '13h', v: 62 }, { h: '14h', v: 70 }, { h: '15h', v: 85 },
-                    { h: '16h', v: 92 }, { h: '17h', v: 100 }, { h: '18h', v: 84 }, { h: '19h', v: 55 }
-                ].map(item => `
+                        { h: '08h', v: 12 }, { h: '09h', v: 45 }, { h: '10h', v: 88 }, { h: '11h', v: 95 },
+                        { h: '12h', v: 76 }, { h: '13h', v: 62 }, { h: '14h', v: 70 }, { h: '15h', v: 85 },
+                        { h: '16h', v: 92 }, { h: '17h', v: 100 }, { h: '18h', v: 84 }, { h: '19h', v: 55 }
+                    ].map(item => `
                                 <div class="p-2 rounded-xl border border-slate-200/60 flex flex-col items-center justify-center ${item.v >= 90 ? 'bg-orange-500 text-white font-black shadow-xs' : (item.v >= 70 ? 'bg-orange-100 text-orange-950 font-bold' : 'bg-slate-50 text-slate-700')}">
                                     <span class="text-[9px] opacity-80">${item.h}</span>
                                     <span class="text-xs font-mono">${item.v}%</span>
@@ -42864,7 +43520,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     </div>
 
                     <!-- 3. PANEL PARA FORMACIÓN Y CALIDAD (ASESORES QUE REQUIEREN ACOMPAÑAMIENTO) -->
-                    <div class="bg-gradient-to-br from-slate-900 via-[#1E1E24] to-slate-950 text-white rounded-2xl p-5 border border-slate-800 space-y-4 shadow-md">
+                    <div class="bg-gradient-to-br from-slate-900 via-[#0F0908] to-slate-950 text-white rounded-2xl p-5 border border-slate-800 space-y-4 shadow-md">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
                             <div>
                                 <div class="flex items-center gap-2.5 flex-wrap">
@@ -43443,7 +44099,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         </div>
 
                         <!-- 6. CRUCE CON CALIDAD (5 cols) -->
-                        <div class="lg:col-span-5 bg-gradient-to-br from-slate-900 via-[#1E1E24] to-slate-950 text-white p-5 rounded-2xl border border-slate-800 shadow-md flex flex-col justify-between space-y-3">
+                        <div class="lg:col-span-5 bg-gradient-to-br from-slate-900 via-[#0F0908] to-slate-950 text-white p-5 rounded-2xl border border-slate-800 shadow-md flex flex-col justify-between space-y-3">
                             <div>
                                 <div class="flex items-center justify-between">
                                     <span class="text-[11px] font-black uppercase tracking-wider text-amber-300 flex items-center gap-2">
@@ -43738,10 +44394,10 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         </div>
                         <div class="grid grid-cols-6 sm:grid-cols-12 gap-1.5 text-center">
                             ${[
-                    { h: '08h', v: 12 }, { h: '09h', v: 45 }, { h: '10h', v: 88 }, { h: '11h', v: 95 },
-                    { h: '12h', v: 76 }, { h: '13h', v: 62 }, { h: '14h', v: 70 }, { h: '15h', v: 85 },
-                    { h: '16h', v: 92 }, { h: '17h', v: 100 }, { h: '18h', v: 84 }, { h: '19h', v: 55 }
-                ].map(item => `
+                        { h: '08h', v: 12 }, { h: '09h', v: 45 }, { h: '10h', v: 88 }, { h: '11h', v: 95 },
+                        { h: '12h', v: 76 }, { h: '13h', v: 62 }, { h: '14h', v: 70 }, { h: '15h', v: 85 },
+                        { h: '16h', v: 92 }, { h: '17h', v: 100 }, { h: '18h', v: 84 }, { h: '19h', v: 55 }
+                    ].map(item => `
                                 <div class="p-2 rounded-xl border border-slate-200/60 flex flex-col items-center justify-center ${item.v >= 90 ? 'bg-orange-500 text-white font-black shadow-xs' : (item.v >= 70 ? 'bg-orange-100 text-orange-950 font-bold' : 'bg-slate-50 text-slate-700')}">
                                     <span class="text-[9px] opacity-80">${item.h}</span>
                                     <span class="text-xs font-mono">${item.v}%</span>
@@ -43815,7 +44471,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                 // REUTILIZACIÓN DE CONTENEDOR: Solo actualizar el contenedor interior sin reconstruir el banner (0 ms)
                 existingTabContent.innerHTML = activeTabContentHtml;
                 if (active360Tab === 'riesgo' && window.CronosProactiveAlerts && typeof window.CronosProactiveAlerts.renderUI === 'function') {
-                    try { window.CronosProactiveAlerts.renderUI(); } catch (e) {}
+                    try { window.CronosProactiveAlerts.renderUI(); } catch (e) { }
                 }
                 return activeTabContentHtml;
             }
@@ -43868,7 +44524,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
             if (window._vista360TabCache[tabId]) {
                 contentEl.innerHTML = window._vista360TabCache[tabId];
                 if (tabId === 'riesgo' && window.CronosProactiveAlerts && typeof window.CronosProactiveAlerts.renderUI === 'function') {
-                    try { window.CronosProactiveAlerts.renderUI(); } catch (e) {}
+                    try { window.CronosProactiveAlerts.renderUI(); } catch (e) { }
                 }
             } else {
                 renderVistaEjecutiva360();
@@ -43878,7 +44534,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
         // Aliases globales para compatibilidad total
         window.renderVistaEjecutiva360 = renderVistaEjecutiva360;
         window.renderExecutive360 = renderVistaEjecutiva360;
-window.CronosPDFGenerator = window.CronosPDFGenerator || {};
+        window.CronosPDFGenerator = window.CronosPDFGenerator || {};
         window.CronosPDFGenerator.generateExecutiveReport = function (rangeOverride) {
             const activePeriod = String(rangeOverride || window.CRONOS_EXECUTIVE_SLA_PERIOD || (window.CronosGlobalFilter && window.CronosGlobalFilter.currentPeriod) || 'mes').toLowerCase();
             const periodLabels = {
