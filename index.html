@@ -1654,6 +1654,8 @@ Año02026
 
             <!-- Tabla de Registros -->
             <div class="flex-1 overflow-y-auto p-4 sm:p-6">
+                <!-- BANNER: AVISO OPERATIVO DE ENCUESTA ACTIVA -->
+                <div id="notif-survey-announcement" class="mb-4"></div>
                 <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-xs">
                     <table class="w-full text-left text-xs text-slate-700 border-collapse">
                         <thead
@@ -6220,6 +6222,22 @@ Año02026
                         </div>
                     </div>
 
+                    
+                    <!-- NAVEGACIÓN SUB-PESTAÑAS GESTIÓN ADMINISTRATIVA -->
+                    <div class="flex items-center gap-2 border-b border-slate-200 pb-3" id="admin-subtabs-nav-bar">
+                        <button type="button" id="tab-btn-admin-usuarios" onclick="CronosAnnouncementManager.switchAdminTab('usuarios')"
+                            class="px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-2 transition bg-indigo-600 text-white shadow-sm cursor-pointer">
+                            <i class="fa-solid fa-users-gear"></i> Cuentas y Permisos
+                        </button>
+                        <button type="button" id="tab-btn-admin-comunicados" onclick="CronosAnnouncementManager.switchAdminTab('comunicados')"
+                            class="px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-2 transition bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 cursor-pointer">
+                            <i class="fa-solid fa-bullhorn text-win-orange"></i> Comunicados y Mensajes
+                            <span id="badge-admin-comunicados-activos" class="bg-amber-100 text-amber-800 text-[10px] px-2 py-0.5 rounded-full font-black">2 Activos</span>
+                        </button>
+                    </div>
+
+                    <div id="subtab-content-admin-usuarios" class="space-y-6">
+
                     <!-- ESTADÍSTICAS DE USO: ACTIVIDAD DE USUARIOS (5 TARJETAS) -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
 
@@ -6424,6 +6442,189 @@ Año02026
                             </div>
                         </div>
                     </div>
+
+                    </div>
+                    <!-- ========================================================================= -->
+                    <!-- SUB-PESTAÑA ADMINISTRATIVA: CENTRAL DE COMUNICADOS Y EXPERIENCIA CRONOS    -->
+                    <!-- ========================================================================= -->
+                    <div id="subtab-content-admin-comunicados" class="hidden space-y-6">
+
+                        <!-- Encabezado y Toolbar de Comunicados -->
+                        <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white p-6 rounded-2xl shadow-xl border border-slate-700 flex flex-col md:flex-row items-center justify-between gap-4">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-2xl bg-win-orange text-white flex items-center justify-center text-2xl font-black shadow-lg shadow-orange-500/30 shrink-0">
+                                    <i class="fa-solid fa-bullhorn"></i>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <h3 class="text-xl font-black text-white tracking-wide">COMUNICADOS Y MENSAJES OPERATIVOS</h3>
+                                        <span class="bg-emerald-500 text-white font-black text-[9px] px-2 py-0.5 rounded-full uppercase">Control Centralizado</span>
+                                    </div>
+                                    <p class="text-xs text-slate-300 mt-1">
+                                        Administración de bienvenida, recordatorios de CRONOS SLA, comunicados, encuestas y alertas con segmentación por rol.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <button type="button" onclick="CronosAnnouncementManager.openEditModal()"
+                                    class="bg-win-orange hover:bg-win-orangeHover text-white px-4 py-2.5 rounded-xl text-xs font-black shadow-md transition flex items-center gap-2 cursor-pointer">
+                                    <i class="fa-solid fa-plus"></i> Nuevo Mensaje
+                                </button>
+                                <button type="button" onclick="CronosAnnouncementManager.exportExcel()"
+                                    class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2.5 rounded-xl text-xs font-bold shadow-md transition flex items-center gap-2 cursor-pointer">
+                                    <i class="fa-solid fa-file-excel"></i> Exportar Excel
+                                </button>
+                                <button type="button" onclick="CronosAnnouncementManager.exportCSV()"
+                                    class="bg-slate-700 hover:bg-slate-600 text-white px-3.5 py-2.5 rounded-xl text-xs font-bold shadow-md transition flex items-center gap-2 cursor-pointer">
+                                    <i class="fa-solid fa-file-csv"></i> Exportar CSV
+                                </button>
+                                <button type="button" onclick="CronosAnnouncementManager.refreshData()"
+                                    class="bg-white/10 hover:bg-white/20 text-white p-2.5 rounded-xl text-xs font-bold transition cursor-pointer" title="Refrescar Datos">
+                                    <i class="fa-solid fa-rotate"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- TABLA: MENSAJES Y COMUNICADOS CONFIGURADOS -->
+                        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                            <div class="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between">
+                                <div>
+                                    <h4 class="text-sm font-black text-slate-900 uppercase tracking-wide flex items-center gap-2">
+                                        <i class="fa-solid fa-list-check text-indigo-600"></i> Mensajes y Recordatorios Configurados
+                                    </h4>
+                                    <p class="text-xs text-slate-500 mt-0.5">Activa, edita, duplica o suspende avisos operativos en tiempo real.</p>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-xs border-collapse">
+                                    <thead class="bg-slate-50 text-slate-600 font-extrabold uppercase text-[10px] tracking-wider border-b border-slate-200">
+                                        <tr>
+                                            <th class="p-3.5">Tipo</th>
+                                            <th class="p-3.5">Título / Subtítulo</th>
+                                            <th class="p-3.5">Perfiles Objetivo</th>
+                                            <th class="p-3.5">Vigencia</th>
+                                            <th class="p-3.5 text-center">Estado</th>
+                                            <th class="p-3.5 text-center">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-admin-announcements" class="divide-y divide-slate-100 font-medium">
+                                        <!-- Inyectado dinámicamente por CronosAnnouncementManager -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN: ANALÍTICA DE OPINIÓN DE ASESORES (NPS, CSAT, CES) -->
+                        <div class="pt-2">
+                            <div class="flex items-center justify-between mb-3">
+                                <div>
+                                    <h4 class="text-sm font-black text-slate-900 uppercase tracking-wide flex items-center gap-2">
+                                        <i class="fa-solid fa-chart-pie text-win-orange"></i> Analítica de Satisfacción y Experiencia
+                                    </h4>
+                                    <p class="text-xs text-slate-500 mt-0.5">Métricas consolidadas de las respuestas enviadas por los asesores.</p>
+                                </div>
+                            </div>
+
+                            <!-- Tarjetas de Métricas KPI en Tiempo Real (4 Tarjetas) -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                                <!-- Card 1: NPS -->
+                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-[10px] font-black text-slate-500 uppercase tracking-wider">Net Promoter Score (NPS)</span>
+                                        <span id="kpi-nps-badge" class="px-2 py-0.5 rounded-full text-[9px] font-black bg-emerald-100 text-emerald-800">Excelente</span>
+                                    </div>
+                                    <div class="flex items-baseline gap-2 mt-2">
+                                        <div id="kpi-nps-score" class="text-3xl font-black text-slate-900">+75</div>
+                                        <span class="text-xs font-bold text-slate-400">Score (-100 a +100)</span>
+                                    </div>
+                                    <div class="mt-3 pt-3 border-t border-slate-100 text-[11px] text-slate-600 flex items-center justify-between font-bold">
+                                        <span class="text-emerald-600">Prom: <span id="kpi-nps-promoters">80%</span></span>
+                                        <span class="text-amber-600">Pas: <span id="kpi-nps-passives">15%</span></span>
+                                        <span class="text-rose-600">Det: <span id="kpi-nps-detractors">5%</span></span>
+                                    </div>
+                                </div>
+
+                                <!-- Card 2: CSAT -->
+                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-[10px] font-black text-slate-500 uppercase tracking-wider">Satisfacción (CSAT %)</span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                                    </div>
+                                    <div class="flex items-baseline gap-2 mt-2">
+                                        <div id="kpi-csat-pct" class="text-3xl font-black text-emerald-600">92.5%</div>
+                                        <span class="text-xs font-bold text-slate-400">Satisfecho / Muy Sat.</span>
+                                    </div>
+                                    <div class="mt-3 pt-3 border-t border-slate-100 text-[11px] text-slate-500 font-medium">
+                                        <span id="kpi-csat-count">0</span> de <span id="kpi-csat-total">0</span> asesores satisfechos
+                                    </div>
+                                </div>
+
+                                <!-- Card 3: CES -->
+                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-[10px] font-black text-slate-500 uppercase tracking-wider">Esfuerzo (CES Promedio)</span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+                                    </div>
+                                    <div class="flex items-baseline gap-2 mt-2">
+                                        <div id="kpi-ces-avg" class="text-3xl font-black text-indigo-600">4.5</div>
+                                        <span class="text-xs font-bold text-slate-400">Escala de 1 a 5</span>
+                                    </div>
+                                    <div class="mt-3 pt-3 border-t border-slate-100 text-[11px] text-slate-500 font-medium">
+                                        Facilidad para encontrar información
+                                    </div>
+                                </div>
+
+                                <!-- Card 4: Participación -->
+                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-[10px] font-black text-slate-500 uppercase tracking-wider">Tasa Participación</span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-win-orange"></span>
+                                    </div>
+                                    <div class="flex items-baseline gap-2 mt-2">
+                                        <div id="kpi-participation-pct" class="text-3xl font-black text-slate-900">100%</div>
+                                        <span class="text-xs font-bold text-slate-400">Cobertura</span>
+                                    </div>
+                                    <div class="mt-3 pt-3 border-t border-slate-100 text-[11px] text-slate-500 font-medium">
+                                        <span id="kpi-participation-answered">0</span> respuestas registradas
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TABLA: HISTORIAL DE RESPUESTAS DE ASESORES -->
+                        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                            <div class="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between">
+                                <div>
+                                    <h4 class="text-sm font-black text-slate-900 uppercase tracking-wide flex items-center gap-2">
+                                        <i class="fa-solid fa-comments text-emerald-600"></i> Respuestas y Feedback de Asesores
+                                    </h4>
+                                    <p class="text-xs text-slate-500 mt-0.5">Detalle individual de opiniones sin mostrar términos técnicos al asesor.</p>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-xs border-collapse">
+                                    <thead class="bg-slate-50 text-slate-600 font-extrabold uppercase text-[10px] tracking-wider border-b border-slate-200">
+                                        <tr>
+                                            <th class="p-3">Fecha</th>
+                                            <th class="p-3">Asesor / Usuario</th>
+                                            <th class="p-3">Rol</th>
+                                            <th class="p-3 text-center">P1 (Recomienda)</th>
+                                            <th class="p-3 text-center">P2 (Satisfacción)</th>
+                                            <th class="p-3 text-center">P3 (Facilidad)</th>
+                                            <th class="p-3">P4 (Módulo)</th>
+                                            <th class="p-3">P5 (Utilidad)</th>
+                                            <th class="p-3">P6 (Mejora Prioritaria)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-admin-survey-responses" class="divide-y divide-slate-100 font-medium">
+                                        <!-- Inyectado dinámicamente -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
 
                 <!-- ========================================================================= -->
@@ -18167,6 +18368,17 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             const canAud = Boolean(!isAsesor && (permissions.auditoria || isAdminOrSup));
             const canSLA = Boolean(!isAsesor && (permissions.analitica_sla || isAdminOrSup));
             const canUsr = Boolean(!isAsesor && (permissions.gestion_usuarios || permissions.gestionUsuarios || isAdminOrSup));
+            // Control de visibilidad de Comunicados y Mensajes Operativos:
+            // Visible para: Administrador, Supervisor, Coordinador, Calidad, Formador (Oculto para Asesor/Agente)
+            const tabAdminComms = document.getElementById('tab-btn-admin-comunicados');
+            if (tabAdminComms) {
+                const canManageComms = !isAsesor && (isAdminOrSup || 
+                    String(userRole).toLowerCase().includes('coordinador') || 
+                    String(userRole).toLowerCase().includes('calidad') || 
+                    String(userRole).toLowerCase().includes('formador') ||
+                    (window.CronosAuthManager && window.CronosAuthManager.canManageAnnouncements && window.CronosAuthManager.canManageAnnouncements()));
+                tabAdminComms.style.display = canManageComms ? '' : 'none';
+            }
             const canExp = Boolean(!isAsesor && (permissions.exportExcel || isAdminOrSup));
             const can360 = Boolean(!isAsesor && !window.CRONOS_SUSPEND_VISTA_360 && (permissions.vista_360 || permissions.executive360 || permissions.vistaEjecutiva360));
             const canAbout = Boolean(permissions.acerca_de || permissions.acercaDe || permissions.about);
@@ -21830,6 +22042,9 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             if (typeof checkAndShowWelcomeModal === 'function') {
                 setTimeout(() => {
                     checkAndShowWelcomeModal();
+                    if (window.CronosSurveyManager && typeof window.CronosSurveyManager.checkAndShowAdvisorPrompt === 'function') {
+                        setTimeout(() => { window.CronosSurveyManager.checkAndShowAdvisorPrompt(); }, 800);
+                    }
                 }, 350);
             }
         }
@@ -23152,6 +23367,9 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         function closeWelcomeModal() {
             try {
                 sessionStorage.setItem('cronos_welcome_shown', 'true');
+                if (window.CronosSurveyManager && typeof window.CronosSurveyManager.checkAndShowAdvisorPrompt === 'function') {
+                    setTimeout(() => { window.CronosSurveyManager.checkAndShowAdvisorPrompt(); }, 400);
+                }
                 const welcomeModal = document.getElementById('modal-welcome-cronos');
                 if (welcomeModal) {
                     welcomeModal.classList.add('hidden');
@@ -25130,14 +25348,14 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 <span
                     class="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-900 inline-block mb-1">PLATAFORMA
                     OFICIAL</span>
-                <h3 class="text-xl font-black tracking-wide text-white">BIENVENIDO A CRONOS FID</h3>
-                <p class="text-xs text-orange-200/90 font-medium mt-0.5">Centro de Recursos Operativos para Negociación
+                <h3 id="welcome-modal-title" class="text-xl font-black tracking-wide text-white">BIENVENIDO A CRONOS FID</h3>
+                <p id="welcome-modal-subtitle" class="text-xs text-orange-200/90 font-medium mt-0.5">Centro de Recursos Operativos para Negociación
                     y Fidelización</p>
             </div>
 
             <div class="p-6 space-y-4">
                 <div class="bg-orange-50/70 border border-orange-200/70 rounded-xl p-4 text-center">
-                    <p class="text-sm font-bold text-slate-800 leading-relaxed">
+                    <p id="welcome-modal-message" class="text-sm font-bold text-slate-800 leading-relaxed">
                         Esta herramienta te ayudará a mejorar tu tiempo en llamada.
                     </p>
                 </div>
@@ -25164,15 +25382,15 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     class="w-14 h-14 mx-auto rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center text-2xl font-black shadow-lg shadow-amber-500/30 mb-2">
                     <i class="fa-solid fa-stopwatch-20"></i>
                 </div>
-                <span
+                <span id="reminder-sla-badge"
                     class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-win-orange text-white inline-block mb-1">RECORDATORIO
                     OPERATIVO</span>
-                <h3 class="text-lg font-black tracking-wide text-white">TIMER CRONOS SLA</h3>
+                <h3 id="reminder-sla-title" class="text-lg font-black tracking-wide text-white">TIMER CRONOS SLA</h3>
             </div>
 
             <div class="p-6 space-y-4">
                 <div class="bg-amber-50 border-2 border-amber-300 rounded-xl p-4 text-center">
-                    <p class="text-xs sm:text-sm font-black text-amber-950 leading-relaxed tracking-wide uppercase">
+                    <p id="reminder-sla-message" class="text-xs sm:text-sm font-black text-amber-950 leading-relaxed tracking-wide uppercase">
                         NO OLVIDES USAR EL TIMER: CRONOS SLA PARA MEJORAR TUS TIEMPOS EN ESPERA Y EVITAR PENALIZACIONES
                         DE CALIDAD.
                     </p>
@@ -25318,6 +25536,287 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
     </div>
 
     <!-- ========================================================================= -->
+    
+    <!-- ========================================================================= -->
+    <!-- MODAL: EXPERIENCIA CRONOS - AVISO OPERATIVO INFORMATIVO (ASESOR)          -->
+    <!-- ========================================================================= -->
+    <div id="modal-experiencia-aviso" onclick="if(event.target === this) CronosAnnouncementManager.dismissSurveyPromptLater()"
+        class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 hidden animate-pop">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-md w-full overflow-hidden text-center">
+            <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white p-6 relative border-b-2 border-win-orange">
+                <div class="w-14 h-14 mx-auto rounded-2xl bg-win-orange text-white flex items-center justify-center text-2xl font-black shadow-lg shadow-orange-500/30 mb-3">
+                    <i class="fa-solid fa-comments"></i>
+                </div>
+                <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-win-orange text-white inline-block mb-1">COMUNICADO OPERATIVO</span>
+                <h3 class="text-lg font-black tracking-wide text-white">TU OPINIÓN ES IMPORTANTE</h3>
+                <p class="text-xs text-orange-200/90 font-medium mt-0.5">Queremos conocer tu experiencia con CRONOS FID</p>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="bg-orange-50/70 border border-orange-200/70 rounded-xl p-4 text-center">
+                    <p class="text-xs sm:text-sm font-bold text-slate-800 leading-relaxed">
+                        Te invitamos a responder una breve consulta (menos de 2 minutos) para ayudarnos a seguir mejorando tus herramientas diarias.
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 gap-3 pt-2">
+                    <button type="button" onclick="CronosAnnouncementManager.dismissSurveyPromptLater()"
+                        class="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-xs uppercase tracking-wider transition cursor-pointer">
+                        Más tarde
+                    </button>
+                    <button type="button" onclick="CronosAnnouncementManager.openSurveyForm()"
+                        class="w-full py-2.5 px-4 bg-win-orange hover:bg-win-orangeHover text-white rounded-xl font-black text-xs uppercase tracking-wider shadow-md active:scale-95 transition cursor-pointer flex items-center justify-center gap-1.5">
+                        <span>Responder</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- MODAL: OPINIÓN DEL ASESOR - FORMULARIO DE CONSULTA (< 2 MIN)              -->
+    <!-- ========================================================================= -->
+    <div id="modal-experiencia-cronos" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9999] flex items-center justify-center p-3 sm:p-4 hidden animate-pop overflow-y-auto">
+        <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-2xl w-full overflow-hidden my-auto">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-5 sm:p-6 flex items-center justify-between border-b-2 border-win-orange relative">
+                <div class="flex items-center gap-3.5 z-10">
+                    <div class="w-12 h-12 rounded-2xl bg-win-orange text-white flex items-center justify-center text-xl font-black shadow-lg shadow-orange-500/30 shrink-0">
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[9px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950">OPINIÓN DEL ASESOR</span>
+                            <span class="text-[9px] font-extrabold text-orange-200"><i class="fa-regular fa-clock"></i> &lt; 2 min</span>
+                        </div>
+                        <h3 id="survey-modal-title" class="text-base sm:text-lg font-black tracking-tight text-white mt-0.5">Tu opinión sobre CRONOS FID</h3>
+                    </div>
+                </div>
+                <button type="button" onclick="CronosAnnouncementManager.closeSurveyForm()"
+                    class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition cursor-pointer z-10" title="Cerrar">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+
+            <!-- Form Container -->
+            <div id="survey-form-content" class="p-5 sm:p-6 space-y-6 max-h-[75vh] overflow-y-auto">
+                <!-- PREGUNTA 1: Recomendación (0-10) -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5">
+                    <div class="flex items-start gap-2.5 mb-3">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5">1</span>
+                        <div>
+                            <div class="text-[10px] font-black uppercase tracking-wider text-indigo-600">Pregunta 1 de 6</div>
+                            <h4 class="text-xs sm:text-sm font-bold text-slate-800">¿Qué tan probable es que recomiendes CRONOS FID a un compañero?</h4>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-11 gap-1 sm:gap-1.5 mt-3" id="survey-scale-group-p1">
+                        <!-- Botones 0 a 10 generados dinámicamente -->
+                    </div>
+                    <div class="flex items-center justify-between text-[10px] text-slate-500 font-extrabold mt-2 px-1">
+                        <span class="text-rose-600 font-bold">0: Nada probable</span>
+                        <span class="text-emerald-600 font-bold">10: Muy probable</span>
+                    </div>
+                    <input type="hidden" id="survey-ans-q1" value="">
+                </div>
+
+                <!-- PREGUNTA 2: Satisfacción General (1-5) -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5">
+                    <div class="flex items-start gap-2.5 mb-3">
+                        <span class="w-6 h-6 rounded-full bg-emerald-600 text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5">2</span>
+                        <div>
+                            <div class="text-[10px] font-black uppercase tracking-wider text-emerald-600">Pregunta 2 de 6</div>
+                            <h4 class="text-xs sm:text-sm font-bold text-slate-800">¿Cómo calificarías tu satisfacción general con CRONOS FID?</h4>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mt-3" id="survey-options-group-p2">
+                        <!-- Opciones 1 a 5 generadas dinámicamente -->
+                    </div>
+                    <input type="hidden" id="survey-ans-q2" value="">
+                </div>
+
+                <!-- PREGUNTA 3: Facilidad de búsqueda (1-5) -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5">
+                    <div class="flex items-start gap-2.5 mb-3">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5">3</span>
+                        <div>
+                            <div class="text-[10px] font-black uppercase tracking-wider text-sky-600">Pregunta 3 de 6</div>
+                            <h4 class="text-xs sm:text-sm font-bold text-slate-800">¿Qué tan fácil te resulta encontrar la información que necesitas dentro de CRONOS FID?</h4>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-5 gap-1.5 sm:gap-2 mt-3" id="survey-options-group-p3">
+                        <!-- Opciones 1 a 5 generadas dinámicamente -->
+                    </div>
+                    <input type="hidden" id="survey-ans-q3" value="">
+                </div>
+
+                <!-- PREGUNTA 4: Módulo más utilizado -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5">
+                    <div class="flex items-start gap-2.5 mb-3">
+                        <span class="w-6 h-6 rounded-full bg-purple-600 text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5">4</span>
+                        <div>
+                            <div class="text-[10px] font-black uppercase tracking-wider text-purple-600">Pregunta 4 de 6</div>
+                            <h4 class="text-xs sm:text-sm font-bold text-slate-800">¿Qué módulo utilizas con mayor frecuencia?</h4>
+                        </div>
+                    </div>
+                    <select id="survey-ans-q4" class="w-full mt-2 p-2.5 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-win-orange">
+                        <option value="">-- Selecciona el módulo principal --</option>
+                        <option value="ACUERDOS DE VOZ (GRABACIÓN)">ACUERDOS DE VOZ (GRABACIÓN)</option>
+                        <option value="DERIVACIONES FIDELIZACIÓN">DERIVACIONES FIDELIZACIÓN</option>
+                        <option value="CRONOS SLA (TIMER)">CRONOS SLA (TIMER)</option>
+                        <option value="CALCULADORA DE PENALIDAD">CALCULADORA DE PENALIDAD</option>
+                        <option value="CLAVE SECRETA">CLAVE SECRETA</option>
+                        <option value="TIPIFICACIONES Y RETENCIONES">TIPIFICACIONES Y RETENCIONES</option>
+                        <option value="GESTIÓN DE TICKETS">GESTIÓN DE TICKETS</option>
+                        <option value="AUDITORÍA Y DASHBOARD">AUDITORÍA Y DASHBOARD</option>
+                    </select>
+                </div>
+
+                <!-- PREGUNTA 5: Utilidad en gestiones diarias -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5">
+                    <div class="flex items-start gap-2.5 mb-3">
+                        <span class="w-6 h-6 rounded-full bg-amber-600 text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5">5</span>
+                        <div>
+                            <div class="text-[10px] font-black uppercase tracking-wider text-amber-600">Pregunta 5 de 6</div>
+                            <h4 class="text-xs sm:text-sm font-bold text-slate-800">¿Consideras que CRONOS FID te ayuda durante tus gestiones diarias?</h4>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mt-3" id="valor-options-group">
+                        <!-- Opciones generadas dinámicamente -->
+                    </div>
+                    <input type="hidden" id="survey-ans-q5" value="">
+                </div>
+
+                <!-- PREGUNTA 6: Propuesta de mejora prioritaria -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5">
+                    <div class="flex items-start gap-2.5 mb-2">
+                        <span class="w-6 h-6 rounded-full bg-slate-700 text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5">6</span>
+                        <div>
+                            <div class="text-[10px] font-black uppercase tracking-wider text-slate-600">Pregunta 6 de 6</div>
+                            <h4 class="text-xs sm:text-sm font-bold text-slate-800">¿Qué cambio o mejora consideras prioritario en CRONOS FID?</h4>
+                        </div>
+                    </div>
+                    <textarea id="survey-ans-q6" rows="3"
+                        class="w-full mt-2 p-3 bg-white border border-slate-300 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-win-orange leading-relaxed"
+                        placeholder="Escribe aquí tus comentarios, sugerencias o mejoras..."></textarea>
+                </div>
+
+                <!-- Mensaje de error/validación -->
+                <div id="survey-error-msg" class="hidden p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span id="survey-error-text">Por favor completa las preguntas requeridas antes de enviar.</span>
+                </div>
+
+                <!-- Acciones -->
+                <div class="flex items-center justify-end gap-3 pt-2">
+                    <button type="button" onclick="CronosAnnouncementManager.closeSurveyForm()"
+                        class="px-5 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-100 transition cursor-pointer">
+                        Cancelar
+                    </button>
+                    <button type="button" onclick="CronosAnnouncementManager.submitSurveyResponse()"
+                        class="px-6 py-2.5 rounded-xl bg-win-orange hover:bg-win-orangeHover text-white text-xs font-black shadow-md shadow-orange-500/25 active:scale-95 transition cursor-pointer flex items-center gap-2">
+                        <span>Enviar Respuestas</span>
+                        <i class="fa-solid fa-paper-plane text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Success Content -->
+            <div id="survey-success-content" class="p-8 text-center space-y-4 hidden">
+                <div class="w-16 h-16 mx-auto rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl font-black shadow-inner">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h3 class="text-xl font-black text-slate-900">¡Muchas Gracias por tu Feedback!</h3>
+                <p class="text-xs sm:text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
+                    Tus respuestas nos permiten seguir evolucionando CRONOS FID para optimizar tu tiempo operativo.
+                </p>
+                <div class="pt-4">
+                    <button type="button" onclick="CronosAnnouncementManager.closeSurveyForm()"
+                        class="px-6 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-black uppercase tracking-wider transition cursor-pointer">
+                        Volver a CRONOS FID
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- MODAL: CREAR / EDITAR MENSAJE O COMUNICADO (ADMINISTRADOR / GESTIÓN)      -->
+    <!-- ========================================================================= -->
+    <div id="modal-admin-comunicado" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 hidden animate-pop">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-lg w-full overflow-hidden">
+            <div class="bg-slate-900 text-white p-5 flex items-center justify-between border-b-2 border-win-orange">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-win-orange text-white flex items-center justify-center text-lg font-black">
+                        <i class="fa-solid fa-bullhorn"></i>
+                    </div>
+                    <div>
+                        <h3 id="admin-comm-modal-title" class="text-base font-black text-white">Editar Comunicado / Mensaje</h3>
+                        <p class="text-xs text-slate-300">Configuración operativa, vigencia y segmentación</p>
+                    </div>
+                </div>
+                <button type="button" onclick="CronosAnnouncementManager.closeEditModal()" class="text-white/80 hover:text-white cursor-pointer">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <input type="hidden" id="admin-comm-id" value="">
+                
+                <div>
+                    <label class="block text-xs font-black uppercase text-slate-700 mb-1">Tipo de Mensaje</label>
+                    <select id="admin-comm-type" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-bold text-slate-800">
+                        <option value="welcome">Bienvenida (modal-welcome-cronos)</option>
+                        <option value="operational">Recordatorio Operativo (modal-reminder-sla)</option>
+                        <option value="announcement">Comunicado General (notificaciones / banner)</option>
+                        <option value="survey">Encuesta de Experiencia (modal-experiencia-cronos)</option>
+                        <option value="alert">Alerta Especial Operativa</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-black uppercase text-slate-700 mb-1">Título / Asunto</label>
+                    <input type="text" id="admin-comm-title" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-bold text-slate-800" placeholder="Ej: BIENVENIDO A CRONOS FID">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-black uppercase text-slate-700 mb-1">Subtítulo / Encabezado</label>
+                    <input type="text" id="admin-comm-subtitle" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs text-slate-800" placeholder="Ej: Centro de Recursos Operativos para Negociación y Fidelización">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-black uppercase text-slate-700 mb-1">Contenido / Mensaje</label>
+                    <textarea id="admin-comm-content" rows="3" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs text-slate-800" placeholder="Texto del mensaje a mostrar al usuario..."></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-black uppercase text-slate-700 mb-1">Perfiles Objetivo (separados por coma o 'all')</label>
+                    <input type="text" id="admin-comm-roles" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs text-slate-800 font-mono" placeholder="all ó asesor,agente,supervisor">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-black uppercase text-slate-700 mb-1">Fecha de Inicio</label>
+                        <input type="date" id="admin-comm-start" class="w-full border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black uppercase text-slate-700 mb-1">Fecha de Fin</label>
+                        <input type="date" id="admin-comm-end" class="w-full border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800">
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 pt-2">
+                    <input type="checkbox" id="admin-comm-active" class="w-4 h-4 text-win-orange rounded focus:ring-win-orange">
+                    <label for="admin-comm-active" class="text-xs font-black text-slate-800 cursor-pointer">Activar inmediatamente para los perfiles objetivo</label>
+                </div>
+
+                <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+                    <button type="button" onclick="CronosAnnouncementManager.closeEditModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 cursor-pointer">Cancelar</button>
+                    <button type="button" onclick="CronosAnnouncementManager.saveFromModal()" class="px-5 py-2.5 rounded-xl text-xs font-black text-white bg-win-orange hover:bg-win-orangeHover shadow-md cursor-pointer flex items-center gap-1.5">
+                        <i class="fa-solid fa-floppy-disk"></i> Guardar Configuración
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- CAPA CENTRALIZADA DE CONSULTAS SQL, EXPORTACIÓN Y COMPONENTES DESACOPLADOS-->
     <!-- ========================================================================= -->
     <script src="services/sql/kpiQueries.js"></script>
@@ -44784,15 +45283,6 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
         window.CronosExecutive360 = {
             isOpen: false,
             open() {
-                if (window.CRONOS_SUSPEND_VISTA_360) {
-                    if (typeof showToast === 'function') {
-                        showToast('Vista Ejecutiva 360° en optimización técnica temporal. Redirigiendo a Dashboard.', 'info');
-                    }
-                    if (typeof switchTab === 'function') {
-                        switchTab('dashboard');
-                    }
-                    return;
-                }
                 const currentUser = window.CRONOS_CURRENT_USER || (typeof UserManager !== 'undefined' && UserManager.getCurrentUser ? UserManager.getCurrentUser() : null);
                 const isAsesor = (typeof isRoleAsesor === 'function') ? isRoleAsesor(currentUser) : (currentUser ? String(currentUser.rol || '').toLowerCase().includes('asesor') : true);
                 if (isAsesor || (typeof hasPermission === 'function' && !hasPermission('vista_360'))) {
@@ -44846,15 +45336,6 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
 
         // Handler oficial de navegación para Vista Ejecutiva 360°
         window.openExecutive360 = function () {
-            if (window.CRONOS_SUSPEND_VISTA_360) {
-                if (typeof showToast === 'function') {
-                    showToast('Vista Ejecutiva 360° en optimización técnica temporal. Redirigiendo a Dashboard.', 'info');
-                }
-                if (typeof switchTab === 'function') {
-                    switchTab('dashboard');
-                }
-                return;
-            }
             const currentUser = window.CRONOS_CURRENT_USER || (typeof UserManager !== 'undefined' && UserManager.getCurrentUser ? UserManager.getCurrentUser() : null);
             const isAsesor = (typeof isRoleAsesor === 'function') ? isRoleAsesor(currentUser) : (currentUser ? String(currentUser.rol || '').toLowerCase().includes('asesor') : true);
             if (isAsesor || (typeof hasPermission === 'function' && !hasPermission('vista_360'))) {
@@ -44930,7 +45411,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
             `;
         };
 
-        window.showAboutArchitectureInfo = function () {
+        window.openAboutArchitecture = function () {
             const panel = document.getElementById('about-info-dynamic-panel');
             if (!panel) return;
             panel.classList.remove('hidden');
@@ -44950,6 +45431,1136 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
         };
     </script>
 
-</body>
 
+    <!-- ========================================================================= -->
+        <!-- ========================================================================= -->
+        <!-- ========================================================================= -->
+    <!-- SUBSISTEMA: COMUNICADOS, MENSAJES Y EXPERIENCIA CRONOS                    -->
+    <!-- ========================================================================= -->
+    <script>
+    (function () {
+        'use strict';
+
+        const DEFAULT_SURVEY_ID = 'survey-cronos-exp-v1';
+
+        // Estructura unificada de comunicados, mensajes operativos y encuestas (cronos_announcements)
+        const DEFAULT_ANNOUNCEMENTS = [
+            {
+                id: 'msg-welcome-cronos',
+                type: 'welcome', // Bienvenida
+                title: 'BIENVENIDO A CRONOS FID',
+                subtitle: 'Centro de Recursos Operativos para Negociación y Fidelización',
+                content: 'Esta herramienta te ayudará a mejorar tu tiempo en llamada.',
+                badge: 'PLATAFORMA OFICIAL',
+                is_active: false, // Inactivo por defecto según requerimiento operativo
+                start_date: '2026-11-01T00:00:00.000Z',
+                end_date: '2026-12-31T23:59:59.999Z',
+                target_roles: ['Asesor', 'Todos'],
+                created_by: 'Administración'
+            },
+            {
+                id: 'msg-reminder-sla',
+                type: 'operational', // Recordatorio Operativo SLA
+                title: 'TIMER CRONOS SLA',
+                subtitle: '',
+                content: 'NO OLVIDES USAR EL TIMER: CRONOS SLA PARA MEJORAR TUS TIEMPOS EN ESPERA Y EVITAR PENALIZACIONES DE CALIDAD.',
+                badge: 'RECORDATORIO OPERATIVO',
+                is_active: true, // Activo para asesores según requerimiento
+                start_date: '2026-11-01T00:00:00.000Z',
+                end_date: '2026-12-31T23:59:59.999Z',
+                target_roles: ['Asesor'],
+                created_by: 'Administración'
+            },
+            {
+                id: DEFAULT_SURVEY_ID,
+                type: 'survey', // Encuesta
+                title: 'Encuesta de Experiencia CRONOS FID',
+                subtitle: 'Opinión del Asesor',
+                content: 'Queremos conocer tu experiencia utilizando CRONOS FID. La encuesta toma menos de 2 minutos.',
+                badge: 'NUEVA ENCUESTA',
+                is_active: true,
+                start_date: '2026-11-01T00:00:00.000Z',
+                end_date: '2026-12-31T23:59:59.999Z',
+                target_roles: ['Asesor'],
+                created_by: 'Administración'
+            },
+            {
+                id: 'msg-comunicado-oficial',
+                type: 'announcement', // Comunicado
+                title: 'Actualización Operativa CRONOS FID',
+                subtitle: 'Estabilidad y Rendimiento',
+                content: 'Se han optimizado los módulos de navegación, filtros y exportaciones.',
+                badge: 'COMUNICADO',
+                is_active: false,
+                start_date: '2026-11-01T00:00:00.000Z',
+                end_date: '2026-12-31T23:59:59.999Z',
+                target_roles: ['Todos'],
+                created_by: 'Administración'
+            },
+            {
+                id: 'msg-alerta-especial',
+                type: 'alert', // Alerta Especial
+                title: 'Alerta Especial de Operaciones',
+                subtitle: 'Fidelización',
+                content: 'Priorizar atención a solicitudes de Clave Secreta y Retoma de llamadas.',
+                badge: 'ALERTA ESPECIAL',
+                is_active: false,
+                start_date: '2026-11-01T00:00:00.000Z',
+                end_date: '2026-12-31T23:59:59.999Z',
+                target_roles: ['Asesor', 'Supervisor'],
+                created_by: 'Administración'
+            }
+        ];
+
+        const CronosAnnouncementManager = {
+            announcements: [],
+            responses: [],
+            activeSurveyId: DEFAULT_SURVEY_ID,
+            initialized: false,
+
+            // Inicialización resiliente con Supabase y localStorage
+            async init() {
+                try {
+                    await this.loadAnnouncements();
+                    await this.loadResponses();
+                    this.initialized = true;
+                    this.setupAdvisorSurveyUI();
+
+                    // Hook en CronosNotifications para renderizar comunicados activos
+                    if (typeof CronosNotifications !== 'undefined') {
+                        const origOpen = CronosNotifications.openModal;
+                        const self = this;
+                        CronosNotifications.openModal = function() {
+                            if (origOpen) origOpen.apply(this, arguments);
+                            self.renderNotificationsCenterAnnouncements();
+                        };
+                    }
+                } catch (e) {
+                    console.warn('[CronosAnnouncements] Inicialización fallback local:', e);
+                }
+            },
+
+            // Carga de Comunicados / Mensajes
+            async loadAnnouncements() {
+                let list = null;
+                if (window.supabaseClient) {
+                    try {
+                        const { data, error } = await window.supabaseClient
+                            .from('cronos_announcements')
+                            .select('*')
+                            .order('created_at', { ascending: false });
+                        if (!error && Array.isArray(data) && data.length > 0) {
+                            list = data;
+                        }
+                    } catch (sbErr) { }
+                }
+                if (!list) {
+                    try {
+                        const cached = localStorage.getItem('cronos_announcements_cache');
+                        if (cached) list = JSON.parse(cached);
+                    } catch (e) { }
+                }
+                if (!list || !Array.isArray(list) || list.length === 0) {
+                    list = JSON.parse(JSON.stringify(DEFAULT_ANNOUNCEMENTS));
+                    this.saveAnnouncementsCache(list);
+                }
+                this.announcements = list;
+                return this.announcements;
+            },
+
+            saveAnnouncementsCache(list) {
+                try {
+                    localStorage.setItem('cronos_announcements_cache', JSON.stringify(list));
+                } catch (e) { }
+            },
+
+            // Carga de Respuestas de Encuestas
+            async loadResponses() {
+                let respList = null;
+                if (window.supabaseClient) {
+                    try {
+                        const { data, error } = await window.supabaseClient
+                            .from('cronos_survey_responses')
+                            .select('*')
+                            .order('created_at', { ascending: false });
+                        if (!error && Array.isArray(data)) {
+                            respList = data;
+                        }
+                    } catch (sbErr) { }
+                }
+                if (!respList) {
+                    try {
+                        const cached = localStorage.getItem('cronos_survey_responses_cache');
+                        if (cached) respList = JSON.parse(cached);
+                    } catch (e) { }
+                }
+                this.responses = Array.isArray(respList) ? respList : [];
+                return this.responses;
+            },
+
+            saveResponsesCache(list) {
+                try {
+                    localStorage.setItem('cronos_survey_responses_cache', JSON.stringify(list));
+                } catch (e) { }
+            },
+
+            // Filtro de mensajes activos aplicables al usuario actual
+            getActiveAnnouncement(type, targetUser = null) {
+                const now = new Date();
+                const user = targetUser || window.CRONOS_CURRENT_USER;
+                const userRole = (user && user.rol) ? String(user.rol).trim() : 'Asesor';
+
+                return this.announcements.find(a => {
+                    if (a.type !== type) return false;
+                    if (!a.is_active) return false;
+                    if (a.start_date && new Date(a.start_date) > now) return false;
+                    if (a.end_date && new Date(a.end_date) < now) return false;
+
+                    // Validar perfil objetivo
+                    if (Array.isArray(a.target_roles) && a.target_roles.length > 0) {
+                        const match = a.target_roles.some(r => {
+                            if (r === 'Todos') return true;
+                            return r.toLowerCase() === userRole.toLowerCase() || userRole.toLowerCase().includes(r.toLowerCase());
+                        });
+                        if (!match) return false;
+                    }
+                    return true;
+                }) || null;
+            },
+
+            // 1. Mensaje de Bienvenida Administrable
+            checkAndShowWelcome() {
+                try {
+                    if (sessionStorage.getItem('cronos_welcome_shown')) {
+                        return false;
+                    }
+
+                    const currentUser = window.CRONOS_CURRENT_USER || (window.SessionManager && typeof window.SessionManager.getSession === 'function' ? window.SessionManager.getSession() : null);
+                    if (!currentUser) return false;
+
+                    const activeWelcome = this.getActiveAnnouncement('welcome', currentUser);
+                    if (!activeWelcome) {
+                        // Si está inactivo o no aplica a este perfil, no mostrar
+                        return false;
+                    }
+
+                    const welcomeModal = document.getElementById('modal-welcome-cronos');
+                    if (welcomeModal) {
+                        const tEl = document.getElementById('welcome-modal-title');
+                        const sEl = document.getElementById('welcome-modal-subtitle');
+                        const mEl = document.getElementById('welcome-modal-message');
+                        if (tEl) tEl.textContent = activeWelcome.title || 'BIENVENIDO A CRONOS FID';
+                        if (sEl) sEl.textContent = activeWelcome.subtitle || 'Centro de Recursos Operativos para Negociación y Fidelización';
+                        if (mEl) mEl.textContent = activeWelcome.content || 'Esta herramienta te ayudará a mejorar tu tiempo en llamada.';
+
+                        welcomeModal.classList.remove('hidden');
+                        return true;
+                    }
+                } catch (e) {
+                    console.warn('[CronosAnnouncements] Error en bienvenida:', e);
+                }
+                return false;
+            },
+
+            closeWelcome() {
+                try {
+                    sessionStorage.setItem('cronos_welcome_shown', 'true');
+                    const welcomeModal = document.getElementById('modal-welcome-cronos');
+                    if (welcomeModal) welcomeModal.classList.add('hidden');
+
+                    // Al cerrar bienvenida, evaluar si hay encuesta activa o recordatorio pendiente
+                    setTimeout(() => {
+                        this.checkAndShowAdvisorSurveyPrompt();
+                    }, 400);
+                } catch (e) { }
+            },
+
+            // 2. Recordatorio Operativo SLA Administrable
+            checkAndShowModuleReminder(targetModule) {
+                try {
+                    if (!targetModule) return;
+                    const normalized = String(targetModule).trim().toLowerCase();
+                    if (normalized === 'analitica-sla' || normalized === 'sla' || normalized === 'cronos-sla') return;
+
+                    const applicableModules = ['generator', 'tipificaciones', 'tickets', 'derivaciones', 'acuerdos-voz', 'directorio'];
+                    if (!applicableModules.includes(normalized)) return;
+
+                    const storageKey = 'cronos_sla_reminded_' + normalized;
+                    if (sessionStorage.getItem(storageKey)) return;
+
+                    const currentUser = window.CRONOS_CURRENT_USER;
+                    const activeReminder = this.getActiveAnnouncement('operational', currentUser);
+                    if (!activeReminder) {
+                        // Inactivo o deshabilitado por el administrador -> no mostrar
+                        return;
+                    }
+
+                    sessionStorage.setItem(storageKey, 'true');
+
+                    const reminderModal = document.getElementById('modal-reminder-sla');
+                    if (reminderModal) {
+                        const tEl = document.getElementById('reminder-sla-title');
+                        const bEl = document.getElementById('reminder-sla-badge');
+                        const mEl = document.getElementById('reminder-sla-message');
+                        if (tEl) tEl.textContent = activeReminder.title || 'TIMER CRONOS SLA';
+                        if (bEl) bEl.textContent = activeReminder.badge || 'RECORDATORIO OPERATIVO';
+                        if (mEl) mEl.textContent = activeReminder.content || 'NO OLVIDES USAR EL TIMER: CRONOS SLA PARA MEJORAR TUS TIEMPOS EN ESPERA Y EVITAR PENALIZACIONES DE CALIDAD.';
+
+                        reminderModal.classList.remove('hidden');
+                    }
+                } catch (e) {
+                    console.warn('[CronosAnnouncements] Error en recordatorio:', e);
+                }
+            },
+
+            closeReminder() {
+                const reminderModal = document.getElementById('modal-reminder-sla');
+                if (reminderModal) reminderModal.classList.add('hidden');
+            },
+
+            // 3. Encuesta: Verificación de si el asesor ya respondió (1 por asesor)
+            hasUserAnswered(surveyId, user) {
+                if (!user) return false;
+                const email = String(user.correo || user.email || '').trim().toLowerCase();
+                const uid = String(user.uid || user.id || '').trim();
+
+                if (email && localStorage.getItem('cronos_answered_' + surveyId + '_' + email)) return true;
+                if (uid && localStorage.getItem('cronos_answered_' + surveyId + '_' + uid)) return true;
+
+                const already = this.responses.some(r => {
+                    if (r.survey_id !== surveyId) return false;
+                    const rEmail = String(r.user_email || '').trim().toLowerCase();
+                    const rUid = String(r.user_id || '').trim();
+                    return (email && rEmail === email) || (uid && rUid === uid);
+                });
+
+                if (already) {
+                    if (email) localStorage.setItem('cronos_answered_' + surveyId + '_' + email, 'true');
+                    return true;
+                }
+                return false;
+            },
+
+            // 4. Disparador de encuesta para asesor (Sin terminología técnica)
+            checkAndShowAdvisorSurveyPrompt(force = false) {
+                const currentUser = window.CRONOS_CURRENT_USER || (window.SessionManager && typeof window.SessionManager.getSession === 'function' ? window.SessionManager.getSession() : null);
+                if (!currentUser) return false;
+
+                const isAsesor = (typeof isRoleAsesor === 'function') ? isRoleAsesor(currentUser) : String(currentUser.rol || '').toLowerCase().includes('asesor');
+                if (!isAsesor) return false;
+
+                const activeSurvey = this.getActiveAnnouncement('survey', currentUser);
+                if (!activeSurvey) return false;
+
+                if (this.hasUserAnswered(activeSurvey.id, currentUser)) return false;
+
+                if (!force && sessionStorage.getItem('cronos_survey_postponed_' + activeSurvey.id)) return false;
+
+                const avisoModal = document.getElementById('modal-experiencia-aviso');
+                if (avisoModal) {
+                    avisoModal.classList.remove('hidden');
+                    return true;
+                }
+                return false;
+            },
+
+            dismissSurveyPromptLater() {
+                const activeSurvey = this.getActiveAnnouncement('survey');
+                if (activeSurvey) {
+                    sessionStorage.setItem('cronos_survey_postponed_' + activeSurvey.id, 'true');
+                }
+                const avisoModal = document.getElementById('modal-experiencia-aviso');
+                if (avisoModal) avisoModal.classList.add('hidden');
+            },
+
+            // Renderizado en Centro de Notificaciones (Avisos Operativos e integración con Información)
+            renderNotificationsCenterAnnouncements() {
+                const container = document.getElementById('notif-survey-announcement');
+                if (!container) return;
+
+                const currentUser = window.CRONOS_CURRENT_USER;
+                if (!currentUser) {
+                    container.innerHTML = '';
+                    container.classList.add('hidden');
+                    return;
+                }
+
+                const activeSurvey = this.getActiveAnnouncement('survey', currentUser);
+                const hasAnswered = activeSurvey ? this.hasUserAnswered(activeSurvey.id, currentUser) : true;
+
+                // Renderizar comunicados activos para el rol
+                const activeComms = this.announcements.filter(a => {
+                    if (a.type !== 'announcement' && a.type !== 'alert') return false;
+                    if (!a.is_active) return false;
+                    const now = new Date();
+                    if (a.start_date && new Date(a.start_date) > now) return false;
+                    if (a.end_date && new Date(a.end_date) < now) return false;
+                    return true;
+                });
+
+                let html = '';
+
+                // Banner de Encuesta: "📊 Nueva encuesta disponible"
+                if (activeSurvey && !hasAnswered) {
+                    html += `
+                        <div class="bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-orange-500/10 border-2 border-win-orange/40 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs mb-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-win-orange text-white flex items-center justify-center text-lg font-black shrink-0">
+                                    <i class="fa-solid fa-chart-simple"></i>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <h4 class="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-tight">📊 Nueva encuesta disponible</h4>
+                                        <span class="bg-win-orange text-white text-[9px] font-black px-2 py-0.2 rounded-full uppercase">Activa</span>
+                                    </div>
+                                    <p class="text-xs text-slate-600 mt-0.5">
+                                        Queremos conocer tu experiencia utilizando CRONOS FID. La encuesta toma menos de 2 minutos.
+                                    </p>
+                                </div>
+                            </div>
+                            <button type="button" onclick="CronosAnnouncementManager.openSurveyForm(); CronosNotifications.closeModal();"
+                                class="bg-win-orange hover:bg-win-orangeHover text-white px-4 py-2 rounded-xl text-xs font-black shadow-md transition whitespace-nowrap flex items-center gap-1.5 cursor-pointer">
+                                <span>Responder encuesta</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    `;
+                }
+
+                // Comunicados o alertas generales
+                activeComms.forEach(c => {
+                    const isAlert = c.type === 'alert';
+                    const borderCls = isAlert ? 'border-rose-300 bg-rose-50/70' : 'border-indigo-200 bg-indigo-50/60';
+                    const iconCls = isAlert ? 'fa-triangle-exclamation text-rose-600' : 'fa-bullhorn text-indigo-600';
+                    html += `
+                        <div class="border rounded-2xl p-3.5 flex items-start gap-3 shadow-xs ${borderCls} mb-2">
+                            <i class="fa-solid ${iconCls} text-base mt-0.5 shrink-0"></i>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h5 class="text-xs font-black text-slate-900">${c.title}</h5>
+                                    <span class="text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded bg-white text-slate-700 border">${c.badge || 'Aviso'}</span>
+                                </div>
+                                <p class="text-[11px] text-slate-700 mt-0.5 leading-snug">${c.content}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                if (html) {
+                    container.innerHTML = html;
+                    container.classList.remove('hidden');
+                } else {
+                    container.innerHTML = '';
+                    container.classList.add('hidden');
+                }
+            },
+
+            // 5. Configuración de Preguntas para el Asesor (0% Terminología técnica)
+            setupAdvisorSurveyUI() {
+                // P1: Escala 0 a 10 (Sin Detractor, Pasivo, Promotor)
+                const npsGroup = document.getElementById('survey-scale-group-p1') || document.getElementById('nps-button-group');
+                if (npsGroup && npsGroup.children.length === 0) {
+                    let html = '';
+                    for (let i = 0; i <= 10; i++) {
+                        html += `<button type="button" onclick="CronosAnnouncementManager.selectP1(${i})" id="btn-ans-p1-${i}"
+                            class="h-10 sm:h-11 rounded-xl border-2 border-slate-200 bg-white font-black text-xs sm:text-sm text-slate-800 hover:border-win-orange hover:bg-orange-50 transition flex items-center justify-center cursor-pointer">
+                            ${i}
+                        </button>`;
+                    }
+                    npsGroup.innerHTML = html;
+                }
+
+                // P2: Opciones de Satisfacción
+                const csatGroup = document.getElementById('survey-options-group-p2') || document.getElementById('csat-options-group');
+                if (csatGroup && csatGroup.children.length === 0) {
+                    const options = [
+                        { val: 1, label: 'Muy insatisfecho', icon: 'fa-face-frown text-rose-500' },
+                        { val: 2, label: 'Insatisfecho', icon: 'fa-face-meh text-orange-500' },
+                        { val: 3, label: 'Neutral', icon: 'fa-face-meh-blank text-amber-500' },
+                        { val: 4, label: 'Satisfecho', icon: 'fa-face-smile text-emerald-500' },
+                        { val: 5, label: 'Muy satisfecho', icon: 'fa-face-laugh-beam text-emerald-600' }
+                    ];
+                    csatGroup.innerHTML = options.map(opt => `
+                        <button type="button" onclick="CronosAnnouncementManager.selectP2(${opt.val})" id="btn-ans-p2-${opt.val}"
+                            class="p-3 rounded-xl border-2 border-slate-200 bg-white hover:border-win-orange text-center transition flex flex-col items-center gap-1.5 cursor-pointer">
+                            <i class="fa-regular ${opt.icon} text-xl"></i>
+                            <span class="text-[10px] sm:text-xs font-bold text-slate-700 leading-tight">${opt.label}</span>
+                        </button>
+                    `).join('');
+                }
+
+                // P3: Escala 1 a 5 de Facilidad de búsqueda
+                const cesGroup = document.getElementById('survey-options-group-p3') || document.getElementById('ces-options-group');
+                if (cesGroup && cesGroup.children.length === 0) {
+                    const likert = [
+                        { val: 1, label: 'Muy difícil' },
+                        { val: 2, label: 'Difícil' },
+                        { val: 3, label: 'Regular' },
+                        { val: 4, label: 'Fácil' },
+                        { val: 5, label: 'Muy fácil' }
+                    ];
+                    cesGroup.innerHTML = likert.map(opt => `
+                        <button type="button" onclick="CronosAnnouncementManager.selectP3(${opt.val})" id="btn-ans-p3-${opt.val}"
+                            class="p-2.5 rounded-xl border-2 border-slate-200 bg-white hover:border-win-orange text-center transition flex flex-col items-center justify-center cursor-pointer min-h-[54px]">
+                            <span class="text-xs font-black text-slate-900">${opt.val}</span>
+                            <span class="text-[9px] font-bold text-slate-600 leading-tight mt-0.5">${opt.label}</span>
+                        </button>
+                    `).join('');
+                }
+
+                // P5: ¿Consideras que CRONOS FID te ayuda durante tus gestiones diarias?
+                // Opciones: Nunca, Rara vez, Algunas veces, Frecuentemente, Siempre
+                const valorGroup = document.getElementById('valor-options-group');
+                if (valorGroup && valorGroup.children.length === 0) {
+                    const options = [
+                        { val: 1, label: 'Nunca' },
+                        { val: 2, label: 'Rara vez' },
+                        { val: 3, label: 'Algunas veces' },
+                        { val: 4, label: 'Frecuentemente' },
+                        { val: 5, label: 'Siempre' }
+                    ];
+                    valorGroup.innerHTML = options.map(opt => `
+                        <button type="button" onclick="CronosAnnouncementManager.selectP5(${opt.val})" id="btn-ans-p5-${opt.val}"
+                            class="p-2.5 rounded-xl border-2 border-slate-200 bg-white hover:border-win-orange text-center transition flex flex-col items-center justify-center cursor-pointer min-h-[54px]">
+                            <span class="text-xs font-black text-slate-900">${opt.val}</span>
+                            <span class="text-[9px] font-bold text-slate-600 leading-tight mt-0.5">${opt.label}</span>
+                        </button>
+                    `).join('');
+                }
+            },
+
+            selectP1(val) {
+                document.getElementById('survey-ans-q1').value = val;
+                for (let i = 0; i <= 10; i++) {
+                    const btn = document.getElementById('btn-ans-p1-' + i);
+                    if (!btn) continue;
+                    if (i === val) {
+                        btn.className = 'h-10 sm:h-11 rounded-xl border-2 bg-win-orange text-white font-black text-xs sm:text-sm border-win-orange shadow-md scale-105 transition flex items-center justify-center';
+                    } else {
+                        btn.className = 'h-10 sm:h-11 rounded-xl border-2 border-slate-200 bg-white font-black text-xs sm:text-sm text-slate-800 transition flex items-center justify-center cursor-pointer';
+                    }
+                }
+            },
+
+            selectP2(val) {
+                document.getElementById('survey-ans-q2').value = val;
+                for (let i = 1; i <= 5; i++) {
+                    const btn = document.getElementById('btn-ans-p2-' + i);
+                    if (!btn) continue;
+                    if (i === val) {
+                        btn.className = 'p-3 rounded-xl border-2 border-win-orange bg-orange-50 text-center shadow-md scale-105 transition flex flex-col items-center gap-1.5';
+                    } else {
+                        btn.className = 'p-3 rounded-xl border-2 border-slate-200 bg-white hover:border-win-orange text-center transition flex flex-col items-center gap-1.5 cursor-pointer';
+                    }
+                }
+            },
+
+            selectP3(val) {
+                document.getElementById('survey-ans-q3').value = val;
+                for (let i = 1; i <= 5; i++) {
+                    const btn = document.getElementById('btn-ans-p3-' + i);
+                    if (!btn) continue;
+                    if (i === val) {
+                        btn.className = 'p-2.5 rounded-xl border-2 border-win-orange bg-orange-50 text-center shadow-md scale-105 transition flex flex-col items-center justify-center min-h-[54px]';
+                    } else {
+                        btn.className = 'p-2.5 rounded-xl border-2 border-slate-200 bg-white hover:border-win-orange text-center transition flex flex-col items-center justify-center min-h-[54px] cursor-pointer';
+                    }
+                }
+            },
+
+            selectP5(val) {
+                document.getElementById('survey-ans-q5').value = val;
+                for (let i = 1; i <= 5; i++) {
+                    const btn = document.getElementById('btn-ans-p5-' + i);
+                    if (!btn) continue;
+                    if (i === val) {
+                        btn.className = 'p-2.5 rounded-xl border-2 border-win-orange bg-orange-50 text-center shadow-md scale-105 transition flex flex-col items-center justify-center min-h-[54px]';
+                    } else {
+                        btn.className = 'p-2.5 rounded-xl border-2 border-slate-200 bg-white hover:border-win-orange text-center transition flex flex-col items-center justify-center min-h-[54px] cursor-pointer';
+                    }
+                }
+            },
+
+            openSurveyForm() {
+                const activeSurvey = this.getActiveAnnouncement('survey') || DEFAULT_ANNOUNCEMENTS[2];
+                this.activeSurveyId = activeSurvey.id;
+
+                const avisoModal = document.getElementById('modal-experiencia-aviso');
+                if (avisoModal) avisoModal.classList.add('hidden');
+
+                const formModal = document.getElementById('modal-experiencia-cronos');
+                if (formModal) {
+                    const tEl = document.getElementById('survey-modal-title');
+                    if (tEl) tEl.textContent = activeSurvey.title || 'Encuesta de Experiencia CRONOS FID';
+
+                    document.getElementById('survey-form-content').classList.remove('hidden');
+                    document.getElementById('survey-success-content').classList.add('hidden');
+                    document.getElementById('survey-error-msg').classList.add('hidden');
+
+                    this.resetAdvisorForm();
+                    formModal.classList.remove('hidden');
+                }
+            },
+
+            closeSurveyForm() {
+                const formModal = document.getElementById('modal-experiencia-cronos');
+                if (formModal) formModal.classList.add('hidden');
+            },
+
+            resetAdvisorForm() {
+                ['q1', 'q2', 'q3', 'q5'].forEach(q => {
+                    const el = document.getElementById('survey-ans-' + q);
+                    if (el) el.value = '';
+                });
+                const q4 = document.getElementById('survey-ans-q4');
+                if (q4) q4.value = '';
+                const q6 = document.getElementById('survey-ans-q6');
+                if (q6) q6.value = '';
+
+                for (let i = 0; i <= 10; i++) {
+                    const btn = document.getElementById('btn-ans-p1-' + i);
+                    if (btn) btn.className = 'h-10 sm:h-11 rounded-xl border-2 border-slate-200 bg-white font-black text-xs sm:text-sm text-slate-800 transition flex items-center justify-center cursor-pointer';
+                }
+                for (let i = 1; i <= 5; i++) {
+                    const b2 = document.getElementById('btn-ans-p2-' + i);
+                    if (b2) b2.className = 'p-3 rounded-xl border-2 border-slate-200 bg-white hover:border-win-orange text-center transition flex flex-col items-center gap-1.5 cursor-pointer';
+                    const b3 = document.getElementById('btn-ans-p3-' + i);
+                    if (b3) b3.className = 'p-2.5 rounded-xl border-2 border-slate-200 bg-white hover:border-win-orange text-center transition flex flex-col items-center justify-center min-h-[54px] cursor-pointer';
+                    const b5 = document.getElementById('btn-ans-p5-' + i);
+                    if (b5) b5.className = 'p-2.5 rounded-xl border-2 border-slate-200 bg-white hover:border-win-orange text-center transition flex flex-col items-center justify-center min-h-[54px] cursor-pointer';
+                }
+            },
+
+            // Envío de respuesta con una sola respuesta por asesor
+            async submitSurveyResponse() {
+                const currentUser = window.CRONOS_CURRENT_USER || { correo: 'anonimo@win.pe', nombre: 'Asesor', rol: 'Asesor' };
+                const surveyId = this.activeSurveyId || DEFAULT_SURVEY_ID;
+
+                if (this.hasUserAnswered(surveyId, currentUser)) {
+                    showToast('Ya has respondido esta encuesta anteriormente. ¡Muchas gracias!', 'info');
+                    this.closeSurveyForm();
+                    return;
+                }
+
+                const q1 = document.getElementById('survey-ans-q1').value;
+                const q2 = document.getElementById('survey-ans-q2').value;
+                const q3 = document.getElementById('survey-ans-q3').value;
+                const q4 = document.getElementById('survey-ans-q4').value;
+                const q5 = document.getElementById('survey-ans-q5').value;
+                const q6 = (document.getElementById('survey-ans-q6').value || '').trim();
+
+                const errBox = document.getElementById('survey-error-msg');
+                const errText = document.getElementById('survey-error-text');
+
+                if (q1 === '' || q2 === '' || q3 === '' || q4 === '' || q5 === '') {
+                    if (errBox && errText) {
+                        errText.textContent = 'Por favor completa todas las preguntas del 1 al 5 antes de enviar.';
+                        errBox.classList.remove('hidden');
+                    }
+                    return;
+                }
+                if (errBox) errBox.classList.add('hidden');
+
+                const npsVal = parseInt(q1, 10);
+                const npsCat = npsVal >= 9 ? 'Promotor' : (npsVal >= 7 ? 'Pasivo' : 'Detractor');
+
+                const responseRecord = {
+                    id: 'resp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+                    survey_id: surveyId,
+                    user_id: currentUser.uid || currentUser.id || currentUser.correo,
+                    user_email: currentUser.correo || currentUser.email || '',
+                    user_nombre: currentUser.nombre || 'Asesor',
+                    user_rol: currentUser.rol || 'Asesor',
+                    answers: {
+                        q1_nps: npsVal,
+                        q2_csat: parseInt(q2, 10),
+                        q3_ces: parseInt(q3, 10),
+                        q4_uso: q4,
+                        q5_valor: parseInt(q5, 10),
+                        q6_feedback: q6
+                    },
+                    metrics: {
+                        nps_category: npsCat
+                    },
+                    created_at: new Date().toISOString()
+                };
+
+                if (window.supabaseClient) {
+                    try {
+                        await window.supabaseClient.from('cronos_survey_responses').insert([responseRecord]);
+                    } catch (sbErr) { }
+                }
+
+                this.responses.unshift(responseRecord);
+                this.saveResponsesCache(this.responses);
+
+                // Control de respuesta única
+                const emailKey = String(currentUser.correo || currentUser.email || '').trim().toLowerCase();
+                const uidKey = String(currentUser.uid || currentUser.id || '').trim();
+                if (emailKey) localStorage.setItem('cronos_answered_' + surveyId + '_' + emailKey, 'true');
+                if (uidKey) localStorage.setItem('cronos_answered_' + surveyId + '_' + uidKey, 'true');
+
+                this.renderNotificationsCenterAnnouncements();
+
+                document.getElementById('survey-form-content').classList.add('hidden');
+                document.getElementById('survey-success-content').classList.remove('hidden');
+
+                showToast('¡Encuesta enviada exitosamente! Gracias por tu opinión.', 'success');
+            },
+
+            // =========================================================================
+            // MÓDULO ADMINISTRATIVO (GESTIÓN USUARIOS -> COMUNICADOS Y MENSAJES)
+            // =========================================================================
+
+            switchAdminTab(tab) {
+                const btnUsuarios = document.getElementById('tab-btn-admin-usuarios');
+                const btnComunicados = document.getElementById('tab-btn-admin-comunicados');
+                const contUsuarios = document.getElementById('subtab-content-admin-usuarios');
+                const contComunicados = document.getElementById('subtab-content-admin-comunicados');
+
+                if (tab === 'comunicados') {
+                    if (btnUsuarios) {
+                        btnUsuarios.className = 'px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-2 transition bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 cursor-pointer';
+                    }
+                    if (btnComunicados) {
+                        btnComunicados.className = 'px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-2 transition bg-win-orange text-white shadow-sm cursor-pointer';
+                    }
+                    if (contUsuarios) contUsuarios.classList.add('hidden');
+                    if (contComunicados) contComunicados.classList.remove('hidden');
+
+                    this.renderAdminDashboard();
+                } else {
+                    if (btnUsuarios) {
+                        btnUsuarios.className = 'px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-2 transition bg-indigo-600 text-white shadow-sm cursor-pointer';
+                    }
+                    if (btnComunicados) {
+                        btnComunicados.className = 'px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-2 transition bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 cursor-pointer';
+                    }
+                    if (contUsuarios) contUsuarios.classList.remove('hidden');
+                    if (contComunicados) contComunicados.classList.add('hidden');
+                }
+            },
+
+            async refreshData() {
+                showToast('Actualizando comunicados y analítica...', 'info');
+                await this.loadAnnouncements();
+                await this.loadResponses();
+                this.renderAdminDashboard();
+                showToast('Datos sincronizados en tiempo real.', 'success');
+            },
+
+            // Cálculo matemático de métricas para la administración
+            calculateMetrics(responses) {
+                const total = responses.length;
+                if (total === 0) {
+                    return {
+                        total: 0,
+                        promoters: 0,
+                        passives: 0,
+                        detractors: 0,
+                        pctPromoters: 0,
+                        pctPassives: 0,
+                        pctDetractors: 0,
+                        nps: 0,
+                        csatSatisfied: 0,
+                        csatPct: 0,
+                        cesAvg: 0,
+                        participationPct: 0
+                    };
+                }
+
+                let promoters = 0;
+                let passives = 0;
+                let detractors = 0;
+                let csatSatisfied = 0;
+                let cesSum = 0;
+
+                responses.forEach(r => {
+                    const ans = r.answers || {};
+                    const npsVal = Number(ans.q1_nps);
+                    if (npsVal >= 9) promoters++;
+                    else if (npsVal >= 7) passives++;
+                    else detractors++;
+
+                    const csatVal = Number(ans.q2_csat);
+                    if (csatVal >= 4) csatSatisfied++;
+
+                    const cesVal = Number(ans.q3_ces) || 0;
+                    cesSum += cesVal;
+                });
+
+                const pctPromoters = Number(((promoters / total) * 100).toFixed(1));
+                const pctPassives = Number(((passives / total) * 100).toFixed(1));
+                const pctDetractors = Number(((detractors / total) * 100).toFixed(1));
+                const nps = Math.round(pctPromoters - pctDetractors);
+                const csatPct = Number(((csatSatisfied / total) * 100).toFixed(1));
+                const cesAvg = Number((cesSum / total).toFixed(2));
+
+                const totalAdvisors = (window.CRONOS_USERS_DB && Array.isArray(window.CRONOS_USERS_DB))
+                    ? window.CRONOS_USERS_DB.filter(u => typeof isRoleAsesor === 'function' ? isRoleAsesor(u) : String(u.rol || '').toLowerCase().includes('asesor')).length
+                    : Math.max(total, 6);
+
+                const participationPct = Number(((total / Math.max(totalAdvisors, 1)) * 100).toFixed(1));
+
+                return {
+                    total,
+                    promoters,
+                    passives,
+                    detractors,
+                    pctPromoters,
+                    pctPassives,
+                    pctDetractors,
+                    nps,
+                    csatSatisfied,
+                    csatPct,
+                    cesAvg,
+                    participationPct
+                };
+            },
+
+            renderAdminDashboard() {
+                const now = new Date();
+                const activeCount = this.announcements.filter(a => {
+                    if (!a.is_active) return false;
+                    if (a.start_date && new Date(a.start_date) > now) return false;
+                    if (a.end_date && new Date(a.end_date) < now) return false;
+                    return true;
+                }).length;
+
+                const bBadge = document.getElementById('badge-admin-comunicados-activos');
+                if (bBadge) bBadge.textContent = activeCount + ' Activo' + (activeCount === 1 ? '' : 's');
+
+                // Renderizar Métricas de Satisfacción para Administrador
+                const metrics = this.calculateMetrics(this.responses);
+
+                const elNps = document.getElementById('kpi-nps-score');
+                if (elNps) elNps.textContent = (metrics.nps > 0 ? '+' : '') + metrics.nps;
+                const elBadgeNps = document.getElementById('kpi-nps-badge');
+                if (elBadgeNps) {
+                    if (metrics.nps >= 50) {
+                        elBadgeNps.textContent = 'Excelente';
+                        elBadgeNps.className = 'px-2 py-0.5 rounded-full text-[9px] font-black bg-emerald-100 text-emerald-800';
+                    } else if (metrics.nps >= 0) {
+                        elBadgeNps.textContent = 'Bueno';
+                        elBadgeNps.className = 'px-2 py-0.5 rounded-full text-[9px] font-black bg-amber-100 text-amber-800';
+                    } else {
+                        elBadgeNps.textContent = 'Requiere Atención';
+                        elBadgeNps.className = 'px-2 py-0.5 rounded-full text-[9px] font-black bg-rose-100 text-rose-800';
+                    }
+                }
+                const elProm = document.getElementById('kpi-nps-promoters');
+                if (elProm) elProm.textContent = metrics.pctPromoters + '%';
+                const elPass = document.getElementById('kpi-nps-passives');
+                if (elPass) elPass.textContent = metrics.pctPassives + '%';
+                const elDet = document.getElementById('kpi-nps-detractors');
+                if (elDet) elDet.textContent = metrics.pctDetractors + '%';
+
+                const elCsatPct = document.getElementById('kpi-csat-pct');
+                if (elCsatPct) elCsatPct.textContent = metrics.csatPct + '%';
+                const elCsatCount = document.getElementById('kpi-csat-count');
+                if (elCsatCount) elCsatCount.textContent = metrics.csatSatisfied;
+                const elCsatTot = document.getElementById('kpi-csat-total');
+                if (elCsatTot) elCsatTot.textContent = metrics.total;
+
+                const elCesAvg = document.getElementById('kpi-ces-avg');
+                if (elCesAvg) elCesAvg.textContent = metrics.cesAvg.toFixed(2);
+
+                const elPartPct = document.getElementById('kpi-participation-pct');
+                if (elPartPct) elPartPct.textContent = metrics.participationPct + '%';
+                const elPartAns = document.getElementById('kpi-participation-answered');
+                if (elPartAns) elPartAns.textContent = metrics.total;
+
+                // Renderizar Tabla de Mensajes y Comunicados
+                const tbody = document.getElementById('table-admin-announcements');
+                if (tbody) {
+                    tbody.innerHTML = this.announcements.map(a => {
+                        const isWithin = (!a.start_date || new Date(a.start_date) <= now) && (!a.end_date || new Date(a.end_date) >= now);
+                        const isLive = a.is_active && isWithin;
+
+                        let typeBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-100 text-blue-800">Comunicado</span>';
+                        if (a.type === 'welcome') typeBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-purple-100 text-purple-800">Bienvenida</span>';
+                        else if (a.type === 'operational') typeBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-100 text-amber-800">Recordatorio SLA</span>';
+                        else if (a.type === 'survey') typeBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800">Encuesta</span>';
+                        else if (a.type === 'alert') typeBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-rose-100 text-rose-800">Alerta Especial</span>';
+
+                        const startStr = a.start_date ? new Date(a.start_date).toLocaleDateString('es-PE') : 'Inmediato';
+                        const endStr = a.end_date ? new Date(a.end_date).toLocaleDateString('es-PE') : 'Indefinido';
+                        const profilesStr = Array.isArray(a.target_roles) ? a.target_roles.join(', ') : 'Todos';
+
+                        const stateHtml = isLive
+                            ? '<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Activo</span>'
+                            : (a.is_active ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">Fuera de Fecha</span>' : '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600">Inactivo</span>');
+
+                        return `
+                            <tr class="hover:bg-slate-50 transition font-medium text-xs">
+                                <td class="p-3 whitespace-nowrap">${typeBadge}</td>
+                                <td class="p-3">
+                                    <div class="font-bold text-slate-900">${a.title}</div>
+                                    <div class="text-[11px] text-slate-500 max-w-sm truncate" title="${a.content || ''}">${a.content || ''}</div>
+                                </td>
+                                <td class="p-3 whitespace-nowrap text-slate-700 font-semibold">${profilesStr}</td>
+                                <td class="p-3 whitespace-nowrap text-slate-600 font-mono text-[11px]">${startStr} - ${endStr}</td>
+                                <td class="p-3 text-center">${stateHtml}</td>
+                                <td class="p-3 text-right whitespace-nowrap">
+                                    <button type="button" onclick="CronosAnnouncementManager.toggleStatus('${a.id}')"
+                                        class="p-1.5 ${a.is_active ? 'text-amber-600 hover:text-amber-800' : 'text-emerald-600 hover:text-emerald-800'} font-bold text-xs cursor-pointer" title="${a.is_active ? 'Desactivar' : 'Activar'}">
+                                        <i class="fa-solid ${a.is_active ? 'fa-pause' : 'fa-play'}"></i>
+                                    </button>
+                                    <button type="button" onclick="CronosAnnouncementManager.openEditModal('${a.id}')"
+                                        class="p-1.5 text-slate-600 hover:text-slate-900 font-bold text-xs cursor-pointer" title="Editar">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                    <button type="button" onclick="CronosAnnouncementManager.duplicate('${a.id}')"
+                                        class="p-1.5 text-indigo-600 hover:text-indigo-800 font-bold text-xs cursor-pointer" title="Duplicar">
+                                        <i class="fa-solid fa-copy"></i>
+                                    </button>
+                                    <button type="button" onclick="CronosAnnouncementManager.deleteItem('${a.id}')"
+                                        class="p-1.5 text-rose-600 hover:text-rose-800 font-bold text-xs cursor-pointer" title="Eliminar">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+                }
+
+                // Renderizar Respuestas Detalladas
+                const tbodyResp = document.getElementById('table-admin-survey-responses');
+                if (tbodyResp) {
+                    if (this.responses.length === 0) {
+                        tbodyResp.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-slate-400 font-bold">Aún no se han recibido respuestas de asesores.</td></tr>';
+                    } else {
+                        tbodyResp.innerHTML = this.responses.slice(0, 15).map(r => {
+                            const ans = r.answers || {};
+                            const dateStr = r.created_at ? new Date(r.created_at).toLocaleString('es-PE') : '-';
+                            const npsVal = Number(ans.q1_nps);
+                            let npsBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-black bg-rose-100 text-rose-800">' + npsVal + ' (Detractor)</span>';
+                            if (npsVal >= 9) npsBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-black bg-emerald-100 text-emerald-800">' + npsVal + ' (Promotor)</span>';
+                            else if (npsVal >= 7) npsBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-black bg-amber-100 text-amber-800">' + npsVal + ' (Pasivo)</span>';
+
+                            return `
+                                <tr class="hover:bg-slate-50 transition text-xs">
+                                    <td class="p-3 whitespace-nowrap text-slate-600 font-mono text-[11px]">${dateStr}</td>
+                                    <td class="p-3">
+                                        <div class="font-bold text-slate-900">${r.user_nombre || 'Asesor'}</div>
+                                        <div class="text-[10px] text-slate-500 font-mono">${r.user_email || '-'}</div>
+                                    </td>
+                                    <td class="p-3 text-center">${npsBadge}</td>
+                                    <td class="p-3 text-center font-bold text-slate-800">${ans.q2_csat || '-'} / 5</td>
+                                    <td class="p-3 text-center font-bold text-slate-800">${ans.q3_ces || '-'} / 5</td>
+                                    <td class="p-3 text-slate-700 font-semibold">${ans.q4_uso || '-'}</td>
+                                    <td class="p-3 text-slate-600 italic max-w-xs truncate" title="${ans.q6_feedback || ''}">
+                                        ${ans.q6_feedback || '<span class="text-slate-300 not-italic">Sin comentarios</span>'}
+                                    </td>
+                                </tr>
+                            `;
+                        }).join('');
+                    }
+                }
+            },
+
+            // Acciones CRUD de Comunicados
+            openEditModal(id = null) {
+                const modal = document.getElementById('modal-admin-comunicado');
+                if (!modal) return;
+                const modalTitle = document.getElementById('admin-comm-modal-title');
+                const idEl = document.getElementById('admin-comm-id');
+                const typeEl = document.getElementById('admin-comm-type');
+                const titleEl = document.getElementById('admin-comm-title');
+                const subtitleEl = document.getElementById('admin-comm-subtitle');
+                const contentEl = document.getElementById('admin-comm-content');
+                const startEl = document.getElementById('admin-comm-start');
+                const endEl = document.getElementById('admin-comm-end');
+                const rolesEl = document.getElementById('admin-comm-roles');
+                const activeEl = document.getElementById('admin-comm-active');
+
+                if (id) {
+                    const item = this.announcements.find(x => x.id === id);
+                    if (item) {
+                        idEl.value = item.id;
+                        typeEl.value = item.type || 'announcement';
+                        titleEl.value = item.title || '';
+                        subtitleEl.value = item.subtitle || item.badge || '';
+                        contentEl.value = item.content || '';
+                        startEl.value = item.start_date ? item.start_date.substring(0, 10) : '';
+                        endEl.value = item.end_date ? item.end_date.substring(0, 10) : '';
+                        rolesEl.value = Array.isArray(item.target_roles) && item.target_roles.length > 0 ? item.target_roles[0] : 'Todos';
+                        activeEl.checked = Boolean(item.is_active);
+                        if (modalTitle) modalTitle.textContent = 'Editar Mensaje / Comunicado';
+                    }
+                } else {
+                    idEl.value = '';
+                    typeEl.value = 'announcement';
+                    titleEl.value = '';
+                    subtitleEl.value = '';
+                    contentEl.value = '';
+                    startEl.value = new Date().toISOString().substring(0, 10);
+                    endEl.value = '';
+                    rolesEl.value = 'Asesor';
+                    activeEl.checked = true;
+                    if (modalTitle) modalTitle.textContent = 'Crear Nuevo Mensaje / Comunicado';
+                }
+                modal.classList.remove('hidden');
+            },
+
+            closeEditModal() {
+                const modal = document.getElementById('modal-admin-comunicado');
+                if (modal) modal.classList.add('hidden');
+            },
+
+            async saveFromModal() {
+                const id = document.getElementById('admin-comm-id').value;
+                const type = document.getElementById('admin-comm-type').value;
+                const title = (document.getElementById('admin-comm-title').value || '').trim();
+                const subtitle = (document.getElementById('admin-comm-subtitle').value || '').trim();
+                const content = (document.getElementById('admin-comm-content').value || '').trim();
+                const start = document.getElementById('admin-comm-start').value;
+                const end = document.getElementById('admin-comm-end').value;
+                const targetRole = document.getElementById('admin-comm-roles').value;
+                const isActive = document.getElementById('admin-comm-active').checked;
+
+                if (!title) {
+                    showToast('Por favor ingresa un título para el mensaje.', 'warning');
+                    return;
+                }
+
+                const targetRoles = targetRole === 'Todos' ? ['Todos'] : [targetRole];
+
+                if (id) {
+                    const item = this.announcements.find(x => x.id === id);
+                    if (item) {
+                        item.type = type;
+                        item.title = title;
+                        item.subtitle = subtitle;
+                        item.content = content;
+                        item.start_date = start ? new Date(start).toISOString() : null;
+                        item.end_date = end ? new Date(end + 'T23:59:59.999Z').toISOString() : null;
+                        item.target_roles = targetRoles;
+                        item.is_active = isActive;
+                        item.updated_at = new Date().toISOString();
+
+                        if (window.supabaseClient) {
+                            try {
+                                await window.supabaseClient.from('cronos_announcements').update(item).eq('id', id);
+                            } catch (e) { }
+                        }
+                    }
+                } else {
+                    const newId = 'ann_' + Date.now();
+                    const newRecord = {
+                        id: newId,
+                        type: type,
+                        title: title,
+                        subtitle: subtitle,
+                        content: content,
+                        badge: type.toUpperCase(),
+                        start_date: start ? new Date(start).toISOString() : new Date().toISOString(),
+                        end_date: end ? new Date(end + 'T23:59:59.999Z').toISOString() : null,
+                        target_roles: targetRoles,
+                        is_active: isActive,
+                        created_by: (window.CRONOS_CURRENT_USER && window.CRONOS_CURRENT_USER.correo) || 'Administración',
+                        created_at: new Date().toISOString()
+                    };
+                    this.announcements.unshift(newRecord);
+                    if (window.supabaseClient) {
+                        try {
+                            await window.supabaseClient.from('cronos_announcements').insert([newRecord]);
+                        } catch (e) { }
+                    }
+                }
+
+                this.saveAnnouncementsCache(this.announcements);
+                this.closeEditModal();
+                this.renderAdminDashboard();
+                showToast('Mensaje guardado correctamente.', 'success');
+            },
+
+            async toggleStatus(id) {
+                const item = this.announcements.find(x => x.id === id);
+                if (!item) return;
+                item.is_active = !item.is_active;
+                item.updated_at = new Date().toISOString();
+
+                if (window.supabaseClient) {
+                    try {
+                        await window.supabaseClient.from('cronos_announcements').update({ is_active: item.is_active }).eq('id', id);
+                    } catch (e) { }
+                }
+                this.saveAnnouncementsCache(this.announcements);
+                this.renderAdminDashboard();
+                showToast(item.is_active ? 'Mensaje activado.' : 'Mensaje desactivado.', 'info');
+            },
+
+            async duplicate(id) {
+                const orig = this.announcements.find(x => x.id === id);
+                if (!orig) return;
+                const clone = JSON.parse(JSON.stringify(orig));
+                clone.id = 'ann_' + Date.now();
+                clone.title = orig.title + ' (Copia)';
+                clone.is_active = false;
+                clone.created_at = new Date().toISOString();
+
+                this.announcements.unshift(clone);
+                if (window.supabaseClient) {
+                    try {
+                        await window.supabaseClient.from('cronos_announcements').insert([clone]);
+                    } catch (e) { }
+                }
+                this.saveAnnouncementsCache(this.announcements);
+                this.renderAdminDashboard();
+                showToast('Mensaje duplicado con éxito.', 'success');
+            },
+
+            async deleteItem(id) {
+                if (!confirm('¿Estás seguro de eliminar este mensaje/comunicado?')) return;
+                this.announcements = this.announcements.filter(x => x.id !== id);
+                if (window.supabaseClient) {
+                    try {
+                        await window.supabaseClient.from('cronos_announcements').delete().eq('id', id);
+                    } catch (e) { }
+                }
+                this.saveAnnouncementsCache(this.announcements);
+                this.renderAdminDashboard();
+                showToast('Mensaje eliminado.', 'info');
+            },
+
+            // Exportaciones
+            exportExcel() {
+                if (window.CronosSurveyManager && typeof window.CronosSurveyManager.exportExcel === 'function') {
+                    window.CronosSurveyManager.exportExcel();
+                }
+            },
+
+            exportCSV() {
+                if (window.CronosSurveyManager && typeof window.CronosSurveyManager.exportCSV === 'function') {
+                    window.CronosSurveyManager.exportCSV();
+                }
+            }
+        };
+
+        window.CronosAnnouncementManager = CronosAnnouncementManager;
+        window.CronosSurveyManager = CronosAnnouncementManager; // Alias retrocompatible
+
+        // Funciones puente globales
+        window.checkAndShowWelcomeModal = function() {
+            CronosAnnouncementManager.checkAndShowWelcome();
+        };
+        window.closeWelcomeModal = function() {
+            CronosAnnouncementManager.closeWelcome();
+        };
+        window.checkAndShowModuleReminder = function(target) {
+            CronosAnnouncementManager.checkAndShowModuleReminder(target);
+        };
+        window.closeReminderSlaModal = function() {
+            CronosAnnouncementManager.closeReminder();
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            CronosAnnouncementManager.init();
+        });
+
+    })();
+    </script>
+
+</body>
 </html>
