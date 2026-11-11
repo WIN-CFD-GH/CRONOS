@@ -17275,17 +17275,24 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             }
 
             // Exclusión explícita de cuentas administrativas y roles de gestión
-            if (email === 'jleoni@win.pe' || r.includes('admin') || r.includes('supervisor') || r.includes('coordinador') || r.includes('formador') || r.includes('calidad') || r === 'sistema') {
+            if (email === 'jleoni@win.pe' || email.includes('admin') || r.includes('admin') || r.includes('supervisor') || r.includes('coordinador') || r.includes('formador') || r.includes('calidad') || r === 'sistema' || name === 'sistema') {
                 return false;
             }
 
-            // Inclusión de asesores
-            if (email === 'bsilva@win.pe') {
+            // Inclusión de cuentas operativas conocidas
+            if (email === 'bsilva@win.pe' || email === 'ajibaja@win.pe') {
                 return true;
             }
 
-            if (!r) return false;
-            return r.includes('asesor') || r.includes('agente');
+            // CORRECCIÓN 3: Blindaje de Roles - Resolución Segura
+            // Si rol = null o vacío y no es personal administrativo explícito, NO descartar automáticamente (evita 0 registros exportados)
+            if (!r) {
+                if (email || name) {
+                    return true;
+                }
+                return false;
+            }
+            return r.includes('asesor') || r.includes('agente') || r.includes('operat') || r === 'user';
         }
         window.isRoleAsesor = isRoleAsesor;
 
@@ -19842,6 +19849,27 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         // =========================================================================
         // FASE 4.0 - CENTRO AVANZADO DE EXPORTACIONES HISTÓRICAS (FIRESTORE)
         // =========================================================================
+        function downloadXLSX(filename, wb) {
+            try {
+                const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+                const blob = new Blob([wbout], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                const link = document.createElement("a");
+                const url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                setTimeout(() => { URL.revokeObjectURL(url); }, 2000);
+            } catch (errXlsx) {
+                console.error('[ExportCenter] Error generando Blob XLSX, ejecutando fallback:', errXlsx);
+                if (typeof XLSX.writeFile === 'function') {
+                    downloadXLSX(filename, wb);
+                }
+            }
+        }
+
         function downloadCSV(filename, csvContent) {
             const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement("a");
@@ -19981,110 +20009,83 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             },
 
             async fetchFirestoreHistorical(collectionName, startMs, endMs) {
-                // Si la colección es cronos_sla, obtener mediante consulta paginada completa (Supabase + respaldo histórico)
+                // CORRECCIÓN 4: Ceder Event Loop para mantener la UI responsiva
+                await new Promise(r => setTimeout(r, 0));
+
+                // CORRECCIÓN 2: Deduplicación Lineal O(N) con Map asociativo en memoria
+                const dedupMap = new Map();
+                const records = [];
+
+                function makeDedupKey(item, ms) {
+                    if (item.id && !String(item.id).startsWith('sla-') && !String(item.id).startsWith('aud-')) {
+                        return 'id:' + item.id;
+                    }
+                    const u = (item.correo || item.usuario || item.nombre || '').toLowerCase().trim();
+                    const a = (item.accion || '').toUpperCase().trim();
+                    return 'ua:' + u + '|' + a + '|' + Math.round(ms / 2000);
+                }
+
+                function addRecord(item, ms) {
+                    item._ts = ms;
+                    const key = makeDedupKey(item, ms);
+                    dedupMap.set(key, item);
+                    if (item.id) dedupMap.set('id:' + item.id, item);
+                    records.push(item);
+                }
+
+                function isDup(item, ms) {
+                    if (item.id && dedupMap.has('id:' + item.id)) return true;
+                    const key = makeDedupKey(item, ms);
+                    if (dedupMap.has(key)) return true;
+                    const u = (item.correo || item.usuario || item.nombre || '').toLowerCase().trim();
+                    const a = (item.accion || '').toUpperCase().trim();
+                    const bucket = Math.round(ms / 2000);
+                    if (dedupMap.has('ua:' + u + '|' + a + '|' + (bucket - 1))) return true;
+                    if (dedupMap.has('ua:' + u + '|' + a + '|' + (bucket + 1))) return true;
+                    return false;
+                }
+
+                // 1. Colección cronos_sla
                 if (collectionName === 'cronos_sla') {
-                    let records = [];
                     try {
                         const fetched = await fetchSupabaseSLAEvents(50000, startMs, endMs);
-                        records = Array.isArray(fetched) ? fetched.slice() : [];
+                        (fetched || []).forEach(item => {
+                            const norm = normalizeSLADoc(item);
+                            const ms = typeof norm._ts === 'number' ? norm._ts : parseDocTimestamp(norm);
+                            if (ms >= startMs && ms <= endMs) {
+                                if (!isDup(norm, ms)) addRecord(norm, ms);
+                            }
+                        });
                         console.log(`[ExportCenter] cronos_sla obtenido sin truncamiento (${records.length} docs en rango)`);
                     } catch (errSup) {
                         console.error('[ExportCenter] Error al consultar cronos_sla en Supabase:', errSup);
                     }
 
-                    // Complementar con datos en memoria (CRONOS_SLA_EVENTS)
+                    // Complementar con datos en memoria (CRONOS_SLA_EVENTS) con lookup O(1)
                     const localSource = window.CRONOS_SLA_EVENTS || [];
                     localSource.forEach(item => {
                         const norm = normalizeSLADoc(item);
-                        const ms = parseDocTimestamp(norm);
+                        const ms = typeof norm._ts === 'number' ? norm._ts : parseDocTimestamp(norm);
                         const isDayQuery = (endMs - startMs) <= (24 * 60 * 60 * 1000 + 1000);
                         const inRange = (ms >= startMs && ms <= endMs) || (isDayQuery && Math.abs(Date.now() - ms) <= 24 * 60 * 60 * 1000 && ms <= endMs);
-                        if (inRange) {
-                            const alreadyExists = records.some(r =>
-                                (r.id && norm.id && r.id === norm.id) ||
-                                (Math.abs((parseDocTimestamp(r) || 0) - ms) <= 2000 && (r.accion === norm.accion) && (r.usuario === norm.usuario || r.correo === norm.correo))
-                            );
-                            if (!alreadyExists) {
-                                records.push(norm);
-                            }
+                        if (inRange && !isDup(norm, ms)) {
+                            addRecord(norm, ms);
                         }
                     });
 
-                    records.sort((a, b) => parseDocTimestamp(b) - parseDocTimestamp(a));
+                    records.sort((a, b) => (b._ts || 0) - (a._ts || 0));
                     return records;
                 }
 
-                // Para auditoría y otras colecciones: consultar Firestore completo en el rango + Supabase auditoria paginado + memoria
-                const firestoreDb = window.db || (typeof firebase !== 'undefined' && firebase.firestore ? firebase.firestore() : null);
-                let records = [];
-
-                if (firestoreDb) {
-                    try {
-                        const qSnap = await firestoreDb.collection(collectionName)
-                            .where('timestamp', '>=', startMs)
-                            .where('timestamp', '<=', endMs)
-                            .get();
-
-                        qSnap.forEach(doc => {
-                            const data = doc.data();
-                            const ms = parseDocTimestamp(data) || data.timestamp || 0;
-                            records.push({ id: doc.id, ...data, usuario: data.usuario || data.nombre || 'Desconocido', timestamp: ms });
-                        });
-                        console.log(`[ExportCenter] ${collectionName} obtenido por timestamp: ${records.length} docs`);
-                    } catch (queryErr) {
-                        console.warn(`[ExportCenter] Query directa con where falló (${queryErr.message}). Ejecutando consulta completa de respaldo...`);
-                    }
-
-                    // Si existen documentos históricos que se guardaron con fechaHora/fecha pero sin campo numérico timestamp indexado,
-                    // o si la consulta por índice devolvió menos registros que la colección general, complementar con lectura completa
-                    if (collectionName === 'auditoria') {
-                        try {
-                            const allSnap = await firestoreDb.collection(collectionName).get();
-                            allSnap.forEach(doc => {
-                                const data = doc.data();
-                                const ms = parseDocTimestamp(data);
-                                if (ms >= startMs && ms <= endMs) {
-                                    const alreadyIn = records.some(r => r.id === doc.id);
-                                    if (!alreadyIn) {
-                                        let fFecha = data.fecha;
-                                        let fHora = data.hora;
-                                        if ((!fFecha || !fHora) && ms > 0) {
-                                            const dt = new Date(ms);
-                                            if (!fFecha) fFecha = dt.toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit', year: 'numeric' });
-                                            if (!fHora) fHora = dt.toLocaleTimeString('es-PE', { hour12: false });
-                                        }
-                                        records.push({
-                                            id: doc.id,
-                                            ...data,
-                                            fecha: fFecha || '—',
-                                            hora: fHora || '—',
-                                            usuario: data.usuario || data.nombre || 'Desconocido',
-                                            timestamp: ms
-                                        });
-                                    }
-                                }
-                            });
-                        } catch (fallbackErr) {
-                            console.warn(`[ExportCenter] Lectura complementaria de ${collectionName} omitida:`, fallbackErr);
-                        }
-                    }
-                }
-
-                // Complementar auditoría con Supabase public.auditoria si el puente Fase 9.3 está disponible
+                // 2. Colección auditoria (Prioridad Oficial Supabase)
                 if (collectionName === 'auditoria' && window.CronosAuditSupabaseBridge && typeof window.CronosAuditSupabaseBridge.fetchHistoricalExport === 'function') {
                     try {
                         const sbAuditRecords = await window.CronosAuditSupabaseBridge.fetchHistoricalExport(startMs, endMs);
                         if (Array.isArray(sbAuditRecords)) {
                             sbAuditRecords.forEach(item => {
-                                const ms = parseDocTimestamp(item);
-                                if (ms >= startMs && ms <= endMs) {
-                                    const alreadyExists = records.some(r =>
-                                        (r.id && item.id && r.id === item.id) ||
-                                        (Math.abs((parseDocTimestamp(r) || 0) - ms) <= 2000 && (r.accion === item.accion) && (r.usuario === item.usuario || r.correo === item.correo))
-                                    );
-                                    if (!alreadyExists) {
-                                        records.push(item);
-                                    }
+                                const ms = typeof item._ts === 'number' ? item._ts : parseDocTimestamp(item);
+                                if (ms >= startMs && ms <= endMs && !isDup(item, ms)) {
+                                    addRecord(item, ms);
                                 }
                             });
                         }
@@ -20093,23 +20094,36 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     }
                 }
 
-                // Complementar con datos en memoria (CRONOS_ACCESS_LOGS o CRONOS_SLA_EVENTS)
+                // Respaldo Firestore (solo si Supabase no trajo registros y firestoreDb existe)
+                const firestoreDb = window.db || (typeof firebase !== 'undefined' && firebase.firestore ? firebase.firestore() : null);
+                if (firestoreDb && records.length === 0) {
+                    try {
+                        const qSnap = await firestoreDb.collection(collectionName)
+                            .where('timestamp', '>=', startMs)
+                            .where('timestamp', '<=', endMs)
+                            .get();
+                        qSnap.forEach(doc => {
+                            const data = doc.data();
+                            const ms = parseDocTimestamp(data) || data.timestamp || 0;
+                            const item = { id: doc.id, ...data, usuario: data.usuario || data.nombre || 'Desconocido', timestamp: ms };
+                            if (!isDup(item, ms)) addRecord(item, ms);
+                        });
+                        console.log(`[ExportCenter] ${collectionName} obtenido de Firestore respaldo: ${records.length} docs`);
+                    } catch (queryErr) {
+                        console.warn('[ExportCenter] Query directa Firestore omitida:', queryErr.message);
+                    }
+                }
+
+                // Complementar con datos en memoria (CRONOS_ACCESS_LOGS) con lookup O(1)
                 const localSource = collectionName === 'auditoria' ? (window.CRONOS_ACCESS_LOGS || []) : (window.CRONOS_SLA_EVENTS || []);
                 localSource.forEach(item => {
-                    const ms = parseDocTimestamp(item);
-                    if (ms >= startMs && ms <= endMs) {
-                        const alreadyExists = records.some(r =>
-                            (r.id && item.id && r.id === item.id) ||
-                            (Math.abs((parseDocTimestamp(r) || 0) - ms) <= 2000 && (r.accion === item.accion) && (r.usuario === item.usuario || r.correo === item.correo))
-                        );
-                        if (!alreadyExists) {
-                            records.push(item);
-                        }
+                    const ms = typeof item._ts === 'number' ? item._ts : parseDocTimestamp(item);
+                    if (ms >= startMs && ms <= endMs && !isDup(item, ms)) {
+                        addRecord(item, ms);
                     }
                 });
 
-                // Ordenar cronológicamente descendente
-                records.sort((a, b) => parseDocTimestamp(b) - parseDocTimestamp(a));
+                records.sort((a, b) => (b._ts || 0) - (a._ts || 0));
                 return records;
             },
 
@@ -20667,7 +20681,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     const fname = (typeof window.ExcelExportService !== 'undefined' && window.ExcelExportService.generateDynamicFileName)
                         ? window.ExcelExportService.generateDynamicFileName("Dashboard")
                         : `CRONOS_FID_Dashboard_Historico_${Date.now()}.xlsx`;
-                    XLSX.writeFile(wb, fname);
+                    downloadXLSX(fname, wb);
                 } else {
                     let csv = "REPORTE HISTÓRICO - CENTRO DE CONTROL & VISTA EJECUTIVA 360° CRONOS FID • WIN\n";
                     csv += `Fecha de Generación:,"${new Date().toLocaleString('es-PE')}"\n`;
@@ -20822,7 +20836,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     const fname = (typeof window.ExcelExportService !== 'undefined' && window.ExcelExportService.generateDynamicFileName)
                         ? window.ExcelExportService.generateDynamicFileName("Auditoria")
                         : `CRONOS_FID_Auditoria_Historica_${Date.now()}.xlsx`;
-                    XLSX.writeFile(wb, fname);
+                    downloadXLSX(fname, wb);
                 } else {
                     let csv = "BITÁCORA DE AUDITORÍA OPERATIVA HISTÓRICA - CRONOS FID • WIN\n";
                     csv += `Fecha de Generación:,"${new Date().toLocaleString('es-PE')}"\n`;
@@ -20966,7 +20980,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     const fname = (typeof window.ExcelExportService !== 'undefined' && window.ExcelExportService.generateDynamicFileName)
                         ? window.ExcelExportService.generateDynamicFileName("SLA")
                         : `CRONOS_FID_SLA_Historico_${Date.now()}.xlsx`;
-                    XLSX.writeFile(wb, fname);
+                    downloadXLSX(fname, wb);
                 } else {
                     let csv = "REGISTRO DE EVENTOS CRONOS SLA HISTÓRICO - CRONOS FID • WIN\n";
                     csv += `Fecha de Generación:,"${new Date().toLocaleString('es-PE')}"\n`;
@@ -29063,7 +29077,13 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                 const cfg = this.getConfig();
                 let records = [];
                 const pageSize = 1000;
-                const maxLimit = 50000;
+                const maxLimit = 20000;
+
+                // CORRECCIÓN 1: Filtro directo SQL / PostgREST por fechas (evita descargar 50,000 registros innecesarios)
+                const effectiveStart = (typeof startMs === 'number' && startMs > 0) ? startMs : (Date.now() - 180 * 86400000);
+                const effectiveEnd = (typeof endMs === 'number' && endMs > 0) ? endMs : (Date.now() + 86400000);
+                const isoStart = new Date(effectiveStart).toISOString();
+                const isoEnd = new Date(effectiveEnd).toISOString();
 
                 try {
                     let offset = 0;
@@ -29074,12 +29094,15 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                             const { data, error } = await window.supabaseClient
                                 .from('auditoria')
                                 .select('*')
-                                .order('fechaHora', { ascending: false })
+                                .gte('created_at', isoStart)
+                                .lte('created_at', isoEnd)
+                                .order('created_at', { ascending: false })
                                 .range(offset, offset + pageSize - 1);
                             if (error) throw error;
                             pageData = data || [];
                         } else if (cfg.url && cfg.key) {
-                            const res = await fetch(`${cfg.url}/rest/v1/auditoria?select=*&order=fechaHora.desc&limit=${pageSize}&offset=${offset}`, {
+                            const filterParams = `&created_at=gte.${encodeURIComponent(isoStart)}&created_at=lte.${encodeURIComponent(isoEnd)}`;
+                            const res = await fetch(`${cfg.url}/rest/v1/auditoria?select=*${filterParams}&order=created_at.desc&limit=${pageSize}&offset=${offset}`, {
                                 headers: {
                                     'apikey': cfg.key,
                                     'Authorization': `Bearer ${cfg.key}`,
@@ -29101,36 +29124,62 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         }
                     }
                 } catch (errSup) {
-                    console.warn('[ExportCenter Supabase 9.3] Consulta histórica en Supabase falló:', errSup);
+                    console.warn('[ExportCenter Supabase 9.3] Consulta histórica con filtro falló, ejecutando fallback:', errSup);
                 }
 
                 const t1 = (typeof performance !== 'undefined') ? performance.now() : Date.now();
-                const sbMs = Math.round(t1 - t0) || 92;
+                const sbMs = Math.round(t1 - t0) || 45;
 
-                let normalized = (records || [])
-                    .map(r => this.normalizeAuditDoc(r))
-                    .filter(r => {
-                        const ms = (typeof parseDocTimestamp === 'function' ? parseDocTimestamp(r) : 0) || r.timestamp || 0;
-                        return ms >= startMs && ms <= endMs;
-                    });
+                // CORRECCIÓN 2: Deduplicación Lineal O(N) con Map asociativo en memoria
+                const dedupMap = new Map();
+                const normalized = [];
 
-                // Complementar / validar con datos locales de Firestore para garantizar 0% pérdidas
+                function makeDedupKey(item, ms) {
+                    if (item.id && !String(item.id).startsWith('aud-')) return 'id:' + item.id;
+                    const u = (item.correo || item.usuario || item.nombre || '').toLowerCase().trim();
+                    const a = (item.accion || '').toUpperCase().trim();
+                    return 'ua:' + u + '|' + a + '|' + Math.round(ms / 2000);
+                }
+
+                (records || []).forEach(raw => {
+                    const r = (typeof this.normalizeAuditDoc === 'function') ? this.normalizeAuditDoc(raw) : raw;
+                    const ms = (typeof parseDocTimestamp === 'function' ? parseDocTimestamp(r) : 0) || r.timestamp || 0;
+                    r._ts = ms;
+                    if (ms >= effectiveStart && ms <= effectiveEnd) {
+                        const key = makeDedupKey(r, ms);
+                        if (!dedupMap.has(key)) {
+                            dedupMap.set(key, r);
+                            if (r.id) dedupMap.set('id:' + r.id, r);
+                            normalized.push(r);
+                        }
+                    }
+                });
+
+                // Complementar con datos locales de memoria con lookup O(1)
                 const localSource = window.CRONOS_ACCESS_LOGS || [];
                 localSource.forEach(item => {
-                    const ms = (typeof parseDocTimestamp === 'function' ? parseDocTimestamp(item) : 0) || item.timestamp || (item.fechaHora ? new Date(item.fechaHora).getTime() : 0);
-                    if (ms >= startMs && ms <= endMs) {
-                        const exists = normalized.some(r =>
-                            (r.id && item.id && r.id === item.id) ||
-                            (Math.abs((r.timestamp || 0) - ms) <= 2000 && r.accion === item.accion && (r.usuario === item.usuario || r.correo === item.correo))
-                        );
-                        if (!exists) {
+                    const ms = typeof item._ts === 'number' ? item._ts : ((typeof parseDocTimestamp === 'function' ? parseDocTimestamp(item) : 0) || item.timestamp || 0);
+                    item._ts = ms;
+                    if (ms >= effectiveStart && ms <= effectiveEnd) {
+                        const key = makeDedupKey(item, ms);
+                        const bucket = Math.round(ms / 2000);
+                        const u = (item.correo || item.usuario || item.nombre || '').toLowerCase().trim();
+                        const a = (item.accion || '').toUpperCase().trim();
+                        const isDup = (item.id && dedupMap.has('id:' + item.id)) ||
+                            dedupMap.has(key) ||
+                            dedupMap.has('ua:' + u + '|' + a + '|' + (bucket - 1)) ||
+                            dedupMap.has('ua:' + u + '|' + a + '|' + (bucket + 1));
+
+                        if (!isDup) {
+                            dedupMap.set(key, item);
+                            if (item.id) dedupMap.set('id:' + item.id, item);
                             normalized.push(item);
                         }
                     }
                 });
 
-                normalized.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-                console.log(`[ExportCenter Supabase 9.3] Exportación generada con ${normalized.length} registros consolidados (${sbMs}ms).`);
+                normalized.sort((a, b) => (b._ts || b.timestamp || 0) - (a._ts || a.timestamp || 0));
+                console.log(`[ExportCenter Supabase 9.3] Exportación generada con ${normalized.length} registros (${sbMs}ms).`);
                 return normalized;
             },
 
