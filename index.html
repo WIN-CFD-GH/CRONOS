@@ -2302,9 +2302,10 @@ Año02026
 
             <!-- Opcion: Acuerdos de Voz (Grabacion) -->
             <button id="tab-acuerdos-voz" onclick="switchTab('acuerdos-voz')"
-                class="flex items-center gap-2 bg-transparent hover:bg-slate-100 text-slate-600 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold shrink-0 transition-all cursor-pointer">
-                <i class="fa-solid fa-microphone-lines"></i>
-                <span>Acuerdos de Voz (Grabacion)</span>
+                class="flex items-center gap-2 bg-transparent hover:bg-slate-100 text-slate-600 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold shrink-0 transition-all cursor-pointer"
+                title="Procesos Operativos (Acuerdos, Formularios y Calculadoras)">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Procesos Operativos</span>
             </button>
 
             <!-- Opcion: Directorio (Escalamiento) -->
@@ -2390,8 +2391,35 @@ Año02026
             <div class="flex-1 w-full min-w-0">
                 <!-- ================= PESTAÑA: ACUERDOS DE VOZ (GRABACIONES Y CONTRATOS) ================= -->
                 <div id="content-acuerdos-voz" class="tab-content hidden animate-pop space-y-6">
+                    <!-- NAVEGACIÓN SECUNDARIA PROCESOS OPERATIVOS -->
+                    <div class="bg-white p-2.5 rounded-2xl shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-3">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <button type="button" id="subtab-btn-acuerdos" onclick="window.CronosProcesosOperativos.switchSubTab('acuerdos')"
+                                class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer bg-gradient-to-r from-purple-700 to-indigo-700 text-white shadow-md shadow-purple-500/20">
+                                <i class="fa-solid fa-microphone-lines"></i>
+                                <span>Acuerdos de Voz</span>
+                            </button>
+                            <button type="button" id="subtab-btn-formularios" onclick="window.CronosProcesosOperativos.switchSubTab('formularios')"
+                                class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer bg-slate-100 hover:bg-slate-200 text-slate-700">
+                                <i class="fa-solid fa-file-signature text-win-orange"></i>
+                                <span>Formularios Operativos</span>
+                                <span class="bg-orange-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">Nuevo</span>
+                            </button>
+                            <button type="button" id="subtab-btn-calculadoras" onclick="window.CronosProcesosOperativos.switchSubTab('calculadoras')"
+                                class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer bg-slate-100 hover:bg-slate-200 text-slate-700">
+                                <i class="fa-solid fa-calculator text-blue-600"></i>
+                                <span>Calculadoras</span>
+                                <span class="bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">Nuevo</span>
+                            </button>
+                        </div>
+                        <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5 px-2">
+                            <i class="fa-solid fa-cube text-slate-400"></i> Módulo Procesos
+                        </div>
+                    </div>
 
-                    <!-- Banner de Cabecera Oficial -->
+                    <!-- SUBSECCIÓN 1: ACUERDOS DE VOZ (100% PRESERVADO) -->
+                    <div id="subcontent-procesos-acuerdos" class="space-y-6">
+<!-- Banner de Cabecera Oficial -->
                     <div
                         class="bg-gradient-to-r from-purple-900 via-purple-800 to-indigo-900 text-white p-6 rounded-2xl shadow-lg border border-purple-700/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                         <div class="flex items-center gap-4">
@@ -2555,6 +2583,379 @@ Año02026
                             </div>
                         </div>
                     </div>
+                    </div>
+
+                    <!-- SUBSECCIÓN 2: FORMULARIOS OPERATIVOS -->
+                    <div id="subcontent-procesos-formularios" class="hidden space-y-6">
+                        <!-- Banner Formularios Operativos -->
+                        <div class="bg-gradient-to-r from-orange-600 via-orange-500 to-amber-600 text-white p-6 rounded-2xl shadow-lg border border-orange-400/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                            <div class="flex items-center gap-4">
+                                <div class="bg-white/10 p-3.5 rounded-2xl text-orange-100 backdrop-blur-md border border-white/10 shrink-0">
+                                    <i class="fa-solid fa-file-signature text-3xl"></i>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2 flex-wrap">
+                                        <h2 class="text-xl md:text-2xl font-black tracking-wide">Formularios Operativos</h2>
+                                        <span class="bg-white/20 text-white border border-white/30 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">Generador Documental</span>
+                                    </div>
+                                    <p class="text-xs md:text-sm text-orange-100 mt-1 max-w-2xl">
+                                        Generador de documentos oficiales para trámites de clientes WIN. Formulación local sin conexión a CRM, Tickets o sistemas externos.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 self-end md:self-auto shrink-0">
+                                <span class="text-xs bg-white/10 border border-white/20 text-white px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 shadow-sm">
+                                    <i class="fa-solid fa-file-contract text-yellow-300"></i> Formato Oficial WIN
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Selector de Formulario -->
+                        <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-200 flex items-center gap-2">
+                            <button type="button" class="bg-slate-900 text-white text-xs sm:text-sm font-bold px-4 py-2 rounded-xl flex items-center gap-2 shadow-sm">
+                                <i class="fa-solid fa-id-card text-win-orange"></i>
+                                <span>Cambio de Titularidad</span>
+                            </button>
+                        </div>
+
+                        <!-- Grid Principal: Formulario de Entrada + Vista Previa -->
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                            <!-- Columna Izquierda: Entradas del Formulario (5 Cols) -->
+                            <div class="lg:col-span-5 bg-white p-6 rounded-2xl shadow-md border border-slate-200 space-y-5">
+                                <div class="border-b border-slate-100 pb-3 flex items-center justify-between">
+                                    <h3 class="font-extrabold text-slate-800 text-base flex items-center gap-2">
+                                        <i class="fa-solid fa-pen-to-square text-win-orange"></i>
+                                        Datos de la Solicitud
+                                    </h3>
+                                    <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-bold">Documento Legal</span>
+                                </div>
+
+                                <!-- Bloque 1: Titular Actual -->
+                                <div class="space-y-3 bg-slate-50/70 p-3.5 rounded-xl border border-slate-200/80">
+                                    <div class="text-[11px] font-black uppercase text-slate-500 tracking-wider flex items-center gap-1.5">
+                                        <i class="fa-solid fa-user-check text-slate-600"></i> Datos del Titular Actual (Cedente)
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Nombre Completo *</label>
+                                        <input type="text" id="form-titular-actual-nombre" placeholder="Nombres y Apellidos del Titular Actual"
+                                            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
+                                            oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">DNI / Documento de Identidad *</label>
+                                        <input type="text" id="form-titular-actual-dni" placeholder="Ej. 45896321" maxlength="12"
+                                            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
+                                            oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                    </div>
+                                </div>
+
+                                <!-- Bloque 2: Nuevo Titular -->
+                                <div class="space-y-3 bg-slate-50/70 p-3.5 rounded-xl border border-slate-200/80">
+                                    <div class="text-[11px] font-black uppercase text-orange-600 tracking-wider flex items-center gap-1.5">
+                                        <i class="fa-solid fa-user-plus text-win-orange"></i> Datos del Nuevo Titular (Cesionario)
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Nombre Completo *</label>
+                                        <input type="text" id="form-titular-nuevo-nombre" placeholder="Nombres y Apellidos del Nuevo Titular"
+                                            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
+                                            oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-700 mb-1">DNI *</label>
+                                            <input type="text" id="form-titular-nuevo-dni" placeholder="Ej. 74125896" maxlength="12"
+                                                class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
+                                                oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-700 mb-1">Teléfono *</label>
+                                            <input type="tel" id="form-titular-nuevo-telefono" placeholder="Ej. 987654321" maxlength="15"
+                                                class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
+                                                oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Correo Electrónico *</label>
+                                        <input type="email" id="form-titular-nuevo-correo" placeholder="correo.nuevo@ejemplo.com"
+                                            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
+                                            oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                    </div>
+                                </div>
+
+                                <!-- Bloque 3: Datos del Servicio -->
+                                <div class="space-y-3 bg-slate-50/70 p-3.5 rounded-xl border border-slate-200/80">
+                                    <div class="text-[11px] font-black uppercase text-indigo-700 tracking-wider flex items-center gap-1.5">
+                                        <i class="fa-solid fa-wifi text-indigo-600"></i> Datos del Servicio
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Código de Cliente *</label>
+                                        <input type="text" id="form-servicio-codigo" placeholder="Ej. WIN-839201"
+                                            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
+                                            oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Dirección del Servicio *</label>
+                                        <input type="text" id="form-servicio-direccion" placeholder="Ej. Av. Javier Prado Este 1234, Dpto 502, Lima"
+                                            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
+                                            oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                    </div>
+                                </div>
+
+                                <!-- Bloque 4: Datos Complementarios -->
+                                <div class="space-y-3 bg-slate-50/70 p-3.5 rounded-xl border border-slate-200/80">
+                                    <div class="text-[11px] font-black uppercase text-slate-600 tracking-wider flex items-center gap-1.5">
+                                        <i class="fa-solid fa-calendar-days text-slate-600"></i> Datos Complementarios
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Fecha de la Solicitud *</label>
+                                        <input type="date" id="form-servicio-fecha"
+                                            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
+                                            oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Observaciones</label>
+                                        <textarea id="form-servicio-observaciones" rows="2" placeholder="Observaciones adicionales sobre el trámite de cesión..."
+                                            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
+                                            oninput="window.CronosProcesosOperativos.generarVistaPrevia()"></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Acciones -->
+                                <div class="flex items-center gap-2 pt-2">
+                                    <button type="button" onclick="window.CronosProcesosOperativos.generarVistaPrevia()"
+                                        class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-2 transition shadow-sm cursor-pointer">
+                                        <i class="fa-solid fa-arrows-rotate text-emerald-400"></i> Actualizar Vista
+                                    </button>
+                                    <button type="button" onclick="window.CronosProcesosOperativos.limpiarFormulario()"
+                                        class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 transition cursor-pointer">
+                                        <i class="fa-solid fa-eraser"></i> Limpiar
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Columna Derecha: Vista Previa y Exportación (7 Cols) -->
+                            <div class="lg:col-span-7 bg-white p-6 rounded-2xl shadow-md border border-slate-200 space-y-4">
+                                <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
+                                    <div>
+                                        <h3 class="font-extrabold text-slate-800 text-base flex items-center gap-2">
+                                            <i class="fa-solid fa-file-invoice text-emerald-600"></i>
+                                            Vista Previa del Documento
+                                        </h3>
+                                        <p class="text-xs text-slate-500">Documento formal redactado y listo para emisión</p>
+                                    </div>
+                                    <div class="flex items-center gap-2 flex-wrap">
+                                        <button type="button" id="btn-descargar-pdf" onclick="window.CronosProcesosOperativos.descargarPDF()"
+                                            class="bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-bold px-3.5 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-md shadow-red-500/20 active:scale-95 transition-all cursor-pointer">
+                                            <i class="fa-solid fa-file-pdf text-sm"></i>
+                                            <span>Descargar PDF</span>
+                                        </button>
+                                        <button type="button" id="btn-descargar-word" onclick="window.CronosProcesosOperativos.descargarWord()"
+                                            class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold px-3.5 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-md shadow-blue-500/20 active:scale-95 transition-all cursor-pointer">
+                                            <i class="fa-solid fa-file-word text-sm"></i>
+                                            <span>Descargar Word</span>
+                                        </button>
+                                        <button type="button" onclick="window.CronosProcesosOperativos.copiarTextoDocumento()"
+                                            class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 transition active:scale-95 cursor-pointer">
+                                            <i class="fa-solid fa-copy"></i>
+                                            <span>Copiar</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Contenedor de Hoja Formal (Estilo A4) -->
+                                <div id="preview-cambio-titularidad" class="bg-slate-50 border border-slate-300 rounded-xl p-6 text-slate-800 font-sans text-xs space-y-4 shadow-inner max-h-[650px] overflow-y-auto">
+                                    <!-- Renderizado Dinámico mediante JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SUBSECCIÓN 3: CALCULADORAS -->
+                    <div id="subcontent-procesos-calculadoras" class="hidden space-y-6">
+                        <!-- Banner Calculadoras -->
+                        <div class="bg-gradient-to-r from-blue-700 via-indigo-700 to-sky-700 text-white p-6 rounded-2xl shadow-lg border border-blue-500/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                            <div class="flex items-center gap-4">
+                                <div class="bg-white/10 p-3.5 rounded-2xl text-blue-100 backdrop-blur-md border border-white/10 shrink-0">
+                                    <i class="fa-solid fa-calculator text-3xl"></i>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2 flex-wrap">
+                                        <h2 class="text-xl md:text-2xl font-black tracking-wide">Calculadoras Operativas</h2>
+                                        <span class="bg-white/20 text-white border border-white/30 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">Fidelización WIN</span>
+                                    </div>
+                                    <p class="text-xs md:text-sm text-blue-100 mt-1 max-w-2xl">
+                                        Herramienta de simulación de prorrateos e impacto económico para negociaciones de cambio de plan y retención.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 self-end md:self-auto shrink-0">
+                                <span class="text-xs bg-white/10 border border-white/20 text-white px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 shadow-sm">
+                                    <i class="fa-solid fa-scale-balanced text-cyan-300"></i> Prorrateo 30 Días
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Advertencia Obligatoria -->
+                        <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-xl flex items-center gap-3 text-amber-900 font-bold text-xs sm:text-sm shadow-xs">
+                            <i class="fa-solid fa-triangle-exclamation text-amber-600 text-xl shrink-0"></i>
+                            <div>
+                                <span class="block font-black uppercase text-xs tracking-wider text-amber-800">Aviso Operativo Obligatorio:</span>
+                                <span>Resultado referencial sujeto a validación de sistemas corporativos.</span>
+                            </div>
+                        </div>
+
+                        <!-- Grid Principal: Entradas de Prorrateo + Resultados / Explicación -->
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                            <!-- Columna Izquierda: Entradas (5 Cols) -->
+                            <div class="lg:col-span-5 bg-white p-6 rounded-2xl shadow-md border border-slate-200 space-y-5">
+                                <div class="border-b border-slate-100 pb-3 flex items-center justify-between">
+                                    <h3 class="font-extrabold text-slate-800 text-base flex items-center gap-2">
+                                        <i class="fa-solid fa-sliders text-blue-600"></i>
+                                        Parámetros del Cambio
+                                    </h3>
+                                    <span class="text-[10px] bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full font-bold">Simulador</span>
+                                </div>
+
+                                <!-- Plan Actual -->
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Tarifa Plan Actual (S/) *</label>
+                                    <input type="number" id="prorr-plan-actual" value="99.00" step="0.01" min="0"
+                                        class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm font-bold text-slate-800 focus:outline-none focus:border-blue-600 focus:bg-white"
+                                        oninput="window.CronosProcesosOperativos.calcularProrrateo()">
+                                    <div class="flex items-center gap-1.5 mt-1.5">
+                                        <span class="text-[10px] text-slate-400 font-bold">Rápidos:</span>
+                                        <button type="button" onclick="window.CronosProcesosOperativos.setPlanActual(69)" class="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-bold cursor-pointer">S/69</button>
+                                        <button type="button" onclick="window.CronosProcesosOperativos.setPlanActual(89)" class="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-bold cursor-pointer">S/89</button>
+                                        <button type="button" onclick="window.CronosProcesosOperativos.setPlanActual(99)" class="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-bold cursor-pointer">S/99</button>
+                                        <button type="button" onclick="window.CronosProcesosOperativos.setPlanActual(119)" class="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-bold cursor-pointer">S/119</button>
+                                        <button type="button" onclick="window.CronosProcesosOperativos.setPlanActual(149)" class="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-bold cursor-pointer">S/149</button>
+                                    </div>
+                                </div>
+
+                                <!-- Plan Nuevo -->
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Tarifa Plan Nuevo (S/) *</label>
+                                    <input type="number" id="prorr-plan-nuevo" value="119.00" step="0.01" min="0"
+                                        class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm font-bold text-slate-800 focus:outline-none focus:border-blue-600 focus:bg-white"
+                                        oninput="window.CronosProcesosOperativos.calcularProrrateo()">
+                                    <div class="flex items-center gap-1.5 mt-1.5">
+                                        <span class="text-[10px] text-slate-400 font-bold">Rápidos:</span>
+                                        <button type="button" onclick="window.CronosProcesosOperativos.setPlanNuevo(69)" class="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-bold cursor-pointer">S/69</button>
+                                        <button type="button" onclick="window.CronosProcesosOperativos.setPlanNuevo(89)" class="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-bold cursor-pointer">S/89</button>
+                                        <button type="button" onclick="window.CronosProcesosOperativos.setPlanNuevo(99)" class="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-bold cursor-pointer">S/99</button>
+                                        <button type="button" onclick="window.CronosProcesosOperativos.setPlanNuevo(119)" class="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-bold cursor-pointer">S/119</button>
+                                        <button type="button" onclick="window.CronosProcesosOperativos.setPlanNuevo(149)" class="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-bold cursor-pointer">S/149</button>
+                                    </div>
+                                </div>
+
+                                <!-- Fechas -->
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Fecha de Cambio *</label>
+                                        <input type="date" id="prorr-fecha-cambio"
+                                            class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-blue-600 focus:bg-white"
+                                            oninput="window.CronosProcesosOperativos.calcularProrrateo()">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Ciclo de Facturación *</label>
+                                        <select id="prorr-ciclo-corte"
+                                            class="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-blue-600 focus:bg-white"
+                                            onchange="window.CronosProcesosOperativos.calcularProrrateo()">
+                                            <option value="1">Día 1 de cada mes (Ciclo 1)</option>
+                                            <option value="15">Día 15 de cada mes (Ciclo 2)</option>
+                                            <option value="23">Día 23 de cada mes (Ciclo 3)</option>
+                                            <option value="28">Día 28 de cada mes (Ciclo 4)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Descuento Aplicado -->
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Descuento Promocional / Fidelización (%)</label>
+                                    <div class="flex items-center gap-2">
+                                        <input type="number" id="prorr-descuento" value="0" min="0" max="100"
+                                            class="w-24 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm font-bold text-slate-800 focus:outline-none focus:border-blue-600 focus:bg-white"
+                                            oninput="window.CronosProcesosOperativos.calcularProrrateo()">
+                                        <span class="text-xs font-bold text-slate-500">% sobre nuevo plan</span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5 mt-1.5">
+                                        <button type="button" onclick="window.CronosProcesosOperativos.setDescuento(0)" class="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-bold cursor-pointer">Sin desc.</button>
+                                        <button type="button" onclick="window.CronosProcesosOperativos.setDescuento(10)" class="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-bold cursor-pointer">10%</button>
+                                        <button type="button" onclick="window.CronosProcesosOperativos.setDescuento(20)" class="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-bold cursor-pointer">20%</button>
+                                        <button type="button" onclick="window.CronosProcesosOperativos.setDescuento(30)" class="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-bold cursor-pointer">30%</button>
+                                        <button type="button" onclick="window.CronosProcesosOperativos.setDescuento(50)" class="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-bold cursor-pointer">50%</button>
+                                    </div>
+                                </div>
+
+                                <button type="button" onclick="window.CronosProcesosOperativos.calcularProrrateo()"
+                                    class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-extrabold py-3 px-4 rounded-xl shadow-md shadow-blue-500/20 active:scale-98 transition flex items-center justify-center gap-2 text-xs uppercase tracking-wider cursor-pointer">
+                                    <i class="fa-solid fa-calculator"></i>
+                                    <span>Recalcular Prorrateo</span>
+                                </button>
+                            </div>
+
+                            <!-- Columna Derecha: Salidas y Argumentario (7 Cols) -->
+                            <div class="lg:col-span-7 space-y-5">
+                                <!-- Cards de Salida Principal -->
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                    <!-- Monto de Transición -->
+                                    <div class="bg-gradient-to-br from-amber-400 to-yellow-300 border-2 border-slate-900 rounded-2xl p-4 text-center shadow-md">
+                                        <span class="text-[10px] font-black text-slate-900 tracking-wider block uppercase">Total Recibo Transición</span>
+                                        <span id="prorr-out-total" class="text-3xl font-mono font-black text-slate-900">S/ 113.00</span>
+                                        <span class="text-[10px] font-bold text-slate-800 block mt-0.5">Estimado próximo recibo</span>
+                                    </div>
+
+                                    <!-- Impacto Mensual -->
+                                    <div class="bg-white border border-slate-200 rounded-2xl p-4 text-center shadow-sm">
+                                        <span class="text-[10px] font-black text-slate-500 tracking-wider block uppercase">Impacto Mensual</span>
+                                        <span id="prorr-out-impacto" class="text-2xl font-mono font-black text-blue-600">+S/ 20.00</span>
+                                        <span class="text-[10px] font-bold text-slate-400 block mt-0.5">Diferencia recurrente</span>
+                                    </div>
+
+                                    <!-- Días del Ciclo -->
+                                    <div class="bg-white border border-slate-200 rounded-2xl p-4 text-center shadow-sm">
+                                        <span class="text-[10px] font-black text-slate-500 tracking-wider block uppercase">Distribución Días</span>
+                                        <span id="prorr-out-dias-resumen" class="text-xl font-mono font-black text-indigo-700">9d / 21d</span>
+                                        <span class="text-[10px] font-bold text-slate-400 block mt-0.5">Plan Ant. / Plan Nvo.</span>
+                                    </div>
+                                </div>
+
+                                <!-- Desglose Matemático Transparente -->
+                                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-3">
+                                    <h4 class="font-extrabold text-slate-800 text-xs uppercase tracking-wider flex items-center gap-2 border-b border-slate-100 pb-2">
+                                        <i class="fa-solid fa-list-ol text-blue-600"></i>
+                                        Desglose Detallado del Cálculo
+                                    </h4>
+                                    <div class="space-y-2 text-xs font-medium text-slate-700" id="prorr-out-desglose">
+                                        <!-- Rellenado dinámico por JS -->
+                                    </div>
+                                </div>
+
+                                <!-- Explicación Orientativa para el Asesor (Speech) -->
+                                <div class="bg-gradient-to-br from-slate-900 to-indigo-950 text-white p-5 rounded-2xl shadow-md border border-slate-700 space-y-3">
+                                    <div class="flex items-center justify-between border-b border-slate-700/80 pb-2.5">
+                                        <div class="flex items-center gap-2">
+                                            <i class="fa-solid fa-comment-dots text-emerald-400 text-base"></i>
+                                            <span class="font-bold text-xs uppercase tracking-wider text-slate-200">Guion Orientativo para el Cliente</span>
+                                        </div>
+                                        <button type="button" onclick="window.CronosProcesosOperativos.copiarSpeechProrrateo()"
+                                            class="bg-white/10 hover:bg-white/20 text-white font-bold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 transition active:scale-95 cursor-pointer">
+                                            <i class="fa-solid fa-copy text-xs"></i>
+                                            <span>Copiar Guion</span>
+                                        </button>
+                                    </div>
+                                    <p id="prorr-out-speech" class="text-xs md:text-sm text-slate-200 leading-relaxed font-sans bg-white/5 p-3.5 rounded-xl border border-white/10">
+                                        <!-- Rellenado dinámico por JS -->
+                                    </p>
+                                    <div class="text-[10px] text-slate-400 italic flex items-center gap-1.5">
+                                        <i class="fa-solid fa-circle-info text-amber-400"></i>
+                                        Utilice este argumento de forma transparente para fidelizar al cliente y evitar reclamos por facturación.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- ================= PESTAÑA: DIRECTORIO (ESCALAMIENTO) ================= -->
@@ -22929,18 +23330,18 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 subClass: "text-xs text-slate-300 mt-1 font-medium transition-all duration-300"
             },
             'acuerdos-voz': {
-                title: "ACUERDOS DE VOZ (GRABACIÓN)",
-                subtitle: "Guiones oficiales de lectura para validaciones y acuerdos comerciales.",
-                icon: "fa-solid fa-microphone-lines",
+                title: "PROCESOS OPERATIVOS",
+                subtitle: "Acuerdos de voz, formularios operativos documentales y calculadoras de prorrateo.",
+                icon: "fa-solid fa-list-check",
                 iconClass: "text-purple-800",
                 headerClass: "bg-slate-900 text-white shadow-md border-b-4 border-slate-700 transition-all duration-300",
                 logo: (typeof window !== 'undefined' && window.CRONOS_LOGO_DARK) ? window.CRONOS_LOGO_DARK : null,
                 subClass: "text-xs text-slate-300 mt-1 font-medium transition-all duration-300"
             },
             'acuerdos_voz': {
-                title: "ACUERDOS DE VOZ (GRABACIÓN)",
-                subtitle: "Guiones oficiales de lectura para validaciones y acuerdos comerciales.",
-                icon: "fa-solid fa-microphone-lines",
+                title: "PROCESOS OPERATIVOS",
+                subtitle: "Acuerdos de voz, formularios operativos documentales y calculadoras de prorrateo.",
+                icon: "fa-solid fa-list-check",
                 iconClass: "text-purple-800",
                 headerClass: "bg-slate-900 text-white shadow-md border-b-4 border-slate-700 transition-all duration-300",
                 logo: (typeof window !== 'undefined' && window.CRONOS_LOGO_DARK) ? window.CRONOS_LOGO_DARK : null,
@@ -23274,6 +23675,9 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 trackModuleAccess('acuerdos_voz');
                 if (typeof renderAcuerdosCards === 'function') {
                     renderAcuerdosCards();
+                }
+                if (window.CronosProcesosOperativos && typeof window.window.CronosProcesosOperativos.init === 'function') {
+                    window.window.CronosProcesosOperativos.init();
                 }
             } else if (target === 'directorio' && contentDir) {
                 contentDir.classList.remove('hidden');
@@ -46673,6 +47077,532 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     }
                 }
             };
+
+            
+        // =========================================================================
+        // MÓDULO: PROCESOS OPERATIVOS (ACUERDOS, FORMULARIOS Y CALCULADORAS)
+        // Arquitectura: Open for Extension, Closed for Modification
+        // Inicialización bajo demanda (Lazy Loaded)
+        // =========================================================================
+        const CronosProcesosOperativos = {
+            initialized: false,
+            currentSubTab: 'acuerdos',
+
+            init() {
+                if (this.initialized) return;
+                this.initialized = true;
+
+                // Inicializar fecha de hoy en formularios y prorrateo
+                const today = new Date().toISOString().split('T')[0];
+                const fFecha = document.getElementById('form-servicio-fecha');
+                if (fFecha && !fFecha.value) fFecha.value = today;
+
+                const pFecha = document.getElementById('prorr-fecha-cambio');
+                if (pFecha && !pFecha.value) pFecha.value = today;
+
+                // Generar vista previa y prorrateo inicial
+                this.generarVistaPrevia();
+                this.calcularProrrateo();
+                console.log('[PROCESOS_OPERATIVOS] Módulo inicializado bajo demanda exitosamente.');
+            },
+
+            switchSubTab(tabName) {
+                this.init();
+                this.currentSubTab = tabName;
+
+                const tabs = ['acuerdos', 'formularios', 'calculadoras'];
+                tabs.forEach(t => {
+                    const btn = document.getElementById('subtab-btn-' + t);
+                    const container = document.getElementById('subcontent-procesos-' + t);
+
+                    if (t === tabName) {
+                        if (container) container.classList.remove('hidden');
+                        if (btn) {
+                            if (t === 'acuerdos') {
+                                btn.className = 'flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer bg-gradient-to-r from-purple-700 to-indigo-700 text-white shadow-md shadow-purple-500/20';
+                            } else if (t === 'formularios') {
+                                btn.className = 'flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-md shadow-orange-500/20';
+                            } else if (t === 'calculadoras') {
+                                btn.className = 'flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20';
+                            }
+                        }
+                    } else {
+                        if (container) container.classList.add('hidden');
+                        if (btn) {
+                            btn.className = 'flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer bg-slate-100 hover:bg-slate-200 text-slate-700';
+                        }
+                    }
+                });
+
+                if (tabName === 'acuerdos' && typeof renderAcuerdosCards === 'function') {
+                    renderAcuerdosCards();
+                }
+            },
+
+            getFormularioData() {
+                const getVal = id => {
+                    const el = document.getElementById(id);
+                    return el ? el.value.trim() : '';
+                };
+
+                return {
+                    titularActualNombre: getVal('form-titular-actual-nombre') || '[NOMBRE TITULAR ACTUAL]',
+                    titularActualDni: getVal('form-titular-actual-dni') || '[DNI TITULAR ACTUAL]',
+                    titularNuevoNombre: getVal('form-titular-nuevo-nombre') || '[NOMBRE NUEVO TITULAR]',
+                    titularNuevoDni: getVal('form-titular-nuevo-dni') || '[DNI NUEVO TITULAR]',
+                    titularNuevoCorreo: getVal('form-titular-nuevo-correo') || '[CORREO NUEVO TITULAR]',
+                    titularNuevoTelefono: getVal('form-titular-nuevo-telefono') || '[TELÉFONO NUEVO TITULAR]',
+                    servicioCodigo: getVal('form-servicio-codigo') || '[CÓDIGO CLIENTE]',
+                    servicioDireccion: getVal('form-servicio-direccion') || '[DIRECCIÓN DEL SERVICIO]',
+                    servicioFecha: getVal('form-servicio-fecha') || new Date().toISOString().split('T')[0],
+                    servicioObservaciones: getVal('form-servicio-observaciones') || 'Sin observaciones adicionales.'
+                };
+            },
+
+            generarVistaPrevia() {
+                const d = this.getFormularioData();
+                const container = document.getElementById('preview-cambio-titularidad');
+                if (!container) return;
+
+                const fechaFormateada = (function(fStr) {
+                    try {
+                        const parts = fStr.split('-');
+                        if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
+                    } catch(e){}
+                    return fStr;
+                })(d.servicioFecha);
+
+                container.innerHTML = `
+                    <!-- Membrete y Cabecera Oficial -->
+                    <div class="border-b-2 border-orange-500 pb-3 mb-4 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] font-mono font-black text-orange-600 uppercase tracking-widest block">WI-NET TELECOM S.A.C.</span>
+                            <h2 class="text-sm md:text-base font-black text-slate-900 leading-tight">SOLICITUD FORMAL DE CAMBIO DE TITULARIDAD</h2>
+                            <span class="text-[10px] text-slate-500 font-bold">Servicio Internet Fibra Óptica - Área de Retenciones y Fidelización</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[10px] bg-slate-900 text-white px-2 py-0.5 rounded font-mono font-bold block">OFICIAL WIN</span>
+                            <span class="text-[10px] text-slate-500 font-semibold block mt-1">Fecha: ${fechaFormateada}</span>
+                        </div>
+                    </div>
+
+                    <!-- Cuadro de Datos del Servicio -->
+                    <div class="mb-3">
+                        <div class="bg-slate-200/80 px-3 py-1 font-black text-[11px] text-slate-800 uppercase rounded-t">1. DATOS DEL SERVICIO INSTALADO</div>
+                        <table class="w-full border-collapse border border-slate-300 bg-white text-[11px]">
+                            <tbody>
+                                <tr>
+                                    <td class="border border-slate-300 p-2 font-bold bg-slate-50 w-1/3">Código de Cliente / Suministro:</td>
+                                    <td class="border border-slate-300 p-2 font-mono font-bold text-slate-900">${d.servicioCodigo}</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-slate-300 p-2 font-bold bg-slate-50">Dirección del Servicio:</td>
+                                    <td class="border border-slate-300 p-2 text-slate-800">${d.servicioDireccion}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Cuadro del Titular Actual (Cedente) -->
+                    <div class="mb-3">
+                        <div class="bg-slate-200/80 px-3 py-1 font-black text-[11px] text-slate-800 uppercase rounded-t">2. DATOS DEL TITULAR ACTUAL (CEDENTE)</div>
+                        <table class="w-full border-collapse border border-slate-300 bg-white text-[11px]">
+                            <tbody>
+                                <tr>
+                                    <td class="border border-slate-300 p-2 font-bold bg-slate-50 w-1/3">Nombres y Apellidos Completos:</td>
+                                    <td class="border border-slate-300 p-2 font-bold text-slate-900 uppercase">${d.titularActualNombre}</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-slate-300 p-2 font-bold bg-slate-50">DNI / Documento de Identidad:</td>
+                                    <td class="border border-slate-300 p-2 font-mono font-bold text-slate-800">${d.titularActualDni}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Cuadro del Nuevo Titular (Cesionario) -->
+                    <div class="mb-3">
+                        <div class="bg-slate-200/80 px-3 py-1 font-black text-[11px] text-orange-700 uppercase rounded-t">3. DATOS DEL NUEVO TITULAR (CESIONARIO)</div>
+                        <table class="w-full border-collapse border border-slate-300 bg-white text-[11px]">
+                            <tbody>
+                                <tr>
+                                    <td class="border border-slate-300 p-2 font-bold bg-slate-50 w-1/3">Nombres y Apellidos Completos:</td>
+                                    <td class="border border-slate-300 p-2 font-bold text-slate-900 uppercase">${d.titularNuevoNombre}</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-slate-300 p-2 font-bold bg-slate-50">DNI / Documento de Identidad:</td>
+                                    <td class="border border-slate-300 p-2 font-mono font-bold text-slate-800">${d.titularNuevoDni}</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-slate-300 p-2 font-bold bg-slate-50">Correo Electrónico:</td>
+                                    <td class="border border-slate-300 p-2 text-slate-800">${d.titularNuevoCorreo}</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-slate-300 p-2 font-bold bg-slate-50">Teléfono / Móvil de Contacto:</td>
+                                    <td class="border border-slate-300 p-2 font-mono text-slate-800">${d.titularNuevoTelefono}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Cláusula de Cesión y Traspaso de Equipos -->
+                    <div class="bg-amber-50/60 border border-amber-200 p-3 rounded text-[10px] text-slate-700 leading-relaxed space-y-1.5">
+                        <span class="font-bold text-amber-900 uppercase block">Cláusula de Cesión y Responsabilidad Contractual:</span>
+                        <p>
+                            Por medio de la presente, el <strong>TITULAR ACTUAL (CEDENTE)</strong> declara su voluntad expresa de transferir la titularidad del servicio de internet fibra óptica a favor del <strong>NUEVO TITULAR (CESIONARIO)</strong>.
+                            El <strong>NUEVO TITULAR</strong> asume a partir de la fecha de efectividad del trámite todas las obligaciones de pago, vigencia y permanencia del servicio, así como la custodia de los equipos instalados en comodato (ONT, Router, MESH y accesorios).
+                        </p>
+                    </div>
+
+                    <!-- Observaciones -->
+                    <div class="mb-4">
+                        <div class="bg-slate-200/80 px-3 py-1 font-black text-[11px] text-slate-800 uppercase rounded-t">4. OBSERVACIONES COMPLEMENTARIAS</div>
+                        <div class="border border-slate-300 bg-white p-2.5 text-[11px] text-slate-700 italic">
+                            ${d.servicioObservaciones}
+                        </div>
+                    </div>
+
+                    <!-- Cuadro de Firmas -->
+                    <div class="pt-6 grid grid-cols-2 gap-8 text-center text-[10px]">
+                        <div>
+                            <div class="border-t border-slate-800 pt-1.5 font-bold uppercase text-slate-800">
+                                ____________________________________<br>
+                                FIRMA TITULAR CEDENTE<br>
+                                DNI: ${d.titularActualDni}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="border-t border-slate-800 pt-1.5 font-bold uppercase text-slate-800">
+                                ____________________________________<br>
+                                FIRMA NUEVO TITULAR CESIONARIO<br>
+                                DNI: ${d.titularNuevoDni}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center text-[9px] text-slate-400 pt-4 border-t border-slate-200 mt-4">
+                        Documento generado desde la plataforma CRONOS FID - Gestión de Procesos Operativos WIN Internet.
+                    </div>
+                `;
+            },
+
+            limpiarFormulario() {
+                const ids = [
+                    'form-titular-actual-nombre', 'form-titular-actual-dni',
+                    'form-titular-nuevo-nombre', 'form-titular-nuevo-dni',
+                    'form-titular-nuevo-correo', 'form-titular-nuevo-telefono',
+                    'form-servicio-codigo', 'form-servicio-direccion',
+                    'form-servicio-observaciones'
+                ];
+                ids.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.value = '';
+                });
+                const fFecha = document.getElementById('form-servicio-fecha');
+                if (fFecha) fFecha.value = new Date().toISOString().split('T')[0];
+
+                this.generarVistaPrevia();
+                if (typeof showToast === 'function') {
+                    showToast('Formulario restablecido exitosamente.', 'info');
+                }
+            },
+
+            descargarWord() {
+                const d = this.getFormularioData();
+                const fechaFormateada = (function(fStr) {
+                    try {
+                        const parts = fStr.split('-');
+                        if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
+                    } catch(e){}
+                    return fStr;
+                })(d.servicioFecha);
+
+                const wordHtml = `
+                    <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                    <head>
+                        <meta charset='utf-8'>
+                        <title>Solicitud de Cambio de Titularidad - WIN</title>
+                        <style>
+                            body { font-family: 'Calibri', 'Segoe UI', Arial, sans-serif; font-size: 11pt; color: #1e293b; margin: 2.5cm; }
+                            .header-title { color: #f37021; font-size: 16pt; font-weight: bold; text-align: center; margin-bottom: 4px; }
+                            .header-subtitle { text-align: center; font-size: 9pt; color: #64748b; margin-bottom: 25px; }
+                            .section-title { background-color: #f1f5f9; color: #0f172a; font-weight: bold; font-size: 10pt; padding: 6px 10px; margin-top: 15px; margin-bottom: 5px; border-left: 4px solid #f37021; }
+                            table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+                            td, th { border: 1px solid #cbd5e1; padding: 7px 10px; font-size: 10pt; text-align: left; }
+                            th { background-color: #f8fafc; font-weight: bold; width: 35%; color: #334155; }
+                            .clause-box { border: 1px solid #e2e8f0; background-color: #fafafa; padding: 10px; font-size: 9pt; color: #475569; line-height: 1.4; margin-top: 15px; }
+                            .signatures-table { width: 100%; border: none; margin-top: 50px; }
+                            .signatures-table td { border: none; text-align: center; vertical-align: top; padding-top: 25px; }
+                            .sig-line { border-top: 1px solid #0f172a; width: 80%; margin: 0 auto 5px auto; }
+                            .footer-note { text-align: center; font-size: 8pt; color: #94a3b8; margin-top: 40px; border-top: 1px solid #e2e8f0; padding-top: 8px; }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="header-title">WI-NET TELECOM S.A.C.</div>
+                        <div class="header-subtitle">SOLICITUD FORMAL DE CAMBIO DE TITULARIDAD Y CESIÓN CONTRACTUAL<br>Fecha de Emisión: ${fechaFormateada}</div>
+
+                        <div class="section-title">1. DATOS DEL SERVICIO INSTALADO</div>
+                        <table>
+                            <tr><th>Código de Cliente:</th><td><strong>${d.servicioCodigo}</strong></td></tr>
+                            <tr><th>Dirección del Servicio:</th><td>${d.servicioDireccion}</td></tr>
+                        </table>
+
+                        <div class="section-title">2. DATOS DEL TITULAR ACTUAL (CEDENTE)</div>
+                        <table>
+                            <tr><th>Nombres y Apellidos:</th><td><strong>${d.titularActualNombre}</strong></td></tr>
+                            <tr><th>Documento de Identidad (DNI/CE):</th><td>${d.titularActualDni}</td></tr>
+                        </table>
+
+                        <div class="section-title">3. DATOS DEL NUEVO TITULAR (CESIONARIO)</div>
+                        <table>
+                            <tr><th>Nombres y Apellidos:</th><td><strong>${d.titularNuevoNombre}</strong></td></tr>
+                            <tr><th>Documento de Identidad (DNI/CE):</th><td>${d.titularNuevoDni}</td></tr>
+                            <tr><th>Correo Electrónico:</th><td>${d.titularNuevoCorreo}</td></tr>
+                            <tr><th>Teléfono de Contacto:</th><td>${d.titularNuevoTelefono}</td></tr>
+                        </table>
+
+                        <div class="section-title">4. OBSERVACIONES COMPLEMENTARIAS</div>
+                        <table>
+                            <tr><th>Detalle:</th><td>${d.servicioObservaciones}</td></tr>
+                        </table>
+
+                        <div class="clause-box">
+                            <strong>CLÁUSULA DE CESIÓN CONTRACTUAL Y COMODATO DE EQUIPOS:</strong><br>
+                            El TITULAR ACTUAL (CEDENTE) transfiere voluntariamente todos los derechos y obligaciones del contrato a favor del NUEVO TITULAR (CESIONARIO). El NUEVO TITULAR declara conocer y aceptar en su integridad los términos de prestación del servicio contratado, asumiendo la responsabilidad patrimonial sobre los equipos ONT/Router entregados en calidad de comodato y el compromiso de pago oportuno de las facturas que se emitan.
+                        </div>
+
+                        <table class="signatures-table">
+                            <tr>
+                                <td style="width: 50%;">
+                                    <div class="sig-line"></div>
+                                    <strong>FIRMA TITULAR CEDENTE</strong><br>
+                                    DNI: ${d.titularActualDni}
+                                </td>
+                                <td style="width: 50%;">
+                                    <div class="sig-line"></div>
+                                    <strong>FIRMA NUEVO TITULAR CESIONARIO</strong><br>
+                                    DNI: ${d.titularNuevoDni}
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div class="footer-note">
+                            Documento generado mediante CRONOS FID v6.5.0 - Gestión Operativa WIN Internet Hogar.
+                        </div>
+                    </body>
+                    </html>
+                `;
+
+                const blob = new Blob(['\ufeff', wordHtml], { type: 'application/msword;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                const cleanCode = (d.servicioCodigo.replace(/[^a-zA-Z0-9_-]/g, '') || 'WIN');
+                a.download = `Cambio_Titularidad_${cleanCode}_${d.servicioFecha}.doc`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                if (typeof showToast === 'function') {
+                    showToast('Documento Word descargado exitosamente.', 'success');
+                }
+            },
+
+            descargarPDF() {
+                const previewEl = document.getElementById('preview-cambio-titularidad');
+                if (!previewEl) return;
+
+                let iframe = document.getElementById('cronos-print-iframe');
+                if (!iframe) {
+                    iframe = document.createElement('iframe');
+                    iframe.id = 'cronos-print-iframe';
+                    iframe.style.position = 'fixed';
+                    iframe.style.right = '0';
+                    iframe.style.bottom = '0';
+                    iframe.style.width = '0';
+                    iframe.style.height = '0';
+                    iframe.style.border = '0';
+                    document.body.appendChild(iframe);
+                }
+
+                const d = iframe.contentWindow.document;
+                d.open();
+                d.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <meta charset="utf-8">
+                        <title>Cambio_Titularidad_WIN</title>
+                        <style>
+                            @page { size: A4; margin: 15mm; }
+                            body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10.5pt; color: #1e293b; margin: 0; padding: 10px; }
+                            table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+                            td, th { border: 1px solid #cbd5e1; padding: 6px 10px; font-size: 9.5pt; text-align: left; }
+                            th { background-color: #f8fafc; font-weight: bold; width: 35%; color: #334155; }
+                        </style>
+                    </head>
+                    <body>
+                        ${previewEl.innerHTML}
+                    </body>
+                    </html>
+                `);
+                d.close();
+
+                setTimeout(() => {
+                    iframe.contentWindow.focus();
+                    iframe.contentWindow.print();
+                }, 400);
+
+                if (typeof showToast === 'function') {
+                    showToast('Preparando generación de PDF...', 'info');
+                }
+            },
+
+            copiarTextoDocumento() {
+                const d = this.getFormularioData();
+                const texto = [
+                    '==================================================',
+                    'WI-NET TELECOM S.A.C. - CAMBIO DE TITULARIDAD',
+                    '==================================================',
+                    `Fecha: ${d.servicioFecha}`,
+                    `Código de Cliente: ${d.servicioCodigo}`,
+                    `Dirección del Servicio: ${d.servicioDireccion}`,
+                    '--------------------------------------------------',
+                    'DATOS DEL TITULAR ACTUAL (CEDENTE):',
+                    `• Nombre: ${d.titularActualNombre}`,
+                    `• DNI: ${d.titularActualDni}`,
+                    '--------------------------------------------------',
+                    'DATOS DEL NUEVO TITULAR (CESIONARIO):',
+                    `• Nombre: ${d.titularNuevoNombre}`,
+                    `• DNI: ${d.titularNuevoDni}`,
+                    `• Correo: ${d.titularNuevoCorreo}`,
+                    `• Teléfono: ${d.titularNuevoTelefono}`,
+                    '--------------------------------------------------',
+                    `Observaciones: ${d.servicioObservaciones}`,
+                    '=================================================='
+                ].join('\n');
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(texto).then(() => {
+                        if (typeof showToast === 'function') showToast('Texto del documento copiado al portapapeles.', 'success');
+                    });
+                } else {
+                    const ta = document.createElement('textarea');
+                    ta.value = texto;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    if (typeof showToast === 'function') showToast('Texto del documento copiado al portapapeles.', 'success');
+                }
+            },
+
+            // --- LÓGICA DE CALCULADORA DE PRORRATEOS ---
+            setPlanActual(val) {
+                const el = document.getElementById('prorr-plan-actual');
+                if (el) { el.value = val; this.calcularProrrateo(); }
+            },
+
+            setPlanNuevo(val) {
+                const el = document.getElementById('prorr-plan-nuevo');
+                if (el) { el.value = val; this.calcularProrrateo(); }
+            },
+
+            setDescuento(pct) {
+                const el = document.getElementById('prorr-descuento');
+                if (el) { el.value = pct; this.calcularProrrateo(); }
+            },
+
+            calcularProrrateo() {
+                const pActual = parseFloat(document.getElementById('prorr-plan-actual')?.value) || 0;
+                const pNuevo = parseFloat(document.getElementById('prorr-plan-nuevo')?.value) || 0;
+                const desc = parseFloat(document.getElementById('prorr-descuento')?.value) || 0;
+                const ciclo = parseInt(document.getElementById('prorr-ciclo-corte')?.value, 10) || 1;
+                const fCambioStr = document.getElementById('prorr-fecha-cambio')?.value || '';
+
+                const fCambio = fCambioStr ? new Date(fCambioStr + 'T00:00:00') : new Date();
+                const diaCambio = fCambio.getDate();
+
+                // Días proporcionales sobre base comercial estándar de 30 días
+                let diasActual, diasNuevo;
+                if (diaCambio >= ciclo) {
+                    diasActual = Math.max(0, diaCambio - ciclo);
+                    diasNuevo = Math.max(1, 30 - diasActual);
+                } else {
+                    diasActual = Math.max(0, (30 - ciclo) + diaCambio);
+                    diasNuevo = Math.max(1, 30 - diasActual);
+                }
+
+                const diarioActual = pActual / 30;
+                const pNuevoConDesc = pNuevo * (1 - (desc / 100));
+                const diarioNuevo = pNuevoConDesc / 30;
+
+                const montoActual = diasActual * diarioActual;
+                const montoNuevo = diasNuevo * diarioNuevo;
+                const totalEstimado = montoActual + montoNuevo;
+                const impactoMensual = pNuevoConDesc - pActual;
+
+                // Actualizar UI
+                const outTotal = document.getElementById('prorr-out-total');
+                if (outTotal) outTotal.textContent = `S/ ${totalEstimado.toFixed(2)}`;
+
+                const outImpacto = document.getElementById('prorr-out-impacto');
+                if (outImpacto) {
+                    outImpacto.textContent = `${impactoMensual >= 0 ? '+' : ''}S/ ${impactoMensual.toFixed(2)} / mes`;
+                    outImpacto.className = impactoMensual >= 0 ? 'text-2xl font-mono font-black text-blue-600' : 'text-2xl font-mono font-black text-emerald-600';
+                }
+
+                const outDias = document.getElementById('prorr-out-dias-resumen');
+                if (outDias) outDias.textContent = `${diasActual}d / ${diasNuevo}d`;
+
+                // Desglose
+                const outDesglose = document.getElementById('prorr-out-desglose');
+                if (outDesglose) {
+                    outDesglose.innerHTML = `
+                        <div class="flex justify-between items-center py-1 border-b border-slate-100">
+                            <span>Plan Actual (S/ ${pActual.toFixed(2)}/mes) &times; ${diasActual} días:</span>
+                            <span class="font-mono font-bold text-slate-900">S/ ${montoActual.toFixed(2)}</span>
+                        </div>
+                        <div class="flex justify-between items-center py-1 border-b border-slate-100">
+                            <span>Plan Nuevo (${desc > 0 ? 'Con ' + desc + '% desc: ' : ''}S/ ${pNuevoConDesc.toFixed(2)}/mes) &times; ${diasNuevo} días:</span>
+                            <span class="font-mono font-bold text-slate-900">S/ ${montoNuevo.toFixed(2)}</span>
+                        </div>
+                        <div class="flex justify-between items-center py-1 text-slate-900 font-extrabold bg-blue-50/50 px-2 rounded">
+                            <span>Total Estimado a Facturar en Recibo de Transición:</span>
+                            <span class="font-mono text-blue-700 font-black">S/ ${totalEstimado.toFixed(2)}</span>
+                        </div>
+                    `;
+                }
+
+                // Speech para el asesor
+                const fechaFormateada = fCambio.toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                const speech = `"Estimado(a) cliente, le informamos con total transparencia que, debido al cambio de plan acordado el día ${fechaFormateada}, en su siguiente recibo correspondiente al ciclo ${ciclo} se aplicará un prorrateo de S/ ${montoActual.toFixed(2)} por los ${diasActual} días de su plan anterior (S/ ${pActual.toFixed(2)}) y S/ ${montoNuevo.toFixed(2)} por los ${diasNuevo} días de su nuevo plan (S/ ${pNuevoConDesc.toFixed(2)}${desc > 0 ? ' que incluye un beneficio del ' + desc + '% de descuento' : ''}). El importe total estimado a cancelar en este recibo de transición será de aproximadamente S/ ${totalEstimado.toFixed(2)}. Posterior a este periodo, su tarifa regular mensual será de S/ ${pNuevoConDesc.toFixed(2)}."`;
+
+                const outSpeech = document.getElementById('prorr-out-speech');
+                if (outSpeech) outSpeech.textContent = speech;
+            },
+
+            copiarSpeechProrrateo() {
+                const text = document.getElementById('prorr-out-speech')?.textContent || '';
+                if (!text) return;
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        if (typeof showToast === 'function') showToast('Guion de prorrateo copiado al portapapeles.', 'success');
+                    });
+                } else {
+                    const ta = document.createElement('textarea');
+                    ta.value = text;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    if (typeof showToast === 'function') showToast('Guion de prorrateo copiado al portapapeles.', 'success');
+                }
+            }
+        };
+
+        window.CronosProcesosOperativos = CronosProcesosOperativos;
 
             window.CronosAnnouncementManager = CronosAnnouncementManager;
             window.CronosSurveyManager = CronosAnnouncementManager; // Alias retrocompatible
