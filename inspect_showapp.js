@@ -6,4 +6,3 @@ console.log('showApp pos:', p);
 if (p !== -1) {
     console.log(html.substring(p, p + 1000));
 }
-// Test Vercel Deployment 2026-11-13
