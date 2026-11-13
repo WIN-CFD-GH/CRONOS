@@ -2596,26 +2596,53 @@ Año02026
                                 <div>
                                     <div class="flex items-center gap-2 flex-wrap">
                                         <h2 class="text-xl md:text-2xl font-black tracking-wide">Formularios Operativos</h2>
-                                        <span class="bg-white/20 text-white border border-white/30 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">Generador Documental</span>
+                                        <span class="bg-white/20 text-white border border-white/30 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">Generador Documental Oficial</span>
                                     </div>
                                     <p class="text-xs md:text-sm text-orange-100 mt-1 max-w-2xl">
-                                        Generador de documentos oficiales para trámites de clientes WIN. Formulación local sin conexión a CRM, Tickets o sistemas externos.
+                                        Generador inteligente de Contratos de Cesión de Posición Contractual bajo los formatos jurídicos oficiales de WIN Telecom S.A.C.
                                     </p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-2 self-end md:self-auto shrink-0">
                                 <span class="text-xs bg-white/10 border border-white/20 text-white px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 shadow-sm">
-                                    <i class="fa-solid fa-file-contract text-yellow-300"></i> Formato Oficial WIN
+                                    <i class="fa-solid fa-shield-halved text-yellow-300"></i> Formato Legal Vigente
                                 </span>
                             </div>
                         </div>
 
-                        <!-- Selector de Formulario -->
-                        <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-200 flex items-center gap-2">
-                            <button type="button" class="bg-slate-900 text-white text-xs sm:text-sm font-bold px-4 py-2 rounded-xl flex items-center gap-2 shadow-sm">
-                                <i class="fa-solid fa-id-card text-win-orange"></i>
-                                <span>Cambio de Titularidad</span>
-                            </button>
+                        <!-- Selector Inicial: Tipo de Cesión (Persona Natural -> Persona Natural / Jurídica) -->
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 space-y-2">
+                            <div class="text-xs font-bold text-slate-600 uppercase tracking-wider flex items-center gap-1.5">
+                                <i class="fa-solid fa-code-branch text-win-orange"></i>
+                                Seleccione el Tipo de Cesión de Titularidad:
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <!-- Opción A: Natural a Natural -->
+                                <div id="opt-cesion-natural" onclick="window.CronosProcesosOperativos.setTipoCesion('natural-natural')"
+                                    class="relative flex items-center gap-3 p-3.5 rounded-xl border-2 cursor-pointer transition-all bg-orange-50/70 border-win-orange shadow-xs">
+                                    <input type="radio" id="radio-cesion-natural" name="radio_tipo_cesion" value="natural-natural" checked
+                                        class="text-win-orange focus:ring-win-orange h-4 w-4 cursor-pointer">
+                                    <div>
+                                        <span class="block font-extrabold text-xs sm:text-sm text-slate-900 flex items-center gap-1.5">
+                                            <i class="fa-solid fa-user text-win-orange"></i> Persona Natural → <i class="fa-solid fa-user text-win-orange"></i> Persona Natural
+                                        </span>
+                                        <span class="block text-[11px] text-slate-500 font-medium mt-0.5">Cesión directa entre personas naturales (Formato Oficial 1)</span>
+                                    </div>
+                                </div>
+
+                                <!-- Opción B: Natural a Jurídica -->
+                                <div id="opt-cesion-juridica" onclick="window.CronosProcesosOperativos.setTipoCesion('natural-juridica')"
+                                    class="relative flex items-center gap-3 p-3.5 rounded-xl border-2 cursor-pointer transition-all bg-white border-slate-200 hover:border-slate-300 shadow-xs">
+                                    <input type="radio" id="radio-cesion-juridica" name="radio_tipo_cesion" value="natural-juridica"
+                                        class="text-win-orange focus:ring-win-orange h-4 w-4 cursor-pointer">
+                                    <div>
+                                        <span class="block font-extrabold text-xs sm:text-sm text-slate-900 flex items-center gap-1.5">
+                                            <i class="fa-solid fa-user text-slate-600"></i> Persona Natural → <i class="fa-solid fa-building text-blue-600"></i> Persona Jurídica
+                                        </span>
+                                        <span class="block text-[11px] text-slate-500 font-medium mt-0.5">Cesión a favor de empresa con RUC y Representante Legal (Formato Oficial 2)</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Grid Principal: Formulario de Entrada + Vista Previa -->
@@ -2625,98 +2652,168 @@ Año02026
                                 <div class="border-b border-slate-100 pb-3 flex items-center justify-between">
                                     <h3 class="font-extrabold text-slate-800 text-base flex items-center gap-2">
                                         <i class="fa-solid fa-pen-to-square text-win-orange"></i>
-                                        Datos de la Solicitud
+                                        Datos del Contrato
                                     </h3>
-                                    <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-bold">Documento Legal</span>
+                                    <span id="badge-tipo-cesion" class="text-[10px] bg-orange-100 text-orange-800 px-2 py-0.5 rounded-full font-bold">Natural → Natural</span>
                                 </div>
 
-                                <!-- Bloque 1: Titular Actual -->
+                                <!-- Bloque 1: Datos del Titular Actual (Cedente) -->
                                 <div class="space-y-3 bg-slate-50/70 p-3.5 rounded-xl border border-slate-200/80">
-                                    <div class="text-[11px] font-black uppercase text-slate-500 tracking-wider flex items-center gap-1.5">
-                                        <i class="fa-solid fa-user-check text-slate-600"></i> Datos del Titular Actual (Cedente)
+                                    <div class="text-[11px] font-black uppercase text-slate-600 tracking-wider flex items-center gap-1.5">
+                                        <i class="fa-solid fa-user-check text-slate-700"></i> Datos del Titular Actual (LA CEDENTE)
                                     </div>
                                     <div>
-                                        <label class="block text-xs font-bold text-slate-700 mb-1">Nombre Completo *</label>
-                                        <input type="text" id="form-titular-actual-nombre" placeholder="Nombres y Apellidos del Titular Actual"
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Nombre Completo del Titular Actual *</label>
+                                        <input type="text" id="form-cedente-nombre" placeholder="Ej. Juan Carlos Pérez Gómez"
+                                            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
+                                            oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                    </div>
+                                    <div class="grid grid-cols-12 gap-2">
+                                        <div class="col-span-4">
+                                            <label class="block text-xs font-bold text-slate-700 mb-1">Tipo Doc. *</label>
+                                            <select id="form-cedente-tipo-doc"
+                                                class="w-full bg-white border border-slate-300 rounded-lg px-2 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
+                                                onchange="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                                <option value="DNI">DNI</option>
+                                                <option value="CE">CE</option>
+                                                <option value="Pasaporte">Pasaporte</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-span-8">
+                                            <label class="block text-xs font-bold text-slate-700 mb-1">Número Documento *</label>
+                                            <input type="text" id="form-cedente-num-doc" placeholder="Ej. 45896321" maxlength="15"
+                                                class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
+                                                oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Domicilio del Cedente *</label>
+                                        <input type="text" id="form-cedente-direccion" placeholder="Ej. Av. Javier Prado Este 1234, Dpto 502"
                                             class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
                                             oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
                                     </div>
                                     <div>
-                                        <label class="block text-xs font-bold text-slate-700 mb-1">DNI / Documento de Identidad *</label>
-                                        <input type="text" id="form-titular-actual-dni" placeholder="Ej. 45896321" maxlength="12"
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Ciudad del Cedente *</label>
+                                        <input type="text" id="form-cedente-ciudad" value="Lima" placeholder="Ej. Lima"
                                             class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
                                             oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
                                     </div>
                                 </div>
 
-                                <!-- Bloque 2: Nuevo Titular -->
-                                <div class="space-y-3 bg-slate-50/70 p-3.5 rounded-xl border border-slate-200/80">
-                                    <div class="text-[11px] font-black uppercase text-orange-600 tracking-wider flex items-center gap-1.5">
-                                        <i class="fa-solid fa-user-plus text-win-orange"></i> Datos del Nuevo Titular (Cesionario)
+                                <!-- Bloque 2A: Datos del Nuevo Titular (Persona Natural) -->
+                                <div id="block-cesionario-natural" class="space-y-3 bg-orange-50/50 p-3.5 rounded-xl border border-orange-200/80">
+                                    <div class="text-[11px] font-black uppercase text-orange-700 tracking-wider flex items-center gap-1.5">
+                                        <i class="fa-solid fa-user-plus text-win-orange"></i> Datos del Nuevo Titular (LA CESIONARIA)
                                     </div>
                                     <div>
-                                        <label class="block text-xs font-bold text-slate-700 mb-1">Nombre Completo *</label>
-                                        <input type="text" id="form-titular-nuevo-nombre" placeholder="Nombres y Apellidos del Nuevo Titular"
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Nombre Completo del Nuevo Titular *</label>
+                                        <input type="text" id="form-cesionario-nombre" placeholder="Ej. María Elena Rodríguez Silva"
+                                            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
+                                            oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                    </div>
+                                    <div class="grid grid-cols-12 gap-2">
+                                        <div class="col-span-4">
+                                            <label class="block text-xs font-bold text-slate-700 mb-1">Tipo Doc. *</label>
+                                            <select id="form-cesionario-tipo-doc"
+                                                class="w-full bg-white border border-slate-300 rounded-lg px-2 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
+                                                onchange="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                                <option value="DNI">DNI</option>
+                                                <option value="CE">CE</option>
+                                                <option value="Pasaporte">Pasaporte</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-span-8">
+                                            <label class="block text-xs font-bold text-slate-700 mb-1">Número Documento *</label>
+                                            <input type="text" id="form-cesionario-num-doc" placeholder="Ej. 74125896" maxlength="15"
+                                                class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
+                                                oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Domicilio del Nuevo Titular *</label>
+                                        <input type="text" id="form-cesionario-direccion" placeholder="Ej. Jr. Las Flores 450, San Isidro, Lima"
+                                            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
+                                            oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                    </div>
+                                </div>
+
+                                <!-- Bloque 2B: Datos del Nuevo Titular (Persona Jurídica) -->
+                                <div id="block-cesionario-juridica" class="hidden space-y-3 bg-blue-50/50 p-3.5 rounded-xl border border-blue-200/80">
+                                    <div class="text-[11px] font-black uppercase text-blue-700 tracking-wider flex items-center gap-1.5">
+                                        <i class="fa-solid fa-building text-blue-600"></i> Datos de la Empresa (LA CESIONARIA)
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Razón Social de la Empresa *</label>
+                                        <input type="text" id="form-empresa-razon-social" placeholder="Ej. INVERSIONES Y SERVICIOS DIGITALES S.A.C."
+                                            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600"
+                                            oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Número de RUC *</label>
+                                        <input type="text" id="form-empresa-ruc" placeholder="Ej. 20601234567" maxlength="11"
+                                            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600"
+                                            oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Domicilio Fiscal de la Empresa *</label>
+                                        <input type="text" id="form-empresa-direccion-fiscal" placeholder="Ej. Av. Los Conquistadores 890, Oficina 401, San Isidro, Lima"
+                                            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600"
+                                            oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                    </div>
+
+                                    <div class="pt-2 border-t border-blue-200/80">
+                                        <div class="text-[10px] font-black uppercase text-blue-600 tracking-wider mb-2">Representante Legal</div>
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-700 mb-1">Nombre Completo del Representante *</label>
+                                            <input type="text" id="form-rep-nombre" placeholder="Ej. Roberto Carlos Gómez Fernández"
+                                                class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600"
+                                                oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                        </div>
+                                        <div class="grid grid-cols-12 gap-2 mt-2">
+                                            <div class="col-span-4">
+                                                <label class="block text-xs font-bold text-slate-700 mb-1">Tipo Doc. *</label>
+                                                <select id="form-rep-tipo-doc"
+                                                    class="w-full bg-white border border-slate-300 rounded-lg px-2 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600"
+                                                    onchange="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                                    <option value="DNI">DNI</option>
+                                                    <option value="CE">CE</option>
+                                                    <option value="Pasaporte">Pasaporte</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-span-8">
+                                                <label class="block text-xs font-bold text-slate-700 mb-1">Número Documento *</label>
+                                                <input type="text" id="form-rep-num-doc" placeholder="Ej. 10458923" maxlength="15"
+                                                    class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600"
+                                                    oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Bloque 3: Datos del Servicio y Emisión -->
+                                <div class="space-y-3 bg-slate-50/70 p-3.5 rounded-xl border border-slate-200/80">
+                                    <div class="text-[11px] font-black uppercase text-indigo-700 tracking-wider flex items-center gap-1.5">
+                                        <i class="fa-solid fa-calendar-check text-indigo-600"></i> Datos del Servicio y Emisión
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Fecha de Instalación del Servicio *</label>
+                                        <input type="date" id="form-fecha-instalacion"
                                             class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
                                             oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
                                     </div>
                                     <div class="grid grid-cols-2 gap-2">
                                         <div>
-                                            <label class="block text-xs font-bold text-slate-700 mb-1">DNI *</label>
-                                            <input type="text" id="form-titular-nuevo-dni" placeholder="Ej. 74125896" maxlength="12"
+                                            <label class="block text-xs font-bold text-slate-700 mb-1">Ciudad de Emisión *</label>
+                                            <input type="text" id="form-emision-ciudad" value="Lima" placeholder="Ej. Lima"
                                                 class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
                                                 oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
                                         </div>
                                         <div>
-                                            <label class="block text-xs font-bold text-slate-700 mb-1">Teléfono *</label>
-                                            <input type="tel" id="form-titular-nuevo-telefono" placeholder="Ej. 987654321" maxlength="15"
+                                            <label class="block text-xs font-bold text-slate-700 mb-1">Fecha de Emisión *</label>
+                                            <input type="date" id="form-emision-fecha"
                                                 class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
                                                 oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
                                         </div>
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-bold text-slate-700 mb-1">Correo Electrónico *</label>
-                                        <input type="email" id="form-titular-nuevo-correo" placeholder="correo.nuevo@ejemplo.com"
-                                            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
-                                            oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
-                                    </div>
-                                </div>
-
-                                <!-- Bloque 3: Datos del Servicio -->
-                                <div class="space-y-3 bg-slate-50/70 p-3.5 rounded-xl border border-slate-200/80">
-                                    <div class="text-[11px] font-black uppercase text-indigo-700 tracking-wider flex items-center gap-1.5">
-                                        <i class="fa-solid fa-wifi text-indigo-600"></i> Datos del Servicio
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-bold text-slate-700 mb-1">Código de Cliente *</label>
-                                        <input type="text" id="form-servicio-codigo" placeholder="Ej. WIN-839201"
-                                            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
-                                            oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-bold text-slate-700 mb-1">Dirección del Servicio *</label>
-                                        <input type="text" id="form-servicio-direccion" placeholder="Ej. Av. Javier Prado Este 1234, Dpto 502, Lima"
-                                            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
-                                            oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
-                                    </div>
-                                </div>
-
-                                <!-- Bloque 4: Datos Complementarios -->
-                                <div class="space-y-3 bg-slate-50/70 p-3.5 rounded-xl border border-slate-200/80">
-                                    <div class="text-[11px] font-black uppercase text-slate-600 tracking-wider flex items-center gap-1.5">
-                                        <i class="fa-solid fa-calendar-days text-slate-600"></i> Datos Complementarios
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-bold text-slate-700 mb-1">Fecha de la Solicitud *</label>
-                                        <input type="date" id="form-servicio-fecha"
-                                            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
-                                            oninput="window.CronosProcesosOperativos.generarVistaPrevia()">
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-bold text-slate-700 mb-1">Observaciones</label>
-                                        <textarea id="form-servicio-observaciones" rows="2" placeholder="Observaciones adicionales sobre el trámite de cesión..."
-                                            class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 focus:outline-none focus:border-win-orange focus:ring-1 focus:ring-win-orange"
-                                            oninput="window.CronosProcesosOperativos.generarVistaPrevia()"></textarea>
                                     </div>
                                 </div>
 
@@ -2738,10 +2835,10 @@ Año02026
                                 <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
                                     <div>
                                         <h3 class="font-extrabold text-slate-800 text-base flex items-center gap-2">
-                                            <i class="fa-solid fa-file-invoice text-emerald-600"></i>
-                                            Vista Previa del Documento
+                                            <i class="fa-solid fa-file-contract text-emerald-600"></i>
+                                            Vista Previa del Contrato Oficial
                                         </h3>
-                                        <p class="text-xs text-slate-500">Documento formal redactado y listo para emisión</p>
+                                        <p class="text-xs text-slate-500">Texto contractual íntegro conforme al formato oficial</p>
                                     </div>
                                     <div class="flex items-center gap-2 flex-wrap">
                                         <button type="button" id="btn-descargar-pdf" onclick="window.CronosProcesosOperativos.descargarPDF()"
@@ -2762,8 +2859,8 @@ Año02026
                                     </div>
                                 </div>
 
-                                <!-- Contenedor de Hoja Formal (Estilo A4) -->
-                                <div id="preview-cambio-titularidad" class="bg-slate-50 border border-slate-300 rounded-xl p-6 text-slate-800 font-sans text-xs space-y-4 shadow-inner max-h-[650px] overflow-y-auto">
+                                <!-- Contenedor de Hoja Formal (Estilo Contrato Oficial) -->
+                                <div id="preview-cambio-titularidad" class="bg-white border-2 border-slate-200 rounded-xl p-8 text-slate-900 font-serif text-xs leading-relaxed space-y-4 shadow-inner max-h-[720px] overflow-y-auto">
                                     <!-- Renderizado Dinámico mediante JS -->
                                 </div>
                             </div>
@@ -47087,23 +47184,76 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
         const CronosProcesosOperativos = {
             initialized: false,
             currentSubTab: 'acuerdos',
+            tipoCesion: 'natural-natural', // 'natural-natural' | 'natural-juridica'
 
             init() {
                 if (this.initialized) return;
                 this.initialized = true;
 
-                // Inicializar fecha de hoy en formularios y prorrateo
+                // Inicializar fechas por defecto (hoy)
                 const today = new Date().toISOString().split('T')[0];
-                const fFecha = document.getElementById('form-servicio-fecha');
-                if (fFecha && !fFecha.value) fFecha.value = today;
+                const fEmision = document.getElementById('form-emision-fecha');
+                if (fEmision && !fEmision.value) fEmision.value = today;
+
+                const fInstalacion = document.getElementById('form-fecha-instalacion');
+                if (fInstalacion && !fInstalacion.value) {
+                    // Sugerir fecha aproximada de hace 6 meses
+                    const d = new Date();
+                    d.setMonth(d.getMonth() - 6);
+                    fInstalacion.value = d.toISOString().split('T')[0];
+                }
 
                 const pFecha = document.getElementById('prorr-fecha-cambio');
                 if (pFecha && !pFecha.value) pFecha.value = today;
 
-                // Generar vista previa y prorrateo inicial
+                // Generar vista previa y cálculo de prorrateo
                 this.generarVistaPrevia();
                 this.calcularProrrateo();
-                console.log('[PROCESOS_OPERATIVOS] Módulo inicializado bajo demanda exitosamente.');
+                console.log('[PROCESOS_OPERATIVOS] Módulo inicializado bajo demanda con formatos contractuales oficiales.');
+            },
+
+            setTipoCesion(tipo) {
+                this.tipoCesion = tipo;
+
+                const optNat = document.getElementById('opt-cesion-natural');
+                const optJur = document.getElementById('opt-cesion-juridica');
+                const radioNat = document.getElementById('radio-cesion-natural');
+                const radioJur = document.getElementById('radio-cesion-juridica');
+                const blockNat = document.getElementById('block-cesionario-natural');
+                const blockJur = document.getElementById('block-cesionario-juridica');
+                const badge = document.getElementById('badge-tipo-cesion');
+
+                if (tipo === 'natural-natural') {
+                    if (radioNat) radioNat.checked = true;
+                    if (optNat) {
+                        optNat.className = 'relative flex items-center gap-3 p-3.5 rounded-xl border-2 cursor-pointer transition-all bg-orange-50/70 border-win-orange shadow-xs';
+                    }
+                    if (optJur) {
+                        optJur.className = 'relative flex items-center gap-3 p-3.5 rounded-xl border-2 cursor-pointer transition-all bg-white border-slate-200 hover:border-slate-300 shadow-xs';
+                    }
+                    if (blockNat) blockNat.classList.remove('hidden');
+                    if (blockJur) blockJur.classList.add('hidden');
+                    if (badge) {
+                        badge.textContent = 'Natural → Natural';
+                        badge.className = 'text-[10px] bg-orange-100 text-orange-800 px-2 py-0.5 rounded-full font-bold';
+                    }
+                } else {
+                    if (radioJur) radioJur.checked = true;
+                    if (optJur) {
+                        optJur.className = 'relative flex items-center gap-3 p-3.5 rounded-xl border-2 cursor-pointer transition-all bg-blue-50/70 border-blue-600 shadow-xs';
+                    }
+                    if (optNat) {
+                        optNat.className = 'relative flex items-center gap-3 p-3.5 rounded-xl border-2 cursor-pointer transition-all bg-white border-slate-200 hover:border-slate-300 shadow-xs';
+                    }
+                    if (blockNat) blockNat.classList.add('hidden');
+                    if (blockJur) blockJur.classList.remove('hidden');
+                    if (badge) {
+                        badge.textContent = 'Natural → Jurídica';
+                        badge.className = 'text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-bold';
+                    }
+                }
+
+                this.generarVistaPrevia();
             },
 
             switchSubTab(tabName) {
@@ -47139,166 +47289,255 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                 }
             },
 
-            getFormularioData() {
+            formatDateToLegalSpanish(dateStr) {
+                if (!dateStr) return '[Fecha]';
+                try {
+                    const parts = dateStr.split('-');
+                    if (parts.length === 3) {
+                        const day = parseInt(parts[2], 10);
+                        const monthNum = parseInt(parts[1], 10);
+                        const year = parts[0];
+                        const months = [
+                            'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+                            'julio', 'agosto', 'setiembre', 'octubre', 'noviembre', 'diciembre'
+                        ];
+                        const monthName = months[monthNum - 1] || 'mes';
+                        return `${day} de ${monthName} de ${year}`;
+                    }
+                } catch (e) {}
+                return dateStr;
+            },
+
+            getFormData() {
                 const getVal = id => {
                     const el = document.getElementById(id);
                     return el ? el.value.trim() : '';
                 };
 
+                const fEmision = getVal('form-emision-fecha') || new Date().toISOString().split('T')[0];
+                const fInstalacion = getVal('form-fecha-instalacion');
+                const ciudadEmision = getVal('form-emision-ciudad') || 'Lima';
+
                 return {
-                    titularActualNombre: getVal('form-titular-actual-nombre') || '[NOMBRE TITULAR ACTUAL]',
-                    titularActualDni: getVal('form-titular-actual-dni') || '[DNI TITULAR ACTUAL]',
-                    titularNuevoNombre: getVal('form-titular-nuevo-nombre') || '[NOMBRE NUEVO TITULAR]',
-                    titularNuevoDni: getVal('form-titular-nuevo-dni') || '[DNI NUEVO TITULAR]',
-                    titularNuevoCorreo: getVal('form-titular-nuevo-correo') || '[CORREO NUEVO TITULAR]',
-                    titularNuevoTelefono: getVal('form-titular-nuevo-telefono') || '[TELÉFONO NUEVO TITULAR]',
-                    servicioCodigo: getVal('form-servicio-codigo') || '[CÓDIGO CLIENTE]',
-                    servicioDireccion: getVal('form-servicio-direccion') || '[DIRECCIÓN DEL SERVICIO]',
-                    servicioFecha: getVal('form-servicio-fecha') || new Date().toISOString().split('T')[0],
-                    servicioObservaciones: getVal('form-servicio-observaciones') || 'Sin observaciones adicionales.'
+                    tipo: this.tipoCesion,
+                    // Cedente
+                    cedenteNombre: getVal('form-cedente-nombre'),
+                    cedenteTipoDoc: getVal('form-cedente-tipo-doc') || 'DNI',
+                    cedenteNumDoc: getVal('form-cedente-num-doc'),
+                    cedenteDireccion: getVal('form-cedente-direccion'),
+                    cedenteCiudad: getVal('form-cedente-ciudad') || 'Lima',
+                    // Cesionario Natural
+                    cesionarioNombre: getVal('form-cesionario-nombre'),
+                    cesionarioTipoDoc: getVal('form-cesionario-tipo-doc') || 'DNI',
+                    cesionarioNumDoc: getVal('form-cesionario-num-doc'),
+                    cesionarioDireccion: getVal('form-cesionario-direccion'),
+                    // Cesionario Empresa / Jurídica
+                    empresaRazonSocial: getVal('form-empresa-razon-social'),
+                    empresaRuc: getVal('form-empresa-ruc'),
+                    empresaDireccionFiscal: getVal('form-empresa-direccion-fiscal'),
+                    repNombre: getVal('form-rep-nombre'),
+                    repTipoDoc: getVal('form-rep-tipo-doc') || 'DNI',
+                    repNumDoc: getVal('form-rep-num-doc'),
+                    // Servicio y fechas
+                    fechaInstalacionRaw: fInstalacion,
+                    fechaInstalacionLegal: this.formatDateToLegalSpanish(fInstalacion),
+                    ciudadEmision: ciudadEmision,
+                    fechaEmisionRaw: fEmision,
+                    fechaEmisionLegal: this.formatDateToLegalSpanish(fEmision)
+                };
+            },
+
+            validateFields(showNotification = true) {
+                const d = this.getFormData();
+                const missing = [];
+
+                if (!d.cedenteNombre) missing.push('Nombre del Titular Actual (Cedente)');
+                if (!d.cedenteNumDoc) missing.push('Número de Documento del Cedente');
+                if (!d.cedenteDireccion) missing.push('Dirección del Cedente');
+                if (!d.fechaInstalacionRaw) missing.push('Fecha de Instalación del Servicio');
+
+                if (d.tipo === 'natural-natural') {
+                    if (!d.cesionarioNombre) missing.push('Nombre del Nuevo Titular (Cesionario)');
+                    if (!d.cesionarioNumDoc) missing.push('Número de Documento del Nuevo Titular');
+                    if (!d.cesionarioDireccion) missing.push('Dirección del Nuevo Titular');
+                } else {
+                    if (!d.empresaRazonSocial) missing.push('Razón Social de la Empresa');
+                    if (!d.empresaRuc) missing.push('RUC de la Empresa');
+                    if (!d.empresaDireccionFiscal) missing.push('Dirección Fiscal de la Empresa');
+                    if (!d.repNombre) missing.push('Nombre del Representante Legal');
+                    if (!d.repNumDoc) missing.push('Número de Documento del Representante');
+                }
+
+                if (missing.length > 0) {
+                    if (showNotification && typeof showToast === 'function') {
+                        showToast(`Por favor complete los campos obligatorios: ${missing[0]}`, 'warning');
+                    }
+                    return false;
+                }
+                return true;
+            },
+
+            getContractText(isForPlainCopy = false) {
+                const d = this.getFormData();
+                const isNat = d.tipo === 'natural-natural';
+
+                // Helpers de formato de placeholders
+                const ph = (val, placeholder) => {
+                    if (val && val.trim()) {
+                        return isForPlainCopy ? val.trim() : `<strong class="text-slate-900 border-b border-orange-400 bg-orange-50/50 px-1">${val.trim()}</strong>`;
+                    }
+                    return isForPlainCopy ? `[${placeholder}]` : `<span class="text-orange-600 bg-orange-100 font-bold px-1.5 py-0.5 rounded">[${placeholder}]</span>`;
+                };
+
+                const ciudadFecha = `${ph(d.ciudadEmision, 'Ciudad')}, ${ph(d.fechaEmisionLegal, 'Fecha')}`;
+
+                let parrafoIntroductorio = '';
+
+                if (isNat) {
+                    parrafoIntroductorio = `Conste por el presente documento el contrato de Cesión de Posición Contractual que celebran de una parte ${ph(d.cedenteNombre, 'Indicar nombre del Titular Actual')}, con ${ph(d.cedenteTipoDoc, 'Colocar su Tipo de Documento (DNI/CE)')} N° ${ph(d.cedenteNumDoc, 'Indicar Número de Documento')}, con domicilio en ${ph(d.cedenteDireccion, 'Indicar dirección')}, ${ph(d.cedenteCiudad, 'Indicar Ciudad')}, a la que en adelante se le denominará LA CEDENTE y de otra parte ${ph(d.cesionarioNombre, 'Indicar Nombre del Nuevo Titular')}, identificado con ${ph(d.cesionarioTipoDoc, 'Tipo de Documento (DNI/CE)')} N° ${ph(d.cesionarioNumDoc, 'Indicar Número de Documento')} con domicilio en ${ph(d.cesionarioDireccion, 'Indicar Dirección')}, a quien en adelante se le denominará LA CESIONARIA y de otra parte WI-NET TELECOM S.A.C., identificada con RUC N° 20521233991, con domicilio en Av. República de Panamá Nro. 3418 Int. 2301 – Urb. Limatambo - San Isidro, a quien en adelante se le denominará EL PROVEEDOR; en los términos y condiciones siguientes:`;
+                } else {
+                    parrafoIntroductorio = `Conste por el presente documento el contrato de Cesión de Posición Contractual que celebran de una parte ${ph(d.cedenteNombre, 'Indicar nombre del Titular Actual')}, con ${ph(d.cedenteTipoDoc, 'Colocar su Tipo de Documento (DNI/CE)')} N° ${ph(d.cedenteNumDoc, 'Indicar Número de Documento')}, con domicilio en ${ph(d.cedenteDireccion, 'Indicar dirección')}, ${ph(d.cedenteCiudad, 'Indicar Ciudad')}, a la que en adelante se le denominará LA CEDENTE y de otra parte la empresa ${ph(d.empresaRazonSocial, 'Indicar Razón Social')}, identificada con RUC N° ${ph(d.empresaRuc, 'Indicar Número de RUC')} con domicilio fiscal en ${ph(d.empresaDireccionFiscal, 'Indicar Dirección de la empresa')}, debidamente representada por su Representante Legal ${ph(d.repNombre, 'Indicar Nombre del Representante Legal')} identificado con ${ph(d.repTipoDoc, 'Tipo de Documento')} N° ${ph(d.repNumDoc, 'Indica Número de Documento')} a quién en adelante se le denominará LA CESIONARIA y de otra parte WI-NET TELECOM S.A.C., identificada con RUC N° 20521233991, con domicilio en Av. República de Panamá Nro. 3418 Int. 2301 – Urb. Limatambo - San Isidro, Lima, a quien en adelante se le denominará EL PROVEEDOR; en los términos y condiciones siguientes:`;
+                }
+
+                const clausulaPrimera = `PRIMERA. - Con fecha ${ph(d.fechaInstalacionLegal, 'Indicar Fecha de instalación')}, LA CEDENTE celebró con EL PROVEEDOR un contrato de prestación del servicio de internet a domicilio, cuyas características aparecen en el referido contrato.`;
+
+                const clausulaSegunda = `SEGUNDA. - LA CESIONARIA está interesada en brindar el servicio referido en la cláusula anterior, asimismo asumir la posición contractual de LA CEDENTE frente a EL PROVEEDOR en los términos y condiciones expuestos en el contrato.`;
+
+                const clausulaTercera = `TERCERA. - Por el presente LA CEDENTE cede su posición contractual a LA CESIONARIA, asumiendo está última todos los derechos y obligaciones derivados de la contratación del servicio referido en la cláusula primera.`;
+
+                const clausulaCuarta = `CUARTA. - EL PROVEEDOR por la presente otorga su conformidad con la cesión realizada.`;
+
+                const clausulaQuinta = `QUINTA. - Son aplicables al presente contrato las disposiciones del Código Civil peruano. El presente se regirá e interpretará conforme a la legislación peruana; sometiéndose las partes a la jurisdicción de los tribunales ordinarios de la ciudad de Lima, renunciando a cualquier otro fuero o jurisdicción que pudiera corresponder.`;
+
+                return {
+                    ciudadFecha,
+                    parrafoIntroductorio,
+                    clausulaPrimera,
+                    clausulaSegunda,
+                    clausulaTercera,
+                    clausulaCuarta,
+                    clausulaQuinta,
+                    cedenteNombre: d.cedenteNombre || '',
+                    cesionariaNombre: isNat ? (d.cesionarioNombre || '') : (d.empresaRazonSocial || ''),
+                    repNombre: d.repNombre || ''
                 };
             },
 
             generarVistaPrevia() {
-                const d = this.getFormularioData();
+                const c = this.getContractText(false);
                 const container = document.getElementById('preview-cambio-titularidad');
                 if (!container) return;
 
-                const fechaFormateada = (function(fStr) {
-                    try {
-                        const parts = fStr.split('-');
-                        if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
-                    } catch(e){}
-                    return fStr;
-                })(d.servicioFecha);
-
                 container.innerHTML = `
-                    <!-- Membrete y Cabecera Oficial -->
-                    <div class="border-b-2 border-orange-500 pb-3 mb-4 flex items-center justify-between">
+                    <!-- Membrete con Logotipo Oficial WIN -->
+                    <div class="border-b-2 border-orange-500 pb-4 mb-6 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black px-3 py-1.5 rounded-lg text-lg tracking-wider font-sans shadow-sm">
+                                WIN
+                            </div>
+                            <div>
+                                <span class="text-[11px] font-sans font-black text-slate-900 tracking-wider block">WI-NET TELECOM S.A.C.</span>
+                                <span class="text-[10px] font-sans text-slate-500 font-semibold block">RUC N° 20521233991</span>
+                            </div>
+                        </div>
+                        <div class="text-right font-sans">
+                            <span class="text-[10px] bg-slate-900 text-white px-2.5 py-1 rounded font-bold uppercase tracking-wider">Formato Oficial Vigente</span>
+                        </div>
+                    </div>
+
+                    <!-- Cabecera de Fecha y Ciudad -->
+                    <div class="text-right text-xs text-slate-700 font-semibold mb-6">
+                        ${c.ciudadFecha}
+                    </div>
+
+                    <!-- Título Oficial del Contrato -->
+                    <div class="text-center font-bold text-sm md:text-base text-slate-900 tracking-wide uppercase my-6 border-y border-slate-200 py-2">
+                        CONTRATO DE CESIÓN DE POSICIÓN CONTRACTUAL
+                    </div>
+
+                    <!-- Párrafo Introductorio Oficial -->
+                    <p class="text-justify text-xs md:text-[13px] text-slate-800 leading-relaxed mb-5">
+                        ${c.parrafoIntroductorio}
+                    </p>
+
+                    <!-- ANTECEDENTES -->
+                    <div class="font-bold text-xs uppercase text-slate-900 mt-5 mb-2 tracking-wider">
+                        ANTECEDENTES
+                    </div>
+                    <p class="text-justify text-xs md:text-[13px] text-slate-800 leading-relaxed mb-3">
+                        ${c.clausulaPrimera}
+                    </p>
+                    <p class="text-justify text-xs md:text-[13px] text-slate-800 leading-relaxed mb-5">
+                        ${c.clausulaSegunda}
+                    </p>
+
+                    <!-- OBJETO -->
+                    <div class="font-bold text-xs uppercase text-slate-900 mt-5 mb-2 tracking-wider">
+                        OBJETO
+                    </div>
+                    <p class="text-justify text-xs md:text-[13px] text-slate-800 leading-relaxed mb-5">
+                        ${c.clausulaTercera}
+                    </p>
+
+                    <!-- CONFORMIDAD -->
+                    <div class="font-bold text-xs uppercase text-slate-900 mt-5 mb-2 tracking-wider">
+                        CONFORMIDAD
+                    </div>
+                    <p class="text-justify text-xs md:text-[13px] text-slate-800 leading-relaxed mb-5">
+                        ${c.clausulaCuarta}
+                    </p>
+
+                    <!-- LEGISLACION APLICABLE -->
+                    <div class="font-bold text-xs uppercase text-slate-900 mt-5 mb-2 tracking-wider">
+                        LEGISLACION APLICABLE
+                    </div>
+                    <p class="text-justify text-xs md:text-[13px] text-slate-800 leading-relaxed mb-8">
+                        ${c.clausulaQuinta}
+                    </p>
+
+                    <!-- Firmas Oficiales Conforme a Formato -->
+                    <div class="pt-8 grid grid-cols-2 gap-12 text-center text-xs text-slate-800 font-sans">
                         <div>
-                            <span class="text-[10px] font-mono font-black text-orange-600 uppercase tracking-widest block">WI-NET TELECOM S.A.C.</span>
-                            <h2 class="text-sm md:text-base font-black text-slate-900 leading-tight">SOLICITUD FORMAL DE CAMBIO DE TITULARIDAD</h2>
-                            <span class="text-[10px] text-slate-500 font-bold">Servicio Internet Fibra Óptica - Área de Retenciones y Fidelización</span>
-                        </div>
-                        <div class="text-right">
-                            <span class="text-[10px] bg-slate-900 text-white px-2 py-0.5 rounded font-mono font-bold block">OFICIAL WIN</span>
-                            <span class="text-[10px] text-slate-500 font-semibold block mt-1">Fecha: ${fechaFormateada}</span>
-                        </div>
-                    </div>
-
-                    <!-- Cuadro de Datos del Servicio -->
-                    <div class="mb-3">
-                        <div class="bg-slate-200/80 px-3 py-1 font-black text-[11px] text-slate-800 uppercase rounded-t">1. DATOS DEL SERVICIO INSTALADO</div>
-                        <table class="w-full border-collapse border border-slate-300 bg-white text-[11px]">
-                            <tbody>
-                                <tr>
-                                    <td class="border border-slate-300 p-2 font-bold bg-slate-50 w-1/3">Código de Cliente / Suministro:</td>
-                                    <td class="border border-slate-300 p-2 font-mono font-bold text-slate-900">${d.servicioCodigo}</td>
-                                </tr>
-                                <tr>
-                                    <td class="border border-slate-300 p-2 font-bold bg-slate-50">Dirección del Servicio:</td>
-                                    <td class="border border-slate-300 p-2 text-slate-800">${d.servicioDireccion}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Cuadro del Titular Actual (Cedente) -->
-                    <div class="mb-3">
-                        <div class="bg-slate-200/80 px-3 py-1 font-black text-[11px] text-slate-800 uppercase rounded-t">2. DATOS DEL TITULAR ACTUAL (CEDENTE)</div>
-                        <table class="w-full border-collapse border border-slate-300 bg-white text-[11px]">
-                            <tbody>
-                                <tr>
-                                    <td class="border border-slate-300 p-2 font-bold bg-slate-50 w-1/3">Nombres y Apellidos Completos:</td>
-                                    <td class="border border-slate-300 p-2 font-bold text-slate-900 uppercase">${d.titularActualNombre}</td>
-                                </tr>
-                                <tr>
-                                    <td class="border border-slate-300 p-2 font-bold bg-slate-50">DNI / Documento de Identidad:</td>
-                                    <td class="border border-slate-300 p-2 font-mono font-bold text-slate-800">${d.titularActualDni}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Cuadro del Nuevo Titular (Cesionario) -->
-                    <div class="mb-3">
-                        <div class="bg-slate-200/80 px-3 py-1 font-black text-[11px] text-orange-700 uppercase rounded-t">3. DATOS DEL NUEVO TITULAR (CESIONARIO)</div>
-                        <table class="w-full border-collapse border border-slate-300 bg-white text-[11px]">
-                            <tbody>
-                                <tr>
-                                    <td class="border border-slate-300 p-2 font-bold bg-slate-50 w-1/3">Nombres y Apellidos Completos:</td>
-                                    <td class="border border-slate-300 p-2 font-bold text-slate-900 uppercase">${d.titularNuevoNombre}</td>
-                                </tr>
-                                <tr>
-                                    <td class="border border-slate-300 p-2 font-bold bg-slate-50">DNI / Documento de Identidad:</td>
-                                    <td class="border border-slate-300 p-2 font-mono font-bold text-slate-800">${d.titularNuevoDni}</td>
-                                </tr>
-                                <tr>
-                                    <td class="border border-slate-300 p-2 font-bold bg-slate-50">Correo Electrónico:</td>
-                                    <td class="border border-slate-300 p-2 text-slate-800">${d.titularNuevoCorreo}</td>
-                                </tr>
-                                <tr>
-                                    <td class="border border-slate-300 p-2 font-bold bg-slate-50">Teléfono / Móvil de Contacto:</td>
-                                    <td class="border border-slate-300 p-2 font-mono text-slate-800">${d.titularNuevoTelefono}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Cláusula de Cesión y Traspaso de Equipos -->
-                    <div class="bg-amber-50/60 border border-amber-200 p-3 rounded text-[10px] text-slate-700 leading-relaxed space-y-1.5">
-                        <span class="font-bold text-amber-900 uppercase block">Cláusula de Cesión y Responsabilidad Contractual:</span>
-                        <p>
-                            Por medio de la presente, el <strong>TITULAR ACTUAL (CEDENTE)</strong> declara su voluntad expresa de transferir la titularidad del servicio de internet fibra óptica a favor del <strong>NUEVO TITULAR (CESIONARIO)</strong>.
-                            El <strong>NUEVO TITULAR</strong> asume a partir de la fecha de efectividad del trámite todas las obligaciones de pago, vigencia y permanencia del servicio, así como la custodia de los equipos instalados en comodato (ONT, Router, MESH y accesorios).
-                        </p>
-                    </div>
-
-                    <!-- Observaciones -->
-                    <div class="mb-4">
-                        <div class="bg-slate-200/80 px-3 py-1 font-black text-[11px] text-slate-800 uppercase rounded-t">4. OBSERVACIONES COMPLEMENTARIAS</div>
-                        <div class="border border-slate-300 bg-white p-2.5 text-[11px] text-slate-700 italic">
-                            ${d.servicioObservaciones}
-                        </div>
-                    </div>
-
-                    <!-- Cuadro de Firmas -->
-                    <div class="pt-6 grid grid-cols-2 gap-8 text-center text-[10px]">
-                        <div>
-                            <div class="border-t border-slate-800 pt-1.5 font-bold uppercase text-slate-800">
+                            <div class="border-t border-slate-900 pt-2 font-bold">
                                 ____________________________________<br>
-                                FIRMA TITULAR CEDENTE<br>
-                                DNI: ${d.titularActualDni}
+                                LA CEDENTE<br>
+                                <span class="text-[10px] font-normal text-slate-600">${c.cedenteNombre || ''}</span>
                             </div>
                         </div>
                         <div>
-                            <div class="border-t border-slate-800 pt-1.5 font-bold uppercase text-slate-800">
+                            <div class="border-t border-slate-900 pt-2 font-bold">
                                 ____________________________________<br>
-                                FIRMA NUEVO TITULAR CESIONARIO<br>
-                                DNI: ${d.titularNuevoDni}
+                                LA CESIONARIA<br>
+                                <span class="text-[10px] font-normal text-slate-600">${c.cesionariaNombre || ''}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="text-center text-[9px] text-slate-400 pt-4 border-t border-slate-200 mt-4">
-                        Documento generado desde la plataforma CRONOS FID - Gestión de Procesos Operativos WIN Internet.
+
+                    <div class="pt-8 text-center text-xs text-slate-800 font-sans">
+                        <div class="inline-block border-t border-slate-900 pt-2 font-bold px-12">
+                            ____________________________________<br>
+                            PROVEEDOR<br>
+                            <span class="text-[10px] font-normal text-slate-600">WI-NET TELECOM S.A.C.</span>
+                        </div>
                     </div>
                 `;
             },
 
             limpiarFormulario() {
                 const ids = [
-                    'form-titular-actual-nombre', 'form-titular-actual-dni',
-                    'form-titular-nuevo-nombre', 'form-titular-nuevo-dni',
-                    'form-titular-nuevo-correo', 'form-titular-nuevo-telefono',
-                    'form-servicio-codigo', 'form-servicio-direccion',
-                    'form-servicio-observaciones'
+                    'form-cedente-nombre', 'form-cedente-num-doc', 'form-cedente-direccion',
+                    'form-cesionario-nombre', 'form-cesionario-num-doc', 'form-cesionario-direccion',
+                    'form-empresa-razon-social', 'form-empresa-ruc', 'form-empresa-direccion-fiscal',
+                    'form-rep-nombre', 'form-rep-num-doc'
                 ];
                 ids.forEach(id => {
                     const el = document.getElementById(id);
                     if (el) el.value = '';
                 });
-                const fFecha = document.getElementById('form-servicio-fecha');
-                if (fFecha) fFecha.value = new Date().toISOString().split('T')[0];
+
+                const today = new Date().toISOString().split('T')[0];
+                const fEmision = document.getElementById('form-emision-fecha');
+                if (fEmision) fEmision.value = today;
 
                 this.generarVistaPrevia();
                 if (typeof showToast === 'function') {
@@ -47307,108 +47546,180 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
             },
 
             descargarWord() {
-                const d = this.getFormularioData();
-                const fechaFormateada = (function(fStr) {
-                    try {
-                        const parts = fStr.split('-');
-                        if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
-                    } catch(e){}
-                    return fStr;
-                })(d.servicioFecha);
+                if (!this.validateFields(true)) return;
 
-                const wordHtml = `
+                const c = this.getContractText(false);
+                const d = this.getFormData();
+                const isNat = d.tipo === 'natural-natural';
+
+                // Generar HTML enriquecido con especificación oficial Word XML
+                const wordContent = `
                     <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
                     <head>
                         <meta charset='utf-8'>
-                        <title>Solicitud de Cambio de Titularidad - WIN</title>
+                        <title>Contrato de Cesión de Posición Contractual - WIN</title>
                         <style>
-                            body { font-family: 'Calibri', 'Segoe UI', Arial, sans-serif; font-size: 11pt; color: #1e293b; margin: 2.5cm; }
-                            .header-title { color: #f37021; font-size: 16pt; font-weight: bold; text-align: center; margin-bottom: 4px; }
-                            .header-subtitle { text-align: center; font-size: 9pt; color: #64748b; margin-bottom: 25px; }
-                            .section-title { background-color: #f1f5f9; color: #0f172a; font-weight: bold; font-size: 10pt; padding: 6px 10px; margin-top: 15px; margin-bottom: 5px; border-left: 4px solid #f37021; }
-                            table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
-                            td, th { border: 1px solid #cbd5e1; padding: 7px 10px; font-size: 10pt; text-align: left; }
-                            th { background-color: #f8fafc; font-weight: bold; width: 35%; color: #334155; }
-                            .clause-box { border: 1px solid #e2e8f0; background-color: #fafafa; padding: 10px; font-size: 9pt; color: #475569; line-height: 1.4; margin-top: 15px; }
-                            .signatures-table { width: 100%; border: none; margin-top: 50px; }
-                            .signatures-table td { border: none; text-align: center; vertical-align: top; padding-top: 25px; }
-                            .sig-line { border-top: 1px solid #0f172a; width: 80%; margin: 0 auto 5px auto; }
-                            .footer-note { text-align: center; font-size: 8pt; color: #94a3b8; margin-top: 40px; border-top: 1px solid #e2e8f0; padding-top: 8px; }
+                            @page {
+                                size: 21.0cm 29.7cm; /* A4 */
+                                margin: 2.5cm 2.5cm 2.5cm 2.5cm;
+                                mso-page-orientation: portrait;
+                            }
+                            body {
+                                font-family: 'Calibri', 'Arial', sans-serif;
+                                font-size: 11pt;
+                                line-height: 1.35;
+                                color: #000000;
+                                text-align: justify;
+                            }
+                            .header-table {
+                                width: 100%;
+                                border-bottom: 2pt solid #FF5A0A;
+                                padding-bottom: 8pt;
+                                margin-bottom: 18pt;
+                            }
+                            .win-brand {
+                                color: #FF5A0A;
+                                font-size: 20pt;
+                                font-weight: bold;
+                                font-family: 'Arial Black', sans-serif;
+                            }
+                            .date-line {
+                                text-align: right;
+                                font-size: 11pt;
+                                margin-bottom: 20pt;
+                            }
+                            .contract-title {
+                                text-align: center;
+                                font-size: 13pt;
+                                font-weight: bold;
+                                text-transform: uppercase;
+                                margin-top: 15pt;
+                                margin-bottom: 20pt;
+                            }
+                            .clause-title {
+                                font-weight: bold;
+                                font-size: 11pt;
+                                text-transform: uppercase;
+                                margin-top: 14pt;
+                                margin-bottom: 4pt;
+                            }
+                            p {
+                                margin-top: 0pt;
+                                margin-bottom: 8pt;
+                                text-align: justify;
+                                font-size: 11pt;
+                            }
+                            .signatures-table {
+                                width: 100%;
+                                margin-top: 45pt;
+                                border-collapse: collapse;
+                            }
+                            .signatures-table td {
+                                width: 50%;
+                                text-align: center;
+                                vertical-align: top;
+                                padding: 10pt;
+                                font-size: 10pt;
+                            }
+                            .sig-line {
+                                width: 75%;
+                                margin: 0 auto;
+                                border-top: 1pt solid #000000;
+                                margin-bottom: 5pt;
+                            }
+                            .provider-table {
+                                width: 100%;
+                                margin-top: 30pt;
+                                border-collapse: collapse;
+                            }
+                            .provider-table td {
+                                text-align: center;
+                                padding: 10pt;
+                                font-size: 10pt;
+                            }
                         </style>
                     </head>
                     <body>
-                        <div class="header-title">WI-NET TELECOM S.A.C.</div>
-                        <div class="header-subtitle">SOLICITUD FORMAL DE CAMBIO DE TITULARIDAD Y CESIÓN CONTRACTUAL<br>Fecha de Emisión: ${fechaFormateada}</div>
-
-                        <div class="section-title">1. DATOS DEL SERVICIO INSTALADO</div>
-                        <table>
-                            <tr><th>Código de Cliente:</th><td><strong>${d.servicioCodigo}</strong></td></tr>
-                            <tr><th>Dirección del Servicio:</th><td>${d.servicioDireccion}</td></tr>
-                        </table>
-
-                        <div class="section-title">2. DATOS DEL TITULAR ACTUAL (CEDENTE)</div>
-                        <table>
-                            <tr><th>Nombres y Apellidos:</th><td><strong>${d.titularActualNombre}</strong></td></tr>
-                            <tr><th>Documento de Identidad (DNI/CE):</th><td>${d.titularActualDni}</td></tr>
-                        </table>
-
-                        <div class="section-title">3. DATOS DEL NUEVO TITULAR (CESIONARIO)</div>
-                        <table>
-                            <tr><th>Nombres y Apellidos:</th><td><strong>${d.titularNuevoNombre}</strong></td></tr>
-                            <tr><th>Documento de Identidad (DNI/CE):</th><td>${d.titularNuevoDni}</td></tr>
-                            <tr><th>Correo Electrónico:</th><td>${d.titularNuevoCorreo}</td></tr>
-                            <tr><th>Teléfono de Contacto:</th><td>${d.titularNuevoTelefono}</td></tr>
-                        </table>
-
-                        <div class="section-title">4. OBSERVACIONES COMPLEMENTARIAS</div>
-                        <table>
-                            <tr><th>Detalle:</th><td>${d.servicioObservaciones}</td></tr>
-                        </table>
-
-                        <div class="clause-box">
-                            <strong>CLÁUSULA DE CESIÓN CONTRACTUAL Y COMODATO DE EQUIPOS:</strong><br>
-                            El TITULAR ACTUAL (CEDENTE) transfiere voluntariamente todos los derechos y obligaciones del contrato a favor del NUEVO TITULAR (CESIONARIO). El NUEVO TITULAR declara conocer y aceptar en su integridad los términos de prestación del servicio contratado, asumiendo la responsabilidad patrimonial sobre los equipos ONT/Router entregados en calidad de comodato y el compromiso de pago oportuno de las facturas que se emitan.
-                        </div>
-
-                        <table class="signatures-table">
+                        <table class="header-table">
                             <tr>
-                                <td style="width: 50%;">
-                                    <div class="sig-line"></div>
-                                    <strong>FIRMA TITULAR CEDENTE</strong><br>
-                                    DNI: ${d.titularActualDni}
+                                <td>
+                                    <span class="win-brand">WIN</span><br>
+                                    <span style="font-size: 9pt; color: #555555; font-weight: bold;">WI-NET TELECOM S.A.C. &bull; RUC 20521233991</span>
                                 </td>
-                                <td style="width: 50%;">
-                                    <div class="sig-line"></div>
-                                    <strong>FIRMA NUEVO TITULAR CESIONARIO</strong><br>
-                                    DNI: ${d.titularNuevoDni}
+                                <td style="text-align: right; font-size: 9pt; color: #555555;">
+                                    <strong>FORMATO OFICIAL</strong><br>
+                                    Cesión de Posición Contractual
                                 </td>
                             </tr>
                         </table>
 
-                        <div class="footer-note">
-                            Documento generado mediante CRONOS FID v6.5.0 - Gestión Operativa WIN Internet Hogar.
-                        </div>
+                        <div class="date-line">${c.ciudadFecha}</div>
+
+                        <div class="contract-title">CONTRATO DE CESIÓN DE POSICIÓN CONTRACTUAL</div>
+
+                        <p>${c.parrafoIntroductorio}</p>
+
+                        <div class="clause-title">ANTECEDENTES</div>
+                        <p>${c.clausulaPrimera}</p>
+                        <p>${c.clausulaSegunda}</p>
+
+                        <div class="clause-title">OBJETO</div>
+                        <p>${c.clausulaTercera}</p>
+
+                        <div class="clause-title">CONFORMIDAD</div>
+                        <p>${c.clausulaCuarta}</p>
+
+                        <div class="clause-title">LEGISLACION APLICABLE</div>
+                        <p>${c.clausulaQuinta}</p>
+
+                        <table class="signatures-table">
+                            <tr>
+                                <td>
+                                    <div class="sig-line"></div>
+                                    <strong>LA CEDENTE</strong><br>
+                                    <span>${c.cedenteNombre || ''}</span>
+                                </td>
+                                <td>
+                                    <div class="sig-line"></div>
+                                    <strong>LA CESIONARIA</strong><br>
+                                    <span>${c.cesionariaNombre || ''}</span>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table class="provider-table">
+                            <tr>
+                                <td>
+                                    <div class="sig-line" style="width: 40%;"></div>
+                                    <strong>PROVEEDOR</strong><br>
+                                    <span>WI-NET TELECOM S.A.C.</span>
+                                </td>
+                            </tr>
+                        </table>
                     </body>
                     </html>
                 `;
 
-                const blob = new Blob(['\ufeff', wordHtml], { type: 'application/msword;charset=utf-8' });
+                const blob = new Blob(['\ufeff', wordContent], { type: 'application/msword;charset=utf-8' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                const cleanCode = (d.servicioCodigo.replace(/[^a-zA-Z0-9_-]/g, '') || 'WIN');
-                a.download = `Cambio_Titularidad_${cleanCode}_${d.servicioFecha}.doc`;
+                const fileSuffix = isNat ? 'Persona_Natural' : 'Persona_Juridica';
+                const cleanCedente = (d.cedenteNombre || 'CEDENTE').replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 20);
+                a.download = `Cesion_Posicion_Contractual_${fileSuffix}_${cleanCedente}_${d.fechaEmisionRaw}.doc`;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
 
                 if (typeof showToast === 'function') {
-                    showToast('Documento Word descargado exitosamente.', 'success');
+                    showToast('Contrato Word (.doc) generado y descargado exitosamente.', 'success');
                 }
             },
 
             descargarPDF() {
+                if (!this.validateFields(true)) return;
+
                 const previewEl = document.getElementById('preview-cambio-titularidad');
                 if (!previewEl) return;
 
@@ -47432,13 +47743,22 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     <html>
                     <head>
                         <meta charset="utf-8">
-                        <title>Cambio_Titularidad_WIN</title>
+                        <title>Contrato_Cesion_Posicion_Contractual_WIN</title>
                         <style>
-                            @page { size: A4; margin: 15mm; }
-                            body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10.5pt; color: #1e293b; margin: 0; padding: 10px; }
-                            table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
-                            td, th { border: 1px solid #cbd5e1; padding: 6px 10px; font-size: 9.5pt; text-align: left; }
-                            th { background-color: #f8fafc; font-weight: bold; width: 35%; color: #334155; }
+                            @page {
+                                size: A4 portrait;
+                                margin: 20mm 20mm 20mm 20mm;
+                            }
+                            body {
+                                font-family: 'Calibri', 'Arial', sans-serif;
+                                font-size: 11pt;
+                                line-height: 1.35;
+                                color: #000;
+                                margin: 0;
+                                padding: 15px;
+                                text-align: justify;
+                            }
+                            strong { color: #000; }
                         </style>
                     </head>
                     <body>
@@ -47454,50 +47774,60 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                 }, 400);
 
                 if (typeof showToast === 'function') {
-                    showToast('Preparando generación de PDF...', 'info');
+                    showToast('Preparando descarga de PDF oficial...', 'info');
                 }
             },
 
             copiarTextoDocumento() {
-                const d = this.getFormularioData();
-                const texto = [
-                    '==================================================',
-                    'WI-NET TELECOM S.A.C. - CAMBIO DE TITULARIDAD',
-                    '==================================================',
-                    `Fecha: ${d.servicioFecha}`,
-                    `Código de Cliente: ${d.servicioCodigo}`,
-                    `Dirección del Servicio: ${d.servicioDireccion}`,
-                    '--------------------------------------------------',
-                    'DATOS DEL TITULAR ACTUAL (CEDENTE):',
-                    `• Nombre: ${d.titularActualNombre}`,
-                    `• DNI: ${d.titularActualDni}`,
-                    '--------------------------------------------------',
-                    'DATOS DEL NUEVO TITULAR (CESIONARIO):',
-                    `• Nombre: ${d.titularNuevoNombre}`,
-                    `• DNI: ${d.titularNuevoDni}`,
-                    `• Correo: ${d.titularNuevoCorreo}`,
-                    `• Teléfono: ${d.titularNuevoTelefono}`,
-                    '--------------------------------------------------',
-                    `Observaciones: ${d.servicioObservaciones}`,
-                    '=================================================='
+                const c = this.getContractText(true);
+                const textoPlano = [
+                    `${c.ciudadFecha}`,
+                    '',
+                    'CONTRATO DE CESIÓN DE POSICIÓN CONTRACTUAL',
+                    '',
+                    c.parrafoIntroductorio,
+                    '',
+                    'ANTECEDENTES',
+                    '',
+                    c.clausulaPrimera,
+                    '',
+                    c.clausulaSegunda,
+                    '',
+                    'OBJETO',
+                    '',
+                    c.clausulaTercera,
+                    '',
+                    'CONFORMIDAD',
+                    '',
+                    c.clausulaCuarta,
+                    '',
+                    'LEGISLACION APLICABLE',
+                    '',
+                    c.clausulaQuinta,
+                    '',
+                    '_________________________                                                          _________________________',
+                    'LA CEDENTE                                                                         LA CESIONARIA',
+                    '',
+                    '_________________________',
+                    'PROVEEDOR'
                 ].join('\n');
 
                 if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(texto).then(() => {
-                        if (typeof showToast === 'function') showToast('Texto del documento copiado al portapapeles.', 'success');
+                    navigator.clipboard.writeText(textoPlano).then(() => {
+                        if (typeof showToast === 'function') showToast('Texto íntegro del contrato copiado al portapapeles.', 'success');
                     });
                 } else {
                     const ta = document.createElement('textarea');
-                    ta.value = texto;
+                    ta.value = textoPlano;
                     document.body.appendChild(ta);
                     ta.select();
                     document.execCommand('copy');
                     document.body.removeChild(ta);
-                    if (typeof showToast === 'function') showToast('Texto del documento copiado al portapapeles.', 'success');
+                    if (typeof showToast === 'function') showToast('Texto íntegro del contrato copiado al portapapeles.', 'success');
                 }
             },
 
-            // --- LÓGICA DE CALCULADORA DE PRORRATEOS ---
+            // --- LÓGICA DE CALCULADORA DE PRORRATEOS (PRESERVADA 100%) ---
             setPlanActual(val) {
                 const el = document.getElementById('prorr-plan-actual');
                 if (el) { el.value = val; this.calcularProrrateo(); }
@@ -47523,7 +47853,6 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                 const fCambio = fCambioStr ? new Date(fCambioStr + 'T00:00:00') : new Date();
                 const diaCambio = fCambio.getDate();
 
-                // Días proporcionales sobre base comercial estándar de 30 días
                 let diasActual, diasNuevo;
                 if (diaCambio >= ciclo) {
                     diasActual = Math.max(0, diaCambio - ciclo);
@@ -47542,7 +47871,6 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                 const totalEstimado = montoActual + montoNuevo;
                 const impactoMensual = pNuevoConDesc - pActual;
 
-                // Actualizar UI
                 const outTotal = document.getElementById('prorr-out-total');
                 if (outTotal) outTotal.textContent = `S/ ${totalEstimado.toFixed(2)}`;
 
@@ -47555,7 +47883,6 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                 const outDias = document.getElementById('prorr-out-dias-resumen');
                 if (outDias) outDias.textContent = `${diasActual}d / ${diasNuevo}d`;
 
-                // Desglose
                 const outDesglose = document.getElementById('prorr-out-desglose');
                 if (outDesglose) {
                     outDesglose.innerHTML = `
@@ -47574,7 +47901,6 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     `;
                 }
 
-                // Speech para el asesor
                 const fechaFormateada = fCambio.toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit', year: 'numeric' });
                 const speech = `"Estimado(a) cliente, le informamos con total transparencia que, debido al cambio de plan acordado el día ${fechaFormateada}, en su siguiente recibo correspondiente al ciclo ${ciclo} se aplicará un prorrateo de S/ ${montoActual.toFixed(2)} por los ${diasActual} días de su plan anterior (S/ ${pActual.toFixed(2)}) y S/ ${montoNuevo.toFixed(2)} por los ${diasNuevo} días de su nuevo plan (S/ ${pNuevoConDesc.toFixed(2)}${desc > 0 ? ' que incluye un beneficio del ' + desc + '% de descuento' : ''}). El importe total estimado a cancelar en este recibo de transición será de aproximadamente S/ ${totalEstimado.toFixed(2)}. Posterior a este periodo, su tarifa regular mensual será de S/ ${pNuevoConDesc.toFixed(2)}."`;
 
