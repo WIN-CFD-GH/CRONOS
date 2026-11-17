@@ -47659,132 +47659,414 @@ ${sheetHtml}
                 },
 
                 // =========================================================================
-                // SECCIÓN 3: CALCULADORAS -> CALCULADORA DE PRORRATEOS
+                // SECCIÓN 3: CALCULADORAS -> CALCULADORA DE PRORRATEOS (FASE 3 - SPRINT 1)
                 // =========================================================================
+                PRORRATEO_STORAGE_KEY: 'cronos_prorrateos_config_v1',
+                activeCalcCase: 'instalacion', // 'instalacion' | 'cambio-plan' | 'alta-sva' | 'baja-sva' | 'suspension' | 'reactivacion'
+                showAdminConfigPanel: false,
+
+                getDefaultProrrateoConfig() {
+                    return {
+                        planes: [
+                            { id: 'wp350', nombre: 'Win Pro 350 Mbps - RET Up To', tarifa: 69.00, activo: true },
+                            { id: 'wp400', nombre: 'Win Pro 400 Mbps - RET Up To', tarifa: 79.00, activo: true },
+                            { id: 'wp450', nombre: 'Win Pro 450 Mbps - RET Up To', tarifa: 89.00, activo: true },
+                            { id: 'wp500', nombre: 'Win Pro 500 Mbps - Migración', tarifa: 99.00, activo: true },
+                            { id: 'wp750', nombre: 'Win Pro 750 Mbps - Migración', tarifa: 109.00, activo: true },
+                            { id: 'wp850', nombre: 'Win Pro 850 Mbps - Migración', tarifa: 119.00, activo: true },
+                            { id: 'wp1000', nombre: 'Win Pro 1000 Mbps - Migración', tarifa: 139.00, activo: true },
+                            { id: 'g600', nombre: 'NUEVO PLAN GAMER 600 -MIGRA', tarifa: 129.00, activo: true },
+                            { id: 'g1000', nombre: 'NUEVO PLAN GAMER 1000 -MIGRA', tarifa: 159.00, activo: true }
+                        ],
+                        svas: [
+                            { id: 'wintv_basico', categoria: 'WIN TV', nombre: 'WIN TV Básico', tarifa: 15.00, activo: true },
+                            { id: 'wintv_plus', categoria: 'WIN TV', nombre: 'WIN TV Plus', tarifa: 25.00, activo: true },
+                            { id: 'wintv_premium', categoria: 'WIN TV', nombre: 'WIN TV Premium', tarifa: 49.00, activo: true },
+                            { id: 'wintv_l1max', categoria: 'WIN TV', nombre: 'WIN TV L1Max', tarifa: 59.00, activo: true },
+                            { id: 'wintv_preml1', categoria: 'WIN TV', nombre: 'WIN TV Premium L1Max', tarifa: 69.00, activo: true },
+                            { id: 'dgo_hogar', categoria: 'DGO', nombre: 'DGO Hogar', tarifa: 59.00, activo: true },
+                            { id: 'dgo_full', categoria: 'DGO', nombre: 'DGO Full', tarifa: 76.00, activo: true },
+                            { id: 'fonowin', categoria: 'Equipos / Otros', nombre: 'FonoWIN', tarifa: 10.00, activo: true },
+                            { id: 'mesh_1', categoria: 'Equipos / Otros', nombre: 'MESH (1 equipo)', tarifa: 9.90, activo: true },
+                            { id: 'mesh_2', categoria: 'Equipos / Otros', nombre: 'MESH (2 equipos)', tarifa: 19.90, activo: true },
+                            { id: 'winbox', categoria: 'Equipos / Otros', nombre: 'WINBOX', tarifa: 15.00, activo: true }
+                        ],
+                        remisiones: [
+                            { diaEmision: 1, descripcion: 'Ciclo 01 (Emisión día 1 - Vencimiento día 28)', activo: true },
+                            { diaEmision: 11, descripcion: 'Ciclo 11 (Emisión día 11 - Vencimiento día 28)', activo: true },
+                            { diaEmision: 15, descripcion: 'Ciclo 15 (Emisión día 15 - Vencimiento día 28)', activo: true },
+                            { diaEmision: 19, descripcion: 'Ciclo 19 (Emisión día 19 - Vencimiento día 28)', activo: true },
+                            { diaEmision: 23, descripcion: 'Ciclo 23 (Emisión día 23 - Vencimiento día 28)', activo: true }
+                        ],
+                        suspension: {
+                            minDias: 15,
+                            maxDias: 60,
+                            afectacion: 'Proporcional a días activos (0% cobro en días suspendidos)'
+                        }
+                    };
+                },
+
+                getProrrateoConfig() {
+                    try {
+                        const raw = localStorage.getItem(this.PRORRATEO_STORAGE_KEY);
+                        if (raw) {
+                            const parsed = JSON.parse(raw);
+                            const def = this.getDefaultProrrateoConfig();
+                            return {
+                                planes: Array.isArray(parsed.planes) && parsed.planes.length ? parsed.planes : def.planes,
+                                svas: Array.isArray(parsed.svas) && parsed.svas.length ? parsed.svas : def.svas,
+                                remisiones: Array.isArray(parsed.remisiones) && parsed.remisiones.length ? parsed.remisiones : def.remisiones,
+                                suspension: parsed.suspension ? { ...def.suspension, ...parsed.suspension } : def.suspension
+                            };
+                        }
+                    } catch (e) {}
+                    return this.getDefaultProrrateoConfig();
+                },
+
+                saveProrrateoConfig(cfg) {
+                    try {
+                        localStorage.setItem(this.PRORRATEO_STORAGE_KEY, JSON.stringify(cfg));
+                    } catch (e) {}
+                },
+
+                canAdminProrrateos() {
+                    try {
+                        const u = window.CRONOS_CURRENT_USER || (typeof UserManager !== 'undefined' && UserManager.getCurrentUser ? UserManager.getCurrentUser() : null);
+                        const rawRole = (u && u.rol) ? String(u.rol) : (typeof UserManager !== 'undefined' && UserManager.getCurrentRole ? String(UserManager.getCurrentRole()) : 'Asesor');
+                        const r = rawRole.trim().toLowerCase();
+                        if (r.includes('asesor')) return false;
+                        return r.includes('admin') || r.includes('super') || r.includes('coord') || r.includes('jefe') || r.includes('geren');
+                    } catch (e) {
+                        return false;
+                    }
+                },
+
+                toggleAdminConfig() {
+                    if (!this.canAdminProrrateos()) {
+                        if (typeof showToast === 'function') showToast('Acceso restringido: solo Administrador, Supervisor o Coordinador.', 'warning');
+                        return;
+                    }
+                    this.showAdminConfigPanel = !this.showAdminConfigPanel;
+                    const panel = document.getElementById('prorr-admin-panel');
+                    if (panel) {
+                        if (this.showAdminConfigPanel) {
+                            panel.classList.remove('hidden');
+                            this.renderAdminConfigPanel();
+                        } else {
+                            panel.classList.add('hidden');
+                        }
+                    }
+                },
+
                 renderCalculadoraProrrateos() {
                     const container = document.getElementById('subview-proc-calculadoras');
                     if (!container) return;
 
+                    const canAdmin = this.canAdminProrrateos();
                     const today = new Date().toISOString().substring(0, 10);
+                    const cfg = this.getProrrateoConfig();
+
+                    const activePlanes = cfg.planes.filter(p => p.activo !== false);
+                    const activeRemisiones = cfg.remisiones.filter(r => r.activo !== false);
+                    const activeSvas = cfg.svas.filter(s => s.activo !== false);
+
+                    const planOptionsHtml = activePlanes.map(p => `<option value="${p.tarifa}" data-nombre="${p.nombre}">${p.nombre} (S/ ${Number(p.tarifa).toFixed(2)})</option>`).join('');
+                    const remisionOptionsHtml = activeRemisiones.map(r => `<option value="${r.diaEmision}">Día ${String(r.diaEmision).padStart(2, '0')} de cada mes</option>`).join('');
+                    const svaOptionsHtml = activeSvas.map(s => `<option value="${s.tarifa}" data-nombre="${s.nombre}">${s.categoria}: ${s.nombre} (S/ ${Number(s.tarifa).toFixed(2)})</option>`).join('');
 
                     container.innerHTML = `
-                        <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+                        <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5">
+                            <!-- Cabecera -->
                             <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-100 pb-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-11 h-11 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-xl shadow-sm shrink-0">
                                         <i class="fa-solid fa-calculator"></i>
                                     </div>
                                     <div>
-                                        <h3 class="text-base sm:text-lg font-black text-slate-900">Calculadora de Prorrateos</h3>
-                                        <p class="text-xs text-slate-500">Simulador referencial de ajuste proporcional por cambio de plan y descuentos en ciclo de facturación.</p>
+                                        <h3 class="text-base sm:text-lg font-black text-slate-900">Calculadora de Prorrateos y Remisiones</h3>
+                                        <p class="text-xs text-slate-500">Simulador operativo de prorrateos (base 30 días), fechas de emisión y guion explicativo para el cliente.</p>
                                     </div>
                                 </div>
-                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 text-[11px] font-black">
-                                    <i class="fa-solid fa-bolt"></i> Cálculo Instantáneo
-                                </span>
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    ${canAdmin ? `
+                                        <button type="button" id="btn-prorr-admin-config" onclick="CronosProcesosOperativos.toggleAdminConfig()"
+                                            class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-black transition cursor-pointer shadow-xs">
+                                            <i class="fa-solid fa-sliders text-amber-400"></i>
+                                            <span>Administrar Planes y Remisiones</span>
+                                        </button>
+                                    ` : `
+                                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 text-slate-600 border border-slate-200 text-[11px] font-bold">
+                                            <i class="fa-solid fa-lock text-slate-400"></i> Modo Consulta (Asesor)
+                                        </span>
+                                    `}
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-200 text-[11px] font-black">
+                                        <i class="fa-solid fa-bolt"></i> Base 30 días
+                                    </span>
+                                </div>
                             </div>
 
-                            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            <!-- Panel Administrable (Solo Admin / Supervisor / Coordinador) -->
+                            <div id="prorr-admin-panel" class="${this.showAdminConfigPanel && canAdmin ? '' : 'hidden'} bg-slate-50 border border-slate-300 rounded-2xl p-4 space-y-4"></div>
+
+                            <!-- Selector de Caso de Cálculo (6 Casos de Negocio) -->
+                            <div class="space-y-2">
+                                <div class="text-[11px] font-black uppercase tracking-wider text-slate-500">Seleccione el Caso de Cálculo</div>
+                                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2" id="prorr-cases-tabs">
+                                    <button type="button" id="btn-case-instalacion" onclick="CronosProcesosOperativos.selectCalcCase('instalacion')"
+                                        class="px-3 py-2.5 rounded-xl text-xs font-black border transition cursor-pointer flex items-center justify-center gap-1.5 bg-indigo-600 text-white border-indigo-600 shadow-xs">
+                                        <i class="fa-solid fa-plug"></i><span>Instalación</span>
+                                    </button>
+                                    <button type="button" id="btn-case-cambio-plan" onclick="CronosProcesosOperativos.selectCalcCase('cambio-plan')"
+                                        class="px-3 py-2.5 rounded-xl text-xs font-black border transition cursor-pointer flex items-center justify-center gap-1.5 bg-white text-slate-700 border-slate-200 hover:bg-slate-50">
+                                        <i class="fa-solid fa-arrow-right-arrow-left"></i><span>Cambio de Plan</span>
+                                    </button>
+                                    <button type="button" id="btn-case-alta-sva" onclick="CronosProcesosOperativos.selectCalcCase('alta-sva')"
+                                        class="px-3 py-2.5 rounded-xl text-xs font-black border transition cursor-pointer flex items-center justify-center gap-1.5 bg-white text-slate-700 border-slate-200 hover:bg-slate-50">
+                                        <i class="fa-solid fa-tv"></i><span>Alta SVA</span>
+                                    </button>
+                                    <button type="button" id="btn-case-baja-sva" onclick="CronosProcesosOperativos.selectCalcCase('baja-sva')"
+                                        class="px-3 py-2.5 rounded-xl text-xs font-black border transition cursor-pointer flex items-center justify-center gap-1.5 bg-white text-slate-700 border-slate-200 hover:bg-slate-50">
+                                        <i class="fa-solid fa-circle-minus"></i><span>Baja SVA</span>
+                                    </button>
+                                    <button type="button" id="btn-case-suspension" onclick="CronosProcesosOperativos.selectCalcCase('suspension')"
+                                        class="px-3 py-2.5 rounded-xl text-xs font-black border transition cursor-pointer flex items-center justify-center gap-1.5 bg-white text-slate-700 border-slate-200 hover:bg-slate-50">
+                                        <i class="fa-solid fa-pause-circle"></i><span>Suspensión</span>
+                                    </button>
+                                    <button type="button" id="btn-case-reactivacion" onclick="CronosProcesosOperativos.selectCalcCase('reactivacion')"
+                                        class="px-3 py-2.5 rounded-xl text-xs font-black border transition cursor-pointer flex items-center justify-center gap-1.5 bg-white text-slate-700 border-slate-200 hover:bg-slate-50">
+                                        <i class="fa-solid fa-play-circle"></i><span>Reactivación</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Grid Principal: Entradas + Resultados -->
+                            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                                 <!-- Entradas -->
                                 <div class="lg:col-span-5 space-y-4 bg-slate-50 p-5 rounded-2xl border border-slate-200">
-                                    <div class="text-xs font-black uppercase tracking-wider text-slate-700">Parámetros del Cambio de Plan</div>
-
-                                    <div>
-                                        <label class="block text-xs font-bold text-slate-700 mb-1">Plan Actual (Tarifa Mensual S/)</label>
-                                        <div class="grid grid-cols-2 gap-2">
-                                            <select id="calc-plan-actual-preset" onchange="CronosProcesosOperativos.onPlanPresetChange('actual')"
-                                                class="border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 focus:border-indigo-600 focus:outline-none">
-                                                <option value="69">WIN 100 Mbps (S/ 69)</option>
-                                                <option value="89">WIN 200 Mbps (S/ 89)</option>
-                                                <option value="99" selected>WIN 400 Mbps (S/ 99)</option>
-                                                <option value="119">WIN 600 Mbps (S/ 119)</option>
-                                                <option value="149">WIN 1000 Mbps (S/ 149)</option>
-                                                <option value="custom">Otro monto...</option>
-                                            </select>
-                                            <input type="number" id="calc-plan-actual" value="99" min="0" step="0.1" oninput="CronosProcesosOperativos.calculateProrrateo()"
-                                                class="border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-black text-slate-900 font-mono focus:border-indigo-600 focus:outline-none">
-                                        </div>
+                                    <div class="text-xs font-black uppercase tracking-wider text-slate-700 flex items-center justify-between">
+                                        <span>Parámetros del Caso</span>
+                                        <span id="calc-case-badge" class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-full">Instalación</span>
                                     </div>
 
+                                    <!-- Ciclo / Fecha de Emisión (Común a los 6 casos) -->
                                     <div>
-                                        <label class="block text-xs font-bold text-slate-700 mb-1">Plan Nuevo (Tarifa Mensual S/)</label>
-                                        <div class="grid grid-cols-2 gap-2">
-                                            <select id="calc-plan-nuevo-preset" onchange="CronosProcesosOperativos.onPlanPresetChange('nuevo')"
-                                                class="border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 focus:border-indigo-600 focus:outline-none">
-                                                <option value="69">WIN 100 Mbps (S/ 69)</option>
-                                                <option value="89" selected>WIN 200 Mbps (S/ 89)</option>
-                                                <option value="99">WIN 400 Mbps (S/ 99)</option>
-                                                <option value="119">WIN 600 Mbps (S/ 119)</option>
-                                                <option value="149">WIN 1000 Mbps (S/ 149)</option>
-                                                <option value="custom">Otro monto...</option>
-                                            </select>
-                                            <input type="number" id="calc-plan-nuevo" value="89" min="0" step="0.1" oninput="CronosProcesosOperativos.calculateProrrateo()"
-                                                class="border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-black text-slate-900 font-mono focus:border-indigo-600 focus:outline-none">
-                                        </div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Ciclo / Fecha de Facturación (Remisión)</label>
+                                        <select id="calc-dia-facturacion" onchange="CronosProcesosOperativos.calculateProrrateo()"
+                                            class="w-full border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-bold text-slate-800 focus:border-indigo-600 focus:outline-none">
+                                            ${remisionOptionsHtml}
+                                        </select>
                                     </div>
 
-                                    <div class="grid grid-cols-2 gap-3">
+                                    <!-- CASO 1: INSTALACIÓN -->
+                                    <div id="calc-fields-instalacion" class="space-y-3">
                                         <div>
-                                            <label class="block text-xs font-bold text-slate-700 mb-1">Fecha de Cambio</label>
-                                            <input type="date" id="calc-fecha-cambio" value="${today}" oninput="CronosProcesosOperativos.calculateProrrateo()"
-                                                class="w-full border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-bold text-slate-800 focus:border-indigo-600 focus:outline-none">
-                                        </div>
-                                        <div>
-                                            <label class="block text-xs font-bold text-slate-700 mb-1">Día de Facturación (Ciclo)</label>
-                                            <select id="calc-dia-facturacion" onchange="CronosProcesosOperativos.calculateProrrateo()"
-                                                class="w-full border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-bold text-slate-800 focus:border-indigo-600 focus:outline-none">
-                                                <option value="1">Día 01 de cada mes</option>
-                                                <option value="8">Día 08 de cada mes</option>
-                                                <option value="15" selected>Día 15 de cada mes</option>
-                                                <option value="22">Día 22 de cada mes</option>
+                                            <label class="block text-xs font-bold text-slate-700 mb-1">Plan Contratado</label>
+                                            <select id="calc-inst-plan" onchange="CronosProcesosOperativos.onSelectTariff('calc-inst-plan', 'calc-inst-tarifa')"
+                                                class="w-full border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-semibold text-slate-800">
+                                                ${planOptionsHtml}
                                             </select>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <div>
+                                                <label class="block text-xs font-bold text-slate-700 mb-1">Tarifa Mensual (S/)</label>
+                                                <input type="number" id="calc-inst-tarifa" value="${activePlanes[0]?.tarifa || 69}" min="0" step="0.1" oninput="CronosProcesosOperativos.calculateProrrateo()"
+                                                    class="w-full border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-black text-slate-900 font-mono">
+                                            </div>
+                                            <div>
+                                                <label class="block text-xs font-bold text-slate-700 mb-1">Fecha de Instalación</label>
+                                                <input type="date" id="calc-inst-fecha" value="${today}" oninput="CronosProcesosOperativos.calculateProrrateo()"
+                                                    class="w-full border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-bold text-slate-800">
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div>
-                                        <label class="block text-xs font-bold text-slate-700 mb-1">Descuento Aplicado al Plan Nuevo (%)</label>
-                                        <div class="flex items-center gap-3">
-                                            <input type="number" id="calc-descuento" value="0" min="0" max="100" step="1" oninput="CronosProcesosOperativos.calculateProrrateo()"
-                                                class="w-28 border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-black text-emerald-700 font-mono focus:border-indigo-600 focus:outline-none">
-                                            <span class="text-xs text-slate-500 font-medium">% de descuento promocional</span>
+                                    <!-- CASO 2: CAMBIO DE PLAN -->
+                                    <div id="calc-fields-cambio-plan" class="hidden space-y-3">
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-700 mb-1">Plan Actual</label>
+                                            <div class="grid grid-cols-3 gap-2">
+                                                <select id="calc-plan-actual-preset" onchange="CronosProcesosOperativos.onSelectTariff('calc-plan-actual-preset', 'calc-plan-actual')"
+                                                    class="col-span-2 border border-slate-300 bg-white rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-800">
+                                                    ${planOptionsHtml}
+                                                </select>
+                                                <input type="number" id="calc-plan-actual" value="${activePlanes[3]?.tarifa || 99}" min="0" step="0.1" oninput="CronosProcesosOperativos.calculateProrrateo()"
+                                                    class="border border-slate-300 bg-white rounded-xl px-2.5 py-2 text-xs font-black text-slate-900 font-mono">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-700 mb-1">Plan Nuevo</label>
+                                            <div class="grid grid-cols-3 gap-2">
+                                                <select id="calc-plan-nuevo-preset" onchange="CronosProcesosOperativos.onSelectTariff('calc-plan-nuevo-preset', 'calc-plan-nuevo')"
+                                                    class="col-span-2 border border-slate-300 bg-white rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-800">
+                                                    ${planOptionsHtml}
+                                                </select>
+                                                <input type="number" id="calc-plan-nuevo" value="${activePlanes[5]?.tarifa || 119}" min="0" step="0.1" oninput="CronosProcesosOperativos.calculateProrrateo()"
+                                                    class="border border-slate-300 bg-white rounded-xl px-2.5 py-2 text-xs font-black text-slate-900 font-mono">
+                                            </div>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <div>
+                                                <label class="block text-xs font-bold text-slate-700 mb-1">Fecha de Cambio</label>
+                                                <input type="date" id="calc-fecha-cambio" value="${today}" oninput="CronosProcesosOperativos.calculateProrrateo()"
+                                                    class="w-full border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-bold text-slate-800">
+                                            </div>
+                                            <div>
+                                                <label class="block text-xs font-bold text-slate-700 mb-1">Descuento Plan Nuevo (%)</label>
+                                                <input type="number" id="calc-descuento" value="0" min="0" max="100" step="1" oninput="CronosProcesosOperativos.calculateProrrateo()"
+                                                    class="w-full border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-black text-emerald-700 font-mono">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- CASO 3: ALTA SVA -->
+                                    <div id="calc-fields-alta-sva" class="hidden space-y-3">
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-700 mb-1">Servicio de Valor Agregado (SVA)</label>
+                                            <select id="calc-alta-sva-sel" onchange="CronosProcesosOperativos.onSelectTariff('calc-alta-sva-sel', 'calc-alta-sva-tarifa')"
+                                                class="w-full border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-semibold text-slate-800">
+                                                ${svaOptionsHtml}
+                                            </select>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <div>
+                                                <label class="block text-xs font-bold text-slate-700 mb-1">Tarifa SVA (S/)</label>
+                                                <input type="number" id="calc-alta-sva-tarifa" value="${activeSvas[0]?.tarifa || 15}" min="0" step="0.1" oninput="CronosProcesosOperativos.calculateProrrateo()"
+                                                    class="w-full border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-black text-slate-900 font-mono">
+                                            </div>
+                                            <div>
+                                                <label class="block text-xs font-bold text-slate-700 mb-1">Fecha de Activación</label>
+                                                <input type="date" id="calc-alta-sva-fecha" value="${today}" oninput="CronosProcesosOperativos.calculateProrrateo()"
+                                                    class="w-full border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-bold text-slate-800">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- CASO 4: BAJA SVA -->
+                                    <div id="calc-fields-baja-sva" class="hidden space-y-3">
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-700 mb-1">SVA dado de Baja</label>
+                                            <select id="calc-baja-sva-sel" onchange="CronosProcesosOperativos.onSelectTariff('calc-baja-sva-sel', 'calc-baja-sva-tarifa')"
+                                                class="w-full border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-semibold text-slate-800">
+                                                ${svaOptionsHtml}
+                                            </select>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <div>
+                                                <label class="block text-xs font-bold text-slate-700 mb-1">Tarifa SVA (S/)</label>
+                                                <input type="number" id="calc-baja-sva-tarifa" value="${activeSvas[0]?.tarifa || 15}" min="0" step="0.1" oninput="CronosProcesosOperativos.calculateProrrateo()"
+                                                    class="w-full border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-black text-slate-900 font-mono">
+                                            </div>
+                                            <div>
+                                                <label class="block text-xs font-bold text-slate-700 mb-1">Fecha de Baja</label>
+                                                <input type="date" id="calc-baja-sva-fecha" value="${today}" oninput="CronosProcesosOperativos.calculateProrrateo()"
+                                                    class="w-full border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-bold text-slate-800">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- CASO 5: SUSPENSIÓN TEMPORAL -->
+                                    <div id="calc-fields-suspension" class="hidden space-y-3">
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-700 mb-1">Plan del Cliente</label>
+                                            <div class="grid grid-cols-3 gap-2">
+                                                <select id="calc-susp-plan-sel" onchange="CronosProcesosOperativos.onSelectTariff('calc-susp-plan-sel', 'calc-susp-tarifa')"
+                                                    class="col-span-2 border border-slate-300 bg-white rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-800">
+                                                    ${planOptionsHtml}
+                                                </select>
+                                                <input type="number" id="calc-susp-tarifa" value="${activePlanes[3]?.tarifa || 99}" min="0" step="0.1" oninput="CronosProcesosOperativos.calculateProrrateo()"
+                                                    class="border border-slate-300 bg-white rounded-xl px-2.5 py-2 text-xs font-black text-slate-900 font-mono">
+                                            </div>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <div>
+                                                <label class="block text-xs font-bold text-slate-700 mb-1">Inicio Suspensión</label>
+                                                <input type="date" id="calc-susp-inicio" value="${today}" oninput="CronosProcesosOperativos.calculateProrrateo()"
+                                                    class="w-full border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-bold text-slate-800">
+                                            </div>
+                                            <div>
+                                                <label class="block text-xs font-bold text-slate-700 mb-1">Días de Suspensión</label>
+                                                <input type="number" id="calc-susp-dias" value="${cfg.suspension.minDias}" min="1" max="90" oninput="CronosProcesosOperativos.calculateProrrateo()"
+                                                    class="w-full border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-black text-amber-700 font-mono">
+                                            </div>
+                                        </div>
+                                        <div id="calc-susp-rule-hint" class="text-[11px] text-amber-800 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2 font-semibold">
+                                            Regla vigente: Mínimo ${cfg.suspension.minDias} días — Máximo ${cfg.suspension.maxDias} días.
+                                        </div>
+                                    </div>
+
+                                    <!-- CASO 6: REACTIVACIÓN -->
+                                    <div id="calc-fields-reactivacion" class="hidden space-y-3">
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-700 mb-1">Plan Reactivado</label>
+                                            <div class="grid grid-cols-3 gap-2">
+                                                <select id="calc-react-plan-sel" onchange="CronosProcesosOperativos.onSelectTariff('calc-react-plan-sel', 'calc-react-tarifa')"
+                                                    class="col-span-2 border border-slate-300 bg-white rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-800">
+                                                    ${planOptionsHtml}
+                                                </select>
+                                                <input type="number" id="calc-react-tarifa" value="${activePlanes[3]?.tarifa || 99}" min="0" step="0.1" oninput="CronosProcesosOperativos.calculateProrrateo()"
+                                                    class="border border-slate-300 bg-white rounded-xl px-2.5 py-2 text-xs font-black text-slate-900 font-mono">
+                                            </div>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <div>
+                                                <label class="block text-xs font-bold text-slate-700 mb-1">Fecha de Reactivación</label>
+                                                <input type="date" id="calc-react-fecha" value="${today}" oninput="CronosProcesosOperativos.calculateProrrateo()"
+                                                    class="w-full border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-bold text-slate-800">
+                                            </div>
+                                            <div>
+                                                <label class="block text-xs font-bold text-slate-700 mb-1">Saldo Pendiente (S/)</label>
+                                                <input type="number" id="calc-react-saldo" value="0" min="0" step="0.1" oninput="CronosProcesosOperativos.calculateProrrateo()"
+                                                    class="w-full border border-slate-300 bg-white rounded-xl px-3 py-2 text-xs font-black text-slate-900 font-mono">
+                                            </div>
                                         </div>
                                     </div>
 
                                     <button type="button" onclick="CronosProcesosOperativos.calculateProrrateo()"
                                         class="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-black shadow-sm transition cursor-pointer flex items-center justify-center gap-2">
                                         <i class="fa-solid fa-rotate"></i>
-                                        <span>Recalcular Prorrateo</span>
+                                        <span>Calcular Prorrateo y Emisión</span>
                                     </button>
                                 </div>
 
-                                <!-- Salidas -->
+                                <!-- Resultados -->
                                 <div class="lg:col-span-7 space-y-4">
                                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                         <div class="p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 text-white shadow-sm">
-                                            <div class="text-[10px] font-bold uppercase text-slate-400 tracking-wider">Monto Estimado del Ciclo</div>
+                                            <div class="text-[10px] font-bold uppercase text-slate-400 tracking-wider">Monto Estimado</div>
                                             <div id="out-monto-estimado" class="text-2xl font-black text-white font-mono mt-1">S/ 0.00</div>
-                                            <div class="text-[10px] text-emerald-400 mt-1 font-semibold">Incluye prorrateo + descuento</div>
+                                            <div id="out-monto-sub" class="text-[10px] text-emerald-400 mt-1 font-semibold">Prorrateo calculado</div>
                                         </div>
                                         <div class="p-4 rounded-2xl bg-indigo-50 border border-indigo-200">
-                                            <div class="text-[10px] font-bold uppercase text-indigo-700 tracking-wider">Prorrateo Calculado</div>
-                                            <div id="out-prorrateo-detalle" class="text-lg font-black text-indigo-900 font-mono mt-1">0d / 0d</div>
+                                            <div class="text-[10px] font-bold uppercase text-indigo-700 tracking-wider">Días Utilizados</div>
+                                            <div id="out-prorrateo-detalle" class="text-lg font-black text-indigo-900 font-mono mt-1">0 días</div>
                                             <div id="out-prorrateo-montos" class="text-[11px] text-indigo-700 mt-1 font-medium">-</div>
                                         </div>
-                                        <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200">
-                                            <div class="text-[10px] font-bold uppercase text-amber-800 tracking-wider">Impacto Esperado</div>
-                                            <div id="out-impacto" class="text-xl font-black text-amber-900 font-mono mt-1">S/ 0.00</div>
-                                            <div id="out-impacto-desc" class="text-[10px] text-amber-700 mt-1 font-semibold">Respecto a recibo regular</div>
+                                        <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200">
+                                            <div class="text-[10px] font-bold uppercase text-emerald-800 tracking-wider">Emisión Correspondiente</div>
+                                            <div id="out-emision-fecha" class="text-sm font-black text-emerald-950 mt-1">-</div>
+                                            <div id="out-emision-venc" class="text-[10px] text-emerald-700 mt-1 font-semibold">Vencimiento: día 28</div>
                                         </div>
                                     </div>
 
+                                    <!-- Detalle del Cálculo -->
+                                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
+                                        <div class="text-[11px] font-black uppercase tracking-wider text-slate-600">Desglose del Cálculo</div>
+                                        <div id="out-calculo-formula" class="text-xs font-mono text-slate-800 bg-white p-2.5 rounded-xl border border-slate-200">-</div>
+                                    </div>
+
+                                    <!-- Explicación para el Cliente -->
                                     <div class="p-4 rounded-2xl bg-white border border-slate-200 space-y-2">
-                                        <div class="text-xs font-black text-slate-800 flex items-center gap-1.5">
-                                            <i class="fa-solid fa-comment-dots text-win-orange"></i>
-                                            <span>Explicación Referencial para el Cliente</span>
+                                        <div class="flex items-center justify-between">
+                                            <div class="text-xs font-black text-slate-800 flex items-center gap-1.5">
+                                                <i class="fa-solid fa-comment-dots text-win-orange"></i>
+                                                <span>Explicación para el Cliente</span>
+                                            </div>
+                                            <button type="button" onclick="CronosProcesosOperativos.copiarGuionProrrateo()"
+                                                class="text-[11px] font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-lg transition cursor-pointer flex items-center gap-1">
+                                                <i class="fa-solid fa-copy"></i> Copiar
+                                            </button>
                                         </div>
-                                        <p id="out-explicacion" class="text-xs text-slate-600 leading-relaxed bg-slate-50 p-3.5 rounded-xl border border-slate-100">
-                                            -
-                                        </p>
+                                        <p id="out-explicacion" class="text-xs text-slate-700 leading-relaxed bg-slate-50 p-3.5 rounded-xl border border-slate-100">-</p>
                                     </div>
 
                                     <!-- Aviso Obligatorio -->
@@ -47797,64 +48079,327 @@ ${sheetHtml}
                         </div>
                     `;
 
+                    this.selectCalcCase(this.activeCalcCase);
+                },
+
+                selectCalcCase(caso) {
+                    const valid = ['instalacion', 'cambio-plan', 'alta-sva', 'baja-sva', 'suspension', 'reactivacion'];
+                    if (!valid.includes(caso)) caso = 'instalacion';
+                    this.activeCalcCase = caso;
+
+                    const labels = {
+                        'instalacion': 'Instalación',
+                        'cambio-plan': 'Cambio de Plan',
+                        'alta-sva': 'Alta SVA',
+                        'baja-sva': 'Baja SVA',
+                        'suspension': 'Suspensión Temporal',
+                        'reactivacion': 'Reactivación'
+                    };
+
+                    valid.forEach(c => {
+                        const btn = document.getElementById('btn-case-' + c);
+                        const grp = document.getElementById('calc-fields-' + c);
+                        if (btn) {
+                            btn.className = (c === caso)
+                                ? 'px-3 py-2.5 rounded-xl text-xs font-black border transition cursor-pointer flex items-center justify-center gap-1.5 bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                                : 'px-3 py-2.5 rounded-xl text-xs font-black border transition cursor-pointer flex items-center justify-center gap-1.5 bg-white text-slate-700 border-slate-200 hover:bg-slate-50';
+                        }
+                        if (grp) {
+                            if (c === caso) grp.classList.remove('hidden');
+                            else grp.classList.add('hidden');
+                        }
+                    });
+
+                    const badge = document.getElementById('calc-case-badge');
+                    if (badge) badge.textContent = labels[caso];
+
                     this.calculateProrrateo();
                 },
 
-                onPlanPresetChange(which) {
-                    const sel = document.getElementById(`calc-plan-${which}-preset`);
-                    const inp = document.getElementById(`calc-plan-${which}`);
-                    if (sel && inp && sel.value !== 'custom') {
-                        inp.value = sel.value;
-                    }
+                onSelectTariff(selectId, inputId) {
+                    const sel = document.getElementById(selectId);
+                    const inp = document.getElementById(inputId);
+                    if (sel && inp) inp.value = sel.value;
                     this.calculateProrrateo();
+                },
+
+                _computeEmissionDate(fechaStr, diaCorte) {
+                    const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+                    const base = fechaStr ? new Date(fechaStr + 'T00:00:00') : new Date();
+                    let year = base.getFullYear();
+                    let month = base.getMonth();
+                    const day = base.getDate();
+
+                    if (day > diaCorte) {
+                        month += 1;
+                        if (month > 11) { month = 0; year += 1; }
+                    }
+                    const emisionTexto = `${diaCorte} de ${meses[month]} de ${year}`;
+                    let vencMonth = month;
+                    let vencYear = year;
+                    if (diaCorte > 28) {
+                        vencMonth += 1;
+                        if (vencMonth > 11) { vencMonth = 0; vencYear += 1; }
+                    }
+                    const vencTexto = `28 de ${meses[vencMonth]} de ${vencYear}`;
+                    return { day, emisionTexto, vencTexto };
+                },
+
+                _computeDaysUsedInCycle(dayOfMove, diaCorte) {
+                    let diasAntes = (dayOfMove >= diaCorte) ? (dayOfMove - diaCorte) : ((30 - diaCorte) + dayOfMove);
+                    diasAntes = Math.min(30, Math.max(0, diasAntes));
+                    const diasRestantes = 30 - diasAntes;
+                    return { diasAntes, diasRestantes };
                 },
 
                 calculateProrrateo() {
-                    const planActual = Math.max(0, parseFloat(document.getElementById('calc-plan-actual')?.value || 0));
-                    const planNuevo = Math.max(0, parseFloat(document.getElementById('calc-plan-nuevo')?.value || 0));
-                    const descuento = Math.min(100, Math.max(0, parseFloat(document.getElementById('calc-descuento')?.value || 0)));
-                    const fechaStr = document.getElementById('calc-fecha-cambio')?.value;
+                    const cfg = this.getProrrateoConfig();
                     const diaCorte = parseInt(document.getElementById('calc-dia-facturacion')?.value || 15, 10);
+                    const caso = this.activeCalcCase;
 
-                    const fechaCambio = fechaStr ? new Date(fechaStr + 'T00:00:00') : new Date();
-                    const diaCambio = fechaCambio.getDate();
+                    let montoEstimado = 0;
+                    let diasLabel = '0 días';
+                    let diasSub = '-';
+                    let montoSub = 'Prorrateo base 30 días';
+                    let formula = '';
+                    let explicacion = '';
+                    let fechaRef = '';
 
-                    // Cálculo comercial estándar sobre ciclo de 30 días
-                    let diasPlanActual = 0;
-                    if (diaCambio >= diaCorte) {
-                        diasPlanActual = diaCambio - diaCorte;
-                    } else {
-                        diasPlanActual = (30 - diaCorte) + diaCambio;
+                    if (caso === 'instalacion') {
+                        const tarifa = Math.max(0, parseFloat(document.getElementById('calc-inst-tarifa')?.value || 0));
+                        fechaRef = document.getElementById('calc-inst-fecha')?.value;
+                        const sel = document.getElementById('calc-inst-plan');
+                        const planNombre = sel?.options[sel.selectedIndex]?.getAttribute('data-nombre') || 'Plan Internet WIN';
+                        const em = this._computeEmissionDate(fechaRef, diaCorte);
+                        const { diasRestantes } = this._computeDaysUsedInCycle(em.day, diaCorte);
+                        const diasUso = diasRestantes === 0 ? 30 : diasRestantes;
+                        montoEstimado = (tarifa / 30) * diasUso;
+                        diasLabel = `${diasUso} días`;
+                        diasSub = `Desde instalación hasta ciclo día ${diaCorte}`;
+                        formula = `(${planNombre}: S/ ${tarifa.toFixed(2)} ÷ 30) × ${diasUso} días = S/ ${montoEstimado.toFixed(2)}`;
+                        explicacion = `Estimado cliente, al haberse instalado su servicio (${planNombre}, tarifa regular S/ ${tarifa.toFixed(2)}) antes del cierre del ciclo de facturación día <strong>${diaCorte}</strong>, su primer recibo corresponderá únicamente a los <strong>${diasUso} días</strong> de servicio utilizado, por un monto estimado de <strong>S/ ${montoEstimado.toFixed(2)}</strong>, a emitirse el <strong>${em.emisionTexto}</strong>.`;
+                    } else if (caso === 'cambio-plan') {
+                        const planActual = Math.max(0, parseFloat(document.getElementById('calc-plan-actual')?.value || 0));
+                        const planNuevo = Math.max(0, parseFloat(document.getElementById('calc-plan-nuevo')?.value || 0));
+                        const desc = Math.min(100, Math.max(0, parseFloat(document.getElementById('calc-descuento')?.value || 0)));
+                        fechaRef = document.getElementById('calc-fecha-cambio')?.value;
+                        const em = this._computeEmissionDate(fechaRef, diaCorte);
+                        const { diasAntes, diasRestantes } = this._computeDaysUsedInCycle(em.day, diaCorte);
+                        const tarifaNuevoDesc = planNuevo * (1 - desc / 100);
+                        const montoAnt = (planActual / 30) * diasAntes;
+                        const montoNvo = (tarifaNuevoDesc / 30) * diasRestantes;
+                        montoEstimado = montoAnt + montoNvo;
+                        const diff = montoEstimado - planActual;
+                        diasLabel = `${diasAntes}d Ant. / ${diasRestantes}d Nvo.`;
+                        diasSub = `S/ ${montoAnt.toFixed(2)} + S/ ${montoNvo.toFixed(2)}`;
+                        montoSub = diff >= 0 ? `Diferencia: +S/ ${diff.toFixed(2)}` : `Ahorro: -S/ ${Math.abs(diff).toFixed(2)}`;
+                        formula = `(S/ ${planActual.toFixed(2)} ÷ 30 × ${diasAntes}d) + (S/ ${tarifaNuevoDesc.toFixed(2)} ÷ 30 × ${diasRestantes}d) = S/ ${montoEstimado.toFixed(2)}`;
+                        explicacion = `Estimado cliente, considerando su ciclo de facturación día <strong>${diaCorte}</strong>, su recibo emitido el <strong>${em.emisionTexto}</strong> incluirá <strong>${diasAntes} días</strong> del plan anterior (S/ ${montoAnt.toFixed(2)}) y <strong>${diasRestantes} días</strong> del nuevo plan (S/ ${montoNvo.toFixed(2)}), dando un total estimado de <strong>S/ ${montoEstimado.toFixed(2)}</strong>.`;
+                    } else if (caso === 'alta-sva') {
+                        const tarifa = Math.max(0, parseFloat(document.getElementById('calc-alta-sva-tarifa')?.value || 0));
+                        fechaRef = document.getElementById('calc-alta-sva-fecha')?.value;
+                        const sel = document.getElementById('calc-alta-sva-sel');
+                        const svaNom = sel?.options[sel.selectedIndex]?.getAttribute('data-nombre') || 'SVA';
+                        const em = this._computeEmissionDate(fechaRef, diaCorte);
+                        const { diasRestantes } = this._computeDaysUsedInCycle(em.day, diaCorte);
+                        const diasUso = diasRestantes === 0 ? 30 : diasRestantes;
+                        montoEstimado = (tarifa / 30) * diasUso;
+                        diasLabel = `${diasUso} días`;
+                        diasSub = `Prorrateo ${svaNom}`;
+                        formula = `(${svaNom}: S/ ${tarifa.toFixed(2)} ÷ 30) × ${diasUso} días = S/ ${montoEstimado.toFixed(2)}`;
+                        explicacion = `Estimado cliente, por el alta del servicio adicional <strong>${svaNom}</strong> (S/ ${tarifa.toFixed(2)}/mes), se facturará de forma proporcional por <strong>${diasUso} días</strong> de uso hasta su ciclo día <strong>${diaCorte}</strong>, equivalente a <strong>S/ ${montoEstimado.toFixed(2)}</strong> en el recibo del <strong>${em.emisionTexto}</strong>.`;
+                    } else if (caso === 'baja-sva') {
+                        const tarifa = Math.max(0, parseFloat(document.getElementById('calc-baja-sva-tarifa')?.value || 0));
+                        fechaRef = document.getElementById('calc-baja-sva-fecha')?.value;
+                        const sel = document.getElementById('calc-baja-sva-sel');
+                        const svaNom = sel?.options[sel.selectedIndex]?.getAttribute('data-nombre') || 'SVA';
+                        const em = this._computeEmissionDate(fechaRef, diaCorte);
+                        const { diasAntes, diasRestantes } = this._computeDaysUsedInCycle(em.day, diaCorte);
+                        const diasCobro = diasAntes === 0 ? 1 : diasAntes;
+                        montoEstimado = (tarifa / 30) * diasCobro;
+                        const ahorro = tarifa - montoEstimado;
+                        diasLabel = `${diasCobro}d usados / ${diasRestantes}d no usados`;
+                        diasSub = `Ajuste a favor: S/ ${ahorro.toFixed(2)}`;
+                        formula = `(${svaNom}: S/ ${tarifa.toFixed(2)} ÷ 30) × ${diasCobro} días utilizados = S/ ${montoEstimado.toFixed(2)} (Descuento no usado: S/ ${ahorro.toFixed(2)})`;
+                        explicacion = `Estimado cliente, al registrar la baja de <strong>${svaNom}</strong>, en su recibo del <strong>${em.emisionTexto}</strong> solo se cobrarán los <strong>${diasCobro} días</strong> utilizados (<strong>S/ ${montoEstimado.toFixed(2)}</strong>), descontándose S/ ${ahorro.toFixed(2)} por los días posteriores a la baja.`;
+                    } else if (caso === 'suspension') {
+                        const tarifa = Math.max(0, parseFloat(document.getElementById('calc-susp-tarifa')?.value || 0));
+                        fechaRef = document.getElementById('calc-susp-inicio')?.value;
+                        const diasSuspRaw = Math.max(1, parseInt(document.getElementById('calc-susp-dias')?.value || 15, 10));
+                        const diasSuspEnCiclo = Math.min(30, diasSuspRaw);
+                        const diasActivos = 30 - diasSuspEnCiclo;
+                        const em = this._computeEmissionDate(fechaRef, diaCorte);
+                        montoEstimado = (tarifa / 30) * diasActivos;
+                        const descuentoSusp = tarifa - montoEstimado;
+                        const ruleOk = diasSuspRaw >= cfg.suspension.minDias && diasSuspRaw <= cfg.suspension.maxDias;
+                        diasLabel = `${diasActivos}d activos / ${diasSuspRaw}d susp.`;
+                        diasSub = ruleOk ? `Dentro de regla (${cfg.suspension.minDias}-${cfg.suspension.maxDias}d)` : `Fuera de rango (${cfg.suspension.minDias}-${cfg.suspension.maxDias}d)`;
+                        montoSub = `Descuento por suspensión: S/ ${descuentoSusp.toFixed(2)}`;
+                        formula = `Plan S/ ${tarifa.toFixed(2)} ÷ 30 × ${diasActivos} días activos = S/ ${montoEstimado.toFixed(2)} (Ahorro suspensión: S/ ${descuentoSusp.toFixed(2)})`;
+                        explicacion = `Estimado cliente, durante su suspensión temporal de <strong>${diasSuspRaw} días</strong> no se genera cobro por los días suspendidos. Para su ciclo día <strong>${diaCorte}</strong> (emisión <strong>${em.emisionTexto}</strong>), solo se facturarán <strong>${diasActivos} días</strong> activos por un monto estimado de <strong>S/ ${montoEstimado.toFixed(2)}</strong>.`;
+                    } else if (caso === 'reactivacion') {
+                        const tarifa = Math.max(0, parseFloat(document.getElementById('calc-react-tarifa')?.value || 0));
+                        const saldo = Math.max(0, parseFloat(document.getElementById('calc-react-saldo')?.value || 0));
+                        fechaRef = document.getElementById('calc-react-fecha')?.value;
+                        const em = this._computeEmissionDate(fechaRef, diaCorte);
+                        const { diasRestantes } = this._computeDaysUsedInCycle(em.day, diaCorte);
+                        const diasUso = diasRestantes === 0 ? 30 : diasRestantes;
+                        const prop = (tarifa / 30) * diasUso;
+                        montoEstimado = prop + saldo;
+                        diasLabel = `${diasUso} días activos`;
+                        diasSub = saldo > 0 ? `Prorrateo S/ ${prop.toFixed(2)} + Saldo S/ ${saldo.toFixed(2)}` : `Prorrateo desde reactivación`;
+                        formula = `(S/ ${tarifa.toFixed(2)} ÷ 30 × ${diasUso} días) + Saldo S/ ${saldo.toFixed(2)} = S/ ${montoEstimado.toFixed(2)}`;
+                        explicacion = `Estimado cliente, tras su reactivación, su próximo recibo a emitirse el <strong>${em.emisionTexto}</strong> contemplará <strong>${diasUso} días</strong> de servicio activo (S/ ${prop.toFixed(2)})${saldo > 0 ? ` más el saldo pendiente de S/ ${saldo.toFixed(2)}` : ''}, dando un total estimado de <strong>S/ ${montoEstimado.toFixed(2)}</strong>.`;
                     }
-                    diasPlanActual = Math.min(30, Math.max(0, diasPlanActual));
-                    const diasPlanNuevo = 30 - diasPlanActual;
 
-                    const tarifaNuevoConDesc = planNuevo * (1 - (descuento / 100));
-                    const costoActualProp = (planActual / 30) * diasPlanActual;
-                    const costoNuevoProp = (tarifaNuevoConDesc / 30) * diasPlanNuevo;
-                    const montoTotal = costoActualProp + costoNuevoProp;
+                    const emOut = this._computeEmissionDate(fechaRef, diaCorte);
+                    const setTxt = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+                    const setHtml = (id, v) => { const e = document.getElementById(id); if (e) e.innerHTML = v; };
 
-                    const diff = montoTotal - planActual;
-                    const diffSign = diff > 0 ? '+' : '';
+                    setTxt('out-monto-estimado', `S/ ${montoEstimado.toFixed(2)}`);
+                    setTxt('out-monto-sub', montoSub);
+                    setTxt('out-prorrateo-detalle', diasLabel);
+                    setTxt('out-prorrateo-montos', diasSub);
+                    setTxt('out-emision-fecha', emOut.emisionTexto);
+                    setTxt('out-emision-venc', `Vence: ${emOut.vencTexto}`);
+                    setTxt('out-calculo-formula', formula);
+                    setHtml('out-explicacion', explicacion);
+                },
 
-                    const elMonto = document.getElementById('out-monto-estimado');
-                    const elProrrateo = document.getElementById('out-prorrateo-detalle');
-                    const elProrrateoMontos = document.getElementById('out-prorrateo-montos');
-                    const elImpacto = document.getElementById('out-impacto');
-                    const elImpactoDesc = document.getElementById('out-impacto-desc');
-                    const elExp = document.getElementById('out-explicacion');
+                renderAdminConfigPanel() {
+                    const panel = document.getElementById('prorr-admin-panel');
+                    if (!panel || !this.canAdminProrrateos()) return;
+                    const cfg = this.getProrrateoConfig();
 
-                    if (elMonto) elMonto.textContent = `S/ ${montoTotal.toFixed(2)}`;
-                    if (elProrrateo) elProrrateo.textContent = `${diasPlanActual}d Ant. / ${diasPlanNuevo}d Nvo.`;
-                    if (elProrrateoMontos) elProrrateoMontos.textContent = `S/ ${costoActualProp.toFixed(2)} + S/ ${costoNuevoProp.toFixed(2)}`;
-                    if (elImpacto) elImpacto.textContent = `${diffSign}S/ ${diff.toFixed(2)}`;
-                    if (elImpactoDesc) {
-                        elImpactoDesc.textContent = diff < 0
-                            ? `Ahorro estimado de S/ ${Math.abs(diff).toFixed(2)} este ciclo`
-                            : (diff > 0 ? `Incremento proporcional de S/ ${diff.toFixed(2)}` : 'Sin variación en el ciclo');
-                    }
-                    if (elExp) {
-                        elExp.innerHTML = `Estimado cliente, considerando su ciclo de facturación los días <strong>${diaCorte}</strong> de cada mes, del total de 30 días del ciclo actual corresponden <strong>${diasPlanActual} días</strong> con su plan anterior (S/ ${planActual.toFixed(2)} → proporcional <strong>S/ ${costoActualProp.toFixed(2)}</strong>) y <strong>${diasPlanNuevo} días</strong> con el nuevo plan (S/ ${planNuevo.toFixed(2)}${descuento > 0 ? ` con ${descuento}% de descuento = S/ ${tarifaNuevoConDesc.toFixed(2)}` : ''} → proporcional <strong>S/ ${costoNuevoProp.toFixed(2)}</strong>). El monto estimado total para su próximo recibo será de <strong>S/ ${montoTotal.toFixed(2)}</strong>.`;
+                    const planesRows = cfg.planes.map((p, idx) => `
+                        <div class="grid grid-cols-12 gap-2 items-center bg-white p-2 rounded-xl border border-slate-200">
+                            <input type="text" value="${p.nombre}" onchange="CronosProcesosOperativos.updatePlanAdmin(${idx}, 'nombre', this.value)"
+                                class="col-span-6 text-xs font-semibold border border-slate-200 rounded-lg px-2 py-1">
+                            <input type="number" step="0.1" value="${p.tarifa}" onchange="CronosProcesosOperativos.updatePlanAdmin(${idx}, 'tarifa', parseFloat(this.value)||0)"
+                                class="col-span-3 text-xs font-mono font-bold border border-slate-200 rounded-lg px-2 py-1">
+                            <label class="col-span-2 flex items-center gap-1 text-[11px] font-bold text-slate-700 cursor-pointer">
+                                <input type="checkbox" ${p.activo !== false ? 'checked' : ''} onchange="CronosProcesosOperativos.updatePlanAdmin(${idx}, 'activo', this.checked)"> Activo
+                            </label>
+                            <button type="button" onclick="CronosProcesosOperativos.deletePlanAdmin(${idx})" class="col-span-1 text-rose-600 hover:text-rose-800 text-xs cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    `).join('');
+
+                    const remRows = cfg.remisiones.map((r, idx) => `
+                        <div class="grid grid-cols-12 gap-2 items-center bg-white p-2 rounded-xl border border-slate-200">
+                            <input type="number" min="1" max="31" value="${r.diaEmision}" onchange="CronosProcesosOperativos.updateRemisionAdmin(${idx}, 'diaEmision', parseInt(this.value,10)||1)"
+                                class="col-span-3 text-xs font-mono font-bold border border-slate-200 rounded-lg px-2 py-1">
+                            <input type="text" value="${r.descripcion}" onchange="CronosProcesosOperativos.updateRemisionAdmin(${idx}, 'descripcion', this.value)"
+                                class="col-span-6 text-xs border border-slate-200 rounded-lg px-2 py-1">
+                            <label class="col-span-2 flex items-center gap-1 text-[11px] font-bold text-slate-700 cursor-pointer">
+                                <input type="checkbox" ${r.activo !== false ? 'checked' : ''} onchange="CronosProcesosOperativos.updateRemisionAdmin(${idx}, 'activo', this.checked)"> Activo
+                            </label>
+                            <button type="button" onclick="CronosProcesosOperativos.deleteRemisionAdmin(${idx})" class="col-span-1 text-rose-600 hover:text-rose-800 text-xs cursor-pointer"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    `).join('');
+
+                    panel.innerHTML = `
+                        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
+                            <div class="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                                <i class="fa-solid fa-shield-halved text-emerald-600"></i>
+                                <span>Configuración Administrable (Planes, Tarifas, Remisiones y Suspensión)</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button type="button" onclick="CronosProcesosOperativos.resetProrrateoConfig()"
+                                    class="text-[11px] font-bold bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg cursor-pointer">Restaurar Valores WIN</button>
+                                <button type="button" onclick="CronosProcesosOperativos.toggleAdminConfig()"
+                                    class="text-[11px] font-bold bg-slate-900 text-white px-2.5 py-1 rounded-lg cursor-pointer">Cerrar</button>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-black text-slate-700">Planes Tarifarios</span>
+                                    <button type="button" onclick="CronosProcesosOperativos.addPlanAdmin()" class="text-[11px] font-bold bg-indigo-600 text-white px-2.5 py-1 rounded-lg cursor-pointer">+ Agregar Plan</button>
+                                </div>
+                                <div class="space-y-1.5 max-h-60 overflow-y-auto">${planesRows}</div>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-xs font-black text-slate-700">Fechas de Emisión / Remisiones</span>
+                                        <button type="button" onclick="CronosProcesosOperativos.addRemisionAdmin()" class="text-[11px] font-bold bg-emerald-600 text-white px-2.5 py-1 rounded-lg cursor-pointer">+ Agregar Emisión</button>
+                                    </div>
+                                    <div class="space-y-1.5">${remRows}</div>
+                                </div>
+                                <div class="bg-white p-3 rounded-xl border border-slate-200 space-y-2">
+                                    <div class="text-xs font-black text-slate-700">Reglas de Suspensión Temporal</div>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <div>
+                                            <label class="block text-[10px] font-bold text-slate-600">Mínimo (días)</label>
+                                            <input type="number" min="1" value="${cfg.suspension.minDias}" onchange="CronosProcesosOperativos.updateSuspAdmin('minDias', parseInt(this.value,10)||15)"
+                                                class="w-full text-xs font-mono font-bold border border-slate-200 rounded-lg px-2 py-1">
+                                        </div>
+                                        <div>
+                                            <label class="block text-[10px] font-bold text-slate-600">Máximo (días)</label>
+                                            <input type="number" min="1" value="${cfg.suspension.maxDias}" onchange="CronosProcesosOperativos.updateSuspAdmin('maxDias', parseInt(this.value,10)||60)"
+                                                class="w-full text-xs font-mono font-bold border border-slate-200 rounded-lg px-2 py-1">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                },
+
+                updatePlanAdmin(idx, key, val) {
+                    const cfg = this.getProrrateoConfig();
+                    if (cfg.planes[idx]) { cfg.planes[idx][key] = val; this.saveProrrateoConfig(cfg); this.renderCalculadoraProrrateos(); }
+                },
+                addPlanAdmin() {
+                    const cfg = this.getProrrateoConfig();
+                    cfg.planes.push({ id: 'plan_' + Date.now(), nombre: 'Nuevo Plan WIN', tarifa: 99.00, activo: true });
+                    this.saveProrrateoConfig(cfg);
+                    this.renderCalculadoraProrrateos();
+                },
+                deletePlanAdmin(idx) {
+                    const cfg = this.getProrrateoConfig();
+                    if (cfg.planes.length <= 1) return;
+                    cfg.planes.splice(idx, 1);
+                    this.saveProrrateoConfig(cfg);
+                    this.renderCalculadoraProrrateos();
+                },
+                updateRemisionAdmin(idx, key, val) {
+                    const cfg = this.getProrrateoConfig();
+                    if (cfg.remisiones[idx]) { cfg.remisiones[idx][key] = val; this.saveProrrateoConfig(cfg); this.renderCalculadoraProrrateos(); }
+                },
+                addRemisionAdmin() {
+                    const cfg = this.getProrrateoConfig();
+                    cfg.remisiones.push({ diaEmision: 25, descripcion: 'Ciclo 25 (Emisión día 25)', activo: true });
+                    this.saveProrrateoConfig(cfg);
+                    this.renderCalculadoraProrrateos();
+                },
+                deleteRemisionAdmin(idx) {
+                    const cfg = this.getProrrateoConfig();
+                    if (cfg.remisiones.length <= 1) return;
+                    cfg.remisiones.splice(idx, 1);
+                    this.saveProrrateoConfig(cfg);
+                    this.renderCalculadoraProrrateos();
+                },
+                updateSuspAdmin(key, val) {
+                    const cfg = this.getProrrateoConfig();
+                    cfg.suspension[key] = val;
+                    this.saveProrrateoConfig(cfg);
+                    this.calculateProrrateo();
+                },
+                resetProrrateoConfig() {
+                    localStorage.removeItem(this.PRORRATEO_STORAGE_KEY);
+                    this.renderCalculadoraProrrateos();
+                    if (typeof showToast === 'function') showToast('Configuración de planes y remisiones restaurada.', 'info');
+                },
+
+                copiarGuionProrrateo() {
+                    const el = document.getElementById('out-explicacion');
+                    const text = el ? el.textContent.replace(/\s+/g, ' ').trim() : '';
+                    if (!text) return;
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(text).then(() => {
+                            if (typeof showToast === 'function') showToast('Explicación para el cliente copiada.', 'success');
+                        });
                     }
                 }
             };
