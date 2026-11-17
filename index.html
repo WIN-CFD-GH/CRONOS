@@ -48142,15 +48142,24 @@ ${sheetHtml}
                     this.calculateProrrateo();
                 },
 
-                _computeDaysFromBillingDate(fechaMovStr, diaFacturacion) {
+                _computeCyclePeriods(fechaMovStr, diaFacturacion) {
                     const base = fechaMovStr ? new Date(fechaMovStr + 'T00:00:00') : new Date();
                     const dayOfMove = base.getDate();
-                    let diasTranscurridos = (dayOfMove >= diaFacturacion)
-                        ? (dayOfMove - diaFacturacion)
-                        : ((30 - diaFacturacion) + dayOfMove);
-                    diasTranscurridos = Math.min(30, Math.max(0, diasTranscurridos));
-                    const diasRestantes = 30 - diasTranscurridos;
-                    return { dayOfMove, diasTranscurridos, diasRestantes };
+                    // Fecha de facturación = día de cierre del ciclo (ciclo de 30 días: del día siguiente al cierre anterior hasta el día de cierre actual)
+                    // Si dayOfMove === diaFacturacion, es el último día del ciclo: 29 días de consumo anterior + 1 día nuevo.
+                    // Si dayOfMove > diaFacturacion, es el nuevo ciclo: (dayOfMove - diaFacturacion - 1) días anteriores.
+                    // Si dayOfMove < diaFacturacion, viene del mes anterior: (30 - diaFacturacion + dayOfMove - 1) días anteriores.
+                    let diasAnterior = 0;
+                    if (dayOfMove === diaFacturacion) {
+                        diasAnterior = 29;
+                    } else if (dayOfMove > diaFacturacion) {
+                        diasAnterior = dayOfMove - diaFacturacion - 1;
+                    } else {
+                        diasAnterior = (30 - diaFacturacion) + dayOfMove - 1;
+                    }
+                    diasAnterior = Math.min(29, Math.max(0, diasAnterior));
+                    const diasNuevo = 30 - diasAnterior;
+                    return { dayOfMove, diasAnterior, diasNuevo };
                 },
 
                 _computeInformativeEmission(fechaMovStr, diaFacturacion) {
@@ -48184,86 +48193,121 @@ ${sheetHtml}
                     const selPlanAct = document.getElementById('calc-plan-actual-preset');
                     const planActualNombre = selPlanAct?.options[selPlanAct.selectedIndex]?.getAttribute('data-nombre') || 'Plan Actual';
 
-                    const { diasTranscurridos, diasRestantes } = this._computeDaysFromBillingDate(fechaMovStr, diaFacturacion);
+                    const { diasAnterior, diasNuevo } = this._computeCyclePeriods(fechaMovStr, diaFacturacion);
                     const emInfo = this._computeInformativeEmission(fechaMovStr, diaFacturacion);
 
-                    // 1. Cálculo del Plan Principal
+                    // 1. Cálculo del Plan Principal (PERIODO ANTERIOR + PERIODO NUEVO)
+                    let diasPlanAnt = 0;
+                    let montoPlanAnt = 0;
+                    let diasPlanNvo = 0;
+                    let montoPlanNvo = 0;
                     let montoPlanMensual = planActual;
                     let montoPlanSub = planActualNombre;
-                    let prorrateoPlan = planActual;
-                    let diasPlanLabel = '30 días';
+                    let prorrateoPlan = 0;
+                    let diasPlanLabel = '';
                     let planFormula = '';
+                    let explicacionPlan = '';
 
                     if (op === 'instalacion') {
-                        const diasUso = diasRestantes === 0 ? 30 : diasRestantes;
-                        prorrateoPlan = (planActual / 30) * diasUso;
-                        diasPlanLabel = `${diasUso} días`;
-                        planFormula = `Plan (${planActualNombre}): (S/ ${planActual.toFixed(2)} ÷ 30) × ${diasUso}d = S/ ${prorrateoPlan.toFixed(2)}`;
+                        diasPlanAnt = 0;
+                        montoPlanAnt = 0;
+                        diasPlanNvo = diasNuevo;
+                        montoPlanNvo = (planActual / 30) * diasPlanNvo;
+                        prorrateoPlan = montoPlanNvo;
+                        diasPlanLabel = `0d Ant. / ${diasPlanNvo}d Nvo.`;
+                        planFormula = `Plan Nuevo (${planActualNombre}): S/ ${planActual.toFixed(2)} ÷ 30 × ${diasPlanNvo}d = S/ ${montoPlanNvo.toFixed(2)}`;
+                        explicacionPlan = `Por instalación nueva (base facturación día <strong>${diaFacturacion}</strong>), se cobran <strong>${diasPlanNvo} días</strong> desde la fecha de instalación hasta el cierre del ciclo (<strong>S/ ${montoPlanNvo.toFixed(2)}</strong>) y no se cobran los ${diasAnterior} días previos.`;
                     } else if (op === 'cambio-plan') {
                         const planNuevo = Math.max(0, parseFloat(document.getElementById('calc-plan-nuevo')?.value || 0));
                         const desc = Math.min(100, Math.max(0, parseFloat(document.getElementById('calc-descuento')?.value || 0)));
                         const selPlanNvo = document.getElementById('calc-plan-nuevo-preset');
                         const planNvoNombre = selPlanNvo?.options[selPlanNvo.selectedIndex]?.getAttribute('data-nombre') || 'Plan Nuevo';
                         const tarifaNuevoDesc = planNuevo * (1 - desc / 100);
-                        const montoAnt = (planActual / 30) * diasTranscurridos;
-                        const montoNvo = (tarifaNuevoDesc / 30) * diasRestantes;
-                        prorrateoPlan = montoAnt + montoNvo;
+
+                        diasPlanAnt = diasAnterior;
+                        montoPlanAnt = (planActual / 30) * diasPlanAnt;
+                        diasPlanNvo = diasNuevo;
+                        montoPlanNvo = (tarifaNuevoDesc / 30) * diasPlanNvo;
+                        prorrateoPlan = montoPlanAnt + montoPlanNvo;
                         montoPlanMensual = tarifaNuevoDesc;
                         montoPlanSub = desc > 0 ? `${planNvoNombre} (-${desc}%)` : planNvoNombre;
-                        diasPlanLabel = `${diasTranscurridos}d Ant. / ${diasRestantes}d Nvo.`;
-                        planFormula = `Plan: (S/ ${planActual.toFixed(2)}÷30×${diasTranscurridos}d) + (S/ ${tarifaNuevoDesc.toFixed(2)}÷30×${diasRestantes}d) = S/ ${prorrateoPlan.toFixed(2)}`;
+                        diasPlanLabel = `${diasPlanAnt}d Ant. / ${diasPlanNvo}d Nvo.`;
+                        planFormula = `Plan Ant (${diasPlanAnt}d): S/ ${montoPlanAnt.toFixed(2)} + Plan Nvo (${diasPlanNvo}d): S/ ${montoPlanNvo.toFixed(2)} = S/ ${prorrateoPlan.toFixed(2)}`;
+                        explicacionPlan = `Tomando como referencia su fecha de facturación día <strong>${diaFacturacion}</strong>, se cobran <strong>${diasPlanAnt} días</strong> del plan anterior (<strong>S/ ${montoPlanAnt.toFixed(2)}</strong>) hasta el día previo al cambio y <strong>${diasPlanNvo} días</strong> correspondientes al nuevo plan (<strong>S/ ${montoPlanNvo.toFixed(2)}</strong>) hasta fin de ciclo.`;
                     } else if (op === 'suspension') {
                         const diasSuspRaw = Math.max(1, parseInt(document.getElementById('calc-susp-dias')?.value || 15, 10));
-                        const diasSuspCiclo = Math.min(30, diasSuspRaw);
-                        const diasActivos = 30 - diasSuspCiclo;
-                        prorrateoPlan = (planActual / 30) * diasActivos;
+                        const diasSuspCiclo = Math.min(30 - diasAnterior, diasSuspRaw);
+                        const diasPostReact = Math.max(0, 30 - diasAnterior - diasSuspCiclo);
+                        diasPlanAnt = diasAnterior;
+                        montoPlanAnt = (planActual / 30) * diasPlanAnt;
+                        diasPlanNvo = diasPostReact;
+                        montoPlanNvo = (planActual / 30) * diasPlanNvo;
+                        prorrateoPlan = montoPlanAnt + montoPlanNvo;
+                        const montoDescontado = (planActual / 30) * diasSuspCiclo;
                         const ruleOk = diasSuspRaw >= cfg.suspension.minDias && diasSuspRaw <= cfg.suspension.maxDias;
-                        diasPlanLabel = `${diasActivos}d act. / ${diasSuspRaw}d susp. (${ruleOk ? 'OK' : 'Fuera rango'})`;
-                        planFormula = `Plan (Suspensión): (S/ ${planActual.toFixed(2)} ÷ 30) × ${diasActivos}d activos = S/ ${prorrateoPlan.toFixed(2)}`;
+                        diasPlanLabel = `${diasPlanAnt}d Ant. / ${diasSuspCiclo}d Susp. / ${diasPlanNvo}d Post. (${ruleOk ? 'OK' : 'Rango'})`;
+                        planFormula = `Antes (${diasPlanAnt}d): S/ ${montoPlanAnt.toFixed(2)} + Susp (${diasSuspCiclo}d): S/ 0.00 (-S/ ${montoDescontado.toFixed(2)}) + Post (${diasPlanNvo}d): S/ ${montoPlanNvo.toFixed(2)} = S/ ${prorrateoPlan.toFixed(2)}`;
+                        explicacionPlan = `Se cobran <strong>${diasPlanAnt} días</strong> previos a la suspensión (S/ ${montoPlanAnt.toFixed(2)})${diasPlanNvo > 0 ? ` y <strong>${diasPlanNvo} días</strong> posteriores a la reactivación (S/ ${montoPlanNvo.toFixed(2)})` : ''}, descontándose <strong>${diasSuspCiclo} días</strong> de suspensión temporal (<strong>-S/ ${montoDescontado.toFixed(2)}</strong>).`;
                     } else if (op === 'reactivacion') {
                         const saldo = Math.max(0, parseFloat(document.getElementById('calc-react-saldo')?.value || 0));
-                        const diasUso = diasRestantes === 0 ? 30 : diasRestantes;
-                        const prop = (planActual / 30) * diasUso;
-                        prorrateoPlan = prop + saldo;
-                        diasPlanLabel = `${diasUso} días activos`;
-                        planFormula = `Plan (Reactivación): (S/ ${planActual.toFixed(2)}÷30×${diasUso}d)${saldo > 0 ? ` + Saldo S/ ${saldo.toFixed(2)}` : ''} = S/ ${prorrateoPlan.toFixed(2)}`;
+                        diasPlanAnt = 0;
+                        montoPlanAnt = saldo;
+                        diasPlanNvo = diasNuevo;
+                        montoPlanNvo = (planActual / 30) * diasPlanNvo;
+                        prorrateoPlan = montoPlanAnt + montoPlanNvo;
+                        diasPlanLabel = `${diasAnterior}d Susp. / ${diasPlanNvo}d Activos`;
+                        planFormula = `Reactivación (${diasPlanNvo}d hasta fin ciclo): S/ ${montoPlanNvo.toFixed(2)}${saldo > 0 ? ` + Saldo S/ ${saldo.toFixed(2)}` : ''} = S/ ${prorrateoPlan.toFixed(2)}`;
+                        explicacionPlan = `Al reactivar el servicio (base facturación día <strong>${diaFacturacion}</strong>), se descuentan los <strong>${diasAnterior} días</strong> previos inactivos y se cobran únicamente <strong>${diasPlanNvo} días</strong> activos desde la reactivación hasta fin de ciclo (<strong>S/ ${montoPlanNvo.toFixed(2)}</strong>)${saldo > 0 ? ` más saldo pendiente de S/ ${saldo.toFixed(2)}` : ''}.`;
                     } else {
-                        // alta-sva o baja-sva con plan vigente
+                        // alta-sva o baja-sva: plan principal mantiene ciclo completo (30d)
+                        diasPlanAnt = diasAnterior;
+                        montoPlanAnt = (planActual / 30) * diasPlanAnt;
+                        diasPlanNvo = diasNuevo;
+                        montoPlanNvo = (planActual / 30) * diasPlanNvo;
                         prorrateoPlan = planActual;
-                        diasPlanLabel = '30 días (ciclo regular)';
-                        planFormula = `Plan vigente (${planActualNombre}): S/ ${planActual.toFixed(2)}`;
+                        diasPlanLabel = `${diasPlanAnt}d + ${diasPlanNvo}d (30d regulares)`;
+                        planFormula = `Plan (${planActualNombre}): S/ ${planActual.toFixed(2)} (30d)`;
+                        explicacionPlan = `Su plan principal (${planActualNombre}, S/ ${planActual.toFixed(2)}) mantiene los 30 días completos del ciclo (facturación día <strong>${diaFacturacion}</strong>).`;
                     }
 
                     // 2. Cálculo Compuesto de Múltiples SVA
                     let montoSvaMensual = 0;
                     let prorrateoSva = 0;
+                    let svaDiasResumen = [];
                     const svaFormulas = [];
-                    const svaNames = [];
+                    const svaExplicaciones = [];
 
                     this.selectedSvas.forEach(item => {
                         const t = Math.max(0, Number(item.tarifa) || 0);
                         let pItem = 0;
-                        let dItem = 30;
+                        let dItem = 0;
                         if (item.accion === 'alta') {
-                            dItem = diasRestantes === 0 ? 30 : diasRestantes;
+                            dItem = diasNuevo; // Desde fecha de activación hasta fin de ciclo
                             pItem = (t / 30) * dItem;
                             montoSvaMensual += t;
+                            svaDiasResumen.push(`${dItem}d Alta`);
                             svaFormulas.push(`${item.nombre} [Alta ${dItem}d]: S/ ${pItem.toFixed(2)}`);
+                            svaExplicaciones.push(`alta de <strong>${item.nombre}</strong>: se cobran <strong>${dItem} días</strong> hasta fin de ciclo (S/ ${pItem.toFixed(2)})`);
                         } else if (item.accion === 'baja') {
-                            dItem = diasTranscurridos === 0 ? 1 : diasTranscurridos;
+                            dItem = diasAnterior; // Se cobra solo lo usado antes de la baja; se descuenta desde baja hasta fin de ciclo
                             pItem = (t / 30) * dItem;
-                            svaFormulas.push(`${item.nombre} [Baja ${dItem}d usados]: S/ ${pItem.toFixed(2)}`);
+                            const descBaja = t - pItem;
+                            svaDiasResumen.push(`${dItem}d uso / ${diasNuevo}d desc.`);
+                            svaFormulas.push(`${item.nombre} [Baja: cobra ${dItem}d S/ ${pItem.toFixed(2)}, desc. ${diasNuevo}d -S/ ${descBaja.toFixed(2)}]`);
+                            svaExplicaciones.push(`baja de <strong>${item.nombre}</strong>: se cobran <strong>${dItem} días</strong> usados (S/ ${pItem.toFixed(2)}) y se descuentan <strong>${diasNuevo} días</strong> desde la baja hasta fin de ciclo (-S/ ${descBaja.toFixed(2)})`);
                         } else {
+                            dItem = 30;
                             if (op === 'suspension') {
                                 const diasSuspRaw = Math.max(1, parseInt(document.getElementById('calc-susp-dias')?.value || 15, 10));
-                                dItem = 30 - Math.min(30, diasSuspRaw);
+                                dItem = Math.max(0, 30 - Math.min(30 - diasAnterior, diasSuspRaw));
                             }
                             pItem = (t / 30) * dItem;
                             montoSvaMensual += t;
+                            svaDiasResumen.push(`${dItem}d Act.`);
                             svaFormulas.push(`${item.nombre} [Activo ${dItem}d]: S/ ${pItem.toFixed(2)}`);
+                            svaExplicaciones.push(`<strong>${item.nombre}</strong> activo ${dItem} días (S/ ${pItem.toFixed(2)})`);
                         }
                         prorrateoSva += pItem;
-                        svaNames.push(`${item.nombre} (S/ ${pItem.toFixed(2)})`);
                     });
 
                     // 3. Totales Consolidados
@@ -48273,26 +48317,26 @@ ${sheetHtml}
                     const impactoTexto = `${impacto >= 0 ? '+' : '-'}S/ ${Math.abs(impacto).toFixed(2)}`;
 
                     const formulaConsolidada = [planFormula, ...svaFormulas].join(' | ') + ` => TOTAL: S/ ${prorrateoTotal.toFixed(2)}`;
-                    const svaResumenTexto = svaNames.length ? ` incluyendo los servicios adicionales (${svaNames.join(', ')})` : '';
-                    const explicacion = `Estimado cliente, tomando como base su fecha de facturación día <strong>${diaFacturacion}</strong>, el prorrateo de su plan es de <strong>S/ ${prorrateoPlan.toFixed(2)}</strong>${svaResumenTexto ? ` y el de sus SVAs de <strong>S/ ${prorrateoSva.toFixed(2)}</strong>` : ''}, dando un total estimado para este ciclo de <strong>S/ ${prorrateoTotal.toFixed(2)}</strong>. A partir del siguiente ciclo, su tarifa mensual regular será de <strong>S/ ${montoTotalMensual.toFixed(2)}</strong>.`;
+                    const explicacionSva = svaExplicaciones.length ? ` Adicionalmente en SVA: ${svaExplicaciones.join('; ')}.` : '';
+                    const explicacion = `${explicacionPlan}${explicacionSva} El monto total consolidado estimado para este ciclo es de <strong>S/ ${prorrateoTotal.toFixed(2)}</strong>.`;
 
                     const setTxt = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
                     const setHtml = (id, v) => { const e = document.getElementById(id); if (e) e.innerHTML = v; };
 
                     setTxt('out-monto-plan', `S/ ${montoPlanMensual.toFixed(2)}`);
-                    setTxt('out-monto-plan-sub', montoPlanSub);
+                    setTxt('out-monto-plan-sub', `Ant: ${diasPlanAnt}d (S/ ${montoPlanAnt.toFixed(2)}) | Nvo: ${diasPlanNvo}d (S/ ${montoPlanNvo.toFixed(2)})`);
                     setTxt('out-monto-sva', `S/ ${montoSvaMensual.toFixed(2)}`);
-                    setTxt('out-monto-sva-sub', `${this.selectedSvas.length} SVA(s) en simulación`);
+                    setTxt('out-monto-sva-sub', this.selectedSvas.length ? svaDiasResumen.join(' · ') : '0 SVAs');
                     setTxt('out-monto-total', `S/ ${montoTotalMensual.toFixed(2)}`);
 
                     setTxt('out-prorrateo-plan', `S/ ${prorrateoPlan.toFixed(2)}`);
                     setTxt('out-dias-considerados', diasPlanLabel);
                     setTxt('out-prorrateo-sva', `S/ ${prorrateoSva.toFixed(2)}`);
-                    setTxt('out-prorrateo-sva-sub', `${this.selectedSvas.length} SVA(s) calculados`);
+                    setTxt('out-prorrateo-sva-sub', `${this.selectedSvas.length} SVA(s) | ${svaDiasResumen.join(', ') || '0d'}`);
                     setTxt('out-prorrateo-total', `S/ ${prorrateoTotal.toFixed(2)}`);
 
                     setTxt('out-impacto-esperado', impactoTexto);
-                    setTxt('out-impacto-sub', `Respecto al plan actual (S/ ${planActual.toFixed(2)})`);
+                    setTxt('out-impacto-sub', `Respecto al plan anterior (S/ ${planActual.toFixed(2)})`);
                     setTxt('out-emision-estimada', emInfo.emisionTexto);
                     setTxt('out-emision-venc', `Vence aprox.: ${emInfo.vencTexto}`);
                     setTxt('out-calculo-formula', formulaConsolidada);
