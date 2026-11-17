@@ -47758,6 +47758,88 @@ ${sheetHtml}
                     }
                 },
 
+                selectedSvas: [],
+
+                addSvaItem(presetId = null, customAction = null) {
+                    const cfg = this.getProrrateoConfig();
+                    const activeSvas = cfg.svas.filter(s => s.activo !== false);
+                    const sel = document.getElementById('calc-sva-picker');
+                    let svaObj = null;
+                    if (presetId) {
+                        svaObj = activeSvas.find(s => s.id === presetId || s.nombre.toLowerCase().includes(presetId.toLowerCase()));
+                    } else if (sel) {
+                        svaObj = activeSvas.find(s => s.id === sel.value);
+                    }
+                    if (!svaObj && activeSvas.length) svaObj = activeSvas[0];
+                    if (!svaObj) return;
+
+                    const op = document.getElementById('calc-tipo-operacion')?.value || this.activeCalcCase || 'instalacion';
+                    const defaultAction = customAction || (op === 'baja-sva' ? 'baja' : 'alta');
+
+                    this.selectedSvas.push({
+                        uid: 'sva_' + Date.now() + '_' + Math.floor(Math.random() * 10000),
+                        id: svaObj.id,
+                        nombre: svaObj.nombre,
+                        categoria: svaObj.categoria,
+                        tarifa: Number(svaObj.tarifa) || 0,
+                        accion: defaultAction // 'alta' | 'baja' | 'activo'
+                    });
+                    this.renderSvaList();
+                    this.calculateProrrateo();
+                },
+
+                removeSvaItem(uid) {
+                    this.selectedSvas = this.selectedSvas.filter(s => s.uid !== uid);
+                    this.renderSvaList();
+                    this.calculateProrrateo();
+                },
+
+                updateSvaItem(uid, field, value) {
+                    const item = this.selectedSvas.find(s => s.uid === uid);
+                    if (!item) return;
+                    item[field] = field === 'tarifa' ? Math.max(0, parseFloat(value) || 0) : value;
+                    this.calculateProrrateo();
+                },
+
+                clearSvaItems() {
+                    this.selectedSvas = [];
+                    this.renderSvaList();
+                    this.calculateProrrateo();
+                },
+
+                renderSvaList() {
+                    const listEl = document.getElementById('calc-sva-list');
+                    if (!listEl) return;
+                    if (!this.selectedSvas.length) {
+                        listEl.innerHTML = `<div class="text-[11px] text-slate-400 italic bg-white border border-dashed border-slate-300 rounded-xl p-2.5 text-center">Sin servicios adicionales agregados. Use "+ Agregar SVA" para incluir Win TV, DGO, Mesh, WinBox o FonoWin.</div>`;
+                        return;
+                    }
+                    listEl.innerHTML = this.selectedSvas.map(item => `
+                        <div class="grid grid-cols-12 gap-1.5 items-center bg-white p-2 rounded-xl border border-slate-200 shadow-2xs">
+                            <div class="col-span-5 truncate">
+                                <div class="text-[11px] font-bold text-slate-800 truncate" title="${item.nombre}">${item.nombre}</div>
+                                <div class="text-[9px] text-slate-400 font-semibold">${item.categoria}</div>
+                            </div>
+                            <div class="col-span-3">
+                                <select onchange="CronosProcesosOperativos.updateSvaItem('${item.uid}', 'accion', this.value)"
+                                    class="w-full text-[10px] font-bold border border-slate-200 rounded-lg px-1.5 py-1 bg-slate-50 text-slate-700">
+                                    <option value="alta" ${item.accion === 'alta' ? 'selected' : ''}>Alta</option>
+                                    <option value="baja" ${item.accion === 'baja' ? 'selected' : ''}>Baja</option>
+                                    <option value="activo" ${item.accion === 'activo' ? 'selected' : ''}>Activo</option>
+                                </select>
+                            </div>
+                            <div class="col-span-3">
+                                <input type="number" step="0.1" min="0" value="${item.tarifa}" oninput="CronosProcesosOperativos.updateSvaItem('${item.uid}', 'tarifa', this.value)"
+                                    class="w-full text-[11px] font-mono font-bold border border-slate-200 rounded-lg px-1.5 py-1 text-right text-slate-900">
+                            </div>
+                            <div class="col-span-1 text-right">
+                                <button type="button" onclick="CronosProcesosOperativos.removeSvaItem('${item.uid}')" title="Quitar SVA"
+                                    class="text-rose-500 hover:text-rose-700 text-xs cursor-pointer px-1"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                        </div>
+                    `).join('');
+                },
+
                 renderCalculadoraProrrateos() {
                     const container = document.getElementById('subview-proc-calculadoras');
                     if (!container) return;
@@ -47772,7 +47854,7 @@ ${sheetHtml}
 
                     const planOptionsHtml = activePlanes.map(p => `<option value="${p.tarifa}" data-nombre="${p.nombre}">${p.nombre} (S/ ${Number(p.tarifa).toFixed(2)})</option>`).join('');
                     const remisionOptionsHtml = activeRemisiones.map(r => `<option value="${r.diaEmision}">Día ${String(r.diaEmision).padStart(2, '0')} de cada mes</option>`).join('');
-                    const svaOptionsHtml = activeSvas.map(s => `<option value="${s.tarifa}" data-nombre="${s.nombre}">${s.categoria}: ${s.nombre} (S/ ${Number(s.tarifa).toFixed(2)})</option>`).join('');
+                    const svaOptionsHtml = activeSvas.map(s => `<option value="${s.id}">${s.categoria}: ${s.nombre} (S/ ${Number(s.tarifa).toFixed(2)})</option>`).join('');
 
                     container.innerHTML = `
                         <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5">
@@ -47784,7 +47866,7 @@ ${sheetHtml}
                                     </div>
                                     <div>
                                         <h3 class="text-base sm:text-lg font-black text-slate-900">CALCULADORA DE PRORRATEOS</h3>
-                                        <p class="text-xs text-slate-500">Cálculo unificado basado en la Fecha de Facturación (base 30 días). Emisión referencial informativa.</p>
+                                        <p class="text-xs text-slate-500">Simulación compuesta unificada (Plan + múltiples SVA) basada en la Fecha de Facturación.</p>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-2 flex-wrap">
@@ -47808,16 +47890,16 @@ ${sheetHtml}
                             <!-- Panel Administrable (Solo Admin / Supervisor / Coordinador) -->
                             <div id="prorr-admin-panel" class="${this.showAdminConfigPanel && canAdmin ? '' : 'hidden'} bg-slate-50 border border-slate-300 rounded-2xl p-4 space-y-4"></div>
 
-                            <!-- Única Calculadora Unificada: Entradas + Resultados -->
+                            <!-- Única Calculadora Unificada Compuesta -->
                             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                                <!-- Entradas Únicas -->
+                                <!-- Entradas -->
                                 <div class="lg:col-span-5 space-y-4 bg-slate-50 p-5 rounded-2xl border border-slate-200">
                                     <div class="text-xs font-black uppercase tracking-wider text-slate-700 flex items-center justify-between">
-                                        <span>Parámetros de Cálculo</span>
+                                        <span>Parámetros de Simulación</span>
                                         <span id="calc-case-badge" class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-full">Instalación</span>
                                     </div>
 
-                                    <!-- 1. Fecha de facturación (Base de cálculo) -->
+                                    <!-- 1. Fecha de facturación -->
                                     <div>
                                         <label class="block text-xs font-bold text-slate-700 mb-1">1. Fecha de facturación</label>
                                         <select id="calc-dia-facturacion" onchange="CronosProcesosOperativos.calculateProrrateo()"
@@ -47880,20 +47962,25 @@ ${sheetHtml}
                                         </div>
                                     </div>
 
-                                    <!-- 6. Servicio adicional (Solo cuando aplique: Alta SVA / Baja SVA) -->
-                                    <div id="wrap-servicio-adicional" class="hidden space-y-2 pt-2 border-t border-slate-200">
-                                        <label class="block text-xs font-bold text-slate-700 mb-1">6. Servicio adicional (SVA)</label>
-                                        <div class="grid grid-cols-3 gap-2">
-                                            <select id="calc-sva-sel" onchange="CronosProcesosOperativos.onSelectTariff('calc-sva-sel', 'calc-sva-tarifa')"
-                                                class="col-span-2 border border-slate-300 bg-white rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-800">
+                                    <!-- 6. Servicios Adicionales (SVA Múltiples) -->
+                                    <div id="wrap-servicio-adicional" class="space-y-2.5 pt-2 border-t border-slate-200">
+                                        <div class="flex items-center justify-between">
+                                            <label class="block text-xs font-bold text-slate-700">6. Servicios Adicionales (SVA)</label>
+                                            <button type="button" onclick="CronosProcesosOperativos.clearSvaItems()" class="text-[10px] font-bold text-slate-400 hover:text-rose-600 cursor-pointer">Limpiar SVAs</button>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <select id="calc-sva-picker" class="flex-1 border border-slate-300 bg-white rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-800">
                                                 ${svaOptionsHtml}
                                             </select>
-                                            <input type="number" id="calc-sva-tarifa" value="${activeSvas[0]?.tarifa || 15}" min="0" step="0.1" oninput="CronosProcesosOperativos.calculateProrrateo()"
-                                                class="border border-slate-300 bg-white rounded-xl px-2.5 py-2 text-xs font-black text-slate-900 font-mono">
+                                            <button type="button" id="btn-add-sva" onclick="CronosProcesosOperativos.addSvaItem()"
+                                                class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black cursor-pointer shrink-0 flex items-center gap-1 shadow-xs">
+                                                <i class="fa-solid fa-plus"></i><span>Agregar SVA</span>
+                                            </button>
                                         </div>
+                                        <div id="calc-sva-list" class="space-y-1.5 max-h-44 overflow-y-auto"></div>
                                     </div>
 
-                                    <!-- Parámetro condicional: Días de suspensión (Solo Suspensión Temporal) -->
+                                    <!-- Parámetro condicional: Días de suspensión -->
                                     <div id="wrap-suspension-dias" class="hidden space-y-2 pt-2 border-t border-slate-200">
                                         <label class="block text-xs font-bold text-slate-700 mb-1">Días de suspensión temporal</label>
                                         <input type="number" id="calc-susp-dias" value="${cfg.suspension.minDias}" min="1" max="90" oninput="CronosProcesosOperativos.calculateProrrateo()"
@@ -47903,7 +47990,7 @@ ${sheetHtml}
                                         </div>
                                     </div>
 
-                                    <!-- Parámetro condicional: Saldo pendiente (Solo Reactivación) -->
+                                    <!-- Parámetro condicional: Saldo pendiente -->
                                     <div id="wrap-reactivacion-saldo" class="hidden space-y-2 pt-2 border-t border-slate-200">
                                         <label class="block text-xs font-bold text-slate-700 mb-1">Saldo pendiente anterior (S/)</label>
                                         <input type="number" id="calc-react-saldo" value="0" min="0" step="0.1" oninput="CronosProcesosOperativos.calculateProrrateo()"
@@ -47913,47 +48000,68 @@ ${sheetHtml}
                                     <button type="button" onclick="CronosProcesosOperativos.calculateProrrateo()"
                                         class="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-black shadow-sm transition cursor-pointer flex items-center justify-center gap-2">
                                         <i class="fa-solid fa-rotate"></i>
-                                        <span>Calcular Prorrateo</span>
+                                        <span>Calcular Prorrateo Consolidado</span>
                                     </button>
                                 </div>
 
-                                <!-- Resultados Unificados -->
+                                <!-- Resultados Compuestos -->
                                 <div class="lg:col-span-7 space-y-4">
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                                        <div class="p-4 rounded-2xl bg-slate-900 text-white shadow-sm">
-                                            <div class="text-[10px] font-bold uppercase text-slate-400 tracking-wider">Monto Mensual</div>
-                                            <div id="out-monto-mensual" class="text-xl font-black text-white font-mono mt-1">S/ 0.00</div>
-                                            <div id="out-monto-mensual-sub" class="text-[10px] text-slate-400 mt-1">Tarifa regular</div>
+                                    <!-- Fila 1: Montos Mensuales (Monto plan, Monto SVA, Monto total) -->
+                                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                        <div class="p-3.5 rounded-2xl bg-slate-900 text-white shadow-sm">
+                                            <div class="text-[10px] font-bold uppercase text-slate-400 tracking-wider">Monto Plan</div>
+                                            <div id="out-monto-plan" class="text-xl font-black text-white font-mono mt-1">S/ 0.00</div>
+                                            <div id="out-monto-plan-sub" class="text-[10px] text-slate-400 mt-0.5 truncate">Tarifa mensual</div>
                                         </div>
-                                        <div class="p-4 rounded-2xl bg-indigo-50 border border-indigo-200">
-                                            <div class="text-[10px] font-bold uppercase text-indigo-700 tracking-wider">Días Considerados</div>
-                                            <div id="out-dias-considerados" class="text-lg font-black text-indigo-900 font-mono mt-1">0 días</div>
-                                            <div id="out-dias-sub" class="text-[11px] text-indigo-700 mt-1 font-medium">Base fecha facturación</div>
+                                        <div class="p-3.5 rounded-2xl bg-slate-800 text-white shadow-sm">
+                                            <div class="text-[10px] font-bold uppercase text-slate-400 tracking-wider">Monto SVA</div>
+                                            <div id="out-monto-sva" class="text-xl font-black text-emerald-400 font-mono mt-1">S/ 0.00</div>
+                                            <div id="out-monto-sva-sub" class="text-[10px] text-slate-400 mt-0.5">0 SVAs activos</div>
                                         </div>
-                                        <div class="p-4 rounded-2xl bg-gradient-to-br from-indigo-700 to-blue-700 text-white shadow-sm">
-                                            <div class="text-[10px] font-bold uppercase text-indigo-200 tracking-wider">Prorrateo</div>
-                                            <div id="out-prorrateo" class="text-2xl font-black text-white font-mono mt-1">S/ 0.00</div>
-                                            <div class="text-[10px] text-indigo-200 mt-1 font-semibold">Total proporcional ciclo</div>
+                                        <div class="p-3.5 rounded-2xl bg-slate-950 text-white shadow-sm border border-slate-700">
+                                            <div class="text-[10px] font-bold uppercase text-amber-300 tracking-wider">Monto Total Mensual</div>
+                                            <div id="out-monto-total" class="text-xl font-black text-amber-300 font-mono mt-1">S/ 0.00</div>
+                                            <div class="text-[10px] text-slate-400 mt-0.5">Plan + SVA regular</div>
                                         </div>
                                     </div>
 
+                                    <!-- Fila 2: Prorrateos (Prorrateo plan, Prorrateo SVA, Prorrateo total) -->
+                                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                        <div class="p-3.5 rounded-2xl bg-indigo-50 border border-indigo-200">
+                                            <div class="text-[10px] font-bold uppercase text-indigo-700 tracking-wider">Prorrateo Plan</div>
+                                            <div id="out-prorrateo-plan" class="text-xl font-black text-indigo-950 font-mono mt-1">S/ 0.00</div>
+                                            <div id="out-dias-considerados" class="text-[10px] text-indigo-700 mt-0.5 font-semibold">0 días</div>
+                                        </div>
+                                        <div class="p-3.5 rounded-2xl bg-purple-50 border border-purple-200">
+                                            <div class="text-[10px] font-bold uppercase text-purple-700 tracking-wider">Prorrateo SVA</div>
+                                            <div id="out-prorrateo-sva" class="text-xl font-black text-purple-950 font-mono mt-1">S/ 0.00</div>
+                                            <div id="out-prorrateo-sva-sub" class="text-[10px] text-purple-700 mt-0.5 font-semibold">SVAs proporcionales</div>
+                                        </div>
+                                        <div class="p-3.5 rounded-2xl bg-gradient-to-br from-indigo-700 to-blue-700 text-white shadow-sm">
+                                            <div class="text-[10px] font-bold uppercase text-indigo-200 tracking-wider">Prorrateo Total</div>
+                                            <div id="out-prorrateo-total" class="text-2xl font-black text-white font-mono mt-1">S/ 0.00</div>
+                                            <div class="text-[10px] text-indigo-200 mt-0.5 font-semibold">Consolidado del ciclo</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Fila 3: Impacto esperado + Emisión informativa -->
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                        <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200">
+                                        <div class="p-3.5 rounded-2xl bg-amber-50 border border-amber-200">
                                             <div class="text-[10px] font-bold uppercase text-amber-800 tracking-wider">Impacto Esperado</div>
                                             <div id="out-impacto-esperado" class="text-lg font-black text-amber-950 font-mono mt-1">S/ 0.00</div>
                                             <div id="out-impacto-sub" class="text-[11px] text-amber-800 mt-0.5 font-medium">-</div>
                                         </div>
-                                        <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200">
-                                            <div class="text-[10px] font-bold uppercase text-emerald-800 tracking-wider">Emisión Estimada (Solo informativa)</div>
+                                        <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200">
+                                            <div class="text-[10px] font-bold uppercase text-emerald-800 tracking-wider">Emisión Informativa</div>
                                             <div id="out-emision-estimada" class="text-sm font-black text-emerald-950 mt-1">-</div>
-                                            <div id="out-emision-venc" class="text-[10px] text-emerald-700 mt-1 font-semibold">Vencimiento referencial: día 28</div>
+                                            <div id="out-emision-venc" class="text-[10px] text-emerald-700 mt-0.5 font-semibold">Vencimiento referencial: día 28</div>
                                         </div>
                                     </div>
 
                                     <!-- Detalle del Cálculo -->
                                     <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
-                                        <div class="text-[11px] font-black uppercase tracking-wider text-slate-600">Fórmula aplicada (Base Fecha de Facturación)</div>
-                                        <div id="out-calculo-formula" class="text-xs font-mono text-slate-800 bg-white p-2.5 rounded-xl border border-slate-200">-</div>
+                                        <div class="text-[11px] font-black uppercase tracking-wider text-slate-600">Desglose Consolidado (Base Fecha de Facturación)</div>
+                                        <div id="out-calculo-formula" class="text-xs font-mono text-slate-800 bg-white p-2.5 rounded-xl border border-slate-200 leading-relaxed">-</div>
                                     </div>
 
                                     <!-- Explicación para cliente -->
@@ -47983,6 +48091,7 @@ ${sheetHtml}
 
                     const selOp = document.getElementById('calc-tipo-operacion');
                     if (selOp) selOp.value = this.activeCalcCase || 'instalacion';
+                    this.renderSvaList();
                     this.onOperacionChange();
                 },
 
@@ -48011,7 +48120,6 @@ ${sheetHtml}
                     };
 
                     toggle('wrap-plan-nuevo', op === 'cambio-plan');
-                    toggle('wrap-servicio-adicional', op === 'alta-sva' || op === 'baja-sva');
                     toggle('wrap-suspension-dias', op === 'suspension');
                     toggle('wrap-reactivacion-saldo', op === 'reactivacion');
 
@@ -48079,116 +48187,115 @@ ${sheetHtml}
                     const { diasTranscurridos, diasRestantes } = this._computeDaysFromBillingDate(fechaMovStr, diaFacturacion);
                     const emInfo = this._computeInformativeEmission(fechaMovStr, diaFacturacion);
 
-                    let montoMensual = planActual;
-                    let montoMensualSub = planActualNombre;
-                    let diasConsiderados = '0 días';
-                    let diasSub = `Base fecha facturación: día ${diaFacturacion}`;
-                    let prorrateo = 0;
-                    let impactoTexto = 'S/ 0.00';
-                    let impactoSub = 'Respecto a tarifa mensual regular';
-                    let formula = '';
-                    let explicacion = '';
+                    // 1. Cálculo del Plan Principal
+                    let montoPlanMensual = planActual;
+                    let montoPlanSub = planActualNombre;
+                    let prorrateoPlan = planActual;
+                    let diasPlanLabel = '30 días';
+                    let planFormula = '';
 
                     if (op === 'instalacion') {
                         const diasUso = diasRestantes === 0 ? 30 : diasRestantes;
-                        prorrateo = (planActual / 30) * diasUso;
-                        const diff = prorrateo - planActual;
-                        montoMensual = planActual;
-                        diasConsiderados = `${diasUso} días`;
-                        diasSub = `Desde movimiento hasta día de facturación ${diaFacturacion}`;
-                        impactoTexto = `${diff >= 0 ? '+' : '-'}S/ ${Math.abs(diff).toFixed(2)}`;
-                        impactoSub = `Primer ciclo proporcional vs. S/ ${planActual.toFixed(2)} mensual`;
-                        formula = `(S/ ${planActual.toFixed(2)} ÷ 30) × ${diasUso} días = S/ ${prorrateo.toFixed(2)}`;
-                        explicacion = `Estimado cliente, considerando su fecha de facturación los días <strong>${diaFacturacion}</strong> de cada mes, su primer ciclo contemplará únicamente <strong>${diasUso} días</strong> de servicio utilizado de su plan ${planActualNombre} (S/ ${planActual.toFixed(2)}), generando un prorrateo estimado de <strong>S/ ${prorrateo.toFixed(2)}</strong>.`;
+                        prorrateoPlan = (planActual / 30) * diasUso;
+                        diasPlanLabel = `${diasUso} días`;
+                        planFormula = `Plan (${planActualNombre}): (S/ ${planActual.toFixed(2)} ÷ 30) × ${diasUso}d = S/ ${prorrateoPlan.toFixed(2)}`;
                     } else if (op === 'cambio-plan') {
                         const planNuevo = Math.max(0, parseFloat(document.getElementById('calc-plan-nuevo')?.value || 0));
                         const desc = Math.min(100, Math.max(0, parseFloat(document.getElementById('calc-descuento')?.value || 0)));
+                        const selPlanNvo = document.getElementById('calc-plan-nuevo-preset');
+                        const planNvoNombre = selPlanNvo?.options[selPlanNvo.selectedIndex]?.getAttribute('data-nombre') || 'Plan Nuevo';
                         const tarifaNuevoDesc = planNuevo * (1 - desc / 100);
                         const montoAnt = (planActual / 30) * diasTranscurridos;
                         const montoNvo = (tarifaNuevoDesc / 30) * diasRestantes;
-                        prorrateo = montoAnt + montoNvo;
-                        const diff = prorrateo - planActual;
-                        montoMensual = tarifaNuevoDesc;
-                        montoMensualSub = desc > 0 ? `Nuevo plan con ${desc}% desc.` : 'Tarifa nuevo plan';
-                        diasConsiderados = `${diasTranscurridos}d Ant. / ${diasRestantes}d Nvo.`;
-                        diasSub = `S/ ${montoAnt.toFixed(2)} + S/ ${montoNvo.toFixed(2)}`;
-                        impactoTexto = `${diff >= 0 ? '+' : '-'}S/ ${Math.abs(diff).toFixed(2)}`;
-                        impactoSub = diff >= 0 ? 'Incremento en ciclo de transición' : 'Ahorro en ciclo de transición';
-                        formula = `(S/ ${planActual.toFixed(2)} ÷ 30 × ${diasTranscurridos}d) + (S/ ${tarifaNuevoDesc.toFixed(2)} ÷ 30 × ${diasRestantes}d) = S/ ${prorrateo.toFixed(2)}`;
-                        explicacion = `Estimado cliente, tomando como base su fecha de facturación día <strong>${diaFacturacion}</strong>, en este ciclo se facturarán <strong>${diasTranscurridos} días</strong> de su plan anterior (S/ ${montoAnt.toFixed(2)}) y <strong>${diasRestantes} días</strong> de su nuevo plan (S/ ${montoNvo.toFixed(2)}), dando un prorrateo estimado de <strong>S/ ${prorrateo.toFixed(2)}</strong>.`;
-                    } else if (op === 'alta-sva') {
-                        const svaTarifa = Math.max(0, parseFloat(document.getElementById('calc-sva-tarifa')?.value || 0));
-                        const selSva = document.getElementById('calc-sva-sel');
-                        const svaNom = selSva?.options[selSva.selectedIndex]?.getAttribute('data-nombre') || 'SVA';
-                        const diasUso = diasRestantes === 0 ? 30 : diasRestantes;
-                        const svaProp = (svaTarifa / 30) * diasUso;
-                        prorrateo = planActual + svaProp;
-                        montoMensual = planActual + svaTarifa;
-                        montoMensualSub = `Plan S/ ${planActual.toFixed(2)} + ${svaNom} S/ ${svaTarifa.toFixed(2)}`;
-                        diasConsiderados = `${diasUso} días SVA`;
-                        diasSub = `Prorrateo SVA: S/ ${svaProp.toFixed(2)}`;
-                        impactoTexto = `+S/ ${svaProp.toFixed(2)}`;
-                        impactoSub = `Adicional por alta de ${svaNom}`;
-                        formula = `Plan S/ ${planActual.toFixed(2)} + (${svaNom} S/ ${svaTarifa.toFixed(2)} ÷ 30 × ${diasUso}d = S/ ${svaProp.toFixed(2)}) = S/ ${prorrateo.toFixed(2)}`;
-                        explicacion = `Estimado cliente, por el alta del servicio adicional <strong>${svaNom}</strong> (S/ ${svaTarifa.toFixed(2)}/mes) y considerando su fecha de facturación día <strong>${diaFacturacion}</strong>, se sumará el proporcional de <strong>${diasUso} días</strong> (<strong>S/ ${svaProp.toFixed(2)}</strong>) a su plan actual, estimando un total de <strong>S/ ${prorrateo.toFixed(2)}</strong>.`;
-                    } else if (op === 'baja-sva') {
-                        const svaTarifa = Math.max(0, parseFloat(document.getElementById('calc-sva-tarifa')?.value || 0));
-                        const selSva = document.getElementById('calc-sva-sel');
-                        const svaNom = selSva?.options[selSva.selectedIndex]?.getAttribute('data-nombre') || 'SVA';
-                        const diasUsados = diasTranscurridos === 0 ? 1 : diasTranscurridos;
-                        const svaCobro = (svaTarifa / 30) * diasUsados;
-                        const ahorro = svaTarifa - svaCobro;
-                        prorrateo = planActual + svaCobro;
-                        montoMensual = planActual;
-                        montoMensualSub = `Sin ${svaNom} desde el próximo ciclo`;
-                        diasConsiderados = `${diasUsados}d usados / ${30 - diasUsados}d no usados`;
-                        diasSub = `SVA cobrado: S/ ${svaCobro.toFixed(2)}`;
-                        impactoTexto = `-S/ ${ahorro.toFixed(2)}`;
-                        impactoSub = `Descuento por días no utilizados de ${svaNom}`;
-                        formula = `Plan S/ ${planActual.toFixed(2)} + (${svaNom} S/ ${svaTarifa.toFixed(2)} ÷ 30 × ${diasUsados}d = S/ ${svaCobro.toFixed(2)}) = S/ ${prorrateo.toFixed(2)}`;
-                        explicacion = `Estimado cliente, al registrar la baja de <strong>${svaNom}</strong> respecto a su fecha de facturación día <strong>${diaFacturacion}</strong>, únicamente se cobrarán los <strong>${diasUsados} días</strong> utilizados (S/ ${svaCobro.toFixed(2)}), generando un ahorro de <strong>S/ ${ahorro.toFixed(2)}</strong> y un total estimado de <strong>S/ ${prorrateo.toFixed(2)}</strong>.`;
+                        prorrateoPlan = montoAnt + montoNvo;
+                        montoPlanMensual = tarifaNuevoDesc;
+                        montoPlanSub = desc > 0 ? `${planNvoNombre} (-${desc}%)` : planNvoNombre;
+                        diasPlanLabel = `${diasTranscurridos}d Ant. / ${diasRestantes}d Nvo.`;
+                        planFormula = `Plan: (S/ ${planActual.toFixed(2)}÷30×${diasTranscurridos}d) + (S/ ${tarifaNuevoDesc.toFixed(2)}÷30×${diasRestantes}d) = S/ ${prorrateoPlan.toFixed(2)}`;
                     } else if (op === 'suspension') {
                         const diasSuspRaw = Math.max(1, parseInt(document.getElementById('calc-susp-dias')?.value || 15, 10));
                         const diasSuspCiclo = Math.min(30, diasSuspRaw);
                         const diasActivos = 30 - diasSuspCiclo;
-                        prorrateo = (planActual / 30) * diasActivos;
-                        const ahorroSusp = planActual - prorrateo;
+                        prorrateoPlan = (planActual / 30) * diasActivos;
                         const ruleOk = diasSuspRaw >= cfg.suspension.minDias && diasSuspRaw <= cfg.suspension.maxDias;
-                        montoMensual = planActual;
-                        diasConsiderados = `${diasActivos}d activos / ${diasSuspRaw}d susp.`;
-                        diasSub = ruleOk ? `Dentro de regla (${cfg.suspension.minDias}-${cfg.suspension.maxDias}d)` : `Fuera de rango (${cfg.suspension.minDias}-${cfg.suspension.maxDias}d)`;
-                        impactoTexto = `-S/ ${ahorroSusp.toFixed(2)}`;
-                        impactoSub = 'Descuento por días en suspensión temporal';
-                        formula = `(S/ ${planActual.toFixed(2)} ÷ 30) × ${diasActivos} días activos = S/ ${prorrateo.toFixed(2)}`;
-                        explicacion = `Estimado cliente, considerando su fecha de facturación día <strong>${diaFacturacion}</strong> y su suspensión temporal de <strong>${diasSuspRaw} días</strong>, no se cobra el periodo suspendido; se facturarán únicamente <strong>${diasActivos} días</strong> activos por un total estimado de <strong>S/ ${prorrateo.toFixed(2)}</strong>.`;
+                        diasPlanLabel = `${diasActivos}d act. / ${diasSuspRaw}d susp. (${ruleOk ? 'OK' : 'Fuera rango'})`;
+                        planFormula = `Plan (Suspensión): (S/ ${planActual.toFixed(2)} ÷ 30) × ${diasActivos}d activos = S/ ${prorrateoPlan.toFixed(2)}`;
                     } else if (op === 'reactivacion') {
                         const saldo = Math.max(0, parseFloat(document.getElementById('calc-react-saldo')?.value || 0));
                         const diasUso = diasRestantes === 0 ? 30 : diasRestantes;
                         const prop = (planActual / 30) * diasUso;
-                        prorrateo = prop + saldo;
-                        const diff = prorrateo - planActual;
-                        montoMensual = planActual;
-                        diasConsiderados = `${diasUso} días activos`;
-                        diasSub = saldo > 0 ? `Prorrateo S/ ${prop.toFixed(2)} + Saldo S/ ${saldo.toFixed(2)}` : 'Prorrateo desde reactivación';
-                        impactoTexto = `${diff >= 0 ? '+' : '-'}S/ ${Math.abs(diff).toFixed(2)}`;
-                        impactoSub = saldo > 0 ? 'Incluye saldo pendiente' : 'Proporcional desde reactivación';
-                        formula = `(S/ ${planActual.toFixed(2)} ÷ 30 × ${diasUso} días) + Saldo S/ ${saldo.toFixed(2)} = S/ ${prorrateo.toFixed(2)}`;
-                        explicacion = `Estimado cliente, tras la reactivación y tomando como base su fecha de facturación día <strong>${diaFacturacion}</strong>, se facturarán <strong>${diasUso} días</strong> de servicio activo (S/ ${prop.toFixed(2)})${saldo > 0 ? ` más el saldo pendiente de S/ ${saldo.toFixed(2)}` : ''}, estimando un total de <strong>S/ ${prorrateo.toFixed(2)}</strong>.`;
+                        prorrateoPlan = prop + saldo;
+                        diasPlanLabel = `${diasUso} días activos`;
+                        planFormula = `Plan (Reactivación): (S/ ${planActual.toFixed(2)}÷30×${diasUso}d)${saldo > 0 ? ` + Saldo S/ ${saldo.toFixed(2)}` : ''} = S/ ${prorrateoPlan.toFixed(2)}`;
+                    } else {
+                        // alta-sva o baja-sva con plan vigente
+                        prorrateoPlan = planActual;
+                        diasPlanLabel = '30 días (ciclo regular)';
+                        planFormula = `Plan vigente (${planActualNombre}): S/ ${planActual.toFixed(2)}`;
                     }
+
+                    // 2. Cálculo Compuesto de Múltiples SVA
+                    let montoSvaMensual = 0;
+                    let prorrateoSva = 0;
+                    const svaFormulas = [];
+                    const svaNames = [];
+
+                    this.selectedSvas.forEach(item => {
+                        const t = Math.max(0, Number(item.tarifa) || 0);
+                        let pItem = 0;
+                        let dItem = 30;
+                        if (item.accion === 'alta') {
+                            dItem = diasRestantes === 0 ? 30 : diasRestantes;
+                            pItem = (t / 30) * dItem;
+                            montoSvaMensual += t;
+                            svaFormulas.push(`${item.nombre} [Alta ${dItem}d]: S/ ${pItem.toFixed(2)}`);
+                        } else if (item.accion === 'baja') {
+                            dItem = diasTranscurridos === 0 ? 1 : diasTranscurridos;
+                            pItem = (t / 30) * dItem;
+                            svaFormulas.push(`${item.nombre} [Baja ${dItem}d usados]: S/ ${pItem.toFixed(2)}`);
+                        } else {
+                            if (op === 'suspension') {
+                                const diasSuspRaw = Math.max(1, parseInt(document.getElementById('calc-susp-dias')?.value || 15, 10));
+                                dItem = 30 - Math.min(30, diasSuspRaw);
+                            }
+                            pItem = (t / 30) * dItem;
+                            montoSvaMensual += t;
+                            svaFormulas.push(`${item.nombre} [Activo ${dItem}d]: S/ ${pItem.toFixed(2)}`);
+                        }
+                        prorrateoSva += pItem;
+                        svaNames.push(`${item.nombre} (S/ ${pItem.toFixed(2)})`);
+                    });
+
+                    // 3. Totales Consolidados
+                    const montoTotalMensual = montoPlanMensual + montoSvaMensual;
+                    const prorrateoTotal = prorrateoPlan + prorrateoSva;
+                    const impacto = prorrateoTotal - planActual;
+                    const impactoTexto = `${impacto >= 0 ? '+' : '-'}S/ ${Math.abs(impacto).toFixed(2)}`;
+
+                    const formulaConsolidada = [planFormula, ...svaFormulas].join(' | ') + ` => TOTAL: S/ ${prorrateoTotal.toFixed(2)}`;
+                    const svaResumenTexto = svaNames.length ? ` incluyendo los servicios adicionales (${svaNames.join(', ')})` : '';
+                    const explicacion = `Estimado cliente, tomando como base su fecha de facturación día <strong>${diaFacturacion}</strong>, el prorrateo de su plan es de <strong>S/ ${prorrateoPlan.toFixed(2)}</strong>${svaResumenTexto ? ` y el de sus SVAs de <strong>S/ ${prorrateoSva.toFixed(2)}</strong>` : ''}, dando un total estimado para este ciclo de <strong>S/ ${prorrateoTotal.toFixed(2)}</strong>. A partir del siguiente ciclo, su tarifa mensual regular será de <strong>S/ ${montoTotalMensual.toFixed(2)}</strong>.`;
 
                     const setTxt = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
                     const setHtml = (id, v) => { const e = document.getElementById(id); if (e) e.innerHTML = v; };
 
-                    setTxt('out-monto-mensual', `S/ ${montoMensual.toFixed(2)}`);
-                    setTxt('out-monto-mensual-sub', montoMensualSub);
-                    setTxt('out-dias-considerados', diasConsiderados);
-                    setTxt('out-dias-sub', diasSub);
-                    setTxt('out-prorrateo', `S/ ${prorrateo.toFixed(2)}`);
+                    setTxt('out-monto-plan', `S/ ${montoPlanMensual.toFixed(2)}`);
+                    setTxt('out-monto-plan-sub', montoPlanSub);
+                    setTxt('out-monto-sva', `S/ ${montoSvaMensual.toFixed(2)}`);
+                    setTxt('out-monto-sva-sub', `${this.selectedSvas.length} SVA(s) en simulación`);
+                    setTxt('out-monto-total', `S/ ${montoTotalMensual.toFixed(2)}`);
+
+                    setTxt('out-prorrateo-plan', `S/ ${prorrateoPlan.toFixed(2)}`);
+                    setTxt('out-dias-considerados', diasPlanLabel);
+                    setTxt('out-prorrateo-sva', `S/ ${prorrateoSva.toFixed(2)}`);
+                    setTxt('out-prorrateo-sva-sub', `${this.selectedSvas.length} SVA(s) calculados`);
+                    setTxt('out-prorrateo-total', `S/ ${prorrateoTotal.toFixed(2)}`);
+
                     setTxt('out-impacto-esperado', impactoTexto);
-                    setTxt('out-impacto-sub', impactoSub);
+                    setTxt('out-impacto-sub', `Respecto al plan actual (S/ ${planActual.toFixed(2)})`);
                     setTxt('out-emision-estimada', emInfo.emisionTexto);
                     setTxt('out-emision-venc', `Vence aprox.: ${emInfo.vencTexto}`);
-                    setTxt('out-calculo-formula', formula);
+                    setTxt('out-calculo-formula', formulaConsolidada);
                     setHtml('out-explicacion', explicacion);
                 },
 
