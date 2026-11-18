@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Thinking &amp; Evolución de Producto — CRONOS FID 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        win: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            500: '#ff5f00',
+                            600: '#ea580c',
+                            700: '#c2410c'
+                        },
+                        navy: {
+                            800: '#0f172a',
+                            900: '#090d16'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Outfit', sans-serif;
+        }
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.3rem 0.85rem;
+            border-radius: 9999px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            background: #fff7ed;
+            color: #c2410c;
+            border: 1px solid #fed7aa;
+        }
+        .card-avoid-break {
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 12mm 12mm 14mm 12mm;
+            }
+            body {
+                background-color: #ffffff !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-break-before {
+                page-break-before: always;
+                break-before: page;
+            }
+            .shadow-sm, .shadow-md, .shadow-lg, .shadow-xl {
+                box-shadow: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Barra Superior Fija (No imprimible) -->
+    <header class="no-print sticky top-0 z-50 bg-navy-900/95 backdrop-blur-md text-white border-b border-slate-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <img src="Logo_WIN-08.png" alt="WIN" class="h-8 w-auto object-contain bg-white rounded-md px-1.5 py-0.5">
+                <div>
+                    <div class="font-heading font-extrabold text-sm tracking-wide">CRONOS FID &bull; DESIGN THINKING 2026</div>
+                    <div class="text-[11px] text-slate-400">Eje Central: Asesores de Fidelización + Ecosistema Supervisión/QA</div>
+                </div>
+            </div>
+            <nav class="hidden xl:flex items-center gap-1 text-[11px] font-semibold text-slate-300">
+                <a href="#sec-1" class="px-1.5 py-1 rounded hover:bg-slate-800 hover:text-white transition">1.Contexto</a>
+                <a href="#sec-2" class="px-1.5 py-1 rounded hover:bg-slate-800 hover:text-white transition">2.Entrevistas</a>
+                <a href="#sec-3" class="px-1.5 py-1 rounded hover:bg-slate-800 hover:text-white transition">3.Personas</a>
+                <a href="#sec-validacion-bp" class="px-1.5 py-1 rounded hover:bg-slate-800 hover:text-white transition">Validación BP</a>
+                <a href="#sec-citas" class="px-1.5 py-1 rounded hover:bg-slate-800 hover:text-white transition">Citas</a>
+                <a href="#sec-4" class="px-1.5 py-1 rounded hover:bg-slate-800 hover:text-white transition">4.Empatía</a>
+                <a href="#sec-5" class="px-1.5 py-1 rounded hover:bg-slate-800 hover:text-white transition">5.Journey</a>
+                <a href="#sec-6" class="px-1.5 py-1 rounded hover:bg-slate-800 hover:text-white transition">6.Insights</a>
+                <a href="#sec-matriz-trazabilidad" class="px-1.5 py-1 rounded hover:bg-slate-800 hover:text-white transition">Trazabilidad</a>
+                <a href="#sec-9b" class="px-1.5 py-1 rounded hover:bg-slate-800 hover:text-white transition">Producto</a>
+                <a href="#sec-10" class="px-1.5 py-1 rounded hover:bg-slate-800 hover:text-white transition">Validación</a>
+                <a href="#sec-11" class="px-1.5 py-1 rounded hover:bg-slate-800 hover:text-white transition">2027</a>
+            </nav>
+            <button onclick="window.print()" class="bg-win-500 hover:bg-win-600 text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-2 shadow-md transition cursor-pointer shrink-0">
+                <i class="fa-solid fa-file-pdf"></i>
+                <span>Exportar PDF</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Portada / Hero Ejecutivo -->
+    <section class="bg-gradient-to-br from-navy-900 via-slate-900 to-slate-800 text-white py-14 px-6 border-b-4 border-win-500">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8">
+                <div class="flex items-center gap-4">
+                    <div class="bg-white p-2.5 rounded-2xl shadow-lg">
+                        <img src="Logo_WIN-08.png" alt="Logo Oficial WIN" class="h-12 w-auto object-contain">
+                    </div>
+                    <div>
+                        <span class="text-xs font-extrabold uppercase tracking-widest text-win-500 block">WIN Telecomunicaciones &bull; Campaña Fidelización &amp; Retenciones</span>
+                        <span class="text-xs text-slate-300 font-medium">Centro de Recursos Operativos para Negociación y Fidelización</span>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full text-xs font-bold">CRONOS FID &bull; JELI v6.5.0</span>
+                    <span class="bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 px-3 py-1 rounded-full text-xs font-bold">Fuente Primaria: Focus Group 03/11/2026</span>
+                </div>
+            </div>
+
+            <h1 class="font-heading text-3xl md:text-5xl font-black tracking-tight leading-tight mb-4">
+                Design Thinking Aplicado a <span class="text-win-500">CRONOS FID</span>
+            </h1>
+            <p class="text-slate-300 text-base md:text-lg max-w-4xl leading-relaxed mb-8">
+                Documento oficial de innovación y evolución de producto centrado en el <strong>Asesor y la Asesora de Fidelización</strong> como usuarios primarios de la plataforma, respaldado por las entrevistas reales del <strong>Focus Group de Acompañamiento (03 de noviembre de 2026)</strong>, los perfiles secundarios de Supervisión y Calidad, la Auditoría Heurística (<code class="text-orange-300">v5.2.0</code>), el roadmap completo (<code class="text-orange-300">v1.0.0</code> &rarr; <code class="text-orange-300">v6.5.0</code>) y telemetría real en producción.
+            </p>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-4">
+                    <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wider">Usuario Primario</div>
+                    <div class="text-2xl font-heading font-black text-white mt-1">41 Asesores</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">Eje central del análisis UCD</div>
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-4">
+                    <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wider">Entrevista Primaria</div>
+                    <div class="text-2xl font-heading font-black text-win-500 mt-1">1h 00m 24s</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">Focus Group real 03/11/2026</div>
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-4">
+                    <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wider">Telemetría Real SLA</div>
+                    <div class="text-2xl font-heading font-black text-emerald-400 mt-1">8,120 Eventos</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">92.0% Normal + Preventivo</div>
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-4">
+                    <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wider">Perfiles Cubiertos</div>
+                    <div class="text-2xl font-heading font-black text-sky-400 mt-1">4 Arquetipos</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">2 Asesores (H/M) + Sup + QA</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-12">
+
+        <!-- ================================================================ -->
+        <!-- SECCIÓN 1: CONTEXTO DEL PROBLEMA                                 -->
+        <!-- ================================================================ -->
+        <section id="sec-1" class="bg-white rounded-3xl shadow-sm border border-slate-200 p-7 md:p-9 card-avoid-break">
+            <div class="section-badge mb-3"><i class="fa-solid fa-compass"></i> Sección 1 &bull; Contexto del Problema</div>
+            <h2 class="font-heading text-2xl md:text-3xl font-extrabold text-slate-900 mb-6">Origen, Problema Inicial, Evolución y Propósito Actual</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5">
+                    <h3 class="font-heading font-bold text-base text-slate-900 flex items-center gap-2 mb-2">
+                        <span class="w-7 h-7 rounded-lg bg-win-500 text-white flex items-center justify-center text-xs font-black">1</span>
+                        ¿Cómo nació CRONOS FID?
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Nació el <strong>15 de agosto de 2026</strong> (<code class="bg-slate-200 px-1.5 py-0.5 rounded text-xs font-bold">v1.0.0</code>) por iniciativa del formador y arquitecto <strong>Jhonny Eduar León Illescas</strong> dentro de la operación de Fidelización y Retenciones de WIN Telecomunicaciones. Surgió como una utilidad ligera para agilizar el día a día del asesor en llamada: generar la <strong>Clave Secreta</strong> y estandarizar retenciones base.
+                    </p>
+                </div>
+
+                <div class="bg-rose-50/60 border border-rose-200 rounded-2xl p-5">
+                    <h3 class="font-heading font-bold text-base text-slate-900 flex items-center gap-2 mb-2">
+                        <span class="w-7 h-7 rounded-lg bg-rose-600 text-white flex items-center justify-center text-xs font-black">2</span>
+                        ¿Qué problema buscaba resolver inicialmente?
+                    </h3>
+                    <ul class="text-sm text-slate-600 space-y-1.5 list-disc pl-5">
+                        <li><strong>Saturación de aplicaciones:</strong> Tal como relatan los asesores entrevistados, operaban con Fénix 360, Smart Wi-Fi, WinForm, SIGO, Botmaker, Discord, 10 Excels, Word y bloc de notas abiertos al mismo tiempo.</li>
+                        <li><strong>Pérdida de tiempo y reprocesos:</strong> Cálculos manuales de prorrateos, edición manual en Word para Cambio de Titularidad y búsqueda lenta de procedimientos.</li>
+                        <li><strong>Falta de control de SLA:</strong> Observaciones de calidad de hasta 500s en espera por no contar con alertas de tiempo en llamada.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-sky-50/60 border border-sky-200 rounded-2xl p-5">
+                    <h3 class="font-heading font-bold text-base text-slate-900 flex items-center gap-2 mb-2">
+                        <span class="w-7 h-7 rounded-lg bg-sky-600 text-white flex items-center justify-center text-xs font-black">3</span>
+                        ¿Cómo evolucionó?
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Evolucionó iterativamente guiado por el feedback directo en piso y entrevistas: sumó <strong>63 escenarios de escalamiento</strong> (<code class="text-xs font-bold">v4.1.5</code>), <strong>Acuerdos de Voz</strong> y <strong>Discord</strong> (<code class="text-xs font-bold">v4.0.0</code>), <strong>Firebase + Supabase</strong> (<code class="text-xs font-bold">v5.0.0</code>), <strong>AI Insights</strong> (<code class="text-xs font-bold">v5.1.0</code>), remediación heurística UX (<code class="text-xs font-bold">v5.2.0–5.2.2</code>), migración HTTPS a <strong>Vercel</strong> (<code class="text-xs font-bold">v6.0.0</code>) y finalmente los módulos solicitados en el Focus Group del 03/11/2026: <strong>Calculadora de Prorrateos</strong> y <strong>Generador Oficial de Cambio de Titularidad</strong> (<code class="text-xs font-bold">v6.5.0</code>).
+                    </p>
+                </div>
+
+                <div class="bg-emerald-50/60 border border-emerald-200 rounded-2xl p-5">
+                    <h3 class="font-heading font-bold text-base text-slate-900 flex items-center gap-2 mb-2">
+                        <span class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs font-black">4</span>
+                        ¿Cuál es su propósito actual?
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Centralizar en una única aplicación web ligera toda la operación del asesor de Fidelización —reduciendo carga de RAM, clics y errores humanos— mientras provee a Supervisión y Calidad trazabilidad inmutable de tiempos SLA, tipificaciones y documentos legales oficiales WIN.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- SECCIÓN 2: EMPATIZAR (EVIDENCIA DE ENTREVISTAS REALES)           -->
+        <!-- ================================================================ -->
+        <section id="sec-2" class="bg-white rounded-3xl shadow-sm border border-slate-200 p-7 md:p-9 print-break-before">
+            <div class="section-badge mb-3"><i class="fa-solid fa-microphone"></i> Sección 2 &bull; Fase Empatizar (Evidencia Real)</div>
+            <h2 class="font-heading text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">Entrevistas Reales a Asesores: Hallazgos, Frustraciones, Necesidades, Objetivos y Motivaciones</h2>
+            <p class="text-sm text-slate-500 mb-6">
+                Fuente primaria obligatoria: Transcripción oficial del Focus Group <strong><em>"Feedback de Acompañamiento - Formador Jhonny León"</em></strong> (03 de noviembre de 2026, 19:01 hrs, duración 1h 00m 24s) con los asesores de Fidelización <strong>Johannes Omar Córdova Martínez</strong> (~2 años de antigüedad) y <strong>José Eduardo González M.</strong> (2 años y 2 meses de antigüedad), ambos del turno tarde (12:00–21:00 L-V / 10:00–19:00 sábados).
+            </p>
+
+            <!-- Evidencia Textual / Citas de Entrevista -->
+            <div class="bg-navy-900 text-white rounded-2xl p-6 mb-6 space-y-4">
+                <h3 class="font-heading font-bold text-sm uppercase tracking-wider text-win-500 flex items-center gap-2">
+                    <i class="fa-solid fa-quote-left"></i> Evidencia Directa de las Entrevistas (Citas Textuales Verificadas)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+                        <div class="font-bold text-orange-300 mb-1">1. Sobrecarga de pasos y múltiples herramientas (José E., min 25:09 &amp; 40:51)</div>
+                        <p class="italic text-slate-200 leading-relaxed">"Buscando la solución siento que me sobrecarga, ya tengo que hacer esto 1, el otro 2, el otro 3, el otro 4... envía acá, envía Discord, envía WhatsApp... El programa del Cronos a mí me parece buenísimo. Es más, podría ser un CRM tranquilamente ya porque veo que tiene todas las cosas."</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+                        <div class="font-bold text-orange-300 mb-1">2. Origen del Generador de Cambio de Titularidad (Omar C., min 53:52)</div>
+                        <p class="italic text-slate-200 leading-relaxed">"Sería favorable que dentro del Cronos nos serviría mucho para el cambio de titularidad... a mí me toma tiempo abrir en Word, cambiar el nombre, el correo, cambiar el cedente a la cedente... Hay veces que me he equivocado... debería ser más simplificado donde pongamos los datos y nos arroje el PDF."</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+                        <div class="font-bold text-orange-300 mb-1">3. Origen de la Calculadora de Prorrateos (Omar C. &amp; José E., min 35:37–37:27)</div>
+                        <p class="italic text-slate-200 leading-relaxed">"Muchas gestiones están cayendo y regresan los clientes porque no se ha detallado que hay un proporcional (prorrateo)... tienes que calcular y decirle..." / "Ahí le generas un reproceso... debería ser un cálculo que lo calcule el sistema matemático."</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+                        <div class="font-bold text-orange-300 mb-1">4. Adopción real por módulo y curva de aprendizaje (Omar C. &amp; José E., min 42:36–47:00)</div>
+                        <p class="italic text-slate-200 leading-relaxed">"En mi caso, clave secreta, tipificaciones y relojito (CRONOS SLA)... Para alguien nuevo que está comenzando, el Cronos va a ser su Biblia." / "El Cronos es como tener el SIGO resumido y súper amigable, entras y ya está."</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+                        <div class="font-bold text-orange-300 mb-1">5. Conflicto en tiempo de espera (1 min vs 2-3 min) (Omar C., min 57:24)</div>
+                        <p class="italic text-slate-200 leading-relaxed">"Hay veces que el tiempo de espera puede ser mayor a 1 minuto cuando hacemos gestión simultánea de visitas técnicas (recableado + Mesh + Winbox), llenado de ticket, pantallazo y Discord... al cliente ya le aviso, pero la pauta exige retomar cada minuto."</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+                        <div class="font-bold text-orange-300 mb-1">6. Confusión sobre reportes de uso y Timer SLA (José E., min 10:32 &amp; 55:41)</div>
+                        <p class="italic text-slate-200 leading-relaxed">"Lo utilizo casi todos los días, pero no sé por qué sale en el reporte de Evelyn que no lo uso hace una semana..." &rarr; Hallazgo: los asesores usaban Clave Secreta y Tipificaciones, pero olvidaban activar el Timer SLA que alimenta el reporte de uso.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50">
+                    <h4 class="font-heading font-bold text-sm text-slate-900 mb-2"><i class="fa-solid fa-magnifying-glass text-win-500 mr-1"></i> Hallazgos Clave</h4>
+                    <ul class="space-y-1.5 text-slate-600 list-disc pl-4">
+                        <li>Los asesores usan al menos <strong>8 aplicativos diarios</strong> (Fénix 360, CRONOS, Smart Wi-Fi, WinForm, SIGO, Botmaker, Discord, Correo).</li>
+                        <li>Casuísticas dominantes reales: <strong>Mudanzas, Viajes, Flipping</strong> (ventas de S/ 1 o falso cambio de titularidad) e <strong>Incumplimiento</strong>.</li>
+                        <li>Asesores seniors (~2 años) tienen contratos descargados en Word/bloc de notas por costumbre; los nuevos dependen 100% de CRONOS.</li>
+                    </ul>
+                </div>
+                <div class="border border-rose-200 rounded-2xl p-4 bg-rose-50/40">
+                    <h4 class="font-heading font-bold text-sm text-rose-900 mb-2"><i class="fa-solid fa-face-tired text-rose-600 mr-1"></i> Frustraciones</h4>
+                    <ul class="space-y-1.5 text-slate-700 list-disc pl-4">
+                        <li>Flujos largos con múltiples pasos repetitivos (IDE de descuentos, Discord con pantallazos, tickets simultáneos).</li>
+                        <li>Errores manuales en Word al cambiar "el/la cedente" en contratos de Cambio de Titularidad.</li>
+                        <li>Reprocesos cuando el cliente vuelve a llamar porque no entendió el prorrateo o fecha de corte de ajuste (24–48h / día 28).</li>
+                        <li>Demoras de carga en CRM al consultar datos de ONT desconectada.</li>
+                    </ul>
+                </div>
+                <div class="border border-sky-200 rounded-2xl p-4 bg-sky-50/40">
+                    <h4 class="font-heading font-bold text-sm text-sky-900 mb-2"><i class="fa-solid fa-puzzle-piece text-sky-600 mr-1"></i> Necesidades</h4>
+                    <ul class="space-y-1.5 text-slate-700 list-disc pl-4">
+                        <li>Centralizar todo en una única app web para no saturar la memoria RAM del equipo.</li>
+                        <li>Generar PDF/Word de Cambio de Titularidad llenando solo datos clave.</li>
+                        <li>Contar con cálculo automático de prorrateo para explicárselo al cliente al instante.</li>
+                        <li>Validar fechas de corte de descuentos y simplificar tipificaciones en "check-resumen".</li>
+                    </ul>
+                </div>
+                <div class="border border-emerald-200 rounded-2xl p-4 bg-emerald-50/40">
+                    <h4 class="font-heading font-bold text-sm text-emerald-900 mb-2"><i class="fa-solid fa-bullseye text-emerald-600 mr-1"></i> Objetivos &amp; Motivaciones</h4>
+                    <ul class="space-y-1.5 text-slate-700 list-disc pl-4">
+                        <li>Retener al cliente recuperando su confianza (usando planes de S/ 59, S/ 69 Dúo, Win TV / Liga 1 Max, traslados).</li>
+                        <li>Evitar llamadas reincidentes (FCR) y observaciones de SLA (500s) o de Calidad.</li>
+                        <li>Cumplir indicadores diarios/mensuales para asegurar comisiones variables.</li>
+                        <li>Aprender nuevas funciones mediante <strong>práctica directa y feedback</strong>.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- SECCIÓN 3: BUYER PERSONAS (EJE PRINCIPAL ASESORES + SECUNDARIOS) -->
+        <!-- ================================================================ -->
+        <section id="sec-3" class="space-y-8 print-break-before">
+            <div>
+                <div class="section-badge mb-3"><i class="fa-solid fa-users"></i> Sección 3 &bull; Buyer Personas (Eje Central: Asesor &amp; Asesora)</div>
+                <h2 class="font-heading text-2xl md:text-3xl font-extrabold text-slate-900">Perfiles Primarios: Asesor Hombre y Asesora Mujer</h2>
+                <p class="text-sm text-slate-500 mt-1">CRONOS FID está diseñado principalmente para la operación diaria de los asesores de Fidelización. Sus perfiles se construyen directamente sobre la evidencia del Focus Group (03/11/2026) y la realidad operativa de piso.</p>
+            </div>
+
+            <!-- PERFILES PRIMARIOS: ASESOR HOMBRE & ASESORA MUJER -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- BUYER PERSONA 3: ASESOR HOMBRE -->
+                <article class="bg-white rounded-3xl shadow-md border-2 border-win-500/40 overflow-hidden card-avoid-break">
+                    <div class="bg-gradient-to-r from-win-600 to-amber-600 p-6 text-white flex items-center gap-4">
+                        <div class="w-16 h-16 rounded-2xl bg-white text-win-600 flex items-center justify-center font-heading font-black text-2xl shrink-0 shadow-md">DV</div>
+                        <div>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="text-[10px] font-extrabold uppercase bg-navy-900/40 text-white px-2.5 py-0.5 rounded-full">Buyer Persona 3 &bull; Perfil Principal</span>
+                                <span class="text-[10px] font-extrabold uppercase bg-white/20 text-white px-2 py-0.5 rounded-full">NSE C+ / B</span>
+                            </div>
+                            <h3 class="font-heading text-xl font-extrabold mt-1">Diego Alejandro Vargas Quispe</h3>
+                            <p class="text-xs text-orange-100">Asesor Senior de Fidelización y Retenciones (Turno Tarde)</p>
+                            <p class="text-[11px] text-white font-bold mt-1">Arquetipo: EL ESTRATEGA RESOLUTIVO &bull; Antigüedad: 2 años en Fidelización</p>
+                        </div>
+                    </div>
+
+                    <div class="p-6 space-y-4 text-xs">
+                        <blockquote class="bg-orange-50 border-l-4 border-win-500 p-3.5 rounded-r-xl italic text-slate-700 leading-relaxed">
+                            "El cliente entra diciendo 'me voy de viaje', pero sondeando descubres el motivo real. El Cronos me salva con la clave secreta y las tipificaciones, pero necesito que también me calcule el prorrateo y genere el cambio de titularidad sin perder tiempo editando en Word."
+                        </blockquote>
+
+                        <div class="grid grid-cols-2 gap-2.5 bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+                            <div><span class="text-slate-400 block font-semibold">Edad / Estado Civil</span><strong class="text-slate-800">27 años &bull; Soltero</strong></div>
+                            <div><span class="text-slate-400 block font-semibold">NSE / Residencia</span><strong class="text-slate-800">NSE C+ / B &bull; Los Olivos</strong></div>
+                            <div><span class="text-slate-400 block font-semibold">Experiencia Laboral</span><strong class="text-slate-800">4 años en Contact Center</strong></div>
+                            <div><span class="text-slate-400 block font-semibold">Antigüedad Fidelización</span><strong class="text-slate-800">2 años (basado en Omar C. y José E.)</strong></div>
+                            <div class="col-span-2"><span class="text-slate-400 block font-semibold">Día a Día (Turno Tarde: L-V 12:00–21:00 / Sáb 10:00–19:00)</span>
+                                <span class="text-slate-700">Ingresa a Fénix 360, abre sus herramientas y atiende llamadas críticas de baja (mudanza, viaje, flipping, fallas técnicas LOS rojo). Sondea al cliente, consulta cobertura/Smart Wi-Fi, negocia planes (S/ 59, Win TV/Liga 1), valida Clave Secreta, tipifica y da seguimiento posterior a ajustes o cesiones pendientes.</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                            <div>
+                                <h4 class="font-bold text-emerald-700 uppercase text-[11px] mb-1">Objetivos</h4>
+                                <ul class="list-disc pl-4 space-y-1 text-slate-600">
+                                    <li>Retener al cliente y evitar que vuelva a llamar (FCR).</li>
+                                    <li>Cumplir meta mensual de retención y comisiones.</li>
+                                    <li>Mantener el TMO bajo control sin errores de descuento.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-rose-700 uppercase text-[11px] mb-1">Frustraciones</h4>
+                                <ul class="list-disc pl-4 space-y-1 text-slate-600">
+                                    <li>Sobrecarga de 4 o 5 pasos entre CRM, IDE, Discord y tickets simultáneos.</li>
+                                    <li>Errores manuales al editar contratos Word de Cambio de Titularidad.</li>
+                                    <li>Regla estricta de 1 min de espera cuando una gestión técnica toma 2–3 min.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sky-700 uppercase text-[11px] mb-1">Necesidades</h4>
+                                <ul class="list-disc pl-4 space-y-1 text-slate-600">
+                                    <li>Calculadora de prorrateo en vivo para evitar reprocesos.</li>
+                                    <li>Generador automático de Cesión de Titularidad en PDF/Word.</li>
+                                    <li>Menor consumo de RAM centralizando pestañas en CRONOS.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-amber-700 uppercase text-[11px] mb-1">Motivaciones</h4>
+                                <ul class="list-disc pl-4 space-y-1 text-slate-600">
+                                    <li>Alcanzar comisiones variables por cumplimiento de KPIs.</li>
+                                    <li>Autonomía operativa y reconocimiento por baja reincidencia.</li>
+                                    <li>Aprender nuevas funciones mediante práctica y feedback directo.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-100 p-3.5 rounded-xl space-y-1.5">
+                            <div><strong>Comportamiento Digital:</strong> Usuario avanzado/mecanizado; utiliza atajos, múltiples pestañas e incluso IA por voz para redactar correos sin errores de ortografía.</div>
+                            <div><strong>Herramientas Utilizadas:</strong> Fénix 360 (CRM), CRONOS FID, Smart Wi-Fi, WinForm, SIGO, Botmaker, Discord, WhatsApp, Correo, Bloc de notas.</div>
+                            <div><strong>Relación con CRONOS FID:</strong> Uso diario intensivo de <em>Clave Secreta</em>, <em>Tipificaciones</em> y <em>Timer CRONOS SLA</em>; requiere recordatorio visual para activar siempre el cronómetro.</div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- BUYER PERSONA 4: ASESORA MUJER -->
+                <article class="bg-white rounded-3xl shadow-md border-2 border-purple-500/40 overflow-hidden card-avoid-break">
+                    <div class="bg-gradient-to-r from-purple-700 to-fuchsia-700 p-6 text-white flex items-center gap-4">
+                        <div class="w-16 h-16 rounded-2xl bg-white text-purple-700 flex items-center justify-center font-heading font-black text-2xl shrink-0 shadow-md">LC</div>
+                        <div>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="text-[10px] font-extrabold uppercase bg-navy-900/40 text-white px-2.5 py-0.5 rounded-full">Buyer Persona 4 &bull; Perfil Principal</span>
+                                <span class="text-[10px] font-extrabold uppercase bg-white/20 text-white px-2 py-0.5 rounded-full">NSE C / B</span>
+                            </div>
+                            <h3 class="font-heading text-xl font-extrabold mt-1">Lucía Fernanda Chávez Huamán</h3>
+                            <p class="text-xs text-purple-100">Asesora de Fidelización y Retenciones (En Consolidación)</p>
+                            <p class="text-[11px] text-white font-bold mt-1">Arquetipo: LA CONCILIADORA METÓDICA &bull; Antigüedad: 7 meses en Fidelización</p>
+                        </div>
+                    </div>
+
+                    <div class="p-6 space-y-4 text-xs">
+                        <blockquote class="bg-purple-50 border-l-4 border-purple-600 p-3.5 rounded-r-xl italic text-slate-700 leading-relaxed">
+                            "Para quienes no llevamos años en el piso, CRONOS FID es literalmente nuestra Biblia: ahí encuentro al instante la clave secreta, las tipificaciones exactas, los guiones legales de Acuerdos de Voz y el relojito SLA para no pasarme del minuto de espera."
+                        </blockquote>
+
+                        <div class="grid grid-cols-2 gap-2.5 bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+                            <div><span class="text-slate-400 block font-semibold">Edad / Estado Civil</span><strong class="text-slate-800">24 años &bull; Soltera</strong></div>
+                            <div><span class="text-slate-400 block font-semibold">NSE / Residencia</span><strong class="text-slate-800">NSE C / B &bull; San Miguel</strong></div>
+                            <div><span class="text-slate-400 block font-semibold">Experiencia Laboral</span><strong class="text-slate-800">2 años en Atención al Cliente</strong></div>
+                            <div><span class="text-slate-400 block font-semibold">Antigüedad Fidelización</span><strong class="text-slate-800">7 meses (perfil en consolidación)</strong></div>
+                            <div class="col-span-2"><span class="text-slate-400 block font-semibold">Día a Día (Turno Mañana / Tarde &bull; Gestión Estructurada)</span>
+                                <span class="text-slate-700">Revisa comunicados al iniciar sesión, atiende llamadas con el widget sticky de CRONOS SLA activo, valida identidad con Clave Secreta, lee los Acuerdos de Voz directamente de CRONOS para evitar errores críticos QA y consulta los 63 escenarios del Directorio ante dudas de escalamiento.</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                            <div>
+                                <h4 class="font-bold text-emerald-700 uppercase text-[11px] mb-1">Objetivos</h4>
+                                <ul class="list-disc pl-4 space-y-1 text-slate-600">
+                                    <li>Lograr retenciones limpias con 100% de apego a Calidad (cero EC).</li>
+                                    <li>Ganar seguridad y rapidez frente a clientes hostiles o casos de flipping.</li>
+                                    <li>Mantener su indicador de uso SLA activo sin alertas de inactividad.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-rose-700 uppercase text-[11px] mb-1">Frustraciones</h4>
+                                <ul class="list-disc pl-4 space-y-1 text-slate-600">
+                                    <li>Temor a cometer errores críticos en lectura legal o fechas de ajuste.</li>
+                                    <li>Esperar respuestas en Discord para autorizaciones o casos complejos.</li>
+                                    <li>Abrumarse con demasiados archivos Word/Excel sueltos y pestañas en SIGO.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sky-700 uppercase text-[11px] mb-1">Necesidades</h4>
+                                <ul class="list-disc pl-4 space-y-1 text-slate-600">
+                                    <li>Flujos guiados paso a paso ("SIGO resumido y amigable").</li>
+                                    <li>Alertas preventivas visibles incluso al navegar en CRM o Power BI.</li>
+                                    <li>Formatos legales validados sin riesgo de olvidar cláusulas o datos.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-amber-700 uppercase text-[11px] mb-1">Motivaciones</h4>
+                                <ul class="list-disc pl-4 space-y-1 text-slate-600">
+                                    <li>Estabilidad económica mientras culmina estudios superiores.</li>
+                                    <li>Obtener felicitaciones en feedback 1:1 y cero penalidades QA.</li>
+                                    <li>Crecer hacia Backoffice o Asesora Senior en WIN.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-100 p-3.5 rounded-xl space-y-1.5">
+                            <div><strong>Comportamiento Digital:</strong> Nativa digital ordenada; prefiere interfaces claras, botones de copiado directo y notificaciones visuales antes que memorizar manuales extensos.</div>
+                            <div><strong>Herramientas Utilizadas:</strong> CRONOS FID (como consola guía central), Fénix 360, Smart Wi-Fi, WinForm, Discord, Botmaker y Correo corporativo.</div>
+                            <div><strong>Relación con CRONOS FID:</strong> Altísima dependencia positiva; utiliza Clave Secreta, Tipificaciones, Acuerdos de Voz, Directorio, Calculadoras y Cambio de Titularidad como su herramienta de cabecera.</div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- PERFILES SECUNDARIOS DEL ECOSISTEMA: SUPERVISOR & CALIDAD -->
+            <div class="bg-slate-100 rounded-3xl p-6 border border-slate-200 card-avoid-break">
+                <div class="flex items-center justify-between flex-wrap gap-2 mb-4">
+                    <div>
+                        <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">Perfiles Secundarios del Ecosistema Operativo</span>
+                        <h3 class="font-heading text-lg font-extrabold text-slate-900">Supervisor (Carlos Mendoza) y Analista de Calidad (Vanessa Morales)</h3>
+                    </div>
+                    <span class="text-xs font-semibold text-slate-500">Fuente: Estudio UCD <em>Buyer Persona-CRONOS FID.html</em></span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs">
+                    <!-- Supervisor -->
+                    <div class="bg-white rounded-2xl p-5 border border-slate-200 space-y-2.5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 rounded-xl bg-navy-900 text-white flex items-center justify-center font-heading font-black">CM</div>
+                            <div>
+                                <div class="font-heading font-bold text-sm text-slate-900">Carlos Alberto Mendoza Ríos &bull; Supervisor</div>
+                                <div class="text-slate-500">34 años &bull; NSE B &bull; Surco &bull; 10 años exp. (4 Sup.) &bull; Arquetipo: <strong>El Líder Operativo</strong></div>
+                            </div>
+                        </div>
+                        <p class="italic text-slate-600">"Mi rol no es solo exigir números, es darle a mi equipo las herramientas y la serenidad para transformar una queja en lealtad a la marca."</p>
+                        <div class="grid grid-cols-2 gap-2 pt-1">
+                            <div><strong class="text-slate-800">Objetivos:</strong> Retención &gt;75%, TMO &le;420s, FCR, coaching 1:1.</div>
+                            <div><strong class="text-slate-800">Frustraciones:</strong> Dispersión CRM/Discord/Excel y falta de reportes automáticos.</div>
+                            <div><strong class="text-slate-800">Necesidades:</strong> Vista 360° en vivo, trazabilidad SLA y escalamientos sin chats perdidos.</div>
+                            <div><strong class="text-slate-800">Motivaciones:</strong> Ascenso a Coordinador, bonos trimestrales, liderar equipo #1.</div>
+                        </div>
+                    </div>
+
+                    <!-- Calidad -->
+                    <div class="bg-white rounded-2xl p-5 border border-slate-200 space-y-2.5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 rounded-xl bg-indigo-700 text-white flex items-center justify-center font-heading font-black">VM</div>
+                            <div>
+                                <div class="font-heading font-bold text-sm text-slate-900">Vanessa Patricia Morales Delgado &bull; Calidad (QA)</div>
+                                <div class="text-slate-500">30 años &bull; NSE B &bull; Jesús María &bull; 6 años exp. (5 QA) &bull; Arquetipo: <strong>La Guardiana de la Calidad</strong></div>
+                            </div>
+                        </div>
+                        <p class="italic text-slate-600">"La retención vale únicamente si el cliente entendió con claridad lo que aceptó. La calidad protege al asesor y respalda a la empresa."</p>
+                        <div class="grid grid-cols-2 gap-2 pt-1">
+                            <div><strong class="text-slate-800">Objetivos:</strong> 0 multas OSIPTEL, QA &gt;88%, discrepancia &lt;5% en calibración.</div>
+                            <div><strong class="text-slate-800">Frustraciones:</strong> Acuerdos verbales omitidos en CRM, scripts leídos a la carrera por TMO.</div>
+                            <div><strong class="text-slate-800">Necesidades:</strong> Repositorio legal inmutable, trazabilidad Clave Secreta y formatos oficiales.</div>
+                            <div><strong class="text-slate-800">Motivaciones:</strong> Especialización CX / Service Design, rigor metodológico, reputación WIN.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- SECCIÓN NUEVA: VALIDACIÓN DE BUYER PERSONA                       -->
+        <!-- ================================================================ -->
+        <section id="sec-validacion-bp" class="bg-white rounded-3xl shadow-sm border border-slate-200 p-7 md:p-9 print-break-before">
+            <div class="section-badge mb-3"><i class="fa-solid fa-user-check"></i> Sección Nueva &bull; Validación de Buyer Persona</div>
+            <h2 class="font-heading text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">Validación Empírica de los Perfiles Primarios (Asesor Hombre y Asesora Mujer)</h2>
+            <p class="text-sm text-slate-500 mb-6">Demostración metodológica que vincula cada atributo de los Buyer Persona primarios con la evidencia real recopilada en entrevista, telemetría y observación operativa.</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-xs">
+                <!-- Validación BP 1: Asesor Hombre -->
+                <div class="border-2 border-win-500/30 rounded-2xl p-5 bg-orange-50/20 space-y-3 card-avoid-break">
+                    <div class="flex items-center justify-between border-b border-orange-200 pb-2.5">
+                        <div>
+                            <span class="text-[10px] font-extrabold uppercase text-win-600 block">Buyer Persona 1 (Primario)</span>
+                            <h3 class="font-heading font-extrabold text-base text-slate-900">Asesor Hombre (Diego Vargas)</h3>
+                        </div>
+                        <span class="bg-emerald-600 text-white font-extrabold px-3 py-1 rounded-full text-[11px] shadow-sm">Nivel de Confianza: ALTO</span>
+                    </div>
+                    <div class="space-y-2 text-slate-700">
+                        <div><strong class="text-slate-900">1. Fuente de validación:</strong> Focus Group grabado + telemetría de uso en <code class="bg-slate-100 px-1 rounded">public.cronos_sla</code>.</div>
+                        <div><strong class="text-slate-900">2. Entrevista utilizada:</strong> <em>Feedback de Acompañamiento - Formador Jhonny León</em> (03/11/2026, 1h 00m 24s) con <strong>Johannes Omar Córdova Martínez</strong> y <strong>José Eduardo González M.</strong></div>
+                        <div><strong class="text-slate-900">3. Hallazgos asociados:</strong> Uso diario de 8+ aplicativos (Fénix 360, CRONOS, Smart Wi-Fi, WinForm, SIGO, Discord, Botmaker), saturación de pasos múltiples, reprocesos por falta de prorrateo y errores manuales al editar Word en Cambio de Titularidad.</div>
+                        <div><strong class="text-slate-900">4. Evidencia encontrada:</strong> Citas textuales directas con marca de tiempo (min 09:26, 25:09, 27:46, 35:37, 42:36, 53:52 y 57:24) + 2 años de antigüedad declarada en turno tarde (12:00–21:00).</div>
+                        <div class="bg-white p-3 rounded-xl border border-slate-200 space-y-1">
+                            <div class="font-bold text-slate-900">5. Justificación de Atributos:</div>
+                            <div>&bull; <strong>Objetivos:</strong> Evitar rellamadas/reprocesos (min 37:05) y cumplir indicadores/comisiones (min 49:33).</div>
+                            <div>&bull; <strong>Frustraciones:</strong> Sobrecarga de 4 pasos (min 25:09), Word manual en cesiones (min 53:52) y espera &gt;1 min (min 57:24).</div>
+                            <div>&bull; <strong>Motivaciones:</strong> Rescatar clientes complejos y aprender mediante práctica y feedback (min 48:59).</div>
+                            <div>&bull; <strong>Necesidades:</strong> Calculadora de prorrateo, PDF automático de cesión y reducir pestañas/RAM (min 53:13).</div>
+                            <div>&bull; <strong>Comportamientos:</strong> Uso intensivo de Clave Secreta, Tipificaciones y Timer; uso de IA por voz para redactar correos (min 58:15).</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Validación BP 2: Asesora Mujer -->
+                <div class="border-2 border-purple-500/30 rounded-2xl p-5 bg-purple-50/20 space-y-3 card-avoid-break">
+                    <div class="flex items-center justify-between border-b border-purple-200 pb-2.5">
+                        <div>
+                            <span class="text-[10px] font-extrabold uppercase text-purple-700 block">Buyer Persona 2 (Primario)</span>
+                            <h3 class="font-heading font-extrabold text-base text-slate-900">Asesora Mujer (Lucía Chávez)</h3>
+                        </div>
+                        <span class="bg-amber-500 text-white font-extrabold px-3 py-1 rounded-full text-[11px] shadow-sm">Nivel de Confianza: MEDIO</span>
+                    </div>
+                    <div class="space-y-2 text-slate-700">
+                        <div><strong class="text-slate-900">1. Fuente de validación:</strong> Evidencia indirecta del Focus Group (sobre asesores en consolidación), observación operativa de piso, Auditoría Heurística (<code class="bg-slate-100 px-1 rounded">v5.2.0</code>) y pauta QA.</div>
+                        <div><strong class="text-slate-900">2. Entrevista utilizada:</strong> <em>Feedback de Acompañamiento - Formador Jhonny León</em> (03/11/2026) — contraste explícito entre seniors y asesores nuevos/en consolidación (min 45:35 y 46:06) + trazabilidad de alertas de uso enviadas por Evelyn (min 10:32 y 55:41).</div>
+                        <div><strong class="text-slate-900">3. Hallazgos asociados:</strong> Los asesores con menor antigüedad dependen de CRONOS FID como guía integral ("Biblia" y "SIGO resumido y amigable") para no omitir cláusulas legales ni equivocarse en tipificaciones.</div>
+                        <div><strong class="text-slate-900">4. Evidencia encontrada:</strong> Declaración textual de Omar C. (min 45:35) y José E. (min 46:06), sumado a la pauta QA de Acuerdos de Voz y métricas reales en Supabase. <em>Nota metodológica transparente: al no haber participado una asesora mujer en la grabación del 03/11/2026, su nivel de confianza es Medio hasta completar entrevista 1:1 en Q1 2027.</em></div>
+                        <div class="bg-white p-3 rounded-xl border border-slate-200 space-y-1">
+                            <div class="font-bold text-slate-900">5. Justificación de Atributos:</div>
+                            <div>&bull; <strong>Objetivos:</strong> Cumplir pauta QA sin errores críticos y dominar procesos en consolidación.</div>
+                            <div>&bull; <strong>Frustraciones:</strong> Curva de aprendizaje en SIGO extenso, fechas de ajuste (día 28 / 24–48h) y reportes de inactividad SLA.</div>
+                            <div>&bull; <strong>Motivaciones:</strong> Estabilidad laboral, feedback positivo 1:1 y cero observaciones de Calidad.</div>
+                            <div>&bull; <strong>Necesidades:</strong> Flujos paso a paso, alertas preventivas visibles y formatos legales prellenados sin error.</div>
+                            <div>&bull; <strong>Comportamientos:</strong> Uso guiado de Acuerdos de Voz, Directorio (63 escenarios), Clave Secreta y SLA sticky.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- SECCIÓN NUEVA: CITAS TEXTUALES (MÍN. 5 POR PERFIL)               -->
+        <!-- ================================================================ -->
+        <section id="sec-citas" class="bg-white rounded-3xl shadow-sm border border-slate-200 p-7 md:p-9 print-break-before">
+            <div class="section-badge mb-3"><i class="fa-solid fa-quote-left"></i> Sección Nueva &bull; Citas Textuales Verificadas</div>
+            <h2 class="font-heading text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">Evidencia Literal del Focus Group (5 Citas por Perfil)</h2>
+            <p class="text-sm text-slate-500 mb-6">Citas extraídas textualmente de [Feedback de Acompañamiento-FORMADOR JHONNY LEÓN (5) (1).docx](file:///c:/Users/jleoni/OneDrive%20-%20winet/2.%20SERVIDOR%20LOCAL/CRONOS%20FID/Feedback%20de%20Acompa%C3%B1amiento-FORMADOR%20JHONNY%20LE%C3%93N%20%285%29%20%281%29.docx) con perfil asociado, contexto exacto e insight generado.</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-xs">
+                <!-- Columna Asesor Hombre (5 citas) -->
+                <div class="space-y-3">
+                    <h3 class="font-heading font-bold text-sm uppercase tracking-wider text-win-600 border-b border-orange-200 pb-2">Perfil Asociado: Asesor Hombre (Senior / Resolutivo)</h3>
+
+                    <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                        <p class="italic font-semibold text-slate-900">"En mi caso la lectura de los contratos porque yo tengo los print aparte y por tema de costumbre nada más... ya me lo sé de memoria."</p>
+                        <div class="mt-1.5 text-slate-600"><strong>Contexto:</strong> Omar Córdova (min 44:35–44:43) al responder qué módulo de CRONOS utiliza menos.</div>
+                        <div class="mt-1 text-win-700 font-medium"><strong>Insight generado:</strong> El asesor senior omite Acuerdos de Voz por memoria/hábito, generando riesgo si cambia un texto normativo.</div>
+                    </div>
+
+                    <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                        <p class="italic font-semibold text-slate-900">"Siento que me sobrecarga, ya tengo que hacer esto 1, tengo que hacer el otro 2, el otro 3, el otro 4... envía acá, envía Discord, envía WhatsApp."</p>
+                        <div class="mt-1.5 text-slate-600"><strong>Contexto:</strong> José Eduardo González (min 25:09–26:31) describiendo el envío de visitas técnicas y aprobaciones.</div>
+                        <div class="mt-1 text-win-700 font-medium"><strong>Insight generado:</strong> La fragmentación en múltiples canales duplica trabajo administrativo y resta tiempo de negociación.</div>
+                    </div>
+
+                    <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                        <p class="italic font-semibold text-slate-900">"A mí me toma tiempo el abrir en Word, cambiar el nombre, el correo, cambiar el cedente a la cedente... Hay veces que me he equivocado... debería ser más simplificado donde pongamos los datos y nos arroje el PDF."</p>
+                        <div class="mt-1.5 text-slate-600"><strong>Contexto:</strong> Omar Córdova (min 53:52–54:28) proponiendo automatizar Cambio de Titularidad en CRONOS.</div>
+                        <div class="mt-1 text-win-700 font-medium"><strong>Insight generado:</strong> La edición manual de contratos en Word provoca errores legales de género/datos y pérdida de tiempo.</div>
+                    </div>
+
+                    <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                        <p class="italic font-semibold text-slate-900">"Muchas gestiones están cayendo y regresan nuevamente los clientes para reingresar un ajuste... porque no se ha detallado que hay un proporcional (prorrateo)."</p>
+                        <div class="mt-1.5 text-slate-600"><strong>Contexto:</strong> Omar Córdova y José González (min 35:37–37:05) sobre errores recurrentes al aplicar descuentos antes del ciclo.</div>
+                        <div class="mt-1 text-win-700 font-medium"><strong>Insight generado:</strong> Calcular prorrateos al instante en CRONOS elimina reprocesos y mejora la retención definitiva (FCR).</div>
+                    </div>
+
+                    <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                        <p class="italic font-semibold text-slate-900">"El tiempo de espera puede ser mayor a 1 minuto cuando hacemos gestión simultánea de visitas técnicas, llenado de ticket, pantallazo y Discord."</p>
+                        <div class="mt-1.5 text-slate-600"><strong>Contexto:</strong> Omar Córdova (min 57:24) consultando sobre observaciones de Calidad por tiempos de espera.</div>
+                        <div class="mt-1 text-win-700 font-medium"><strong>Insight generado:</strong> Existe una brecha real entre la pauta de espera de 1 minuto y la carga operativa de escalamientos múltiples.</div>
+                    </div>
+                </div>
+
+                <!-- Columna Asesora Mujer / Perfil en Consolidación (5 citas) -->
+                <div class="space-y-3">
+                    <h3 class="font-heading font-bold text-sm uppercase tracking-wider text-purple-700 border-b border-purple-200 pb-2">Perfil Asociado: Asesora Mujer (Adopción Estructurada / Consolidación)</h3>
+
+                    <div class="p-3.5 rounded-2xl bg-purple-50/40 border border-purple-200">
+                        <p class="italic font-semibold text-slate-900">"Tiene mucha información que sirve... quizás para alguien nuevo que está comenzando, el Cronos va a ser su Biblia, por así decirlo."</p>
+                        <div class="mt-1.5 text-slate-600"><strong>Contexto:</strong> Omar Córdova (min 45:35) evaluando la utilidad integral de CRONOS para perfiles en consolidación.</div>
+                        <div class="mt-1 text-purple-800 font-medium"><strong>Insight generado:</strong> Para asesores con menor antigüedad, CRONOS actúa como guía única que reduce la curva de aprendizaje.</div>
+                    </div>
+
+                    <div class="p-3.5 rounded-2xl bg-purple-50/40 border border-purple-200">
+                        <p class="italic font-semibold text-slate-900">"El Cronos es como tener el SIGO resumido... súper amigable porque entras y ya está."</p>
+                        <div class="mt-1.5 text-slate-600"><strong>Contexto:</strong> José Eduardo González (min 46:06–48:11) comparando la usabilidad de CRONOS frente al manual corporativo SIGO.</div>
+                        <div class="mt-1 text-purple-800 font-medium"><strong>Insight generado:</strong> La arquitectura visual limpia y directa reduce la ansiedad operativa frente a manuales extensos.</div>
+                    </div>
+
+                    <div class="p-3.5 rounded-2xl bg-purple-50/40 border border-purple-200">
+                        <p class="italic font-semibold text-slate-900">"Lo utilizo casi por no decirlo todos los días, pero no sé por qué sale que no lo uso de hace como una semana... las alertas."</p>
+                        <div class="mt-1.5 text-slate-600"><strong>Contexto:</strong> José González (min 10:32 &amp; 55:41) consultando sobre el reporte semanal de uso enviado por Evelyn.</div>
+                        <div class="mt-1 text-purple-800 font-medium"><strong>Insight generado:</strong> Usar Clave Secreta sin encender el Timer SLA provoca falsos negativos de adopción en reportes de piso.</div>
+                    </div>
+
+                    <div class="p-3.5 rounded-2xl bg-purple-50/40 border border-purple-200">
+                        <p class="italic font-semibold text-slate-900">"En mi caso, clave secreta, tipificaciones y relojito (CRONOS SLA)... La clave es clave, sí, tipificaciones y claves."</p>
+                        <div class="mt-1.5 text-slate-600"><strong>Contexto:</strong> Omar Córdova y José González (min 42:36–44:27) priorizando los módulos esenciales del día a día.</div>
+                        <div class="mt-1 text-purple-800 font-medium"><strong>Insight generado:</strong> El núcleo crítico de valor diario recae en validación rápida, tipificación guiada y control del tiempo.</div>
+                    </div>
+
+                    <div class="p-3.5 rounded-2xl bg-purple-50/40 border border-purple-200">
+                        <p class="italic font-semibold text-slate-900">"Un feedback y la práctica, sí, la práctica en realidad [ayuda a entender un proceso más rápido]."</p>
+                        <div class="mt-1.5 text-slate-600"><strong>Contexto:</strong> Omar Córdova y José González (min 48:59–49:02) respondiendo cómo asimilan mejor nuevas herramientas.</div>
+                        <div class="mt-1 text-purple-800 font-medium"><strong>Insight generado:</strong> Los nuevos módulos (Titularidad/Prorrateos) requieren acompañamiento práctico y comunicados claros en la app.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- SECCIÓN 4: MAPAS DE EMPATÍA (ASESOR HOMBRE & ASESORA MUJER + SEC)-->
+        <!-- ================================================================ -->
+        <section id="sec-4" class="bg-white rounded-3xl shadow-sm border border-slate-200 p-7 md:p-9 print-break-before">
+            <div class="section-badge mb-3"><i class="fa-solid fa-brain"></i> Sección 4 &bull; Mapas de Empatía</div>
+            <h2 class="font-heading text-2xl md:text-3xl font-extrabold text-slate-900 mb-6">Mapas de Empatía: Asesor Hombre, Asesora Mujer, Supervisión y Calidad</h2>
+
+            <!-- Mapas Asesores (Primarios) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <!-- Asesor Hombre -->
+                <div class="border-2 border-win-500/30 rounded-2xl p-5 bg-orange-50/20 space-y-3">
+                    <div class="flex items-center justify-between border-b border-orange-200 pb-2.5">
+                        <h3 class="font-heading font-extrabold text-base text-slate-900">Asesor Hombre: Diego Vargas (Perfil Senior)</h3>
+                        <span class="text-[10px] font-bold bg-win-500 text-white px-2.5 py-0.5 rounded-full">Usuario Principal</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                        <div class="bg-white p-3 rounded-xl border border-slate-200">
+                            <div class="font-bold text-slate-900 mb-1">¿Qué piensa y siente?</div>
+                            <p class="text-slate-600">Siente saturación cuando una sola retención dispara 4 tareas paralelas. Piensa que su foco debe ser negociar, no llenar planillas repetitivas.</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-slate-200">
+                            <div class="font-bold text-slate-900 mb-1">¿Qué ve?</div>
+                            <p class="text-slate-600">10 ventanas abiertas (Fénix, Smart Wi-Fi, Discord, Excel, Word), clientes con casos de flipping y reportes semanales de uso de SLA.</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-slate-200">
+                            <div class="font-bold text-slate-900 mb-1">¿Qué escucha?</div>
+                            <p class="text-slate-600">Clientes insistiendo en irse por viaje/mudanza; alertas de calidad por espera &gt;1 min; colegas pidiendo apoyo en Discord.</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-slate-200">
+                            <div class="font-bold text-slate-900 mb-1">¿Qué dice y hace?</div>
+                            <p class="text-slate-600">Sondea a fondo para detectar flipping real; calcula prorrateos a mano para evitar que el cliente vuelva a llamar; pide herramientas todo-en-uno.</p>
+                        </div>
+                        <div class="bg-rose-50 p-3 rounded-xl border border-rose-200">
+                            <div class="font-bold text-rose-800 mb-1">Dolores</div>
+                            <p class="text-rose-900/80">Reprocesos por prorrateos no explicados, edición manual lenta en Word y demora al consultar ONT desconectada.</p>
+                        </div>
+                        <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+                            <div class="font-bold text-emerald-800 mb-1">Beneficios Esperados</div>
+                            <p class="text-emerald-900/80">Calculadora instantánea, PDF automático de Cambio de Titularidad y reducción de pasos en una consola rápida.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Asesora Mujer -->
+                <div class="border-2 border-purple-500/30 rounded-2xl p-5 bg-purple-50/20 space-y-3">
+                    <div class="flex items-center justify-between border-b border-purple-200 pb-2.5">
+                        <h3 class="font-heading font-extrabold text-base text-slate-900">Asesora Mujer: Lucía Chávez (En Consolidación)</h3>
+                        <span class="text-[10px] font-bold bg-purple-600 text-white px-2.5 py-0.5 rounded-full">Usuario Principal</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                        <div class="bg-white p-3 rounded-xl border border-slate-200">
+                            <div class="font-bold text-slate-900 mb-1">¿Qué piensa y siente?</div>
+                            <p class="text-slate-600">Quiere hacerlo impecable desde la primera llamada. Siente tranquilidad cuando CRONOS le da el guion exacto y el semáforo visible.</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-slate-200">
+                            <div class="font-bold text-slate-900 mb-1">¿Qué ve?</div>
+                            <p class="text-slate-600">Semáforo SLA fijo en su barra lateral, Acuerdos de Voz estructurados, avisos del día y Directorio ordenado por área.</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-slate-200">
+                            <div class="font-bold text-slate-900 mb-1">¿Qué escucha?</div>
+                            <p class="text-slate-600">Feedback de Calidad recordando fechas de ajuste y Clave Secreta; supervisores alentando a empatizar antes de ofertar descuentos.</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-slate-200">
+                            <div class="font-bold text-slate-900 mb-1">¿Qué dice y hace?</div>
+                            <p class="text-slate-600">Usa CRONOS FID como su "Biblia" diaria; copia plantillas en 1 clic para no cometer errores de tipeo ni olvidar requisitos.</p>
+                        </div>
+                        <div class="bg-rose-50 p-3 rounded-xl border border-rose-200">
+                            <div class="font-bold text-rose-800 mb-1">Dolores</div>
+                            <p class="text-rose-900/80">Incertidumbre ante cambios comerciales recientes, temor a errores críticos QA y pérdida de tiempo buscando en SIGO extenso.</p>
+                        </div>
+                        <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+                            <div class="font-bold text-emerald-800 mb-1">Beneficios Esperados</div>
+                            <p class="text-emerald-900/80">Curva de aprendizaje acelerada, alertas nativas si cambia de pestaña y confianza total al emitir documentos legales.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumen Mapas Secundarios: Supervisor & Calidad -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                <div>
+                    <div class="font-heading font-bold text-slate-900 mb-1">Mapa de Empatía &bull; Supervisor (Carlos Mendoza)</div>
+                    <p class="text-slate-600"><strong>Piensa/Ve:</strong> Colas en rojo y presión por KPIs diarios. <strong>Escucha:</strong> Asesores pidiendo apoyo y Coordinación exigiendo bajar TMO. <strong>Dolores:</strong> Chats perdidos y consolidación manual. <strong>Beneficio:</strong> Vista 360° y trazabilidad SLA.</p>
+                </div>
+                <div>
+                    <div class="font-heading font-bold text-slate-900 mb-1">Mapa de Empatía &bull; Calidad (Vanessa Morales)</div>
+                    <p class="text-slate-600"><strong>Piensa/Ve:</strong> Audios vs. CRM y riesgo regulatorio OSIPTEL. <strong>Escucha:</strong> "No seas tan rígida, se retuvo la cuenta". <strong>Dolores:</strong> Acuerdos mal leídos por prisa. <strong>Beneficio:</strong> Fuente única de verdad legal e inmutable.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- SECCIÓN 5: CUSTOMER JOURNEY DEL ASESOR                           -->
+        <!-- ================================================================ -->
+        <section id="sec-5" class="bg-white rounded-3xl shadow-sm border border-slate-200 p-7 md:p-9 card-avoid-break">
+            <div class="section-badge mb-3"><i class="fa-solid fa-route"></i> Sección 5 &bull; Customer Journey Específico del Asesor</div>
+            <h2 class="font-heading text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">Flujo Real del Asesor en Operación (Entrevistas 03/11/2026)</h2>
+            <p class="text-sm text-slate-500 mb-6">Recorrido validado directamente con los asesores entrevistados: <strong>Inicio Jornada &rarr; Ingreso CRM &rarr; Clave Secreta &rarr; Tipificación &rarr; CRONOS SLA &rarr; Escalamiento &rarr; Seguimiento &rarr; Cierre</strong>.</p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs min-w-[900px]">
+                    <thead>
+                        <tr class="bg-navy-900 text-white">
+                            <th class="p-3 rounded-tl-xl font-bold uppercase w-36">Etapa del Flujo</th>
+                            <th class="p-3 font-bold uppercase">Objetivo</th>
+                            <th class="p-3 font-bold uppercase">Acción Real del Asesor</th>
+                            <th class="p-3 font-bold uppercase">Frustración Identificada</th>
+                            <th class="p-3 rounded-tr-xl font-bold uppercase">Oportunidad de Mejora</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200">
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-extrabold text-slate-900 bg-slate-50">1. Inicio Jornada</td>
+                            <td class="p-3 text-slate-700">Preparar estación y conocer novedades del turno.</td>
+                            <td class="p-3 text-slate-600">Login Firebase en CRONOS FID, revisión de Avisos/Comunicados y apertura de apps.</td>
+                            <td class="p-3 text-rose-700">Múltiples pestañas saturando RAM; cierres de sesión en PC personal o autenticación Gmail.</td>
+                            <td class="p-3 text-emerald-700 font-medium">Centralizar herramientas en CRONOS para abrir máximo 3–5 pestañas y validar sesión estable.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-extrabold text-slate-900 bg-slate-50">2. Ingreso CRM</td>
+                            <td class="p-3 text-slate-700">Identificar cuenta, historial y motivo real tras el sondeo.</td>
+                            <td class="p-3 text-slate-600">Ingresa DNI/contrato en Fénix 360, consulta Smart Wi-Fi/WinForm para detectar viajes, mudanzas o flipping.</td>
+                            <td class="p-3 text-rose-700">Demora al consultar datos de ONT desconectada en CRM cuando urge validar potencia o CTO.</td>
+                            <td class="p-3 text-emerald-700 font-medium">Mantener guías rápidas y escenarios técnicos listos en CRONOS mientras carga la consulta ONT.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-extrabold text-slate-900 bg-slate-50">3. Clave Secreta</td>
+                            <td class="p-3 text-slate-700">Validar identidad del titular en segundos.</td>
+                            <td class="p-3 text-slate-600">Genera clave de 6 dígitos en CRONOS FID y dicta script al cliente (módulo #1 más usado).</td>
+                            <td class="p-3 text-rose-700">Anterior secuestro accidental de la barra espaciadora al digitar (resuelto en Sprint 1).</td>
+                            <td class="p-3 text-emerald-700 font-medium">Mantener acceso inmediato en 1 clic con registro automático en bitácora.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-extrabold text-slate-900 bg-slate-50">4. Tipificación</td>
+                            <td class="p-3 text-slate-700">Registrar correctamente oferta, descuento, ajuste o cesión.</td>
+                            <td class="p-3 text-slate-600">Usa Tipificaciones de CRONOS, verifica calendario de corte (24–48h / día 28) y calcula prorrateo.</td>
+                            <td class="p-3 text-rose-700">Cálculo manual de prorrateo causando reprocesos; llenado repetitivo de planilla IDE y Word de Cesión.</td>
+                            <td class="p-3 text-emerald-700 font-medium">Integrar Calculadora de Prorrateos y Generador Oficial Cambio de Titularidad (implementado v6.5.0).</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-extrabold text-slate-900 bg-slate-50">5. CRONOS SLA</td>
+                            <td class="p-3 text-slate-700">Controlar tiempo en espera y TMO (&le; 420s).</td>
+                            <td class="p-3 text-slate-600">Activa el timer/relojito lateral sticky y recibe alertas nativas (35s/45s/60s) al usar otras ventanas.</td>
+                            <td class="p-3 text-rose-700">Olvido de activar el timer (apareciendo sin uso en reportes) y choque entre espera de 1 min y trámites de 2–3 min.</td>
+                            <td class="p-3 text-emerald-700 font-medium">Recordatorio de uso de Timer SLA y propuesta formal a Operaciones sobre tiempos en tickets múltiples.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-extrabold text-slate-900 bg-slate-50">6. Escalamiento</td>
+                            <td class="p-3 text-slate-700">Derivar visitas técnicas simultáneas o aprobaciones.</td>
+                            <td class="p-3 text-slate-600">Genera tickets (recableado + Mesh + Winbox) y deriva por Discord/Correo usando Directorio (63 escenarios).</td>
+                            <td class="p-3 text-rose-700">Enviar pantallazos y repetir datos en CRM, Discord y correo consume demasiado tiempo en llamada.</td>
+                            <td class="p-3 text-emerald-700 font-medium">Consolidar resumen tipo checklist ("check-check-resumen") para copiar en un solo bloque.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-extrabold text-slate-900 bg-slate-50">7. Seguimiento</td>
+                            <td class="p-3 text-slate-700">Cumplir compromisos asumidos (ajustes 24h, traslados, cesiones).</td>
+                            <td class="p-3 text-slate-600">Verifica pago tras ajuste, coordina visita o envía contrato de Cambio de Titularidad por correo/Botmaker.</td>
+                            <td class="p-3 text-rose-700">Riesgo de olvidar pendientes por saturación de llamadas entrantes, haciendo que el cliente regrese molesto.</td>
+                            <td class="p-3 text-emerald-700 font-medium">Dejar Info de Beneficios clara y evaluar bandeja ligera de recordatorios de seguimiento.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-extrabold text-slate-900 bg-slate-50">8. Cierre</td>
+                            <td class="p-3 text-slate-700">Confirmar retención limpia y alimentar trazabilidad.</td>
+                            <td class="p-3 text-slate-600">Lee Acuerdo de Voz (si aplica), detiene timer SLA y cierra tipificación en Fénix 360.</td>
+                            <td class="p-3 text-rose-700">Desfase si el asesor no detiene/registra el ciclo completo en CRONOS SLA.</td>
+                            <td class="p-3 text-emerald-700 font-medium">Sincronización automática con Supabase + captura periódica de Encuesta interna NPS/CSAT/CES.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- SECCIÓN 6 & 7: INSIGHTS TRAZABLES Y PROBLEM STATEMENTS           -->
+        <!-- ================================================================ -->
+        <section id="sec-6" class="grid grid-cols-1 lg:grid-cols-2 gap-6 card-avoid-break">
+            <!-- INSIGHTS CON TRAZABILIDAD EXPLÍCITA -->
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-7">
+                <div class="section-badge mb-3"><i class="fa-solid fa-lightbulb"></i> Sección 6 &bull; Insights Trazables</div>
+                <h2 class="font-heading text-2xl font-extrabold text-slate-900 mb-4">Insights Clasificados por Fuente de Evidencia</h2>
+                <div class="space-y-3 text-xs">
+                    <div class="p-3.5 rounded-2xl bg-orange-50/50 border border-orange-200">
+                        <span class="inline-block bg-win-500 text-white font-extrabold px-2 py-0.5 rounded text-[10px] uppercase mb-1.5">Insight proveniente de entrevista</span>
+                        <p class="text-slate-700 leading-relaxed"><strong>Brecha de adopción entre seniors y nuevos:</strong> Mientras los asesores con ~2 años memorizan Acuerdos de Voz y usan prioritariamente Clave Secreta, Tipificaciones y Timer, los nuevos usan CRONOS FID como su <em>"Biblia operativa"</em> (Omar C. &amp; José E., Focus Group 03/11/2026).</p>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-orange-50/50 border border-orange-200">
+                        <span class="inline-block bg-win-500 text-white font-extrabold px-2 py-0.5 rounded text-[10px] uppercase mb-1.5">Insight proveniente de entrevista</span>
+                        <p class="text-slate-700 leading-relaxed"><strong>Prorrateos y Cambio de Titularidad como foco directo de reprocesos:</strong> La ausencia de cálculo automático de prorrateo y la edición manual en Word provocaban rellamadas de clientes y errores de género ("el/la cedente"), motivando su implementación inmediata en v6.5.0.</p>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-emerald-50/50 border border-emerald-200">
+                        <span class="inline-block bg-emerald-600 text-white font-extrabold px-2 py-0.5 rounded text-[10px] uppercase mb-1.5">Insight proveniente de telemetría</span>
+                        <p class="text-slate-700 leading-relaxed"><strong>Efectividad preventiva del Timer SLA:</strong> Sobre <strong>8,120 eventos</strong> reales en <code class="font-bold">public.cronos_sla</code> (muestra de 1,000 recientes), el <strong>92.0%</strong> se resuelve en Normal (45.9%) o Preventivo (46.1%), con solo 1.0% en SLA Crítico.</p>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-sky-50/50 border border-sky-200">
+                        <span class="inline-block bg-sky-600 text-white font-extrabold px-2 py-0.5 rounded text-[10px] uppercase mb-1.5">Insight proveniente de observación operativa</span>
+                        <p class="text-slate-700 leading-relaxed"><strong>Desconexión entre uso de módulos y medición SLA:</strong> Asesores que usaban Clave Secreta diariamente aparecían sin actividad en reportes porque no iniciaban el Timer SLA; además, el despliegue HTTPS en Vercel desbloqueó alertas nativas de Windows bloqueadas en <code class="font-bold">file:///</code>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROBLEM STATEMENTS -->
+            <div id="sec-7" class="bg-white rounded-3xl shadow-sm border border-slate-200 p-7">
+                <div class="section-badge mb-3"><i class="fa-solid fa-crosshairs"></i> Sección 7 &bull; Problem Statements</div>
+                <h2 class="font-heading text-2xl font-extrabold text-slate-900 mb-4">Declaraciones de Problema (Centradas en el Asesor)</h2>
+                <div class="space-y-3 text-xs">
+                    <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                        <div class="font-black uppercase text-win-600 mb-1">PS-01 &bull; Reducción de Pasos Operativos</div>
+                        <p class="text-slate-800 leading-relaxed"><strong>Los asesores de Fidelización</strong> necesitan reducir pasos operativos y unificar herramientas en CRONOS FID <strong>porque</strong> actualmente utilizan múltiples aplicativos (CRM, Word, Excel, Discord, Botmaker) para completar una sola gestión, saturando su equipo y aumentando el TMO.</p>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                        <div class="font-black uppercase text-purple-700 mb-1">PS-02 &bull; Automatización Documental y Prorrateos</div>
+                        <p class="text-slate-800 leading-relaxed"><strong>Los asesores en llamada</strong> necesitan calcular prorrateos al instante y generar contratos oficiales de Cambio de Titularidad desde formularios guiados <strong>porque</strong> calcular manualmente y editar archivos Word provoca errores de redacción y rellamadas de clientes.</p>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                        <div class="font-black uppercase text-sky-700 mb-1">PS-03 &bull; Control de Tiempos de Espera y Trazabilidad</div>
+                        <p class="text-slate-800 leading-relaxed"><strong>Los asesores y supervisores</strong> necesitan alertas SLA persistentes y un flujo claro de activación del cronómetro <strong>porque</strong> cambiar de pestaña hacia Fénix 360 o Power BI oculta el tiempo transcurrido y distorsiona los reportes de uso.</p>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                        <div class="font-black uppercase text-indigo-700 mb-1">PS-04 &bull; Alineación Legal entre Piso y Calidad</div>
+                        <p class="text-slate-800 leading-relaxed"><strong>El equipo de Calidad y los asesores nuevos</strong> necesitan scripts legales inmutables y plantillas oficiales con identidad WIN (<code class="font-bold">Logo_WIN-08</code>) <strong>porque</strong> la presión por bajar el TMO induce omisiones normativas ante OSIPTEL.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- SECCIÓN NUEVA: MATRIZ DE TRAZABILIDAD                            -->
+        <!-- ================================================================ -->
+        <section id="sec-matriz-trazabilidad" class="bg-white rounded-3xl shadow-sm border border-slate-200 p-7 md:p-9 print-break-before">
+            <div class="section-badge mb-3"><i class="fa-solid fa-diagram-project"></i> Sección Nueva &bull; Matriz de Trazabilidad</div>
+            <h2 class="font-heading text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">Trazabilidad Completa: Entrevista &rarr; Hallazgo &rarr; Insight &rarr; Problema &rarr; Solución CRONOS FID</h2>
+            <p class="text-sm text-slate-500 mb-6">Vínculo directo y verificable entre cada hallazgo real extraído del Focus Group (03/11/2026) y las soluciones diseñadas o proyectadas en CRONOS FID.</p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs min-w-[920px]">
+                    <thead>
+                        <tr class="bg-navy-900 text-white">
+                            <th class="p-3 rounded-tl-xl font-bold uppercase w-32">Área / Módulo</th>
+                            <th class="p-3 font-bold uppercase">Entrevista (Fuente)</th>
+                            <th class="p-3 font-bold uppercase">Hallazgo</th>
+                            <th class="p-3 font-bold uppercase">Insight</th>
+                            <th class="p-3 font-bold uppercase">Problema Identificado</th>
+                            <th class="p-3 rounded-tr-xl font-bold uppercase">Solución en CRONOS FID</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200">
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-extrabold text-slate-900 bg-slate-50">Seguimientos</td>
+                            <td class="p-3 text-slate-600">Omar C. (min 27:46)</td>
+                            <td class="p-3 text-slate-700">Seguimiento de ajustes (24–48h), traslados y cesiones pendientes consume tiempo y puede olvidarse.</td>
+                            <td class="p-3 text-win-700 font-medium">El asesor pierde tiempo valioso administrando pendientes de forma manual.</td>
+                            <td class="p-3 text-rose-700">Falta de control estructurado de seguimientos, causando rellamadas molestas.</td>
+                            <td class="p-3 text-emerald-700 font-semibold">Roadmap de Seguimientos Inteligentes + estandarización de Info de Beneficios.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-extrabold text-slate-900 bg-slate-50">Tipificaciones</td>
+                            <td class="p-3 text-slate-600">José E. (min 25:09, 40:51) &amp; Omar C. (min 09:26)</td>
+                            <td class="p-3 text-slate-700">Múltiples pasos repetitivos entre CRM, plantilla IDE de descuentos, Discord y bloc de notas.</td>
+                            <td class="p-3 text-win-700 font-medium">La repetición de digitación y cambio de ventanas sobrecarga cognitivamente al asesor.</td>
+                            <td class="p-3 text-rose-700">Exceso de tiempo operativo en tipificar y documentar ofertas/ajustes.</td>
+                            <td class="p-3 text-emerald-700 font-semibold">Matriz de Tipificaciones Asistidas con copiado en 1 clic (2° módulo más usado).</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-extrabold text-slate-900 bg-slate-50">Acuerdos de Voz</td>
+                            <td class="p-3 text-slate-600">Omar C. (min 44:35, 45:35) &amp; José E. (min 44:38)</td>
+                            <td class="p-3 text-slate-700">Seniors los recitan de memoria o en prints propios; asesores nuevos los usan como su "Biblia".</td>
+                            <td class="p-3 text-win-700 font-medium">Memorizar contratos expone a errores si cambian condiciones; los nuevos requieren guía exacta.</td>
+                            <td class="p-3 text-rose-700">Riesgo de vicios legales ante OSIPTEL y sanciones de Calidad.</td>
+                            <td class="p-3 text-emerald-700 font-semibold">Módulo Acuerdos de Voz con scripts fonéticos validados y cálculo con IGV.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-extrabold text-slate-900 bg-slate-50">CRONOS SLA</td>
+                            <td class="p-3 text-slate-600">José E. (min 10:32, 55:41) &amp; Omar C. (min 57:24)</td>
+                            <td class="p-3 text-slate-700">Asesores olvidan activar el timer (salen sin uso en reportes) y sufren al cambiar de pestaña.</td>
+                            <td class="p-3 text-win-700 font-medium">El asesor pierde noción del SLA al mirar Fénix 360 o Power BI si no hay alerta externa.</td>
+                            <td class="p-3 text-rose-700">Observaciones de hasta 500s en espera y falsos negativos de adopción.</td>
+                            <td class="p-3 text-emerald-700 font-semibold">Timer sticky lateral, modal de confirmación y notificaciones nativas Windows vía Vercel HTTPS.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-extrabold text-slate-900 bg-slate-50">Cambio de Titularidad</td>
+                            <td class="p-3 text-slate-600">Omar C. (min 53:52–54:28)</td>
+                            <td class="p-3 text-slate-700">Abrir Word manual para cambiar nombres, correos y "el/la cedente" genera errores frecuentes.</td>
+                            <td class="p-3 text-win-700 font-medium">Editar contratos legales manualmente bajo presión de llamada induce fallos formales.</td>
+                            <td class="p-3 text-rose-700">Demora en trámite y envío de contratos con errores de redacción/género.</td>
+                            <td class="p-3 text-emerald-700 font-semibold">Generador Documental Oficial (Natural&rarr;Natural y Natural&rarr;Jurídica) con Logo_WIN-08, Word y PDF A4 (v6.5.0).</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-extrabold text-slate-900 bg-slate-50">Calculadora de Prorrateos</td>
+                            <td class="p-3 text-slate-600">Omar C. (min 35:37) &amp; José E. (min 37:05)</td>
+                            <td class="p-3 text-slate-700">Clientes regresan reclamando porque no se calculó ni explicó el monto proporcional del mes.</td>
+                            <td class="p-3 text-win-700 font-medium">Sin cálculo instantáneo en pantalla, el asesor omite el detalle o falla el monto verbal.</td>
+                            <td class="p-3 text-rose-700">Reprocesos y pérdida de confianza tras la retención inicial.</td>
+                            <td class="p-3 text-emerald-700 font-semibold">Calculadora de Prorrateos en vivo con desglose de días y speech explicativo (v6.5.0).</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-extrabold text-slate-900 bg-slate-50">Procesos Operativos</td>
+                            <td class="p-3 text-slate-600">José E. (min 46:06) &amp; Jhonny L. (min 53:13)</td>
+                            <td class="p-3 text-slate-700">Saturación de PC con 10 Excels y 20 pestañas; necesidad de un "SIGO resumido y amigable".</td>
+                            <td class="p-3 text-win-700 font-medium">Agrupar formularios, acuerdos y calculadoras bajo una sola ruta reduce carga de RAM y clics.</td>
+                            <td class="p-3 text-rose-700">Dispersión documental y lentitud en estaciones de trabajo.</td>
+                            <td class="p-3 text-emerald-700 font-semibold">Módulo unificado Procesos Operativos con carga bajo demanda (v6.5.0).</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-extrabold text-slate-900 bg-slate-50">Clave Secreta</td>
+                            <td class="p-3 text-slate-600">Omar C. &amp; José E. (min 09:26, 44:21)</td>
+                            <td class="p-3 text-slate-700">Es el módulo #1 indispensable en cada llamada; Auditoría detectó secuestro de barra espaciadora.</td>
+                            <td class="p-3 text-win-700 font-medium">La validación de identidad debe ser instantánea y sin bloqueos de teclado al digitar.</td>
+                            <td class="p-3 text-rose-700">Saltos accidentales de pestaña al escribir nombres de clientes.</td>
+                            <td class="p-3 text-emerald-700 font-semibold">Generador criptográfico 6 dígitos en 1 clic + fix de teclado (Sprint 1).</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-extrabold text-slate-900 bg-slate-50">Comunicados &amp; Encuestas</td>
+                            <td class="p-3 text-slate-600">José E. (min 46:06, 48:59) &amp; Omar C. (min 48:59)</td>
+                            <td class="p-3 text-slate-700">Desconocimiento de pestañas nuevas de CRONOS; aprendizaje óptimo mediante práctica y feedback.</td>
+                            <td class="p-3 text-win-700 font-medium">Las mejoras solo se adoptan cuando se difunden en el flujo diario y se recoge feedback directo.</td>
+                            <td class="p-3 text-rose-700">Subutilización de módulos nuevos por falta de comunicación in-app.</td>
+                            <td class="p-3 text-emerald-700 font-semibold">Centro de Avisos/Comunicados y Motor de Encuestas NPS/CSAT/CES (v6.5.0).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- SECCIÓN 8 & 9: IDEACIÓN Y PROTOTIPADO (ROADMAP v1.0 -> v6.5.0)   -->
+        <!-- ================================================================ -->
+        <section id="sec-8" class="bg-white rounded-3xl shadow-sm border border-slate-200 p-7 md:p-9 print-break-before">
+            <div class="section-badge mb-3"><i class="fa-solid fa-wand-magic-sparkles"></i> Sección 8 &bull; Ideación &amp; Soluciones Implementadas</div>
+            <h2 class="font-heading text-2xl md:text-3xl font-extrabold text-slate-900 mb-4">Soluciones Implementadas desde las Necesidades del Asesor</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs mb-8">
+                <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50">
+                    <div class="font-heading font-bold text-sm text-slate-900 mb-1"><i class="fa-solid fa-stopwatch text-win-500 mr-1"></i> CRONOS SLA</div>
+                    <p class="text-slate-600">Cronómetro sticky lateral para asesores, semáforo tricolor, modal de confirmación ante reset y alertas nativas Windows en HTTPS (35s/45s/60s).</p>
+                </div>
+                <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50">
+                    <div class="font-heading font-bold text-sm text-slate-900 mb-1"><i class="fa-solid fa-key text-win-500 mr-1"></i> Clave Secreta &amp; Tipificaciones</div>
+                    <p class="text-slate-600">Los dos módulos más usados según entrevistas: generación criptográfica en 1 clic (sin bloqueo de barra espaciadora) y árbol de descuentos/ajustes.</p>
+                </div>
+                <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50">
+                    <div class="font-heading font-bold text-sm text-slate-900 mb-1"><i class="fa-solid fa-file-signature text-win-500 mr-1"></i> Cambio de Titularidad Oficial</div>
+                    <p class="text-slate-600">Respuesta directa al pedido de Omar C. en el Focus Group: escenarios Natural&rarr;Natural y Natural&rarr;Jurídica con <code class="font-bold">Logo_WIN-08</code>, Word (.doc) y PDF A4.</p>
+                </div>
+                <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50">
+                    <div class="font-heading font-bold text-sm text-slate-900 mb-1"><i class="fa-solid fa-calculator text-win-500 mr-1"></i> Calculadora de Prorrateos</div>
+                    <p class="text-slate-600">Respuesta directa a Omar C. y José E.: calcula transición de planes y ciclo con guion explicativo para evitar reprocesos del cliente.</p>
+                </div>
+                <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50">
+                    <div class="font-heading font-bold text-sm text-slate-900 mb-1"><i class="fa-solid fa-folder-tree text-win-500 mr-1"></i> Directorio (63 Escenarios) &amp; Tickets</div>
+                    <p class="text-slate-600">Búsqueda rápida por área (NOC, Terreno, Facturación, Legal), plantillas de correo y derivaciones Discord estandarizadas.</p>
+                </div>
+                <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50">
+                    <div class="font-heading font-bold text-sm text-slate-900 mb-1"><i class="fa-solid fa-chart-pie text-win-500 mr-1"></i> Encuestas, AI Insights, Dashboard &amp; Auditoría</div>
+                    <p class="text-slate-600">Captura NPS/CSAT/CES, comunicados en plataforma, analítica predictiva IA, Dashboard 360° y gobernanza RBAC (12 módulos x 6 roles).</p>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 9: PROTOTIPADO / ROADMAP -->
+            <div id="sec-9" class="pt-4 border-t border-slate-200">
+                <div class="section-badge mb-3"><i class="fa-solid fa-timeline"></i> Sección 9 &bull; Prototipado &amp; Roadmap (v1.0.0 &rarr; v6.5.0)</div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="font-extrabold text-slate-500">v1.0.0 &ndash; v3.9.0 (Ago–Sep 2026)</div>
+                        <div class="font-bold text-slate-900 mt-1">MVP Clave Secreta + Cloud</div>
+                        <p class="text-slate-600 mt-1">Generador de Clave Secreta, rebranding CRONOS FID y bitácora Firestore.</p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-amber-50/50 border border-amber-200">
+                        <div class="font-extrabold text-amber-700">v4.0.0 &ndash; v5.1.0 (Sep–Oct 2026)</div>
+                        <div class="font-bold text-slate-900 mt-1">Ecosistema Operativo + IA</div>
+                        <p class="text-slate-600 mt-1">Acuerdos de Voz, Discord, 63 escenarios, Supabase PostgreSQL, Exportaciones Excel/PDF y Suite AI Insights.</p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-indigo-50/50 border border-indigo-200">
+                        <div class="font-extrabold text-indigo-700">v5.2.0 &ndash; v5.2.2 (14 Oct 2026)</div>
+                        <div class="font-bold text-slate-900 mt-1">Heurística + Sprints 1, 1.5 y 2</div>
+                        <p class="text-slate-600 mt-1">IGU 76.9%, sticky SLA, fix barra espaciadora, tecla ESC, notificaciones SO y matriz RBAC 12x6.</p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-orange-50 border border-win-500/40">
+                        <div class="font-extrabold text-win-600">v6.0.0 &rarr; v6.5.0 (Nov 2026)</div>
+                        <div class="font-bold text-slate-900 mt-1">Vercel + Procesos Operativos</div>
+                        <p class="text-slate-600 mt-1">Despliegue Vercel, Encuestas, Comunicados, Cambio de Titularidad oficial (Logo_WIN-08) y Calculadora de Prorrateos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- SECCIÓN NUEVA: TRAZABILIDAD DEL PRODUCTO                         -->
+        <!-- ================================================================ -->
+        <section id="sec-9b" class="bg-white rounded-3xl shadow-sm border border-slate-200 p-7 md:p-9 print-break-before">
+            <div class="section-badge mb-3"><i class="fa-solid fa-code-branch"></i> Sección Nueva &bull; Trazabilidad del Producto</div>
+            <h2 class="font-heading text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">Evolución Basada en Evidencia: Problema &rarr; Idea &rarr; Sprint &rarr; Implementación &rarr; Resultado</h2>
+            <p class="text-sm text-slate-500 mb-6">Demostración de cómo cada ciclo de Design Thinking se tradujo en entregas concretas dentro de CRONOS FID.</p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs min-w-[880px]">
+                    <thead>
+                        <tr class="bg-slate-900 text-white">
+                            <th class="p-3 rounded-tl-xl font-bold uppercase">Problema Detectado</th>
+                            <th class="p-3 font-bold uppercase">Idea Generada</th>
+                            <th class="p-3 font-bold uppercase w-28">Sprint / Versión</th>
+                            <th class="p-3 font-bold uppercase">Implementación Realizada</th>
+                            <th class="p-3 rounded-tr-xl font-bold uppercase">Resultado Esperado</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200">
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 text-rose-700 font-medium">Secuestro de barra espaciadora en Clave Secreta, resets accidentales del Timer SLA y modales sin ESC (IGU H3: 6.2/10).</td>
+                            <td class="p-3 text-slate-700">Devolver control y libertad al asesor con confirmaciones explícitas y atajos estándar.</td>
+                            <td class="p-3 font-extrabold text-indigo-700">Sprint 1<br><span class="text-[10px] text-slate-400">v5.2.1</span></td>
+                            <td class="p-3 text-slate-600">Fix de barra espaciadora en inputs, modal <code class="bg-slate-100 px-1 rounded">#modal-confirm-reset-sla</code>, manejador global ESC y toasts accionables.</td>
+                            <td class="p-3 text-emerald-700 font-semibold">Cero reinicios involuntarios de SLA y elevación de Heurística H3 &gt; 8.5/10.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 text-rose-700 font-medium">El asesor pierde de vista el semáforo SLA al cambiar a CRM o Power BI (y bloqueo de alertas en <code class="bg-slate-100 px-1 rounded">file:///</code>).</td>
+                            <td class="p-3 text-slate-700">Alertas nativas del sistema operativo en segundo plano + panel sticky lateral exclusivo del asesor.</td>
+                            <td class="p-3 font-extrabold text-indigo-700">Sprint 1.5<br><span class="text-[10px] text-slate-400">v5.2.1</span></td>
+                            <td class="p-3 text-slate-600">Fijación sticky <code class="bg-slate-100 px-1 rounded">#sidebar-sticky-wrapper</code> y <code class="bg-slate-100 px-1 rounded">new Notification()</code> a 35s/45s/60s sobre origen HTTPS.</td>
+                            <td class="p-3 text-emerald-700 font-semibold">Control proactivo de esperas (92.0% de eventos en Normal + Preventivo).</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 text-rose-700 font-medium">Riesgo de acceso de asesores a vistas gerenciales y necesidad de gobernanza multi-rol.</td>
+                            <td class="p-3 text-slate-700">Aislamiento reactivo de permisos por rol desde matriz centralizada.</td>
+                            <td class="p-3 font-extrabold text-indigo-700">Sprint 2<br><span class="text-[10px] text-slate-400">v5.2.2</span></td>
+                            <td class="p-3 text-slate-600">Matriz RBAC de 12 módulos x 6 roles (Admin, Formador, Coord., Sup., Calidad, Asesor).</td>
+                            <td class="p-3 text-emerald-700 font-semibold">Interfaz limpia para el asesor y seguridad organizacional en 1 clic.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 text-rose-700 font-medium">Restricción de notificaciones en archivos locales y necesidad de despliegue continuo estable.</td>
+                            <td class="p-3 text-slate-700">Migrar infraestructura web a entorno HTTPS productivo conectado a GitHub.</td>
+                            <td class="p-3 font-extrabold text-emerald-700">Migración<br><span class="text-[10px] text-slate-400">v6.0.0</span></td>
+                            <td class="p-3 text-slate-600">Publicación oficial en Vercel (<code class="bg-slate-100 px-1 rounded">cronos-gray.vercel.app</code>) manteniendo Firebase y Supabase.</td>
+                            <td class="p-3 text-emerald-700 font-semibold">Acceso universal HTTPS, cero errores de despliegue y actualizaciones inmediatas.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 text-rose-700 font-medium">Falta de canal estructurado de avisos en piso y sin medición formal de NPS/CSAT/CES.</td>
+                            <td class="p-3 text-slate-700">Integrar comunicados administrables y motor de encuestas dentro de la app.</td>
+                            <td class="p-3 font-extrabold text-win-600">Sprints A–D<br><span class="text-[10px] text-slate-400">v6.5.0</span></td>
+                            <td class="p-3 text-slate-600">Centro de Comunicados/Avisos, <code class="bg-slate-100 px-1 rounded">CronosSurveyEngine</code> y optimización de exportaciones.</td>
+                            <td class="p-3 text-emerald-700 font-semibold">Alineación diaria de turno y captura continua de voz del asesor.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 text-rose-700 font-medium">Reprocesos por prorrateos mal explicados y errores manuales en Word de Cambio de Titularidad (Focus Group 03/11/2026).</td>
+                            <td class="p-3 text-slate-700">Unificar Acuerdos de Voz, Formularios Oficiales y Calculadoras en un solo módulo bajo demanda.</td>
+                            <td class="p-3 font-extrabold text-win-600">Evolución<br><span class="text-[10px] text-slate-400">v6.5.0</span></td>
+                            <td class="p-3 text-slate-600">Módulo <strong>Procesos Operativos</strong>: Calculadora de Prorrateos + Generador oficial de Cesión (Natural&rarr;Natural / Natural&rarr;Jurídica) con <code class="bg-slate-100 px-1 rounded">Logo_WIN-08</code>, Word y PDF A4.</td>
+                            <td class="p-3 text-emerald-700 font-semibold">Reducción drástica de reprocesos, cero errores de género/cláusulas y ahorro de tiempo por llamada.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- SECCIÓN 10, 11 & 12: VALIDACIÓN, PLAN 2027 Y CONCLUSIONES        -->
+        <!-- ================================================================ -->
+        <section id="sec-10" class="bg-white rounded-3xl shadow-sm border border-slate-200 p-7 md:p-9 card-avoid-break">
+            <div class="section-badge mb-3"><i class="fa-solid fa-chart-line"></i> Sección 10 &bull; Validación Actual</div>
+            <h2 class="font-heading text-2xl font-extrabold text-slate-900 mb-4">Adopción, Uso, Métricas CX y Feedback Validado</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5 text-xs">
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                    <div class="font-bold text-slate-500 uppercase">Telemetría Real Supabase</div>
+                    <div class="text-2xl font-heading font-black text-slate-900 mt-1">8,120 Eventos SLA</div>
+                    <p class="text-slate-600 mt-1">Uso activo sobre dotación de 41 asesores en Fidelización.</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200">
+                    <div class="font-bold text-emerald-700 uppercase">Cumplimiento Preventivo</div>
+                    <div class="text-2xl font-heading font-black text-emerald-700 mt-1">92.0% en Rango</div>
+                    <p class="text-emerald-900/80 mt-1">45.9% Normal + 46.1% Preventivo (solo 1.0% SLA Crítico).</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200">
+                    <div class="font-bold text-amber-800 uppercase">NPS / CES / CSAT (v6.5.0)</div>
+                    <div class="text-lg font-heading font-black text-amber-900 mt-1">Instrumento Activo</div>
+                    <p class="text-amber-900/80 mt-1">Motor desplegado en Vercel; primera ola de captura en curso (sin datos inventados).</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-11" class="bg-white rounded-3xl shadow-sm border border-slate-200 p-7 md:p-9 card-avoid-break">
+            <div class="section-badge mb-3"><i class="fa-solid fa-calendar-check"></i> Sección 11 &bull; Plan de Validación Futura 2027</div>
+            <h2 class="font-heading text-2xl font-extrabold text-slate-900 mb-4">Indicadores y Metas 2027</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                        <tr class="bg-slate-900 text-white">
+                            <th class="p-2.5 rounded-tl-xl">Indicador</th>
+                            <th class="p-2.5">Meta 2027</th>
+                            <th class="p-2.5">Frecuencia</th>
+                            <th class="p-2.5 rounded-tr-xl">Mecanismo de Validación</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200">
+                        <tr><td class="p-2.5 font-bold text-win-600">NPS</td><td class="p-2.5 font-bold">&ge; +50 pts</td><td class="p-2.5">Trimestral</td><td class="p-2.5">Encuesta interna v6.5.0 + seguimiento a detractores.</td></tr>
+                        <tr><td class="p-2.5 font-bold text-win-600">CES</td><td class="p-2.5 font-bold">&le; 1.8 / 5.0</td><td class="p-2.5">Mensual</td><td class="p-2.5">Medición de esfuerzo en flujos de Titularidad, Prorrateos y Directorio.</td></tr>
+                        <tr><td class="p-2.5 font-bold text-win-600">CSAT</td><td class="p-2.5 font-bold">&ge; 4.5 / 5.0</td><td class="p-2.5">Trimestral</td><td class="p-2.5">Satisfacción por rol (Asesores, Supervisión, Calidad).</td></tr>
+                        <tr><td class="p-2.5 font-bold text-win-600">Adopción</td><td class="p-2.5 font-bold">&ge; 95% Dotación</td><td class="p-2.5">Semanal</td><td class="p-2.5">Uso efectivo de Timer SLA (&ge; 180s) y módulos operativos.</td></tr>
+                        <tr><td class="p-2.5 font-bold text-win-600">Productividad</td><td class="p-2.5 font-bold">&gt; 75% Retención / &ge; 88% QA</td><td class="p-2.5">Mensual</td><td class="p-2.5">Correlación entre adopción CRONOS y tasa de retención / FCR.</td></tr>
+                        <tr><td class="p-2.5 font-bold text-win-600">TMO</td><td class="p-2.5 font-bold">&le; 420 seg</td><td class="p-2.5">Diaria / Semanal</td><td class="p-2.5">Dashboard 360° y alertas preventivas en tiempo real.</td></tr>
+                        <tr><td class="p-2.5 font-bold text-win-600">TE (Espera)</td><td class="p-2.5 font-bold">-30% vs. línea base</td><td class="p-2.5">Quincenal</td><td class="p-2.5">Tiempos de búsqueda y escalamiento en tickets simultáneos.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="sec-12" class="bg-gradient-to-br from-navy-900 to-slate-900 text-white rounded-3xl shadow-md p-7 md:p-9 border-t-4 border-win-500 card-avoid-break">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-win-500/20 text-orange-300 border border-win-500/40 mb-4">
+                <i class="fa-solid fa-award"></i> Sección 12 &bull; Conclusiones Estratégicas
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+                    <h3 class="font-heading font-bold text-sm text-win-500 mb-2">1. ¿Resolvió el problema inicial?</h3>
+                    <p class="text-slate-300 leading-relaxed"><strong>Sí.</strong> Eliminó la dispersión crítica de archivos al centralizar Clave Secreta, Tipificaciones, Directorio, SLA, Prorrateos y Cambio de Titularidad en una sola consola productiva en Vercel con 8,120 eventos trazados.</p>
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+                    <h3 class="font-heading font-bold text-sm text-sky-400 mb-2">2. ¿Cómo evolucionó su propósito?</h3>
+                    <p class="text-slate-300 leading-relaxed">Pasó de ser un generador puntual de claves a ser la columna vertebral operativa del asesor en piso, escuchando sus entrevistas reales para transformar dolores cotidianos en módulos listos en días, sin esperar largos desarrollos del CRM legado.</p>
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+                    <h3 class="font-heading font-bold text-sm text-emerald-400 mb-2">3. ¿Cuál es el siguiente reto?</h3>
+                    <p class="text-slate-300 leading-relaxed">Consolidar la primera ola cuantitativa de NPS/CES/CSAT, unificar en un solo flujo el resumen de tickets múltiples ("check-resumen") solicitado en entrevistas y alinear con Operaciones la pauta de tiempos de espera en gestiones complejas.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="max-w-6xl mx-auto px-6 py-8 text-center text-xs text-slate-500 border-t border-slate-200 mt-8">
+        <p class="font-bold text-slate-700">CRONOS FID &bull; JELI v6.5.0 &bull; WIN NOV2026</p>
+        <p class="mt-1">Documento Oficial de Design Thinking Centrado en el Asesor &bull; Fuente Primaria: Focus Group 03/11/2026</p>
+    </footer>
+
+</body>
+</html>

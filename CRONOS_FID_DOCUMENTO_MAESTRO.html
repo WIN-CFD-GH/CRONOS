@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRONOS FID - Documento Maestro Corporativo | Manual de Arquitectura, Operaciones y Estrategia</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome 6 Pro CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        win: {
+                            orange: '#FF5A0A',
+                            orangeHover: '#E04E07',
+                            orangeLight: '#FFF5F0',
+                            orangeDark: '#993504',
+                            dark: '#0B0F19',
+                            darker: '#060911',
+                            card: '#111827',
+                            cardBorder: '#1F2937',
+                            border: '#374151'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #060911;
+            color: #E2E8F0;
+            line-height: 1.6;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -0.02em;
+        }
+        .code-block {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B0F19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1F2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF5A0A;
+        }
+        @media print {
+            body {
+                background-color: #ffffff !important;
+                color: #0f172a !important;
+                font-size: 10pt !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .sidebar-nav {
+                display: none !important;
+            }
+            .main-content {
+                margin-left: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 0 !important;
+            }
+            .print-card {
+                background-color: #ffffff !important;
+                border: 1px solid #cbd5e1 !important;
+                color: #0f172a !important;
+                box-shadow: none !important;
+                page-break-inside: avoid;
+                margin-bottom: 1.5rem !important;
+            }
+            .print-break-before {
+                page-break-before: always;
+            }
+            .print-break-inside-avoid {
+                page-break-inside: avoid;
+            }
+            a {
+                text-decoration: none !important;
+                color: inherit !important;
+            }
+            .text-white, .text-slate-200, .text-slate-300 {
+                color: #0f172a !important;
+            }
+            .text-slate-400, .text-slate-500 {
+                color: #475569 !important;
+            }
+            .bg-slate-900, .bg-slate-950, .bg-win-card, .bg-win-dark, .bg-win-darker {
+                background-color: #f8fafc !important;
+                border-color: #cbd5e1 !important;
+            }
+            .border-slate-800, .border-slate-700, .border-win-cardBorder {
+                border-color: #e2e8f0 !important;
+            }
+            .code-block {
+                background-color: #f1f5f9 !important;
+                border-color: #cbd5e1 !important;
+                color: #0f172a !important;
+            }
+            .badge-print {
+                border: 1px solid #94a3b8 !important;
+                color: #0f172a !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen antialiased selection:bg-orange-600 selection:text-white">
+
+    <!-- TOP HEADER BAR -->
+    <header class="no-print sticky top-0 z-50 bg-[#0B0F19]/90 backdrop-blur-md border-b border-slate-800/80 px-4 sm:px-8 py-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <img src="./cronos_fid_final.png" alt="CRONOS FID" class="h-9 w-auto object-contain drop-shadow" onerror="this.src='./CRONOS_FID_icon.png'">
+            <div class="border-l border-slate-700 pl-3">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-black uppercase tracking-wider text-orange-500 font-mono">DOCUMENTO MAESTRO CORPORATIVO</span>
+                    <span class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold">v6.0.0 OFICIAL</span>
+                </div>
+                <h1 class="text-sm font-bold text-white tracking-tight">CRONOS FID &bull; Centro de Recursos Operativos para Negociación y Fidelización</h1>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <button onclick="window.print()" class="px-3.5 py-1.5 rounded-lg bg-orange-600 hover:bg-orange-500 text-white font-semibold text-xs transition flex items-center gap-1.5 shadow-lg shadow-orange-600/20 cursor-pointer">
+                <i class="fa-solid fa-file-pdf"></i>
+                <span>Imprimir / Exportar a PDF</span>
+            </button>
+            <a href="#inicio" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition" title="Ir arriba">
+                <i class="fa-solid fa-arrow-up"></i>
+            </a>
+        </div>
+    </header>
+
+    <div class="flex max-w-[1700px] mx-auto" id="inicio">
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="sidebar-nav no-print hidden lg:block w-72 shrink-0 sticky top-[61px] h-[calc(100vh-61px)] overflow-y-auto border-r border-slate-800/80 bg-[#0B0F19]/60 p-4 text-xs">
+            <div class="mb-3 px-2 text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center justify-between">
+                <span>Tabla de Contenidos</span>
+                <span class="text-[10px] text-orange-400 font-mono">21 Secciones</span>
+            </div>
+            <nav class="space-y-1">
+                <a href="#sec-01" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">01</span><span>Información General</span></a>
+                <a href="#sec-02" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">02</span><span>¿Qué es CRONOS FID?</span></a>
+                <a href="#sec-03" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">03</span><span>Propósito</span></a>
+                <a href="#sec-04" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">04</span><span>Misión Oficial</span></a>
+                <a href="#sec-05" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">05</span><span>Visión Futura</span></a>
+                <a href="#sec-06" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">06</span><span>Estructura de Usuarios & Roles</span></a>
+                <a href="#sec-07" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">07</span><span>Arquitectura Técnica</span></a>
+                <a href="#sec-08" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">08</span><span>Catálogo de Módulos (15)</span></a>
+                <a href="#sec-09" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">09</span><span>Evolución Histórica</span></a>
+                <a href="#sec-10" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">10</span><span>Roadmap Estratégico</span></a>
+                <a href="#sec-11" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">11</span><span>Changelog Oficial (CRN)</span></a>
+                <a href="#sec-12" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">12</span><span>UI/UX & Heurísticas</span></a>
+                <a href="#sec-13" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">13</span><span>CRONOS AI Insights</span></a>
+                <a href="#sec-14" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">14</span><span>Reportabilidad & Exportaciones</span></a>
+                <a href="#sec-15" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">15</span><span>Seguridad, Auth & Data</span></a>
+                <a href="#sec-16" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">16</span><span>Infraestructura & Despliegue</span></a>
+                <a href="#sec-17" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">17</span><span>Ecosistema ATC vs FID</span></a>
+                <a href="#sec-18" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">18</span><span>Reglas Maestras de Desarrollo</span></a>
+                <a href="#sec-19" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">19</span><span>Riesgos & Continuidad (DRP)</span></a>
+                <a href="#sec-20" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">20</span><span>Lecciones Aprendidas</span></a>
+                <a href="#sec-21" class="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition"><span class="w-5 font-mono text-orange-400 font-bold">21</span><span>Estado Actual & Dictamen</span></a>
+            </nav>
+            <div class="mt-6 pt-4 border-t border-slate-800 text-[10px] text-slate-500">
+                <p class="font-bold text-slate-400">WIN TELECOMUNICACIONES S.A.</p>
+                <p>Gerencia de Operaciones & CX</p>
+                <p class="text-orange-400/80 font-mono mt-1">Uso Confidencial Interno</p>
+            </div>
+        </aside>
+
+        <!-- MAIN ARTICLE BODY -->
+        <main class="main-content flex-1 min-w-0 p-4 sm:p-8 lg:p-12 space-y-16">
+
+            <!-- HERO BANNER -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-[#0B0F19] to-black border border-slate-800 p-8 sm:p-12 shadow-2xl print-card">
+                <div class="absolute -top-24 -right-24 w-96 h-96 bg-orange-600/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="flex flex-col md:flex-row items-center md:items-start justify-between gap-8 relative z-10">
+                    <div class="space-y-4 text-center md:text-left max-w-3xl">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 text-xs font-bold font-mono">
+                            <i class="fa-solid fa-file-contract"></i>
+                            <span>DOCUMENTO MAESTRO CORPORATIVO &bull; REFERENCIA OFICIAL</span>
+                        </div>
+                        <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+                            CRONOS FID <span class="text-orange-500">JELI v6.0.0</span>
+                        </h1>
+                        <p class="text-base sm:text-lg text-slate-300 font-light leading-relaxed">
+                            Centro de Recursos Operativos para Negociación y Fidelización &bull; Consolidado Integral de Arquitectura, Operaciones, Reglas de Negocio, Trazabilidad Histórica y Estrategia Tecnológica para WIN Telecomunicaciones.
+                        </p>
+                        <div class="flex flex-wrap gap-2.5 pt-2 justify-center md:justify-start text-xs font-mono">
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700 text-slate-200">
+                                <i class="fa-solid fa-code-branch text-orange-400 mr-1.5"></i>SemVer: 6.0.0 (Oct 2026)
+                            </span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700 text-slate-200">
+                                <i class="fa-solid fa-database text-cyan-400 mr-1.5"></i>Dual-Stack Cloud
+                            </span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700 text-slate-200">
+                                <i class="fa-solid fa-users text-emerald-400 mr-1.5"></i>41 Asesores Oficiales
+                            </span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700 text-slate-200">
+                                <i class="fa-solid fa-shield-halved text-purple-400 mr-1.5"></i>RBAC 6 Roles
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-center justify-center p-6 rounded-2xl bg-slate-900/80 border border-slate-700/80 shadow-inner shrink-0 text-center">
+                        <img src="./cronos_fid_final.png" alt="CRONOS FID Oficial" class="h-28 w-auto object-contain mb-3 drop-shadow-lg" onerror="this.src='./CRONOS_FID_icon.png'">
+                        <div class="text-xs font-bold text-white tracking-wide">WIN TELECOMUNICACIONES</div>
+                        <div class="text-[10px] text-slate-400">Dirección de Operaciones & CX</div>
+                        <div class="mt-2 text-[10px] text-emerald-400 font-mono font-bold bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">ESTADO: PRODUCCIÓN ACTIVA</div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- SECCIÓN 1: INFORMACIÓN GENERAL -->
+            <section id="sec-01" class="space-y-6 pt-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-sm border border-orange-500/30">01</span>
+                    <h2 class="text-2xl font-black text-white">INFORMACIÓN GENERAL DEL PROYECTO</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="p-5 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-2">
+                        <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Nombre del Proyecto</div>
+                        <div class="text-xl font-bold text-white">CRONOS FID</div>
+                        <div class="text-xs text-orange-400 font-mono">Centro de Recursos Operativos para Negociación y Fidelización</div>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-2">
+                        <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Versión Oficial Actual</div>
+                        <div class="text-xl font-bold text-emerald-400 font-mono">JELI v6.0.0 &bull; WIN OCT2026</div>
+                        <div class="text-xs text-slate-400">Release Corporativo Homologado (SemVer 6.0.0)</div>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-2">
+                        <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Ciclo Temporal</div>
+                        <div class="text-sm font-semibold text-white">Creación: <span class="font-mono text-orange-400">15 de Agosto de 2026</span></div>
+                        <div class="text-xs text-slate-400">Última Actualización: <span class="font-mono text-emerald-400">Noviembre 2026</span></div>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-2">
+                        <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Responsable Funcional</div>
+                        <div class="text-base font-bold text-white">Jhonny León Illescas</div>
+                        <div class="text-xs text-slate-400 leading-tight">Diseño de Experiencia de Usuario (CX/UX), Reglas de Negocio de Retención, Optimización de Flujos y Calibración Operativa.</div>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-2">
+                        <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Responsable Técnico</div>
+                        <div class="text-base font-bold text-white">Jhonny León Illescas</div>
+                        <div class="text-xs text-slate-400 leading-tight">Arquitectura de Software, Seguridad RBAC, Dual-Stack (Firebase + Supabase PostgreSQL), Frontend SPA y Telemetría.</div>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-2">
+                        <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Organización & Alcance</div>
+                        <div class="text-base font-bold text-white">WIN Telecomunicaciones S.A.</div>
+                        <div class="text-xs text-slate-400 leading-tight">Campaña Nacional de Fidelización y Retención de Clientes Hogar (FTTH) & Portal Unificado ATC/FID.</div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- SECCIÓN 2: ¿QUÉ ES CRONOS FID? -->
+            <section id="sec-02" class="space-y-6 pt-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-sm border border-orange-500/30">02</span>
+                    <h2 class="text-2xl font-black text-white">¿QUÉ ES CRONOS FID?</h2>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-4 text-sm text-slate-300">
+                    <p class="leading-relaxed">
+                        <strong class="text-white text-base">CRONOS FID</strong> es la plataforma integral de software de escritorio y web concebida para transformar, blindar y acelerar las operaciones del equipo de <strong>Fidelización y Retención de WIN Telecomunicaciones</strong>. Diseñada bajo un enfoque centrado en el usuario (UCD) y adaptada a la dinámica de alta presión de las llamadas de retención, consolida en una sola pantalla todas las herramientas cognitivas, operativas, normativas y analíticas que un asesor requiere en tiempo real.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                        <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-2">
+                            <h3 class="font-bold text-orange-400 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                Problemática Previa que Resuelve
+                            </h3>
+                            <ul class="list-disc list-inside space-y-1 text-xs text-slate-400">
+                                <li>Dispersión de información en múltiples hojas de cálculo, blocs de notas y documentos no sincronizados.</li>
+                                <li>Vulnerabilidad y demora en la validación de identidad del titular (proceso de Clave Secreta).</li>
+                                <li>Tiempos Muertos de Operación (TMO excesivo) por cálculo manual de descuentos y promociones.</li>
+                                <li>Inconsistencias y errores graves de tipificación en el CRM corporativo.</li>
+                                <li>Riesgo de sanciones regulatorias ante OSIPTEL por omisión de requisitos fonéticos en grabaciones de acuerdos de voz.</li>
+                                <li>Falta de trazabilidad y retrasos de hasta 15 minutos en derivaciones hacia supervisores en Discord.</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-2">
+                            <h3 class="font-bold text-emerald-400 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-seedling"></i>
+                                Origen, Nacimiento y Áreas Impactadas
+                            </h3>
+                            <ul class="list-disc list-inside space-y-1 text-xs text-slate-400">
+                                <li><strong>Nacimiento:</strong> Iniciado el 15 de agosto de 2026 como <code class="font-mono text-slate-200">generador_de_claves_win.html</code> (v1.0.0) para resolver la validación de abonados.</li>
+                                <li><strong>Evolución:</strong> Escalamiento progresivo a Gestor de Fidelizaciones (v3.0 a v5.0) y consolidación como Sistema Operativo Integral en la v6.0.0.</li>
+                                <li><strong>Áreas Impactadas:</strong> Operaciones de Fidelización (41 asesores), Supervisión y Coordinación operativa, Área de Calidad (QA), Formación & Capacitación, Dirección de Operaciones / CX y Auditoría Corporativa.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- SECCIÓN 3: PROPÓSITO -->
+            <section id="sec-03" class="space-y-6 pt-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-sm border border-orange-500/30">03</span>
+                    <h2 class="text-2xl font-black text-white">PROPÓSITO DE LA PLATAFORMA</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div class="p-6 rounded-2xl bg-gradient-to-b from-slate-900 to-[#0B0F19] border border-orange-500/30 print-card space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center text-lg font-bold">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Propósito Operativo</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Maximizar la fluidez, agilidad y asertividad del asesor durante la llamada viva. Reducir el TMO entre un 35% y 45%, erradicar tiempos muertos de consulta, eliminar la fricción cognitiva mediante guías fonéticas interactivas y garantizar derivaciones operativas en menos de 5 segundos.
+                        </p>
+                        <div class="pt-2 border-t border-slate-800 text-[11px] text-orange-400 font-mono">
+                            Meta: TMO $\le$ 300s &bull; Cero errores tipificación
+                        </div>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-gradient-to-b from-slate-900 to-[#0B0F19] border border-emerald-500/30 print-card space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg font-bold">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Propósito Estratégico</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Elevar la tasa de retención efectiva por encima del 75%, blindar contractualmente a WIN ante reclamos de OSIPTEL con acuerdos de voz auditados, y dotar a la Gerencia de visibilidad 360° en tiempo real sobre causas de churn, desempeño por supervisor y tendencias predictivas.
+                        </p>
+                        <div class="pt-2 border-t border-slate-800 text-[11px] text-emerald-400 font-mono">
+                            Meta: Retención $\ge$ 75% &bull; 100% blindaje legal
+                        </div>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-gradient-to-b from-slate-900 to-[#0B0F19] border border-cyan-500/30 print-card space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg font-bold">
+                            <i class="fa-solid fa-microchip"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Propósito Tecnológico</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Consolidar una arquitectura desacoplada, reactiva y resiliente basada en Single Page Application (SPA) con Dual-Stack en la nube (Firebase Auth + Supabase PostgreSQL Client v2) bajo el principio <em>Open for Extension, Closed for Modification</em>, con latencia ultra baja (&lt;50ms).
+                        </p>
+                        <div class="pt-2 border-t border-slate-800 text-[11px] text-cyan-400 font-mono">
+                            Meta: Uptime 99.9% &bull; Latencia &lt; 50ms
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- SECCIÓN 4 & 5: MISIÓN Y VISIÓN -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+                <section id="sec-04" class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 print-card space-y-3">
+                    <div class="flex items-center gap-3 border-b border-slate-800 pb-2">
+                        <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-xs border border-orange-500/30">04</span>
+                        <h2 class="text-xl font-black text-white">MISIÓN ACTUAL</h2>
+                    </div>
+                    <blockquote class="italic text-slate-300 text-sm leading-relaxed border-l-2 border-orange-500 pl-4 py-1">
+                        "Dotar al equipo de Fidelización y Retención de WIN Telecomunicaciones de un ecosistema tecnológico unificado, intuitivo, ágil y seguro que optimice cada segundo de la llamada, garantice la precisión operativa y legal de las negociaciones, y transforme cada interacción crítica con el cliente en una experiencia de lealtad y retención sostenible."
+                    </blockquote>
+                </section>
+                <section id="sec-05" class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 print-card space-y-3">
+                    <div class="flex items-center gap-3 border-b border-slate-800 pb-2">
+                        <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-cyan-500/20 text-cyan-400 font-bold font-mono text-xs border border-cyan-500/30">05</span>
+                        <h2 class="text-xl font-black text-white">VISIÓN FUTURA (2027)</h2>
+                    </div>
+                    <blockquote class="italic text-slate-300 text-sm leading-relaxed border-l-2 border-cyan-500 pl-4 py-1">
+                        "Consolidarse hacia 2027 como la plataforma tecnológica estándar e indiscutible de excelencia operativa y analítica en telecomunicaciones para WIN a nivel nacional, integrando inteligencia artificial predictiva en tiempo real, interoperabilidad total con el CRM corporativo y unificación de canales de voz y digitales bajo un modelo omnicanal sin fisuras."
+                    </blockquote>
+                </section>
+            </div>
+    
+            <!-- SECCIÓN 6: ESTRUCTURA DE USUARIOS Y ROLES -->
+            <section id="sec-06" class="space-y-6 pt-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-sm border border-orange-500/30">06</span>
+                    <h2 class="text-2xl font-black text-white">ESTRUCTURA DE USUARIOS Y ROLES (RBAC)</h2>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-5">
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        CRONOS FID implementa un modelo de <strong>Control de Acceso Basado en Roles (RBAC)</strong> estructurado en 6 perfiles corporativos. Cada rol posee un alcance funcional rigurosamente delimitado tanto en la interfaz de usuario como en los controladores en memoria y bases de datos. Tras la depuración oficial de dotación de Octubre 2026 (<code class="font-mono text-orange-400">DOTA_FIDE_OCT2026.xlsx</code>), el censo de usuarios activos homologados es el siguiente:
+                    </p>
+                    
+                    <!-- Roles Summary Grid -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-center">
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800">
+                            <div class="text-2xl font-black text-blue-400 font-mono">41</div>
+                            <div class="text-xs font-bold text-white mt-1">Asesores</div>
+                            <div class="text-[10px] text-slate-400">Línea Viva Retención</div>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800">
+                            <div class="text-2xl font-black text-amber-400 font-mono">6</div>
+                            <div class="text-xs font-bold text-white mt-1">Supervisores</div>
+                            <div class="text-[10px] text-slate-400">Control de Turno</div>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800">
+                            <div class="text-2xl font-black text-purple-400 font-mono">2</div>
+                            <div class="text-xs font-bold text-white mt-1">Coordinadores</div>
+                            <div class="text-[10px] text-slate-400">Gestión de Campaña</div>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800">
+                            <div class="text-2xl font-black text-emerald-400 font-mono">4</div>
+                            <div class="text-xs font-bold text-white mt-1">Calidad (QA)</div>
+                            <div class="text-[10px] text-slate-400">Auditoría & OSIPTEL</div>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800">
+                            <div class="text-2xl font-black text-pink-400 font-mono">9</div>
+                            <div class="text-xs font-bold text-white mt-1">Formadores</div>
+                            <div class="text-[10px] text-slate-400">Capacitación & Casos</div>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-orange-500/40 bg-orange-500/5">
+                            <div class="text-2xl font-black text-orange-400 font-mono">1</div>
+                            <div class="text-xs font-bold text-white mt-1">Administrador</div>
+                            <div class="text-[10px] text-orange-300">Gobernanza Total</div>
+                        </div>
+                    </div>
+
+                    <!-- Matriz de Permisos Table -->
+                    <div class="overflow-x-auto pt-2">
+                        <table class="w-full text-left text-xs text-slate-300 border-collapse">
+                            <thead>
+                                <tr class="border-b border-slate-700 bg-slate-950/80 text-slate-400 font-mono text-[11px]">
+                                    <th class="py-2.5 px-3 font-semibold">MÓDULO CONFIGURABLE</th>
+                                    <th class="py-2.5 px-2 text-center text-orange-400">ADMIN</th>
+                                    <th class="py-2.5 px-2 text-center text-purple-400">COORD</th>
+                                    <th class="py-2.5 px-2 text-center text-amber-400">SUPERV</th>
+                                    <th class="py-2.5 px-2 text-center text-emerald-400">CALIDAD</th>
+                                    <th class="py-2.5 px-2 text-center text-pink-400">FORMADOR</th>
+                                    <th class="py-2.5 px-2 text-center text-blue-400">ASESOR</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800/60 font-mono text-[11px]">
+                                <tr class="hover:bg-slate-800/30">
+                                    <td class="py-2 px-3 font-sans font-medium text-white">1. Dashboard & Analítica Global</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Total</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Total</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Turno</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> QA</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Casos</td>
+                                    <td class="py-2 px-2 text-center text-slate-500 font-normal">Personal</td>
+                                </tr>
+                                <tr class="hover:bg-slate-800/30">
+                                    <td class="py-2 px-3 font-sans font-medium text-white">2. Clave Secreta & Retenciones</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Core</td>
+                                </tr>
+                                <tr class="hover:bg-slate-800/30">
+                                    <td class="py-2 px-3 font-sans font-medium text-white">3. Tipificaciones & Tickets</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Core</td>
+                                </tr>
+                                <tr class="hover:bg-slate-800/30">
+                                    <td class="py-2 px-3 font-sans font-medium text-white">4. Derivaciones Discord (#aprobaciones)</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-slate-600">-</td>
+                                    <td class="py-2 px-2 text-center text-slate-600">-</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Envío</td>
+                                </tr>
+                                <tr class="hover:bg-slate-800/30">
+                                    <td class="py-2 px-3 font-sans font-medium text-white">5. Acuerdos de Voz (Legal OSIPTEL)</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Auditor</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Core</td>
+                                </tr>
+                                <tr class="hover:bg-slate-800/30">
+                                    <td class="py-2 px-3 font-sans font-medium text-white">6. Directorio 63 Escenarios</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Core</td>
+                                </tr>
+                                <tr class="hover:bg-slate-800/30">
+                                    <td class="py-2 px-3 font-sans font-medium text-white">7. CRONOS SLA (Temporizador Sticky)</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i> Monitoreo</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i> Monitoreo</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i> Alertas</td>
+                                    <td class="py-2 px-2 text-center text-slate-600">-</td>
+                                    <td class="py-2 px-2 text-center text-slate-600">-</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Medición</td>
+                                </tr>
+                                <tr class="hover:bg-slate-800/30">
+                                    <td class="py-2 px-3 font-sans font-medium text-white">8. Auditoría Operativa & Trazabilidad</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Total</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Total</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Equipo</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Total</td>
+                                    <td class="py-2 px-2 text-center text-slate-600">-</td>
+                                    <td class="py-2 px-2 text-center text-slate-600">-</td>
+                                </tr>
+                                <tr class="hover:bg-slate-800/30">
+                                    <td class="py-2 px-3 font-sans font-medium text-white">9. Gestión de Usuarios (CRUD & Dotación)</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Total</td>
+                                    <td class="py-2 px-2 text-center text-amber-400 font-normal">Consulta</td>
+                                    <td class="py-2 px-2 text-center text-slate-600">-</td>
+                                    <td class="py-2 px-2 text-center text-slate-600">-</td>
+                                    <td class="py-2 px-2 text-center text-slate-600">-</td>
+                                    <td class="py-2 px-2 text-center text-slate-600">-</td>
+                                </tr>
+                                <tr class="hover:bg-slate-800/30">
+                                    <td class="py-2 px-3 font-sans font-medium text-white">10. Centro de Exportaciones (Excel/CSV)</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Multi</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Campaña</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Turno</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> QA</td>
+                                    <td class="py-2 px-2 text-center text-slate-600">-</td>
+                                    <td class="py-2 px-2 text-center text-slate-600">-</td>
+                                </tr>
+                                <tr class="hover:bg-slate-800/30">
+                                    <td class="py-2 px-3 font-sans font-medium text-white">11. Vista Ejecutiva 360°</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Total</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Total</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400 font-bold"><i class="fa-solid fa-check"></i> Supervisión</td>
+                                    <td class="py-2 px-2 text-center text-slate-600">-</td>
+                                    <td class="py-2 px-2 text-center text-slate-600">-</td>
+                                    <td class="py-2 px-2 text-center text-slate-600">-</td>
+                                </tr>
+                                <tr class="hover:bg-slate-800/30">
+                                    <td class="py-2 px-3 font-sans font-medium text-white">12. Acerca de CRONOS FID & Changelog</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                    <td class="py-2 px-2 text-center text-emerald-400"><i class="fa-solid fa-check"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- SECCIÓN 7: ARQUITECTURA TÉCNICA -->
+            <section id="sec-07" class="space-y-6 pt-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-sm border border-orange-500/30">07</span>
+                    <h2 class="text-2xl font-black text-white">ARQUITECTURA TÉCNICA Y PERSISTENCIA DUAL</h2>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-6">
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        CRONOS FID opera bajo un patrón arquitectónico <strong>Single Page Application (SPA) desacoplada y reactiva</strong>, combinando renderizado en cliente sin frameworks intrusivos para maximizar la velocidad y estabilidad en estaciones de trabajo de contact center. Su estrategia de persistencia es un modelo <strong>Dual-Cloud</strong> con segregación funcional estricta:
+                    </p>
+                    
+                    <!-- Architecture Diagram Container -->
+                    <div class="p-5 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs">
+                        <div class="text-orange-400 font-bold mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-network-wired"></i> DIAGRAMA DE ARQUITECTURA DEL SISTEMA DUAL-CLOUD CRONOS FID
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                            <!-- Capa Cliente -->
+                            <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-700/60 space-y-2">
+                                <div class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-bold inline-block text-[10px]">CAPA CLIENTE (FRONTEND SPA)</div>
+                                <div class="font-bold text-white text-sm">index.html &bull; atc-fide.html</div>
+                                <p class="text-[11px] text-slate-400 font-sans">
+                                    HTML5 + Tailwind CSS + Vanilla JS Modular. Módulos desacoplados en <code class="text-slate-300">components/</code> y servicios en <code class="text-slate-300">services/</code>.
+                                </p>
+                                <div class="text-[10px] text-slate-500 pt-1 border-t border-slate-800">
+                                    Latencia UI &lt; 16ms &bull; Web Audio API
+                                </div>
+                            </div>
+                            <!-- Capa Seguridad & Auth -->
+                            <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-700/60 space-y-2">
+                                <div class="px-2 py-0.5 rounded bg-orange-500/20 text-orange-400 font-bold inline-block text-[10px]">AUTENTICACIÓN & AUDITORÍA</div>
+                                <div class="font-bold text-white text-sm">Firebase Cloud Platform</div>
+                                <p class="text-[11px] text-slate-400 font-sans">
+                                    <strong>Firebase Auth v10 Compat:</strong> Tokens de sesión, RBAC. <br>
+                                    <strong>Firestore DB:</strong> Colecciones <code class="text-orange-300">usuarios</code> y <code class="text-orange-300">auditoria</code> histórica.
+                                </p>
+                                <div class="text-[10px] text-slate-500 pt-1 border-t border-slate-800">
+                                    Inmutabilidad &bull; Retención 180 días
+                                </div>
+                            </div>
+                            <!-- Capa Operativa & SLA -->
+                            <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-700/60 space-y-2">
+                                <div class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold inline-block text-[10px]">OPERACIONES & SLA ANALYTICS</div>
+                                <div class="font-bold text-white text-sm">Supabase PostgreSQL Cloud v2</div>
+                                <p class="text-[11px] text-slate-400 font-sans">
+                                    <strong>public.cronos_sla:</strong> Inserción y analítica de métricas de llamada en tiempo real. Soporte para consultas OLAP y vistas ejecutivas.
+                                </p>
+                                <div class="text-[10px] text-slate-500 pt-1 border-t border-slate-800">
+                                    Row Level Security &bull; Conexión Pooling
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detalle de Stack Tecnológico -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                        <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-2 text-xs">
+                            <h3 class="font-bold text-white text-sm flex items-center gap-2">
+                                <i class="fa-brands fa-js text-yellow-400"></i>
+                                Stack Tecnológico del Frontend
+                            </h3>
+                            <ul class="space-y-1.5 text-slate-400">
+                                <li><strong class="text-slate-200">Núcleo:</strong> HTML5 semántico, CSS3 con Tailwind CSS (CDN oficial v3.4.x) y Google Fonts.</li>
+                                <li><strong class="text-slate-200">Lógica:</strong> Vanilla JavaScript ES6+ estructurado modularmente con soporte de IIFE (<code class="text-slate-300">window.CronosDB</code>, <code class="text-slate-300">window.CronosSLA</code>).</li>
+                                <li><strong class="text-slate-200">Librerías Core:</strong> FontAwesome 6 Pro, Chart.js (gráficos predictivos), SheetJS (xlsx.full.min.js para hojas de cálculo), SweetAlert2 y Web Audio API.</li>
+                                <li><strong class="text-slate-200">Ergonomía:</strong> Cero dependencias de Node.js en tiempo de ejecución de cliente; carga instantánea (&lt;1.5 segundos).</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-2 text-xs">
+                            <h3 class="font-bold text-white text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-server text-cyan-400"></i>
+                                Bases de Datos y Contingencia Standalone
+                            </h3>
+                            <ul class="space-y-1.5 text-slate-400">
+                                <li><strong class="text-slate-200">Supabase PostgreSQL:</strong> Tabla principal <code class="text-emerald-400 font-mono">public.cronos_sla</code> con campos: <code class="text-slate-300">id, asesor_id, duracion_segundos, fecha, estado, supervisor</code>.</li>
+                                <li><strong class="text-slate-200">Firebase Firestore:</strong> Documentos de seguridad, bitácoras de auditoría y respaldo de usuarios.</li>
+                                <li><strong class="text-slate-200">SQLite Local (Opcional):</strong> <code class="text-cyan-400 font-mono">database/app.sqlite3</code> como respaldo offline en caso de caída de conectividad externa.</li>
+                                <li><strong class="text-slate-200">Hosting:</strong> Vercel Serverless Platform con cabeceras de seguridad CSP y GitHub Pages para entrega estática.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- SECCIÓN 8: CATÁLOGO DE MÓDULOS -->
+            <section id="sec-08" class="space-y-6 pt-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-sm border border-orange-500/30">08</span>
+                    <h2 class="text-2xl font-black text-white">CATÁLOGO EXHAUSTIVO DE MÓDULOS FUNCIONALES (15)</h2>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-6">
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        CRONOS FID cuenta con 15 módulos operacionales y administrativos homologados. Cada uno resuelve una necesidad crítica del flujo de trabajo de retención, garantizando que el asesor y la supervisión cuenten con herramientas precisas y sin redundancias:
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- M1 -->
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-orange-400 font-mono">MÓDULO 01</span>
+                                <i class="fa-solid fa-gauge-high text-slate-500"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-sm">Dashboard & Vista 360°</h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Panel ejecutivo que consolida KPI de retención, TMO promedio, distribución de estados SLA, comparativas por supervisor y tendencias horarias con gráficos reactivos en Chart.js.
+                            </p>
+                        </div>
+                        <!-- M2 -->
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-orange-400 font-mono">MÓDULO 02</span>
+                                <i class="fa-solid fa-key text-slate-500"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-sm">Generador de Clave Secreta</h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Autenticación de abonados mediante generación de tokens de 6 dígitos con hash SHA-256 temporal. Copiado en un clic y validación instantánea sin retrasos en línea viva.
+                            </p>
+                        </div>
+                        <!-- M3 -->
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-orange-400 font-mono">MÓDULO 03</span>
+                                <i class="fa-solid fa-tags text-slate-500"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-sm">Tipificaciones Multinivel</h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Catálogo jerárquico estandarizado para clasificar motivos de cancelación, ofertas aceptadas y rechazos. Genera la glosa exacta formateada para pegar en el CRM corporativo.
+                            </p>
+                        </div>
+                        <!-- M4 -->
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-orange-400 font-mono">MÓDULO 04</span>
+                                <i class="fa-solid fa-ticket text-slate-500"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-sm">Tickets de Soporte</h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Generador guiado de solicitudes de soporte para averías técnicas, facturación y traslados externos. Previene campos en blanco y valida coherencia de datos antes de emisión.
+                            </p>
+                        </div>
+                        <!-- M5 -->
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-orange-400 font-mono">MÓDULO 05</span>
+                                <i class="fa-brands fa-discord text-slate-500"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-sm">Derivaciones a Discord</h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Envío automatizado de solicitudes de aprobación a canales de Discord mediante webhooks seguros (<code class="text-slate-300">#aprobaciones-y-prioridades</code>). Reduce tiempos de espera a &lt;5s.
+                            </p>
+                        </div>
+                        <!-- M6 -->
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-orange-400 font-mono">MÓDULO 06</span>
+                                <i class="fa-solid fa-microphone-lines text-slate-500"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-sm">Acuerdos de Voz (OSIPTEL)</h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Asistente de lectura fonética de contratos y promociones con validación en pantalla. Asegura el cumplimiento riguroso de cláusulas de permanencia y tarifas reguladas.
+                            </p>
+                        </div>
+                        <!-- M7 -->
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-orange-400 font-mono">MÓDULO 07</span>
+                                <i class="fa-solid fa-sitemap text-slate-500"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-sm">Directorio de 63 Escenarios</h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Base de conocimiento interactiva con buscador en vivo de 63 escenarios operacionales, rutas de escalamiento, correos de contacto, anexos y matrices de decisión.
+                            </p>
+                        </div>
+                        <!-- M8 -->
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-orange-400 font-mono">MÓDULO 08</span>
+                                <i class="fa-solid fa-stopwatch-20 text-slate-500"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-sm">CRONOS SLA (Temporizador)</h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Cronómetro ergonómico lateral con fijación sticky, semáforo visual (verde, ámbar, rojo), avisos acústicos de Web Audio API y notificaciones nativas de Windows a los 35s, 45s y 60s.
+                            </p>
+                        </div>
+                        <!-- M9 -->
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-orange-400 font-mono">MÓDULO 09</span>
+                                <i class="fa-solid fa-fingerprint text-slate-500"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-sm">Auditoría Operativa</h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Registro inmutable de transacciones, inicios de sesión, cambios de estado y derivaciones. Permite reconstruir eventos y peritar incidentes con marca de tiempo precisa.
+                            </p>
+                        </div>
+                        <!-- M10 -->
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-orange-400 font-mono">MÓDULO 10</span>
+                                <i class="fa-solid fa-brain text-slate-500"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-sm">CRONOS AI Insights</h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Motor de inteligencia operativa con algoritmos estocásticos para proyección de TMO, detección de anomalías estadísticas y generación de recomendaciones tácticas para líderes.
+                            </p>
+                        </div>
+                        <!-- M11 -->
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-orange-400 font-mono">MÓDULO 11</span>
+                                <i class="fa-solid fa-heart-pulse text-slate-500"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-sm">Observabilidad & Telemetría</h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Monitor de salud cliente (Healthcheck), latencia de red, tiempo de respuesta con Supabase/Firebase, detección de desconexiones y telemetría de eventos de usuario.
+                            </p>
+                        </div>
+                        <!-- M12 -->
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-orange-400 font-mono">MÓDULO 12</span>
+                                <i class="fa-solid fa-handshake text-slate-500"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-sm">Compromisos con Clientes</h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Módulo de registro y seguimiento de promesas comerciales (descuentos temporales, visitas técnicas, devoluciones) con alertas de vencimiento para evitar reincidencia de reclamo.
+                            </p>
+                        </div>
+                        <!-- M13 -->
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-orange-400 font-mono">MÓDULO 13</span>
+                                <i class="fa-solid fa-bullseye text-slate-500"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-sm">Objetivos Estratégicos</h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Configuración de metas de campaña por turnos y supervisores (meta de retención mensual, umbral máximo de cancelaciones aceptables y cumplimiento de SLA).
+                            </p>
+                        </div>
+                        <!-- M14 -->
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-orange-400 font-mono">MÓDULO 14</span>
+                                <i class="fa-solid fa-chart-pie text-slate-500"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-sm">Analítica Predictiva ML</h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Modelado de riesgo de fuga de clientes basado en factores combinados (antigüedad del servicio, historial de averías, reclamos y tipo de plan contratado).
+                            </p>
+                        </div>
+                        <!-- M15 -->
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-orange-400 font-mono">MÓDULO 15</span>
+                                <i class="fa-solid fa-users-gear text-slate-500"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-sm">Gestión de Usuarios & RBAC</h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Administración de cuentas, restablecimiento de accesos, auditoría de último inicio de sesión y cruce automático de dotaciones con planillas de personal activo.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- SECCIÓN 9: EVOLUCIÓN HISTÓRICA -->
+            <section id="sec-09" class="space-y-6 pt-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-sm border border-orange-500/30">09</span>
+                    <h2 class="text-2xl font-black text-white">EVOLUCIÓN HISTÓRICA Y VERSIONES (v1.0.0 &rarr; v6.0.0)</h2>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-4">
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        El proyecto ha transitado por 6 generaciones arquitectónicas mayores desde agosto de 2026, pasando de una utilidad de cálculo a una plataforma enterprise:
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800">
+                            <div class="text-orange-400 font-bold font-mono">v1.0.0 (15 Ago 2026)</div>
+                            <div class="font-bold text-white mt-1">Generador de Claves</div>
+                            <p class="text-[11px] text-slate-400 mt-1">Creación del algoritmo de cálculo de clave secreta y scripts fonéticos iniciales.</p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800">
+                            <div class="text-orange-400 font-bold font-mono">v3.7.0 (01 Sep 2026)</div>
+                            <div class="font-bold text-white mt-1">Rebranding CRONOS FID</div>
+                            <p class="text-[11px] text-slate-400 mt-1">Adopción del nombre corporativo, paleta oficial WIN Orange y maquetación con Tailwind.</p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800">
+                            <div class="text-orange-400 font-bold font-mono">v4.0.0 (25 Sep 2026)</div>
+                            <div class="font-bold text-white mt-1">Discord & Acuerdos Legales</div>
+                            <p class="text-[11px] text-slate-400 mt-1">Integración de webhooks de Discord para aprobaciones y módulo legal de acuerdos de voz.</p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800">
+                            <div class="text-orange-400 font-bold font-mono">v4.1.5 (01 Oct 2026)</div>
+                            <div class="font-bold text-white mt-1">Directorio 63 Escenarios</div>
+                            <p class="text-[11px] text-slate-400 mt-1">Ampliación exhaustiva de la base de conocimiento operacional con filtrado reactivo.</p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800">
+                            <div class="text-orange-400 font-bold font-mono">v5.0.0 - v5.2.2 (Oct 2026)</div>
+                            <div class="font-bold text-white mt-1">Supabase v2 & UX Nielsen</div>
+                            <p class="text-[11px] text-slate-400 mt-1">Migración a Supabase PostgreSQL v2, suite AI Insights, notificaciones nativas y RBAC.</p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-emerald-500/40 bg-emerald-500/5">
+                            <div class="text-emerald-400 font-bold font-mono">v6.0.0 (Nov 2026 - Actual)</div>
+                            <div class="font-bold text-white mt-1">JELI Enterprise & Depuración</div>
+                            <p class="text-[11px] text-slate-300 mt-1">Portal Unificado FID/ATC, Vista Ejecutiva 360°, depuración de 41 asesores oficiales y homologación final.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- SECCIÓN 10: ROADMAP ESTRATÉGICO -->
+            <section id="sec-10" class="space-y-6 pt-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-sm border border-orange-500/30">10</span>
+                    <h2 class="text-2xl font-black text-white">ROADMAP ESTRATÉGICO CORPORATIVO (8 FASES)</h2>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-4">
+                    <div class="space-y-3 text-xs">
+                        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-start gap-3">
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold font-mono shrink-0">FASE 1</span>
+                            <div>
+                                <strong class="text-white text-sm">Ergonomía UI/UX & Heurísticas de Nielsen (Completada):</strong>
+                                <p class="text-slate-400 mt-0.5">Optimización de atajos, cierre global ESC, preservación de foco en inputs, modal de reset SLA y alertas accesibles.</p>
+                            </div>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-start gap-3">
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold font-mono shrink-0">FASE 2</span>
+                            <div>
+                                <strong class="text-white text-sm">Inteligencia Operativa & AI Insights (Completada):</strong>
+                                <p class="text-slate-400 mt-0.5">Métricas predictivas de TMO, detección de desvíos estadísticos y recomendaciones tácticas para supervisión.</p>
+                            </div>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-start gap-3">
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold font-mono shrink-0">FASE 3</span>
+                            <div>
+                                <strong class="text-white text-sm">Gestión del Riesgo & Matriz 360° (Completada):</strong>
+                                <p class="text-slate-400 mt-0.5">Visión ejecutiva multidimensional para Coordinación y Dirección de Operaciones WIN.</p>
+                            </div>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-start gap-3">
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold font-mono shrink-0">FASE 4</span>
+                            <div>
+                                <strong class="text-white text-sm">Formación & Aseguramiento de Calidad QA (Completada):</strong>
+                                <p class="text-slate-400 mt-0.5">Banco de casos de estudio, perfiles especializados de Formador y Calidad para auditoría OSIPTEL.</p>
+                            </div>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-start gap-3">
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold font-mono shrink-0">FASE 5</span>
+                            <div>
+                                <strong class="text-white text-sm">Compromisos & Objetivos Estratégicos (Completada):</strong>
+                                <p class="text-slate-400 mt-0.5">Módulo de control de compromisos acordados con abonados y fijación de metas de retención por turno.</p>
+                            </div>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-start gap-3">
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold font-mono shrink-0">FASE 6</span>
+                            <div>
+                                <strong class="text-white text-sm">Observabilidad & Telemetría en Tiempo Real (Completada):</strong>
+                                <p class="text-slate-400 mt-0.5">Monitoreo activo del estado de servicios en la nube, latencia de base de datos y logs locales de error.</p>
+                            </div>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-start gap-3">
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold font-mono shrink-0">FASE 7</span>
+                            <div>
+                                <strong class="text-white text-sm">Optimización de Scripts & Reducción de Carga Cognitiva (Completada):</strong>
+                                <p class="text-slate-400 mt-0.5">Unificación fonética de contratos, acuerdos de permanencia y copiado directo de glosas con un clic.</p>
+                            </div>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/80 border border-emerald-500/30 bg-emerald-500/10 flex items-start gap-3">
+                            <span class="px-2 py-0.5 rounded bg-emerald-500 text-slate-950 font-bold font-mono shrink-0">FASE 8</span>
+                            <div>
+                                <strong class="text-white text-sm">Desacoplamiento Total & Homologación Supabase Client v2 (Completada):</strong>
+                                <p class="text-slate-300 mt-0.5">Migración de todas las métricas a Supabase PostgreSQL v2, persistencia en Firestore y depuración oficial de usuarios.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- SECCIÓN 11: CHANGELOG OFICIAL (CRN-0001 A CRN-0022) -->
+            <section id="sec-11" class="space-y-6 pt-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-sm border border-orange-500/30">11</span>
+                    <h2 class="text-2xl font-black text-white">HISTORIAL OFICIAL DE CAMBIOS (CHANGELOG CRN-0001 A CRN-0022)</h2>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-4">
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Registro oficial auditable de los 22 hitos evolutivos registrados en la bitácora institucional (<code class="font-mono text-orange-400">components/changelog.js</code>):
+                    </p>
+                    <div class="overflow-x-auto max-h-[500px] overflow-y-auto">
+                        <table class="w-full text-left text-xs text-slate-300 border-collapse">
+                            <thead class="sticky top-0 bg-slate-950 z-10 border-b border-slate-700 font-mono text-[11px] text-slate-400">
+                                <tr>
+                                    <th class="py-2.5 px-3">ID</th>
+                                    <th class="py-2.5 px-2">VER.</th>
+                                    <th class="py-2.5 px-2">FECHA</th>
+                                    <th class="py-2.5 px-3">TÍTULO DEL CAMBIO</th>
+                                    <th class="py-2.5 px-2">CATEGORÍA</th>
+                                    <th class="py-2.5 px-3">IMPACTO / DESCRIPCIÓN</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800 text-[11px]">
+    
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0022</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">5.2.2</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-10-14</td>
+                                    <td class="py-2 px-3 font-medium text-white">Sprint 2 - Gobernanza RBAC: Inclusión de Vista Ejecutiva 360° y Acerca de CRONOS FID en Matriz de Permisos</td>
+                                    <td class="py-2 px-2 text-slate-400">Seguridad y Gobernanza RBAC</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Incorporación completa de los módulos 'Vista Ejecutiva 360°' (vista_360) y 'Acerca de CRONOS FID' (acerca_de) a la Matriz de Permisos oficial de CRONOS FID: 1) ...</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0021</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">5.2.1</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-10-14</td>
+                                    <td class="py-2 px-3 font-medium text-white">Sprint 1.5 - Sistema de Notificaciones Nativas del Sistema Operativo para CRONOS SLA</td>
+                                    <td class="py-2 px-2 text-slate-400">Nueva Funcionalidad / Alertas Nativas de Sistema</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Implementación y corrección definitiva del sistema de notificaciones nativas del sistema operativo para CRONOS SLA: 1) Eliminación total de toasts visuales inte...</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0020</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">5.2.1</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-10-14</td>
+                                    <td class="py-2 px-3 font-medium text-white">Sprint 1 - Control y Libertad del Usuario (H-01, H-02, H-04, H-06)</td>
+                                    <td class="py-2 px-2 text-slate-400">Mejora / Evolución Heurística UX</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Implementación integral del Sprint 1 para elevar la Heurística 3 de Jakob Nielsen (Control y Libertad del Usuario) superando el umbral objetivo de 8.5. Cuatro i...</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0019</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">5.2.0</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-10-14</td>
+                                    <td class="py-2 px-3 font-medium text-white">Evaluación Heurística Integral de Usabilidad y Diagnóstico UX/UI (10 Heurísticas de Jakob Nielsen)</td>
+                                    <td class="py-2 px-2 text-slate-400">Diagnóstico / Auditoría UX</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Auditoría formal de usabilidad basada en las 10 heurísticas de Jakob Nielsen. Formulación del Índice Global de Usabilidad (IGU: 76.9% - BUENO), emisión del info...</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0018</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">5.2.1</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-10-13</td>
+                                    <td class="py-2 px-3 font-medium text-white">Corrección de Fijación Vertical Sticky y Offset Dinámico de CRONOS SLA durante el Scroll en Perfil Asesor</td>
+                                    <td class="py-2 px-2 text-slate-400">Corrección UX</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Resolución de incidencia de desplazamiento y ocultación bajo el header durante el scroll vertical: implementación de altura dinámica con variable CSS --cronos-h...</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0017</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">5.2.0</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-10-13</td>
+                                    <td class="py-2 px-3 font-medium text-white">Optimización y Exclusividad del Panel Lateral CRONOS SLA para Perfil Asesor</td>
+                                    <td class="py-2 px-2 text-slate-400">Optimización UX</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Optimización de experiencia de usuario (UX) para el perfil Asesor: eliminación completa de accesos a módulos administrativos no autorizados (Vista Ejecutiva 360...</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0016</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">5.1.0</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-10-13</td>
+                                    <td class="py-2 px-3 font-medium text-white">Reubicación Ergonómica de CRONOS SLA en Barra Lateral para Perfil Asesor</td>
+                                    <td class="py-2 px-2 text-slate-400">Mejora UX</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Ajuste de experiencia de usuario (UX) exclusivo para el rol Asesor: reubicación ergonómica y fija (sticky) de CRONOS SLA en la parte superior de la columna late...</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0015</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">5.1.0</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-10-13</td>
+                                    <td class="py-2 px-3 font-medium text-white">Corrección de Navegación y Apertura en Módulos Administrativos</td>
+                                    <td class="py-2 px-2 text-slate-400">Corrección</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Corrección de cierre de etiquetas DOM en modal de exportaciones que bloqueaban la apertura de Acerca de CRONOS FID, e integración completa del componente Vista ...</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0001</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">5.1.0</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-10-13</td>
+                                    <td class="py-2 px-3 font-medium text-white">Implementación de Filtros Globales Temporales</td>
+                                    <td class="py-2 px-2 text-slate-400">Mejora</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Se agregaron filtros sincronizados Día, Semana, Mes y Rango Personalizado con patrón observador desacoplado....</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0002</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">5.1.0</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-10-13</td>
+                                    <td class="py-2 px-3 font-medium text-white">Suite de Inteligencia Operativa y CRONOS AI Insights</td>
+                                    <td class="py-2 px-2 text-slate-400">IA</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Despliegue del motor analítico de insights, detección de anomalías, proyecciones estocásticas y asistente conversacional....</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0003</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">5.1.0</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-10-13</td>
+                                    <td class="py-2 px-3 font-medium text-white">Desacoplamiento de Capa de Consultas SQL y Analítica</td>
+                                    <td class="py-2 px-2 text-slate-400">Refactorización</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Centralización de consultas SQL parametrizadas a Supabase y capa de métricas MetricsService como Single Source of Truth....</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0004</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">5.1.0</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-10-12</td>
+                                    <td class="py-2 px-3 font-medium text-white">Servicio de Exportación Excel Auditable y Multiformato</td>
+                                    <td class="py-2 px-2 text-slate-400">Optimización</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Reescritura del servicio de exportación Excel desacoplado del DOM con generación de hojas de auditoría y metadatos de integridad....</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0005</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">5.1.0</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-10-12</td>
+                                    <td class="py-2 px-3 font-medium text-white">Generador de Informes Ejecutivos IA en Formato PDF</td>
+                                    <td class="py-2 px-2 text-slate-400">Nueva Funcionalidad</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Módulo para generación y descarga de informes ejecutivos con formato corporativo WIN, gráficos renderizados y recomendaciones IA....</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0006</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">5.0.0</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-10-10</td>
+                                    <td class="py-2 px-3 font-medium text-white">Migración Operativa de CRONOS SLA a Supabase Client v2</td>
+                                    <td class="py-2 px-2 text-slate-400">Integración</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Implementación de persistencia remota de tiempos operativos en tabla pública cronos_sla con soporte offline por LocalStorage....</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0007</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">5.0.0</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-10-09</td>
+                                    <td class="py-2 px-3 font-medium text-white">Módulo de Gestión de Usuarios y Control Multi-Rol</td>
+                                    <td class="py-2 px-2 text-slate-400">Seguridad</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Panel administrativo para creación, edición, reseteo de credenciales y filtrado de interfaz según rol (Asesor, Supervisor, Admin)....</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0008</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">4.1.6</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-10-05</td>
+                                    <td class="py-2 px-3 font-medium text-white">Monitoreo Exclusivo de Asesores y Corrección de Métricas</td>
+                                    <td class="py-2 px-2 text-slate-400">Corrección</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Ajuste de filtros para omitir tiempos de supervisores y administradores en el cálculo de cumplimiento de SLA de atención....</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0009</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">4.1.5</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-10-01</td>
+                                    <td class="py-2 px-3 font-medium text-white">Expansión del Directorio de Escalamientos a 63 Escenarios</td>
+                                    <td class="py-2 px-2 text-slate-400">Nueva Funcionalidad</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Incorporación de matriz de 63 escenarios dinámicos con checklist de requisitos, validadores de campos obligatorios y copia directa....</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0010</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">4.0.0</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-09-25</td>
+                                    <td class="py-2 px-3 font-medium text-white">Integración de Canales Discord para Derivaciones</td>
+                                    <td class="py-2 px-2 text-slate-400">Integración</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Generador de formatos preestructurados para los canales de aprobaciones, retenciones prioritarias y soporte en Discord....</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0011</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">4.0.0</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-09-20</td>
+                                    <td class="py-2 px-3 font-medium text-white">Módulo de Acuerdos de Voz con Validaciones Legales Fonéticas</td>
+                                    <td class="py-2 px-2 text-slate-400">Nueva Funcionalidad</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Generador dinámico de speech legal de grabación de llamadas con cálculo de tarifa, meses de descuento y cláusulas contractuales....</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0012</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">3.9.0</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-09-15</td>
+                                    <td class="py-2 px-3 font-medium text-white">Persistencia Cloud en Firebase Firestore de Auditoría Operativa</td>
+                                    <td class="py-2 px-2 text-slate-400">Base de Datos</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Migración de bitácora local a colección remota Firestore 'auditoria' con respaldo inmutable de acciones realizadas por cada asesor....</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0013</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">3.7.0</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-09-01</td>
+                                    <td class="py-2 px-3 font-medium text-white">Rebranding Oficial a CRONOS FID y Rediseño Visual</td>
+                                    <td class="py-2 px-2 text-slate-400">Mejora</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Transformación conceptual a Centro de Recursos Operativos para Negociación y Fidelización (CRONOS FID) con tipografía Outfit y Space Grotesk....</td>
+                                </tr>
+        
+                                <tr class="hover:bg-slate-800/40">
+                                    <td class="py-2 px-3 font-mono font-bold text-orange-400">CRN-0014</td>
+                                    <td class="py-2 px-2 font-mono text-emerald-400 font-semibold">1.0.0</td>
+                                    <td class="py-2 px-2 font-mono text-slate-400">2026-08-15</td>
+                                    <td class="py-2 px-3 font-medium text-white">Creación del Generador de Clave Secreta y Retenciones Base</td>
+                                    <td class="py-2 px-2 text-slate-400">Nueva Funcionalidad</td>
+                                    <td class="py-2 px-3 text-slate-400 leading-tight max-w-md">Lanzamiento fundacional de la herramienta de generación de plantillas de validación de identidad y clave secreta del cliente....</td>
+                                </tr>
+        
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- SECCIÓN 12: UI/UX & HEURÍSTICAS DE NIELSEN -->
+            <section id="sec-12" class="space-y-6 pt-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-sm border border-orange-500/30">12</span>
+                    <h2 class="text-2xl font-black text-white">EXPERIENCIA DE USUARIO (UI/UX) & HEURÍSTICAS DE NIELSEN</h2>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-4">
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        En octubre de 2026 se ejecutó una evaluación formal basada en las <strong>10 Heurísticas de Usabilidad de Jakob Nielsen</strong> (<code class="font-mono text-slate-200">AUDITORIA_HEURISTICA_CRONOS_FID_v5.2.0.md</code>), elevando el Índice Global de Usabilidad (IGU) del 76.9% inicial a más del 92.4% tras la ejecución de los Sprints 1 y 2:
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 space-y-1">
+                            <span class="font-mono text-orange-400 font-bold">H1: Visibilidad del Estado del Sistema</span>
+                            <p class="text-slate-400 text-[11px]">Widget CRONOS SLA con fijación sticky permanente, indicador de segundos transcurridos y semáforo visual de 3 colores.</p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 space-y-1">
+                            <span class="font-mono text-orange-400 font-bold">H2: Coincidencia con el Mundo Real</span>
+                            <p class="text-slate-400 text-[11px]">Vocabulario estricto de contact center (TMO, churn, derivación, ticket, corte comercial, titularidad).</p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 space-y-1">
+                            <span class="font-mono text-orange-400 font-bold">H3: Control y Libertad del Usuario</span>
+                            <p class="text-slate-400 text-[11px]">Modal accesible de confirmación para reinicio de SLA (#modal-confirm-reset-sla), salida global con tecla ESC y control de navegación.</p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 space-y-1">
+                            <span class="font-mono text-orange-400 font-bold">H4: Consistencia y Estándares</span>
+                            <p class="text-slate-400 text-[11px]">Identidad corporativa WIN (#FF5A0A), iconografía FontAwesome y botones con estados hover/active homogéneos.</p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 space-y-1">
+                            <span class="font-mono text-orange-400 font-bold">H5: Prevención de Errores</span>
+                            <p class="text-slate-400 text-[11px]">Validación estricta de 6 dígitos en Clave Secreta, bloqueo de envíos con campos vacíos y eliminación de secuestro de barra espaciadora.</p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 space-y-1">
+                            <span class="font-mono text-orange-400 font-bold">H6: Reconocimiento antes que Recuerdo</span>
+                            <p class="text-slate-400 text-[11px]">Directorio integrado de 63 escenarios con búsqueda en vivo y autocompletado inteligente de glosas de retención.</p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 space-y-1">
+                            <span class="font-mono text-orange-400 font-bold">H7: Flexibilidad y Eficiencia de Uso</span>
+                            <p class="text-slate-400 text-[11px]">Atajos de teclado configurados, copiado de textos en 1 clic y acceso rápido a Discord sin salir del aplicativo.</p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 space-y-1">
+                            <span class="font-mono text-orange-400 font-bold">H8: Diseño Estético y Minimalista</span>
+                            <p class="text-slate-400 text-[11px]">Alta relación de contraste WCAG AA, distribución en cuadrícula sin sobrecarga y paneles colapsables.</p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 space-y-1">
+                            <span class="font-mono text-orange-400 font-bold">H9: Ayuda para Errores</span>
+                            <p class="text-slate-400 text-[11px]">Toasts explicativos y accionables (indicando la causa y la acción correctiva inmediata) con temporizador extendido a 5.5s.</p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 space-y-1">
+                            <span class="font-mono text-orange-400 font-bold">H10: Ayuda y Documentación</span>
+                            <p class="text-slate-400 text-[11px]">Módulo Acerca de CRONOS FID, panel interactivo de Changelog, guías de usuario integradas y tooltip informativos.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- SECCIÓN 13: CRONOS AI INSIGHTS -->
+            <section id="sec-13" class="space-y-6 pt-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-sm border border-orange-500/30">13</span>
+                    <h2 class="text-2xl font-black text-white">MOTOR DE INTELIGENCIA OPERATIVA (CRONOS AI INSIGHTS)</h2>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-4 text-xs text-slate-300">
+                    <p class="leading-relaxed">
+                        El módulo <strong>CRONOS AI Insights</strong> opera como un copiloto cognitivo en tiempo de ejecución. Integra modelos matemáticos en cliente que analizan en tiempo real los patrones de las llamadas:
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="text-orange-400 font-bold flex items-center gap-2">
+                                <i class="fa-solid fa-calculator"></i>
+                                Cálculo Estocástico de TMO
+                            </div>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Modela la duración proyectada de la llamada calculando la media móvil ponderada exponencialmente (EMA) frente a la distribución histórica del asesor y la campaña.
+                            </p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="text-cyan-400 font-bold flex items-center gap-2">
+                                <i class="fa-solid fa-bell-slash"></i>
+                                Detección de Desvíos $>2\sigma$
+                            </div>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Identifica anomalías cuando una interacción supera en 2 desviaciones estándar el promedio del tipo de caso, alertando de posibles atascamientos en la negociación.
+                            </p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="text-emerald-400 font-bold flex items-center gap-2">
+                                <i class="fa-solid fa-lightbulb"></i>
+                                Sugerencias Proactivas
+                            </div>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Genera recomendaciones tácticas automáticas para supervisores en base a los datos acumulados del turno (ej. redistribución de pausas, refuerzo en cierres de permanencia).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- SECCIÓN 14: REPORTABILIDAD Y EXPORTACIONES -->
+            <section id="sec-14" class="space-y-6 pt-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-sm border border-orange-500/30">14</span>
+                    <h2 class="text-2xl font-black text-white">CENTRO DE REPORTABILIDAD Y EXPORTACIONES</h2>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-4 text-xs text-slate-300">
+                    <p class="leading-relaxed">
+                        CRONOS FID cuenta con un motor de extracción analítica integrado mediante <strong>SheetJS (<code class="font-mono text-slate-200">xlsx.full.min.js</code>)</strong> que permite a Supervisores, Coordinadores y Auditoría descargar la información operativa en múltiples dimensiones:
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <h3 class="font-bold text-white text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-file-excel text-emerald-400"></i>
+                                Formatos y Rangos Temporales Soportados
+                            </h3>
+                            <ul class="space-y-1.5 text-slate-400 text-[11px]">
+                                <li><strong class="text-slate-200">Formatos:</strong> Libros de trabajo Microsoft Excel (.xlsx) con estilos de encabezado y CSV plano delimtado por comas.</li>
+                                <li><strong class="text-slate-200">Filtros Temporales:</strong> 1) Día actual (turno en curso), 2) Últimos 7 días (Semana), 3) Últimos 30 días (Mes), 4) Trimestre (3 Meses) y 5) Semestre (6 Meses).</li>
+                                <li><strong class="text-slate-200">Filtro Asesor:</strong> Filtrado dinámico por asesor individual o consolidado general de toda la dotación.</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <h3 class="font-bold text-white text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-table-list text-orange-400"></i>
+                                Esquema de Datos Exportados
+                            </h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Las hojas de cálculo exportadas integran los siguientes campos obligatorios: <code class="font-mono text-slate-300">ID_REGISTRO, FECHA, HORA, ASESOR_NOMBRE, CORREO_ASESOR, SUPERVISOR_ASIGNADO, TIEMPO_SEGUNDOS, ESTADO_SLA (En Rango / Alerta / Excedido), TIPIFICACION, NUMERO_DOCUMENTO, MOTIVO_RETENCION</code>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- SECCIÓN 15: SEGURIDAD, AUTH & GOBERNANZA -->
+            <section id="sec-15" class="space-y-6 pt-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-sm border border-orange-500/30">15</span>
+                    <h2 class="text-2xl font-black text-white">SEGURIDAD, AUTENTICACIÓN Y GOBERNANZA DE DATOS</h2>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-4 text-xs text-slate-300">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="font-bold text-orange-400 flex items-center gap-2">
+                                <i class="fa-solid fa-lock"></i> Autenticación Segura
+                            </div>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Gestión de identidades mediante Firebase Authentication con credenciales cifradas, tokens JWT en sesión y caducidad automática para prevenir sesiones huérfanas.
+                            </p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="font-bold text-cyan-400 flex items-center gap-2">
+                                <i class="fa-solid fa-shield-virus"></i> Sanitización & XSS
+                            </div>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Sanitización sistemática de inputs de formulario mediante reemplazo de entidades HTML y validación estricta de expresiones regulares en campos numéricos y de texto.
+                            </p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <div class="font-bold text-emerald-400 flex items-center gap-2">
+                                <i class="fa-solid fa-database"></i> Row Level Security (RLS)
+                            </div>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                Supabase PostgreSQL configurado con políticas RLS para garantizar que los registros operativos solo sean legibles y modificables según las directivas del rol autenticado.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- SECCIÓN 16: INFRAESTRUCTURA Y DESPLIEGUE -->
+            <section id="sec-16" class="space-y-6 pt-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-sm border border-orange-500/30">16</span>
+                    <h2 class="text-2xl font-black text-white">INFRAESTRUCTURA Y DESPLIEGUE (VERCEL & GITHUB PAGES)</h2>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-4 text-xs text-slate-300">
+                    <p class="leading-relaxed">
+                        El despliegue de CRONOS FID está optimizado para entornos de alta concurrencia mediante entrega distribuida en red (Edge CDN):
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <h3 class="font-bold text-white text-sm flex items-center gap-2">
+                                <i class="fa-brands fa-github text-slate-300"></i>
+                                GitHub Pages & Pipeline de Publicación
+                            </h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                El core estático principal se compila y aloja en GitHub Pages sirviendo <code class="font-mono text-slate-200">index.html</code>. El ciclo de desarrollo respeta estrictamente el protocolo: 1) Desarrollo y pruebas en <code class="text-orange-400">http://localhost</code>, 2) Homologación de dependencias, y 3) Despliegue productivo único de index.html sin alterar credenciales ni esquemas externos.
+                            </p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                            <h3 class="font-bold text-white text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-triangle-circle-square text-cyan-400"></i>
+                                Vercel Edge Serverless & Cabeceras de Seguridad
+                            </h3>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">
+                                El archivo <code class="font-mono text-slate-200">vercel.json</code> inyecta cabeceras HTTP de protección perimetral: <code class="text-slate-300">X-Frame-Options: DENY</code>, <code class="text-slate-300">X-Content-Type-Options: nosniff</code>, <code class="text-slate-300">Referrer-Policy: strict-origin-when-cross-origin</code> y políticas de orígenes cruzados.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- SECCIÓN 17: ECOSISTEMA ATC VS FID -->
+            <section id="sec-17" class="space-y-6 pt-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-sm border border-orange-500/30">17</span>
+                    <h2 class="text-2xl font-black text-white">ECOSISTEMA UNIFICADO: CRONOS ATC vs CRONOS FID</h2>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-4 text-xs text-slate-300">
+                    <p class="leading-relaxed">
+                        Conforme a la implementación en <code class="font-mono text-orange-400">atc-fide.html</code> (<em>CRONOS | Portal Operativo Unificado (FID & ATC)</em>), el ecosistema CRONOS contempla la coexistencia de dos divisiones operativas con alta sinergia pero especialización funcional:
+                    </p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-slate-300 border-collapse">
+                            <thead>
+                                <tr class="border-b border-slate-700 bg-slate-950 font-mono text-[11px] text-slate-400">
+                                    <th class="py-2.5 px-3">COMPONENTE / CAPACIDAD</th>
+                                    <th class="py-2.5 px-3 text-orange-400">CRONOS FID (Fidelización)</th>
+                                    <th class="py-2.5 px-3 text-blue-400">CRONOS ATC (Atención al Cliente)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800 text-[11px]">
+                                <tr>
+                                    <td class="py-2 px-3 font-semibold text-white">Objetivo Principal</td>
+                                    <td class="py-2 px-3">Retención de abonados en riesgo de churn y negociación de valor.</td>
+                                    <td class="py-2 px-3">Resolución de consultas, incidencias técnicas y facturación.</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-semibold text-white">Generador de Clave Secreta</td>
+                                    <td class="py-2 px-3 text-emerald-400 font-bold">Activo &bull; Validación obligatoria para rescisión/planes.</td>
+                                    <td class="py-2 px-3 text-slate-400">Opcional según naturaleza del trámite.</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-semibold text-white">Acuerdos de Voz Legales</td>
+                                    <td class="py-2 px-3 text-emerald-400 font-bold">Crítico &bull; Fonética obligatoria por permanencia OSIPTEL.</td>
+                                    <td class="py-2 px-3 text-slate-400">No aplica (salvo migraciones de plan específicas).</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-semibold text-white">Derivaciones Discord</td>
+                                    <td class="py-2 px-3">Canal <code class="text-orange-300 font-mono">#aprobaciones-y-prioridades</code> (descuentos especiales).</td>
+                                    <td class="py-2 px-3">Canal <code class="text-blue-300 font-mono">#escalamiento-noc-planta</code> (soporte averías).</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-semibold text-white">CRONOS SLA Sticky</td>
+                                    <td class="py-2 px-3 text-emerald-400 font-bold">Compartido &bull; Mismo motor ergonómico y alertas sonoras.</td>
+                                    <td class="py-2 px-3 text-emerald-400 font-bold">Compartido &bull; Mismo motor ergonómico y alertas sonoras.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- SECCIÓN 18: REGLAS MAESTRAS -->
+            <section id="sec-18" class="space-y-6 pt-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-sm border border-orange-500/30">18</span>
+                    <h2 class="text-2xl font-black text-white">REGLAS MAESTRAS DE DESARROLLO Y ARQUITECTURA</h2>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-3 text-xs text-slate-300">
+                    <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-start gap-3">
+                        <span class="font-mono text-orange-400 font-bold shrink-0">REGLA 1:</span>
+                        <div><strong>Open for Extension, Closed for Modification:</strong> Nuevas capacidades deben agregarse como módulos desacoplados sin alterar la lógica de negocio central ni introducir regresiones.</div>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-start gap-3">
+                        <span class="font-mono text-orange-400 font-bold shrink-0">REGLA 2:</span>
+                        <div><strong>Supabase como Fuente de Verdad Operativa:</strong> Toda la analítica de SLA y rendimiento proviene de Supabase PostgreSQL v2 (<code class="font-mono text-slate-300">public.cronos_sla</code>).</div>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-start gap-3">
+                        <span class="font-mono text-orange-400 font-bold shrink-0">REGLA 3:</span>
+                        <div><strong>Firebase Auth como Guardián de Identidad:</strong> Ningún usuario puede operar el sistema sin validación previa en Firebase Auth y asignación de rol activo.</div>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-start gap-3">
+                        <span class="font-mono text-orange-400 font-bold shrink-0">REGLA 4:</span>
+                        <div><strong>Analítica Centrada Estrictamente en Asesores:</strong> Cuentas administrativas, de supervisión, formación y calidad quedan excluidas de los cálculos de TMO para no sesgar las métricas reales de atención.</div>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-start gap-3">
+                        <span class="font-mono text-orange-400 font-bold shrink-0">REGLA 5:</span>
+                        <div><strong>Integridad de Exportaciones:</strong> Las descargas de Excel y CSV deben reflejar fielmente la base de datos sin truncamientos arbitrarios ni redondeos inexactos.</div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- SECCIÓN 19: RIESGOS & PLAN DE CONTINUIDAD -->
+            <section id="sec-19" class="space-y-6 pt-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-sm border border-orange-500/30">19</span>
+                    <h2 class="text-2xl font-black text-white">GESTIÓN DE RIESGOS Y PLAN DE CONTINUIDAD (DRP)</h2>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-4 text-xs text-slate-300">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-slate-300 border-collapse">
+                            <thead>
+                                <tr class="border-b border-slate-700 bg-slate-950 font-mono text-[11px] text-slate-400">
+                                    <th class="py-2.5 px-3">ESCENARIO DE RIESGO</th>
+                                    <th class="py-2.5 px-2 text-center">PROBABILIDAD</th>
+                                    <th class="py-2.5 px-2 text-center">IMPACTO</th>
+                                    <th class="py-2.5 px-3">MEDIDA DE MITIGACIÓN / CONTINUIDAD (DRP)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800 text-[11px]">
+                                <tr>
+                                    <td class="py-2 px-3 font-semibold text-white">Interrupción de Supabase Cloud</td>
+                                    <td class="py-2 px-2 text-center text-amber-400">Baja</td>
+                                    <td class="py-2 px-2 text-center text-red-400 font-bold">Alto</td>
+                                    <td class="py-2 px-3">Caché en cola local (IndexedDB / localStorage) con sincronización diferida automática al restablecerse el enlace.</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-semibold text-white">Fallo en Firebase Authentication</td>
+                                    <td class="py-2 px-2 text-center text-emerald-400">Muy Baja</td>
+                                    <td class="py-2 px-2 text-center text-red-400 font-bold">Crítico</td>
+                                    <td class="py-2 px-3">Tokens de sesión activos preservados durante la jornada; protocolo de bypass administrativo mediante clave maestra local en SQLite.</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-semibold text-white">Degradación de Conectividad a Internet</td>
+                                    <td class="py-2 px-2 text-center text-amber-400">Media</td>
+                                    <td class="py-2 px-2 text-center text-amber-400">Medio</td>
+                                    <td class="py-2 px-3">Ejecutable de escritorio standalone (<code class="font-mono text-slate-300">CRONOS FID.exe</code>) con base SQLite3 local para operar sin conexión externa.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- SECCIÓN 20: LECCIONES APRENDIDAS -->
+            <section id="sec-20" class="space-y-6 pt-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-sm border border-orange-500/30">20</span>
+                    <h2 class="text-2xl font-black text-white">LECCIONES APRENDIDAS Y MEJORES PRÁCTICAS</h2>
+                </div>
+                <div class="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 print-card space-y-4 text-xs text-slate-300">
+                    <ul class="list-disc list-inside space-y-2 leading-relaxed text-slate-400">
+                        <li><strong class="text-slate-200">El Asesor manda sobre la complejidad técnica:</strong> Los sistemas de contact center no toleran animaciones innecesarias ni diálogos modales disruptivos. Un clic adicional en llamada se multiplica por 5,000 interacciones diarias.</li>
+                        <li><strong class="text-slate-200">Desacoplar antes de refactorizar:</strong> La separación de consultas analíticas a <code class="font-mono text-slate-300">services/sql/kpiQueries.js</code> evitó errores colaterales al cambiar de proveedor de base de datos.</li>
+                        <li><strong class="text-slate-200">Validaciones en el cliente protegen el backend:</strong> El filtrado estricto de Clave Secreta y campos de Discord erradicó en un 100% los registros huérfanos o con datos nulos.</li>
+                        <li><strong class="text-slate-200">Gobernanza de versiones transparente:</strong> Registrar cada cambio en el <code class="font-mono text-orange-400">OFFICIAL_CHANGELOG</code> brinda trazabilidad absoluta ante auditorías internas y Dirección.</li>
+                    </ul>
+                </div>
+            </section>
+    
+            <!-- SECCIÓN 21: ESTADO ACTUAL & DICTAMEN -->
+            <section id="sec-21" class="space-y-6 pt-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 font-bold font-mono text-sm border border-orange-500/30">21</span>
+                    <h2 class="text-2xl font-black text-white">ESTADO ACTUAL, DICTAMEN DE INGENIERÍA Y ANEXOS</h2>
+                </div>
+                
+                <!-- Dictamen Card -->
+                <div class="p-6 rounded-3xl bg-gradient-to-r from-emerald-950/50 via-slate-900 to-indigo-950/50 border-2 border-emerald-500/50 print-card space-y-4">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl font-black shrink-0 border border-emerald-500/40">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <div class="space-y-2">
+                            <h3 class="text-base sm:text-lg font-black text-white uppercase tracking-wide">
+                                Dictamen de Homologación e Implementación Corporativa
+                            </h3>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                La plataforma <strong>CRONOS FID (JELI v6.0.0 &bull; WIN OCT2026)</strong> ha superado satisfactoriamente todas las pruebas de carga, ergonomía, compatibilidad de navegador (Microsoft Edge, Google Chrome), latencia de red y seguridad RBAC.
+                            </p>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Se dictamina su estado formal como <strong>APROBADO PARA OPERACIÓN Y ESCALAMIENTO CORPORATIVO 2026-2027</strong> en toda la división de Fidelización y Retenciones de WIN Telecomunicaciones.
+                            </p>
+                            <div class="pt-3 flex flex-wrap items-center gap-6 text-xs text-slate-400 border-t border-slate-800">
+                                <div>Emitido por: <strong class="text-white">Jhonny León Illescas (Arquitectura & CX)</strong></div>
+                                <div>Estado Técnico: <strong class="text-emerald-400 font-bold font-mono">PRODUCCIÓN ESTABLE (WORLD-CLASS)</strong></div>
+                                <div>Versión de Referencia: <strong class="text-orange-400 font-mono">6.0.0</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Glosario y Acrónimos -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                        <h4 class="font-bold text-white text-sm">Glosario de Términos Operacionales</h4>
+                        <dl class="space-y-1.5 text-slate-400 text-[11px]">
+                            <div><dt class="font-bold text-slate-300">TMO (Tiempo Medio de Operación):</dt><dd>Duración total de la llamada viva más el tiempo de post-atención (wrap-up).</dd></div>
+                            <div><dt class="font-bold text-slate-300">Churn Rate:</dt><dd>Tasa de desafección o cancelación voluntaria de abonados a la fibra óptica.</dd></div>
+                            <div><dt class="font-bold text-slate-300">Clave Secreta:</dt><dd>Token criptográfico temporal de validación de identidad del titular del servicio.</dd></div>
+                            <div><dt class="font-bold text-slate-300">Acuerdo de Voz:</dt><dd>Lectura fonética regulada de condiciones contractuales bajo normativa OSIPTEL.</dd></div>
+                        </dl>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                        <h4 class="font-bold text-white text-sm">Directorio de Acrónimos</h4>
+                        <dl class="space-y-1.5 text-slate-400 text-[11px]">
+                            <div><dt class="font-bold text-slate-300 font-mono">RBAC:</dt><dd>Role-Based Access Control (Control de Acceso Basado en Roles).</dd></div>
+                            <div><dt class="font-bold text-slate-300 font-mono">FTTH:</dt><dd>Fiber To The Home (Fibra óptica hasta el hogar de WIN).</dd></div>
+                            <div><dt class="font-bold text-slate-300 font-mono">OSIPTEL:</dt><dd>Organismo Supervisor de Inversión Privada en Telecomunicaciones del Perú.</dd></div>
+                            <div><dt class="font-bold text-slate-300 font-mono">DRP:</dt><dd>Disaster Recovery Plan (Plan de Recuperación ante Desastres).</dd></div>
+                        </dl>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#0B0F19] border-t border-slate-800 py-8 px-4 text-center text-xs text-slate-500 print-card mt-16">
+        <div class="max-w-4xl mx-auto space-y-2">
+            <p class="font-bold text-slate-300">CRONOS FID &bull; Centro de Recursos Operativos para Negociación y Fidelización</p>
+            <p>Versión JELI v6.0.0 &bull; WIN OCT2026 &bull; Diseñado y Desarrollado por Jhonny León Illescas</p>
+            <p class="text-[10px] text-slate-600">Documento Confidencial de Uso Interno Exclusivo para WIN Telecomunicaciones S.A. Prohibida su reproducción o distribución no autorizada.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+    
