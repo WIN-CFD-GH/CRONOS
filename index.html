@@ -22145,19 +22145,13 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 loginScreen.style.display = 'none';
             }
             console.log("Aplicación lista");
-            if (typeof checkAndShowWelcomeModal === 'function') {
+            if (window.CronosAnnouncementManager && typeof window.CronosAnnouncementManager.runPriorityQueue === 'function') {
                 setTimeout(() => {
-                    if (window.CronosAnnouncementManager && typeof window.CronosAnnouncementManager.checkAndShowWelcome === 'function') {
-                        window.CronosAnnouncementManager.checkAndShowWelcome();
-                    } else {
-                        checkAndShowWelcomeModal();
-                    }
-                    if (window.CronosAnnouncementManager && typeof window.CronosAnnouncementManager.checkAndShowAdvisorSurveyPrompt === 'function') {
-                        setTimeout(() => { window.CronosAnnouncementManager.checkAndShowAdvisorSurveyPrompt(); }, 800);
-                    }
-                    if (window.CronosAnnouncementManager && typeof window.CronosAnnouncementManager.checkAndNotifyActiveAnnouncements === 'function') {
-                        window.CronosAnnouncementManager.checkAndNotifyActiveAnnouncements();
-                    }
+                    window.CronosAnnouncementManager.runPriorityQueue();
+                }, 350);
+            } else if (typeof checkAndShowWelcomeModal === 'function') {
+                setTimeout(() => {
+                    checkAndShowWelcomeModal();
                 }, 350);
             }
         }
@@ -45736,7 +45730,39 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     }
                 },
 
-                // Carga de Comunicados / Mensajes
+                // Sincronización Cloud de Comunicados / Encuestas (Firestore + Supabase)
+                async syncAnnouncementToCloud(item) {
+                    if (!item || !item.id) return;
+                    if (window.db) {
+                        try {
+                            await window.db.collection('cronos_announcements').doc(item.id).set(item, { merge: true });
+                        } catch (fsErr) {
+                            console.warn('[CronosAnnouncements] Error guardando comunicado en Firestore:', fsErr);
+                        }
+                    }
+                    if (window.supabaseClient) {
+                        try {
+                            const { error } = await window.supabaseClient.from('cronos_announcements').upsert([item], { onConflict: 'id' });
+                            if (error) { /* Tabla opcional en Supabase */ }
+                        } catch (sbErr) { }
+                    }
+                },
+
+                async deleteAnnouncementFromCloud(id) {
+                    if (!id) return;
+                    if (window.db) {
+                        try {
+                            await window.db.collection('cronos_announcements').doc(id).delete();
+                        } catch (fsErr) { }
+                    }
+                    if (window.supabaseClient) {
+                        try {
+                            await window.supabaseClient.from('cronos_announcements').delete().eq('id', id);
+                        } catch (sbErr) { }
+                    }
+                },
+
+                // Carga de Comunicados / Mensajes (Supabase + Firestore + Caché)
                 async loadAnnouncements() {
                     let list = null;
                     if (window.supabaseClient) {
@@ -45750,6 +45776,16 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                             }
                         } catch (sbErr) { }
                     }
+                    if (!list && window.db) {
+                        try {
+                            const snap = await window.db.collection('cronos_announcements').get();
+                            if (!snap.empty) {
+                                list = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                            }
+                        } catch (fsErr) {
+                            console.warn('[CronosAnnouncements] Error leyendo comunicados en Firestore:', fsErr);
+                        }
+                    }
                     if (!list) {
                         try {
                             const cached = localStorage.getItem('cronos_announcements_cache');
@@ -45759,6 +45795,9 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     if (!list || !Array.isArray(list) || list.length === 0) {
                         list = JSON.parse(JSON.stringify(DEFAULT_ANNOUNCEMENTS));
                         this.saveAnnouncementsCache(list);
+                        if (window.db) {
+                            list.forEach(item => { this.syncAnnouncementToCloud(item); });
+                        }
                     }
                     // Normalizar target_roles de cada elemento para garantizar segmentación estricta
                     list.forEach(a => {
@@ -45790,9 +45829,14 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     } catch (e) { }
                 },
 
-                // Carga de Respuestas de Encuestas
+                // Carga de Respuestas de Encuestas (Supabase + Firestore + Caché unificados)
                 async loadResponses() {
-                    let respList = null;
+                    const mergedMap = new Map();
+                    const addItem = (item) => {
+                        if (!item || !item.id) return;
+                        mergedMap.set(item.id, item);
+                    };
+
                     if (window.supabaseClient) {
                         try {
                             const { data, error } = await window.supabaseClient
@@ -45800,17 +45844,35 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                                 .select('*')
                                 .order('created_at', { ascending: false });
                             if (!error && Array.isArray(data)) {
-                                respList = data;
+                                data.forEach(addItem);
                             }
                         } catch (sbErr) { }
                     }
-                    if (!respList) {
+
+                    if (window.db) {
                         try {
-                            const cached = localStorage.getItem('cronos_survey_responses_cache');
-                            if (cached) respList = JSON.parse(cached);
-                        } catch (e) { }
+                            const snap = await window.db.collection('cronos_survey_responses').get();
+                            if (!snap.empty) {
+                                snap.docs.forEach(doc => addItem({ id: doc.id, ...doc.data() }));
+                            }
+                        } catch (fsErr) {
+                            console.warn('[CronosAnnouncements] Error leyendo respuestas en Firestore:', fsErr);
+                        }
                     }
-                    this.responses = Array.isArray(respList) ? respList : [];
+
+                    try {
+                        const cached = localStorage.getItem('cronos_survey_responses_cache');
+                        if (cached) {
+                            const parsed = JSON.parse(cached);
+                            if (Array.isArray(parsed)) parsed.forEach(addItem);
+                        }
+                    } catch (e) { }
+
+                    const list = Array.from(mergedMap.values()).sort((a, b) => {
+                        return new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime();
+                    });
+                    this.responses = list;
+                    this.saveResponsesCache(this.responses);
                     return this.responses;
                 },
 
@@ -45909,7 +45971,61 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     });
                 },
 
-                // 1. Mensaje de Bienvenida Administrable
+                // Verificación de encuesta activa pendiente para el usuario actual
+                hasPendingActiveSurvey(user = null) {
+                    const currentUser = user || window.CRONOS_CURRENT_USER || (window.SessionManager && typeof window.SessionManager.getSession === 'function' ? window.SessionManager.getSession() : null);
+                    if (!currentUser) return false;
+                    const activeSurvey = this.getActiveAnnouncement('survey', currentUser);
+                    if (!activeSurvey) return false;
+                    return !this.hasUserAnswered(activeSurvey.id, currentUser);
+                },
+
+                // Verifica si un modal de mayor prioridad está actualmente visible
+                isHigherPriorityModalOpen() {
+                    const modalIds = ['modal-experiencia-aviso', 'modal-encuesta-experiencia', 'modal-welcome-cronos'];
+                    return modalIds.some(id => {
+                        const el = document.getElementById(id);
+                        return el && !el.classList.contains('hidden');
+                    });
+                },
+
+                // Cola de Prioridad Oficial de Mensajes:
+                // Prioridad 1: Encuesta activa pendiente
+                // Prioridad 2: Comunicado especial / alerta
+                // Prioridad 3: Bienvenida
+                // Prioridad 4: Recordatorio SLA (solo si NO hay encuesta activa pendiente)
+                async runPriorityQueue() {
+                    try {
+                        await this.loadAnnouncements();
+                        await this.loadResponses();
+                        const currentUser = window.CRONOS_CURRENT_USER || (window.SessionManager && typeof window.SessionManager.getSession === 'function' ? window.SessionManager.getSession() : null);
+                        if (!currentUser) return;
+
+                        if (typeof CronosNotifications !== 'undefined' && CronosNotifications.updateBadge) {
+                            CronosNotifications.updateBadge();
+                        }
+
+                        // Prioridad 1: Encuesta activa pendiente -> mostrar primero y bloquear Recordatorio SLA
+                        if (this.hasPendingActiveSurvey(currentUser)) {
+                            const reminderModal = document.getElementById('modal-reminder-sla');
+                            if (reminderModal) reminderModal.classList.add('hidden');
+                            const shown = this.checkAndShowAdvisorSurveyPrompt(false);
+                            if (shown) return;
+                        }
+
+                        // Prioridad 2: Comunicado especial / Alerta
+                        this.checkAndNotifyActiveAnnouncements();
+
+                        // Prioridad 3: Bienvenida (solo si no hay encuesta abierta)
+                        if (!this.isHigherPriorityModalOpen()) {
+                            this.checkAndShowWelcome();
+                        }
+                    } catch (e) {
+                        console.warn('[CronosAnnouncements] Error en runPriorityQueue:', e);
+                    }
+                },
+
+                // Prioridad 3: Mensaje de Bienvenida Administrable
                 checkAndShowWelcome() {
                     try {
                         if (sessionStorage.getItem('cronos_welcome_shown')) {
@@ -45919,9 +46035,11 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         const currentUser = window.CRONOS_CURRENT_USER || (window.SessionManager && typeof window.SessionManager.getSession === 'function' ? window.SessionManager.getSession() : null);
                         if (!currentUser) return false;
 
+                        // Prioridad 1 tiene precedencia absoluta si hay encuesta pendiente
+                        if (this.hasPendingActiveSurvey(currentUser)) return false;
+
                         const activeWelcome = this.getActiveAnnouncement('welcome', currentUser);
                         if (!activeWelcome) {
-                            // Si está inactivo o no aplica a este perfil, no mostrar
                             return false;
                         }
 
@@ -45949,14 +46067,13 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         const welcomeModal = document.getElementById('modal-welcome-cronos');
                         if (welcomeModal) welcomeModal.classList.add('hidden');
 
-                        // Al cerrar bienvenida, evaluar si hay encuesta activa o recordatorio pendiente
                         setTimeout(() => {
                             this.checkAndShowAdvisorSurveyPrompt();
                         }, 400);
                     } catch (e) { }
                 },
 
-                // 2. Recordatorio Operativo SLA Administrable
+                // Prioridad 4: Recordatorio Operativo SLA Administrable
                 checkAndShowModuleReminder(targetModule) {
                     try {
                         if (!targetModule) return;
@@ -45966,9 +46083,13 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         const currentUser = window.CRONOS_CURRENT_USER || (window.SessionManager && typeof window.SessionManager.getSession === 'function' ? window.SessionManager.getSession() : null);
                         if (!currentUser) return;
 
+                        // REGLA DE PRIORIDAD: No mostrar Recordatorio SLA mientras exista encuesta activa pendiente
+                        if (this.hasPendingActiveSurvey(currentUser) || this.isHigherPriorityModalOpen()) {
+                            return;
+                        }
+
                         const activeReminder = this.getActiveAnnouncement('operational', currentUser);
                         if (!activeReminder) {
-                            // Inactivo o deshabilitado para este perfil
                             return;
                         }
 
@@ -46362,14 +46483,28 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         created_at: new Date().toISOString()
                     };
 
+                    if (window.db) {
+                        try {
+                            await window.db.collection('cronos_survey_responses').doc(responseRecord.id).set(responseRecord);
+                        } catch (fsErr) {
+                            console.warn('[CronosAnnouncements] Error guardando respuesta en Firestore:', fsErr);
+                        }
+                    }
                     if (window.supabaseClient) {
                         try {
                             await window.supabaseClient.from('cronos_survey_responses').insert([responseRecord]);
                         } catch (sbErr) { }
                     }
 
-                    this.responses.unshift(responseRecord);
+                    this.responses = [responseRecord, ...this.responses.filter(r => r.id !== responseRecord.id)];
                     this.saveResponsesCache(this.responses);
+
+                    const avisoModal = document.getElementById('modal-experiencia-aviso');
+                    if (avisoModal) avisoModal.classList.add('hidden');
+                    if (typeof this.renderAdminDashboard === 'function') {
+                        this.renderAdminDashboard();
+                        this.loadAnnouncements().then(() => this.loadResponses()).then(() => this.renderAdminDashboard());
+                    }
 
                     // Control de respuesta única
                     const emailKey = String(currentUser.correo || currentUser.email || '').trim().toLowerCase();
@@ -46722,11 +46857,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                             item.is_active = isActive;
                             item.updated_at = new Date().toISOString();
 
-                            if (window.supabaseClient) {
-                                try {
-                                    await window.supabaseClient.from('cronos_announcements').update(item).eq('id', id);
-                                } catch (e) { }
-                            }
+                            await this.syncAnnouncementToCloud(item);
                         }
                     } else {
                         const newId = 'ann_' + Date.now();
@@ -46745,11 +46876,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                             created_at: new Date().toISOString()
                         };
                         this.announcements.unshift(newRecord);
-                        if (window.supabaseClient) {
-                            try {
-                                await window.supabaseClient.from('cronos_announcements').insert([newRecord]);
-                            } catch (e) { }
-                        }
+                        await this.syncAnnouncementToCloud(newRecord);
                     }
 
                     this.saveAnnouncementsCache(this.announcements);
@@ -46764,11 +46891,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     item.is_active = !item.is_active;
                     item.updated_at = new Date().toISOString();
 
-                    if (window.supabaseClient) {
-                        try {
-                            await window.supabaseClient.from('cronos_announcements').update({ is_active: item.is_active }).eq('id', id);
-                        } catch (e) { }
-                    }
+                    await this.syncAnnouncementToCloud(item);
                     this.saveAnnouncementsCache(this.announcements);
                     this.renderAdminDashboard();
                     showToast(item.is_active ? 'Mensaje activado.' : 'Mensaje desactivado.', 'info');
@@ -46784,11 +46907,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     clone.created_at = new Date().toISOString();
 
                     this.announcements.unshift(clone);
-                    if (window.supabaseClient) {
-                        try {
-                            await window.supabaseClient.from('cronos_announcements').insert([clone]);
-                        } catch (e) { }
-                    }
+                    await this.syncAnnouncementToCloud(clone);
                     this.saveAnnouncementsCache(this.announcements);
                     this.renderAdminDashboard();
                     showToast('Mensaje duplicado con éxito.', 'success');
@@ -46797,11 +46916,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                 async deleteItem(id) {
                     if (!confirm('¿Estás seguro de eliminar este mensaje/comunicado?')) return;
                     this.announcements = this.announcements.filter(x => x.id !== id);
-                    if (window.supabaseClient) {
-                        try {
-                            await window.supabaseClient.from('cronos_announcements').delete().eq('id', id);
-                        } catch (e) { }
-                    }
+                    await this.deleteAnnouncementFromCloud(id);
                     this.saveAnnouncementsCache(this.announcements);
                     this.renderAdminDashboard();
                     showToast('Mensaje eliminado.', 'info');
