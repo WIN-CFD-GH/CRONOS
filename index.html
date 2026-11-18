@@ -45730,20 +45730,29 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     }
                 },
 
-                // Sincronización Cloud de Comunicados / Encuestas (Firestore + Supabase)
+                // Sincronización Cloud de Comunicados / Encuestas (Firestore auditoria garantizado + Supabase opcional)
                 async syncAnnouncementToCloud(item) {
                     if (!item || !item.id) return;
                     if (window.db) {
                         try {
-                            await window.db.collection('cronos_announcements').doc(item.id).set(item, { merge: true });
+                            const currentUser = window.CRONOS_CURRENT_USER || {};
+                            await window.db.collection('auditoria').doc('ann_state_' + item.id).set({
+                                modulo: 'CRONOS_ANNOUNCEMENT_STATE',
+                                accion: 'COMUNICADO_ACTUALIZADO',
+                                correo: currentUser.correo || 'sistema@win.pe',
+                                nombre: currentUser.nombre || 'Administración',
+                                rol: currentUser.rol || 'Administrador',
+                                fechaHora: new Date().toISOString(),
+                                timestamp: Date.now(),
+                                announcement_data: item
+                            }, { merge: true });
                         } catch (fsErr) {
-                            console.warn('[CronosAnnouncements] Error guardando comunicado en Firestore:', fsErr);
+                            console.warn('[CronosAnnouncements] Error guardando comunicado en Firestore auditoria:', fsErr);
                         }
                     }
                     if (window.supabaseClient) {
                         try {
-                            const { error } = await window.supabaseClient.from('cronos_announcements').upsert([item], { onConflict: 'id' });
-                            if (error) { /* Tabla opcional en Supabase */ }
+                            await window.supabaseClient.from('cronos_announcements').upsert([item], { onConflict: 'id' });
                         } catch (sbErr) { }
                     }
                 },
@@ -45752,7 +45761,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     if (!id) return;
                     if (window.db) {
                         try {
-                            await window.db.collection('cronos_announcements').doc(id).delete();
+                            await window.db.collection('auditoria').doc('ann_state_' + id).delete();
                         } catch (fsErr) { }
                     }
                     if (window.supabaseClient) {
@@ -45762,7 +45771,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     }
                 },
 
-                // Carga de Comunicados / Mensajes (Supabase + Firestore + Caché)
+                // Carga de Comunicados / Mensajes (Supabase + Firestore auditoria + Caché)
                 async loadAnnouncements() {
                     let list = null;
                     if (window.supabaseClient) {
@@ -45778,9 +45787,11 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     }
                     if (!list && window.db) {
                         try {
-                            const snap = await window.db.collection('cronos_announcements').get();
+                            const snap = await window.db.collection('auditoria').where('modulo', '==', 'CRONOS_ANNOUNCEMENT_STATE').get();
                             if (!snap.empty) {
-                                list = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                                list = snap.docs
+                                    .map(doc => doc.data() && doc.data().announcement_data ? doc.data().announcement_data : null)
+                                    .filter(Boolean);
                             }
                         } catch (fsErr) {
                             console.warn('[CronosAnnouncements] Error leyendo comunicados en Firestore:', fsErr);
@@ -45851,12 +45862,17 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
 
                     if (window.db) {
                         try {
-                            const snap = await window.db.collection('cronos_survey_responses').get();
+                            const snap = await window.db.collection('auditoria').where('modulo', '==', 'CRONOS_SURVEY_RESPONSE').get();
                             if (!snap.empty) {
-                                snap.docs.forEach(doc => addItem({ id: doc.id, ...doc.data() }));
+                                snap.docs.forEach(doc => {
+                                    const d = doc.data();
+                                    if (d && d.survey_response) {
+                                        addItem(d.survey_response);
+                                    }
+                                });
                             }
                         } catch (fsErr) {
-                            console.warn('[CronosAnnouncements] Error leyendo respuestas en Firestore:', fsErr);
+                            console.warn('[CronosAnnouncements] Error leyendo respuestas en Firestore auditoria:', fsErr);
                         }
                     }
 
@@ -46485,9 +46501,18 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
 
                     if (window.db) {
                         try {
-                            await window.db.collection('cronos_survey_responses').doc(responseRecord.id).set(responseRecord);
+                            await window.db.collection('auditoria').doc(responseRecord.id).set({
+                                modulo: 'CRONOS_SURVEY_RESPONSE',
+                                accion: 'ENCUESTA_RESPONDIDA',
+                                correo: responseRecord.user_email,
+                                nombre: responseRecord.user_nombre,
+                                rol: responseRecord.user_rol,
+                                fechaHora: responseRecord.created_at,
+                                timestamp: Date.now(),
+                                survey_response: responseRecord
+                            });
                         } catch (fsErr) {
-                            console.warn('[CronosAnnouncements] Error guardando respuesta en Firestore:', fsErr);
+                            console.warn('[CronosAnnouncements] Error guardando respuesta en Firestore auditoria:', fsErr);
                         }
                     }
                     if (window.supabaseClient) {
