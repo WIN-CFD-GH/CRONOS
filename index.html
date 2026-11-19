@@ -232,9 +232,6 @@ Año02026
 
         /* 4. PERFIL SUPERVISOR: 360°, Riesgo, Alertas, Inteligencia Operativa, Cumplimiento, Metas, Predictiva, AI */
         body.profile-mode-supervisor .cronos-tech-element,
-        body.profile-mode-supervisor #tab-nav-gestion-usuarios,
-        body.profile-mode-supervisor #tab-gestion-usuarios,
-        body.profile-mode-supervisor #menu-opt-users,
         body.profile-mode-supervisor #menu-opt-settings,
         body.profile-mode-supervisor #section-gestion-formacion-calidad,
         body.profile-mode-supervisor #section-observabilidad-adopcion,
@@ -15623,6 +15620,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 derivaciones_discord: true,
                 acuerdos_voz: true,
                 acuerdosVoz: true,
+                directorio: true,
                 dashboard: true,
                 auditoria: true,
                 analitica_sla: true,
@@ -15648,6 +15646,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 derivaciones_discord: true,
                 acuerdos_voz: true,
                 acuerdosVoz: true,
+                directorio: true,
                 dashboard: true,
                 auditoria: true,
                 analitica_sla: true,
@@ -15673,6 +15672,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 derivaciones_discord: true,
                 acuerdos_voz: true,
                 acuerdosVoz: true,
+                directorio: true,
                 dashboard: true,
                 auditoria: true,
                 analitica_sla: true,
@@ -15698,6 +15698,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 derivaciones_discord: true,
                 acuerdos_voz: true,
                 acuerdosVoz: true,
+                directorio: true,
                 dashboard: true,
                 auditoria: true,
                 analitica_sla: true,
@@ -15723,6 +15724,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 derivaciones_discord: true,
                 acuerdos_voz: true,
                 acuerdosVoz: true,
+                directorio: true,
                 dashboard: true,
                 auditoria: true,
                 analitica_sla: true,
@@ -15748,6 +15750,7 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 derivaciones_discord: true,
                 acuerdos_voz: true,
                 acuerdosVoz: true,
+                directorio: true,
                 dashboard: false,
                 auditoria: false,
                 analitica_sla: false,
@@ -16823,13 +16826,28 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                     return Boolean(!isAsesor && (perms.vista_360 || perms.executive360 || perms.vistaEjecutiva360));
                 }
                 if (permissionKey === 'acerca_de' || permissionKey === 'acercaDe' || permissionKey === 'about') {
-                    return Boolean(perms.acerca_de || perms.acercaDe || perms.about);
+                    return Boolean(perms.acerca_de || perms.acercaDe || perms.about || perms.accesoTotal);
                 }
+                const aliases = {
+                    generator: ['generator', 'claveSecreta'],
+                    tipificaciones: ['tipificaciones'],
+                    tickets: ['tickets', 'tickets_tec', 'ticketsTecnologicos'],
+                    derivaciones: ['derivaciones', 'derivaciones_discord', 'derivacionesDiscord'],
+                    acuerdos_voz: ['acuerdos_voz', 'acuerdosVoz', 'procesos_operativos'],
+                    directorio: ['directorio'],
+                    dashboard: ['dashboard'],
+                    auditoria: ['auditoria'],
+                    analitica_sla: ['analitica_sla', 'analiticaSLA'],
+                    gestion_usuarios: ['gestion_usuarios', 'gestionUsuarios'],
+                    exportExcel: ['exportExcel', 'exportaciones']
+                };
+                const keysToCheck = aliases[permissionKey] || [permissionKey];
                 if (perms.accesoTotal) {
-                    if (perms[permissionKey] === false) return false;
+                    if (keysToCheck.some(k => perms[k] === false)) return false;
                     return true;
                 }
-                return Boolean(perms[permissionKey]);
+                if (permissionKey === 'directorio' && perms.directorio === undefined) return true;
+                return keysToCheck.some(k => perms[k] === true);
             } catch (err) {
                 console.warn('[hasPermission] Error al validar permiso:', permissionKey, err);
                 return false;
@@ -18452,13 +18470,31 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             const tabDir = document.getElementById('tab-directorio');
             const tabSLAOp = document.getElementById('tab-cronos-sla');
 
-            if (tabGen) tabGen.style.display = permissions.claveSecreta !== false ? '' : 'none';
-            if (tabTip) tabTip.style.display = permissions.tipificaciones !== false ? '' : 'none';
-            if (tabTic) tabTic.style.display = permissions.ticketsTecnologicos !== false ? '' : 'none';
-            if (tabDer) tabDer.style.display = permissions.derivacionesDiscord !== false ? '' : 'none';
-            if (tabAcu) tabAcu.style.display = permissions.acuerdosVoz !== false ? '' : 'none';
-            if (tabDir) tabDir.style.display = permissions.directorio !== false ? '' : 'none';
-            if (tabSLAOp) tabSLAOp.style.display = permissions.cronos_sla !== false ? '' : 'none';
+            const checkMat = (keys, defaultVal = false) => {
+                if (permissions.accesoTotal) {
+                    if (keys.some(k => permissions[k] === false)) return false;
+                    return true;
+                }
+                const hasDefined = keys.some(k => permissions[k] !== undefined);
+                if (!hasDefined) return defaultVal;
+                return keys.some(k => permissions[k] === true);
+            };
+
+            const canGen = checkMat(['generator', 'claveSecreta'], true);
+            const canTip = checkMat(['tipificaciones'], true);
+            const canTic = checkMat(['tickets', 'tickets_tec', 'ticketsTecnologicos'], true);
+            const canDer = checkMat(['derivaciones', 'derivaciones_discord', 'derivacionesDiscord'], true);
+            const canAcu = checkMat(['acuerdos_voz', 'acuerdosVoz', 'procesos_operativos'], true);
+            const canDir = checkMat(['directorio'], true);
+            const canSLAOp = permissions.cronos_sla !== false;
+
+            if (tabGen) tabGen.style.display = canGen ? '' : 'none';
+            if (tabTip) tabTip.style.display = canTip ? '' : 'none';
+            if (tabTic) tabTic.style.display = canTic ? '' : 'none';
+            if (tabDer) tabDer.style.display = canDer ? '' : 'none';
+            if (tabAcu) tabAcu.style.display = canAcu ? '' : 'none';
+            if (tabDir) tabDir.style.display = canDir ? '' : 'none';
+            if (tabSLAOp) tabSLAOp.style.display = canSLAOp ? '' : 'none';
 
             const tabDash = document.getElementById('tab-dashboard');
             const tabAud = document.getElementById('tab-auditoria');
@@ -18470,24 +18506,20 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
 
             const btnExp = document.getElementById('sidebar-btn-exports');
 
-            const canDash = Boolean(!isAsesor && (permissions.dashboard || isAdminOrSup));
-            const canAud = Boolean(!isAsesor && (permissions.auditoria || isAdminOrSup));
-            const canSLA = Boolean(!isAsesor && (permissions.analitica_sla || isAdminOrSup));
-            const canUsr = Boolean(!isAsesor && (permissions.gestion_usuarios || permissions.gestionUsuarios || isAdminOrSup));
+            const canDash = Boolean(!isAsesor && checkMat(['dashboard'], false));
+            const canAud = Boolean(!isAsesor && checkMat(['auditoria'], false));
+            const canSLA = Boolean(!isAsesor && checkMat(['analitica_sla', 'analiticaSLA'], false));
+            const canUsr = Boolean(!isAsesor && checkMat(['gestion_usuarios', 'gestionUsuarios'], false));
             // Control de visibilidad de Comunicados y Mensajes Operativos:
-            // Visible para: Administrador, Supervisor, Coordinador, Calidad, Formador (Oculto para Asesor/Agente)
             const tabAdminComms = document.getElementById('tab-btn-admin-comunicados');
             if (tabAdminComms) {
-                const canManageComms = !isAsesor && (isAdminOrSup ||
-                    String(userRole).toLowerCase().includes('coordinador') ||
-                    String(userRole).toLowerCase().includes('calidad') ||
-                    String(userRole).toLowerCase().includes('formador') ||
+                const canManageComms = !isAsesor && (canUsr || isAdminOrSup ||
                     (window.CronosAuthManager && window.CronosAuthManager.canManageAnnouncements && window.CronosAuthManager.canManageAnnouncements()));
                 tabAdminComms.style.display = canManageComms ? '' : 'none';
             }
-            const canExp = Boolean(!isAsesor && (permissions.exportExcel || isAdminOrSup));
-            const can360 = Boolean(!isAsesor && !window.CRONOS_SUSPEND_VISTA_360 && (permissions.vista_360 || permissions.executive360 || permissions.vistaEjecutiva360));
-            const canAbout = Boolean(permissions.acerca_de || permissions.acercaDe || permissions.about);
+            const canExp = Boolean(!isAsesor && checkMat(['exportExcel', 'exportaciones'], false));
+            const can360 = Boolean(!isAsesor && !window.CRONOS_SUSPEND_VISTA_360 && checkMat(['vista_360', 'executive360', 'vistaEjecutiva360'], false));
+            const canAbout = Boolean(checkMat(['acerca_de', 'acercaDe', 'about'], false));
 
             if (tabDash) tabDash.style.display = canDash ? '' : 'none';
             if (tabAud) tabAud.style.display = canAud ? '' : 'none';
@@ -18601,14 +18633,14 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             const menuUsers = document.getElementById('menu-opt-users');
             const menuHistory = document.getElementById('menu-opt-history');
             if (menuSettings) menuSettings.style.display = (!isAsesor && (permissions.configuracion || isAdminOrSup)) ? '' : 'none';
-            if (menuUsers) menuUsers.style.display = (!isAsesor && (permissions.gestion_usuarios || isAdminOrSup)) ? '' : 'none';
+            if (menuUsers) menuUsers.style.display = canUsr ? '' : 'none';
             if (menuHistory) menuHistory.style.display = (permissions.historialAccesos !== false && permissions.auditoria !== false && !isAsesor) ? '' : 'none';
 
             const menuExports = document.getElementById('menu-opt-exports');
-            if (menuExports) menuExports.style.display = (!isAsesor && (permissions.exportExcel || isAdminOrSup)) ? '' : 'none';
+            if (menuExports) menuExports.style.display = canExp ? '' : 'none';
 
             const sidebarExports = document.getElementById('sidebar-btn-exports');
-            if (sidebarExports) sidebarExports.style.display = (!isAsesor && (permissions.exportExcel || isAdminOrSup)) ? '' : 'none';
+            if (sidebarExports) sidebarExports.style.display = canExp ? '' : 'none';
 
             // Gestión de visibilidad de componentes técnicos y paneles de migración (Fases 9.x Supabase)
             if (isAsesor) {
@@ -18790,21 +18822,32 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             },
 
             updateNavbarTabs(activeRole) {
-                // Pestañas operativas
-                const opTabs = ['tab-generator', 'tab-tipificaciones', 'tab-tickets', 'tab-derivaciones', 'tab-acuerdos-voz', 'tab-directorio'];
-
-                opTabs.forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) {
-                        if (activeRole === 'Calidad' || activeRole === 'Formador') {
-                            el.style.display = 'none';
-                        } else {
-                            el.style.display = '';
-                        }
+                const perms = (typeof currentUserPermissions === 'function') ? currentUserPermissions(activeRole) :
+                    ((window.CRONOS_PERMISSIONS && window.CRONOS_PERMISSIONS[activeRole]) || (window.CRONOS_DEFAULT_PERMISSIONS && window.CRONOS_DEFAULT_PERMISSIONS[activeRole]) || {});
+                const hasMod = (keys, defVal = false) => {
+                    if (perms.accesoTotal) {
+                        if (keys.some(k => perms[k] === false)) return false;
+                        return true;
                     }
+                    if (!keys.some(k => perms[k] !== undefined)) return defVal;
+                    return keys.some(k => perms[k] === true);
+                };
+                const isAsesor = activeRole === 'Asesor';
+
+                const opMap = {
+                    'tab-generator': hasMod(['generator', 'claveSecreta'], true),
+                    'tab-tipificaciones': hasMod(['tipificaciones'], true),
+                    'tab-tickets': hasMod(['tickets', 'tickets_tec', 'ticketsTecnologicos'], true),
+                    'tab-derivaciones': hasMod(['derivaciones', 'derivaciones_discord', 'derivacionesDiscord'], true),
+                    'tab-acuerdos-voz': hasMod(['acuerdos_voz', 'acuerdosVoz', 'procesos_operativos'], true),
+                    'tab-directorio': hasMod(['directorio'], true)
+                };
+                Object.keys(opMap).forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.style.display = opMap[id] ? '' : 'none';
                 });
 
-                // Pestañas especializadas
+                // Pestañas especializadas gobernadas por la Matriz
                 const nav360 = document.getElementById('tab-nav-executive-360');
                 const navAud = document.getElementById('tab-nav-auditoria');
                 const navSLA = document.getElementById('tab-nav-analitica-sla');
@@ -18812,12 +18855,12 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 const navForm = document.getElementById('tab-nav-formacion-calidad');
                 const navUsr = document.getElementById('tab-nav-gestion-usuarios');
 
-                if (nav360) nav360.style.display = (window.CRONOS_SUSPEND_VISTA_360) ? 'none' : ((activeRole !== 'Asesor') ? '' : 'none');
-                if (navAud) navAud.style.display = (['Calidad', 'Supervisor', 'Administrador'].includes(activeRole)) ? '' : 'none';
-                if (navSLA) navSLA.style.display = (['Calidad', 'Formador', 'Supervisor', 'Coordinador', 'Administrador'].includes(activeRole)) ? '' : 'none';
-                if (navDash) navDash.style.display = (['Supervisor', 'Coordinador', 'Administrador'].includes(activeRole)) ? '' : 'none';
+                if (nav360) nav360.style.display = (window.CRONOS_SUSPEND_VISTA_360 || isAsesor) ? 'none' : (hasMod(['vista_360', 'executive360', 'vistaEjecutiva360'], false) ? '' : 'none');
+                if (navAud) navAud.style.display = (!isAsesor && hasMod(['auditoria'], false)) ? '' : 'none';
+                if (navSLA) navSLA.style.display = (!isAsesor && hasMod(['analitica_sla', 'analiticaSLA'], false)) ? '' : 'none';
+                if (navDash) navDash.style.display = (!isAsesor && hasMod(['dashboard'], false)) ? '' : 'none';
                 if (navForm) navForm.style.display = (window.CRONOS_SUSPEND_VISTA_360) ? 'none' : ((['Formador', 'Calidad', 'Administrador'].includes(activeRole)) ? '' : 'none');
-                if (navUsr) navUsr.style.display = (activeRole === 'Administrador') ? '' : 'none';
+                if (navUsr) navUsr.style.display = (!isAsesor && hasMod(['gestion_usuarios', 'gestionUsuarios'], false)) ? '' : 'none';
             },
 
             applySectionFilters(role) {
@@ -21699,7 +21742,8 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
                 { key: 'tipificaciones', name: 'Tipificaciones' },
                 { key: 'tickets', name: 'Tickets/Tecnológico' },
                 { key: 'derivaciones', name: 'Derivaciones/Discord' },
-                { key: 'acuerdos_voz', name: 'Acuerdos de Voz' },
+                { key: 'acuerdos_voz', name: 'Procesos Operativos (Acuerdos)' },
+                { key: 'directorio', name: 'Directorio (Escalamiento)' },
                 { key: 'dashboard', name: 'Dashboard' },
                 { key: 'auditoria', name: 'Auditoría' },
                 { key: 'analitica_sla', name: 'Analítica CRONOS SLA' },
@@ -23227,7 +23271,35 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             // SEGURIDAD CRÍTICA: Perfil Asesor tiene bloqueada la Vista Ejecutiva 360° y módulos de gestión
             const restrictedForAsesor = ['dashboard', 'auditoria', 'analitica-sla', 'gestion-usuarios', 'vista-360'];
             if (isAsesor && restrictedForAsesor.includes(targetNorm)) {
-                if (targetNorm === 'vista-360') {
+                // Guardia unificada de Matriz de Permisos en navegación directa (Configurado -> Visible -> Accesible)
+            const modulePermMap = {
+                'generator': 'generator',
+                'tipificaciones': 'tipificaciones',
+                'tickets': 'tickets',
+                'derivaciones': 'derivaciones',
+                'acuerdos-voz': 'acuerdos_voz',
+                'directorio': 'directorio',
+                'dashboard': 'dashboard',
+                'auditoria': 'auditoria',
+                'analitica-sla': 'analitica_sla',
+                'gestion-usuarios': 'gestion_usuarios'
+            };
+            const requiredPerm = modulePermMap[targetNorm];
+            if (requiredPerm && typeof hasPermission === 'function' && !hasPermission(requiredPerm)) {
+                if (typeof showToast === 'function') {
+                    showToast('Acceso restringido: módulo deshabilitado para tu perfil en la Matriz de Permisos.', 'warning');
+                }
+                const fallbackOrder = ['generator', 'tipificaciones', 'tickets', 'derivaciones', 'acuerdos-voz', 'directorio', 'dashboard', 'auditoria', 'analitica-sla'];
+                const firstAllowed = fallbackOrder.find(m => hasPermission(modulePermMap[m]));
+                if (firstAllowed && firstAllowed !== targetNorm) {
+                    targetNorm = firstAllowed;
+                    target = firstAllowed;
+                } else {
+                    return;
+                }
+            }
+
+            if (targetNorm === 'vista-360') {
                     if (typeof showToast === 'function') {
                         showToast('Acceso denegado: Vista Ejecutiva 360° es de uso exclusivo para perfiles de gestión.', 'warning');
                     }
