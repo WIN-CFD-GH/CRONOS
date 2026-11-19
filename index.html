@@ -23520,37 +23520,8 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
             if (window.CronosAnnouncementManager && typeof window.CronosAnnouncementManager.checkAndShowModuleReminder === 'function') {
                 return window.CronosAnnouncementManager.checkAndShowModuleReminder(target);
             }
-            try {
-                if (!target) return;
-                const normalized = String(target).trim().toLowerCase();
-
-                // Excluir si es el propio módulo CRONOS SLA
-                if (normalized === 'analitica-sla' || normalized === 'sla' || normalized === 'cronos-sla') {
-                    return;
-                }
-
-                const storageKey = 'cronos_sla_reminded_' + normalized;
-                if (sessionStorage.getItem(storageKey)) {
-                    return; // Mostrar únicamente la primera vez que el usuario abra cada módulo durante la sesión
-                }
-
-                // Si el modal de bienvenida está visible o aún no se ha cerrado, encolar para mostrar al cerrar bienvenida
-                const welcomeModal = document.getElementById('modal-welcome-cronos');
-                const isWelcomeOpen = welcomeModal && !welcomeModal.classList.contains('hidden');
-                if (!sessionStorage.getItem('cronos_welcome_shown') || isWelcomeOpen) {
-                    window._pendingSlaModuleReminder = normalized;
-                    return;
-                }
-
-                sessionStorage.setItem(storageKey, 'true');
-
-                const reminderModal = document.getElementById('modal-reminder-sla');
-                if (reminderModal) {
-                    reminderModal.classList.remove('hidden');
-                }
-            } catch (e) {
-                console.warn('[Module Reminder] Error:', e);
-            }
+            // Nunca mostrar recordatorio SLA si CronosAnnouncementManager no ha cargado estado oficial Cloud
+            return;
         }
 
         function closeReminderSlaModal() {
@@ -45707,6 +45678,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                 responses: [],
                 activeSurveyId: DEFAULT_SURVEY_ID,
                 initialized: false,
+                announcementsLoadedFromCloud: false,
 
                 // Inicialización resiliente con Supabase y localStorage
                 async init() {
@@ -45785,29 +45757,40 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                             }
                         } catch (sbErr) { }
                     }
-                    if (!list && window.db) {
+                    let loadedFromCloud = false;
+                    if (list && Array.isArray(list) && list.length > 0) {
+                        loadedFromCloud = true;
+                    }
+                    if (!loadedFromCloud && window.db && (window.CRONOS_CURRENT_USER || (typeof firebase !== 'undefined' && firebase.auth && firebase.auth().currentUser))) {
                         try {
                             const snap = await window.db.collection('auditoria').where('modulo', '==', 'CRONOS_ANNOUNCEMENT_STATE').get();
                             if (!snap.empty) {
                                 list = snap.docs
                                     .map(doc => doc.data() && doc.data().announcement_data ? doc.data().announcement_data : null)
                                     .filter(Boolean);
+                                loadedFromCloud = true;
                             }
                         } catch (fsErr) {
                             console.warn('[CronosAnnouncements] Error leyendo comunicados en Firestore:', fsErr);
                         }
                     }
-                    if (!list) {
-                        try {
-                            const cached = localStorage.getItem('cronos_announcements_cache');
-                            if (cached) list = JSON.parse(cached);
-                        } catch (e) { }
-                    }
-                    if (!list || !Array.isArray(list) || list.length === 0) {
-                        list = JSON.parse(JSON.stringify(DEFAULT_ANNOUNCEMENTS));
+                    // Si ya cargó desde CRONOS_ANNOUNCEMENT_STATE, sobrescribir caché local y jamás usar fallback local viejo
+                    if (loadedFromCloud) {
+                        this.announcementsLoadedFromCloud = true;
                         this.saveAnnouncementsCache(list);
-                        if (window.db) {
-                            list.forEach(item => { this.syncAnnouncementToCloud(item); });
+                    } else {
+                        if (!list) {
+                            try {
+                                const cached = localStorage.getItem('cronos_announcements_cache');
+                                if (cached) list = JSON.parse(cached);
+                            } catch (e) { }
+                        }
+                        if (!list || !Array.isArray(list) || list.length === 0) {
+                            list = JSON.parse(JSON.stringify(DEFAULT_ANNOUNCEMENTS));
+                            this.saveAnnouncementsCache(list);
+                            if (window.db && (window.CRONOS_CURRENT_USER || (typeof firebase !== 'undefined' && firebase.auth && firebase.auth().currentUser))) {
+                                list.forEach(item => { this.syncAnnouncementToCloud(item); });
+                            }
                         }
                     }
                     // Normalizar target_roles de cada elemento para garantizar segmentación estricta
@@ -45954,15 +45937,15 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     });
                 },
 
-                // Filtro de mensajes activos aplicables al usuario actual
+                // Filtro estricto de mensajes activos aplicables al usuario actual
                 getActiveAnnouncement(type, targetUser = null) {
                     const now = new Date();
                     const user = targetUser || window.CRONOS_CURRENT_USER || (window.SessionManager && typeof window.SessionManager.getSession === 'function' ? window.SessionManager.getSession() : null);
                     if (!user) return null;
 
                     return this.announcements.find(a => {
-                        if (a.type !== type) return false;
-                        if (!a.is_active) return false;
+                        if (!a || a.type !== type) return false;
+                        if (a.is_active !== true) return false;
                         if (a.start_date && new Date(a.start_date) > now) return false;
                         if (a.end_date && new Date(a.end_date) < now) return false;
 
@@ -46093,6 +46076,9 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                 checkAndShowModuleReminder(targetModule) {
                     try {
                         if (!targetModule) return;
+                        // Nunca mostrar si aún no se ha cargado el estado oficial desde CRONOS_ANNOUNCEMENT_STATE
+                        if (!this.announcementsLoadedFromCloud) return;
+
                         const normalized = String(targetModule).trim().toLowerCase();
                         if (normalized === 'analitica-sla' || normalized === 'sla' || normalized === 'cronos-sla') return;
 
@@ -46105,7 +46091,9 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                         }
 
                         const activeReminder = this.getActiveAnnouncement('operational', currentUser);
-                        if (!activeReminder) {
+                        if (!activeReminder || activeReminder.is_active !== true) {
+                            const rm = document.getElementById('modal-reminder-sla');
+                            if (rm) rm.classList.add('hidden');
                             return;
                         }
 
