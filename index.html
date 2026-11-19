@@ -25472,6 +25472,36 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
     </div>
 
     <!-- ========================================================================= -->
+    <!-- MODAL: COMUNICADO / ALERTA ACTIVA (PRIORIDAD 2) -->
+    <div id="modal-comunicado-activo" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9998] flex items-center justify-center p-4 hidden animate-pop">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-md w-full overflow-hidden">
+            <div class="bg-gradient-to-r from-indigo-900 via-slate-900 to-slate-800 text-white p-5 flex items-center justify-between border-b-2 border-win-orange">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-win-orange text-white flex items-center justify-center text-lg shadow-md">
+                        <i id="comm-modal-icon" class="fa-solid fa-bullhorn"></i>
+                    </div>
+                    <div>
+                        <span id="comm-modal-badge" class="text-[10px] font-extrabold uppercase tracking-wider bg-white/15 text-orange-300 px-2 py-0.5 rounded-full">COMUNICADO</span>
+                        <h3 id="comm-modal-title" class="text-sm sm:text-base font-black text-white mt-0.5 leading-tight">Comunicado Oficial</h3>
+                    </div>
+                </div>
+                <button type="button" onclick="CronosAnnouncementManager.closeActiveAnnouncementModal()" class="text-slate-400 hover:text-white transition cursor-pointer">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-3">
+                <p id="comm-modal-subtitle" class="text-xs font-extrabold uppercase tracking-wider text-win-orange"></p>
+                <p id="comm-modal-content" class="text-sm text-slate-700 leading-relaxed whitespace-pre-line"></p>
+                <div class="pt-3 flex justify-end">
+                    <button type="button" onclick="CronosAnnouncementManager.closeActiveAnnouncementModal()"
+                        class="bg-win-orange hover:bg-win-orangeHover text-white font-black text-xs px-5 py-2.5 rounded-xl shadow-md transition cursor-pointer">
+                        Entendido
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL 2: RECORDATORIO DE USO DE CRONOS SLA (UNA VEZ POR MÓDULO POR SESIÓN) -->
     <!-- ========================================================================= -->
     <div id="modal-reminder-sla" onclick="if(event.target === this) closeReminderSlaModal()"
@@ -45981,7 +46011,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
 
                 // Verifica si un modal de mayor prioridad está actualmente visible
                 isHigherPriorityModalOpen() {
-                    const modalIds = ['modal-experiencia-aviso', 'modal-encuesta-experiencia', 'modal-welcome-cronos'];
+                    const modalIds = ['modal-experiencia-aviso', 'modal-experiencia-cronos', 'modal-comunicado-activo', 'modal-welcome-cronos'];
                     return modalIds.some(id => {
                         const el = document.getElementById(id);
                         return el && !el.classList.contains('hidden');
@@ -46180,6 +46210,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     }
                     const avisoModal = document.getElementById('modal-experiencia-aviso');
                     if (avisoModal) avisoModal.classList.add('hidden');
+                    setTimeout(() => { this.checkAndNotifyActiveAnnouncements(); }, 250);
                 },
 
                 // Renderizado en Centro de Notificaciones (Avisos Operativos e integración con Información)
@@ -46407,6 +46438,7 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                 closeSurveyForm() {
                     const formModal = document.getElementById('modal-experiencia-cronos');
                     if (formModal) formModal.classList.add('hidden');
+                    setTimeout(() => { this.checkAndNotifyActiveAnnouncements(); }, 250);
                 },
 
                 resetAdvisorForm() {
@@ -46935,31 +46967,60 @@ CRONOS FID Engineering Team - Google DeepMind Agentic Pair Programming
                     showToast('Mensaje eliminado.', 'info');
                 },
 
-                // Notificación proactiva en sesión de alertas y comunicados
+                closeActiveAnnouncementModal() {
+                    const modal = document.getElementById('modal-comunicado-activo');
+                    if (modal) modal.classList.add('hidden');
+                    setTimeout(() => {
+                        if (!this.isHigherPriorityModalOpen()) {
+                            this.checkAndShowWelcome();
+                        }
+                    }, 250);
+                },
+
+                // Notificación proactiva en sesión de comunicados ('announcement') y alertas ('alert')
                 checkAndNotifyActiveAnnouncements() {
                     try {
                         const currentUser = window.CRONOS_CURRENT_USER || (window.SessionManager && typeof window.SessionManager.getSession === 'function' ? window.SessionManager.getSession() : null);
-                        if (!currentUser) return;
+                        if (!currentUser) return false;
 
                         if (typeof CronosNotifications !== 'undefined' && CronosNotifications.updateBadge) {
                             CronosNotifications.updateBadge();
                         }
 
-                        const activeAlerts = this.getActiveAnnouncements(['alert'], currentUser);
-                        if (activeAlerts && activeAlerts.length > 0) {
-                            activeAlerts.forEach(a => {
-                                const sKey = 'cronos_alert_toast_' + a.id;
-                                if (!sessionStorage.getItem(sKey)) {
-                                    sessionStorage.setItem(sKey, 'true');
-                                    setTimeout(() => {
-                                        showToast('⚠️ ALERTA OPERATIVA: ' + a.title, 'warning');
-                                    }, 1500);
-                                }
-                            });
+                        const activeItems = this.getActiveAnnouncements(['alert', 'announcement'], currentUser);
+                        if (!activeItems || activeItems.length === 0) return false;
+
+                        // Buscar primer comunicado/alerta activo pendiente de mostrar en esta sesión
+                        const pendingItem = activeItems.find(a => !sessionStorage.getItem('cronos_comm_shown_' + a.id));
+                        if (!pendingItem) return false;
+
+                        sessionStorage.setItem('cronos_comm_shown_' + pendingItem.id, 'true');
+
+                        const modal = document.getElementById('modal-comunicado-activo');
+                        if (modal) {
+                            const isAlert = pendingItem.type === 'alert';
+                            const badgeEl = document.getElementById('comm-modal-badge');
+                            const titleEl = document.getElementById('comm-modal-title');
+                            const subEl = document.getElementById('comm-modal-subtitle');
+                            const contEl = document.getElementById('comm-modal-content');
+                            const iconEl = document.getElementById('comm-modal-icon');
+
+                            if (badgeEl) badgeEl.textContent = pendingItem.badge || (isAlert ? 'ALERTA ESPECIAL' : 'COMUNICADO OFICIAL');
+                            if (titleEl) titleEl.textContent = pendingItem.title || 'Comunicado Oficial';
+                            if (subEl) {
+                                subEl.textContent = pendingItem.subtitle || '';
+                                subEl.style.display = pendingItem.subtitle ? 'block' : 'none';
+                            }
+                            if (contEl) contEl.textContent = pendingItem.content || '';
+                            if (iconEl) iconEl.className = isAlert ? 'fa-solid fa-triangle-exclamation' : 'fa-solid fa-bullhorn';
+
+                            modal.classList.remove('hidden');
+                            return true;
                         }
                     } catch (e) {
-                        console.warn('[CronosAnnouncements] Error al notificar alertas:', e);
+                        console.warn('[CronosAnnouncements] Error al notificar comunicados:', e);
                     }
+                    return false;
                 },
 
                 // Exportaciones
