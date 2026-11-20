@@ -1327,19 +1327,28 @@ Año02026
                             <span class="font-bold text-slate-800 block text-xs">Modo de Experiencia</span>
                             <span class="text-[11px] text-slate-500">Elige entre Modo Básico (Asesor Nuevo) o Modo Avanzado.</span>
                         </div>
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <label class="inline-flex items-center gap-1.5 cursor-pointer text-xs font-bold text-slate-800">
+                                <input type="radio" name="profile-pref-modo-radio" id="profile-pref-radio-basico" value="basico" checked
+                                    onchange="if(window.CronosSmartOnboarding) CronosSmartOnboarding.setSelfAdvancedMode(false);"
+                                    class="accent-emerald-600 cursor-pointer">
+                                <span>Modo Básico</span>
+                            </label>
+                            <label class="inline-flex items-center gap-1.5 cursor-pointer text-xs font-bold text-slate-800">
+                                <input type="radio" name="profile-pref-modo-radio" id="profile-pref-radio-avanzado" value="avanzado"
+                                    onchange="if(window.CronosSmartOnboarding) CronosSmartOnboarding.setSelfAdvancedMode(true);"
+                                    class="accent-indigo-600 cursor-pointer">
+                                <span>Modo Avanzado</span>
+                            </label>
                             <select id="profile-pref-modo-select"
                                 onchange="if(window.CronosSmartOnboarding) CronosSmartOnboarding.setSelfAdvancedMode(this.value === 'avanzado');"
-                                class="border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-800 bg-slate-50 cursor-pointer">
+                                class="hidden border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-800 bg-slate-50 cursor-pointer">
                                 <option value="basico">Modo Básico (Asesor Nuevo)</option>
                                 <option value="avanzado">Modo Avanzado (Asesor Avanzado)</option>
                             </select>
-                            <label class="inline-flex items-center gap-1.5 cursor-pointer">
-                                <input type="checkbox" id="profile-pref-modo-toggle"
-                                    onchange="if(window.CronosSmartOnboarding) CronosSmartOnboarding.setSelfAdvancedMode(this.checked);"
-                                    class="w-4 h-4 accent-indigo-600 cursor-pointer">
-                                <span id="profile-pref-modo-label" class="text-xs font-black text-indigo-700">Modo Básico</span>
-                            </label>
+                            <input type="checkbox" id="profile-pref-modo-toggle" class="hidden"
+                                onchange="if(window.CronosSmartOnboarding) CronosSmartOnboarding.setSelfAdvancedMode(this.checked);">
+                            <span id="profile-pref-modo-label" class="hidden text-xs font-black text-indigo-700">Modo Básico</span>
                         </div>
                     </div>
                 </div>
@@ -49860,8 +49869,8 @@ ${sheetHtml}
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                 <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200">
-                                    <div class="text-[10px] font-black uppercase text-emerald-700">Usuarios Nuevos (Nivel 1 • Asesor Nuevo)</div>
-                                    <div id="metric-maturity-basicos" class="text-2xl font-black text-emerald-950 mt-1">${dist.nuevos}</div>
+                                    <div class="text-[10px] font-black uppercase text-emerald-700">Usuarios Básicos (Nivel 1 • Asesor Nuevo)</div>
+                                    <div id="metric-maturity-basicos" class="text-2xl font-black text-emerald-950 mt-1">${dist.basicos}</div>
                                     <div class="text-[10px] text-emerald-700 mt-0.5">&lt; 60 días o &lt; 300 interacciones</div>
                                 </div>
                                 <div class="p-4 rounded-xl bg-amber-50 border border-amber-200">
@@ -50130,7 +50139,7 @@ ${sheetHtml}
                             </div>
                             <div class="p-5 space-y-3">
                                 <p id="smart-adv-suggestion-text" class="text-xs text-slate-700 font-semibold leading-relaxed">
-                                    Hemos detectado que ya tienes experiencia utilizando CRONOS FID.
+                                    Hemos detectado que ya cuentas con experiencia utilizando CRONOS FID.
                                     <br><br>
                                     ¿Deseas activar el Modo Avanzado?
                                 </p>
@@ -50205,6 +50214,10 @@ ${sheetHtml}
                     if (details) {
                         details.textContent = `Antigüedad: ${mat.diasAntiguedad}d • Accesos: ${mat.accesos} • Interacciones: ${mat.interacciones} • Onboarding: ${mat.onboardingCompletado ? 'Completado' : 'Pendiente'}`;
                     }
+                    const rBas = document.getElementById('profile-pref-radio-basico');
+                    const rAdv = document.getElementById('profile-pref-radio-avanzado');
+                    if (rBas) rBas.checked = !isAdv;
+                    if (rAdv) rAdv.checked = isAdv;
                     const sel = document.getElementById('profile-pref-modo-select');
                     if (sel) sel.value = isAdv ? 'avanzado' : 'basico';
                     const toggle = document.getElementById('profile-pref-modo-toggle');
