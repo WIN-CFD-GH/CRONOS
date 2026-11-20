@@ -1306,13 +1306,13 @@ Año02026
                     </div>
                 </div>
 
-                <!-- Preferencias: Autogestión de Experiencia Adaptativa (Mi Perfil -> Preferencias) -->
+                <!-- Preferencias: Autogestión de Experiencia Adaptativa (Mi Perfil -> Preferencias -> Modo de Experiencia) -->
                 <div id="profile-preferences-section"
                     class="bg-white border border-indigo-200 rounded-xl p-3.5 space-y-2.5 text-slate-700 shadow-sm">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <i class="fa-solid fa-sliders text-indigo-600 text-sm"></i>
-                            <span class="font-black text-slate-900 text-xs uppercase tracking-wider">Preferencias de Experiencia</span>
+                            <span class="font-black text-slate-900 text-xs uppercase tracking-wider">Preferencias • Modo de Experiencia</span>
                         </div>
                         <span id="profile-maturity-level-badge"
                             class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 uppercase">
@@ -1322,17 +1322,25 @@ Año02026
                     <p id="profile-maturity-details" class="text-[11px] text-slate-500 leading-snug">
                         Experiencia adaptativa activa según tu nivel de madurez operativa en CRONOS FID.
                     </p>
-                    <div class="pt-2 border-t border-slate-100 flex items-center justify-between gap-3">
+                    <div class="pt-2 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                         <div>
-                            <span class="font-bold text-slate-800 block text-xs">Modo Avanzado</span>
-                            <span class="text-[11px] text-slate-500">Reduce tutoriales repetitivos y ayudas no críticas.</span>
+                            <span class="font-bold text-slate-800 block text-xs">Modo de Experiencia</span>
+                            <span class="text-[11px] text-slate-500">Elige entre Modo Básico (Asesor Nuevo) o Modo Avanzado.</span>
                         </div>
-                        <label class="inline-flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" id="profile-pref-modo-toggle"
-                                onchange="if(window.CronosSmartOnboarding) CronosSmartOnboarding.setSelfAdvancedMode(this.checked);"
-                                class="w-4 h-4 accent-indigo-600 cursor-pointer">
-                            <span id="profile-pref-modo-label" class="text-xs font-black text-indigo-700">Modo Básico</span>
-                        </label>
+                        <div class="flex items-center gap-2">
+                            <select id="profile-pref-modo-select"
+                                onchange="if(window.CronosSmartOnboarding) CronosSmartOnboarding.setSelfAdvancedMode(this.value === 'avanzado');"
+                                class="border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-800 bg-slate-50 cursor-pointer">
+                                <option value="basico">Modo Básico (Asesor Nuevo)</option>
+                                <option value="avanzado">Modo Avanzado (Asesor Avanzado)</option>
+                            </select>
+                            <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                                <input type="checkbox" id="profile-pref-modo-toggle"
+                                    onchange="if(window.CronosSmartOnboarding) CronosSmartOnboarding.setSelfAdvancedMode(this.checked);"
+                                    class="w-4 h-4 accent-indigo-600 cursor-pointer">
+                                <span id="profile-pref-modo-label" class="text-xs font-black text-indigo-700">Modo Básico</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
@@ -49843,16 +49851,17 @@ ${sheetHtml}
                             </div>
                         </div>
 
-                        <!-- Métricas de Madurez Adaptativa (Usuarios Básicos, Intermedios, Avanzados) -->
+                        <!-- Métricas de Madurez Adaptativa (Usuarios Nuevos, Intermedios, Avanzados - Solo Admin/Supervisor/Formador) -->
+                        ${this.canViewMaturityMetrics() ? `
                         <div class="bg-white rounded-2xl border border-slate-200 p-5 space-y-4">
                             <div>
                                 <h4 class="text-sm font-black text-slate-900">Métricas de Madurez Adaptativa (Administrador / Supervisor / Formador)</h4>
-                                <p class="text-xs text-slate-500">Clasificación automática por antigüedad, accesos, interacciones, onboarding y uso de módulos principales.</p>
+                                <p class="text-xs text-slate-500">Clasificación automática por antigüedad, accesos, interacciones, onboarding y uso frecuente de módulos principales.</p>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                 <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200">
-                                    <div class="text-[10px] font-black uppercase text-emerald-700">Usuarios Básicos (Nivel 1 • Asesor Nuevo)</div>
-                                    <div id="metric-maturity-basicos" class="text-2xl font-black text-emerald-950 mt-1">${dist.basicos}</div>
+                                    <div class="text-[10px] font-black uppercase text-emerald-700">Usuarios Nuevos (Nivel 1 • Asesor Nuevo)</div>
+                                    <div id="metric-maturity-basicos" class="text-2xl font-black text-emerald-950 mt-1">${dist.nuevos}</div>
                                     <div class="text-[10px] text-emerald-700 mt-0.5">&lt; 60 días o &lt; 300 interacciones</div>
                                 </div>
                                 <div class="p-4 rounded-xl bg-amber-50 border border-amber-200">
@@ -49867,6 +49876,7 @@ ${sheetHtml}
                                 </div>
                             </div>
                         </div>
+                        ` : ''}
 
                         <!-- FASE 6: Métricas de Onboarding -->
                         <div class="bg-white rounded-2xl border border-slate-200 p-5 space-y-4">
@@ -50064,6 +50074,11 @@ ${sheetHtml}
                     };
                 },
 
+                canViewMaturityMetrics(user) {
+                    const role = this.getUserRole(user).toLowerCase();
+                    return role.includes('admin') || role.includes('super') || role.includes('formador');
+                },
+
                 getMaturityDistribution() {
                     const users = Array.isArray(window.CRONOS_USERS_DB) && window.CRONOS_USERS_DB.length
                         ? window.CRONOS_USERS_DB
@@ -50077,7 +50092,7 @@ ${sheetHtml}
                         else if (m.level === 2) intermedios++;
                         else basicos++;
                     });
-                    return { basicos, intermedios, avanzados };
+                    return { nuevos: basicos, basicos, intermedios, avanzados };
                 },
 
                 // NO CAMBIO AUTOMÁTICO: sugerir Modo Avanzado cuando se detecta Nivel 3 (Asesor Avanzado)
@@ -50115,7 +50130,7 @@ ${sheetHtml}
                             </div>
                             <div class="p-5 space-y-3">
                                 <p id="smart-adv-suggestion-text" class="text-xs text-slate-700 font-semibold leading-relaxed">
-                                    Hemos detectado que ya cuentas con experiencia utilizando CRONOS FID.
+                                    Hemos detectado que ya tienes experiencia utilizando CRONOS FID.
                                     <br><br>
                                     ¿Deseas activar el Modo Avanzado?
                                 </p>
@@ -50153,7 +50168,7 @@ ${sheetHtml}
                     const modal = document.getElementById('modal-smart-advanced-suggestion');
                     if (modal) modal.classList.add('hidden');
                     if (typeof showToast === 'function') {
-                        showToast('Continuando en Modo Básico', 'info', 'Puedes activar el Modo Avanzado cuando gustes desde Mi Perfil → Preferencias.');
+                        showToast('Continuando en Modo Básico', 'info', 'Puedes activar el Modo Avanzado cuando gustes desde Mi Perfil → Preferencias → Modo de Experiencia.');
                     }
                 },
 
@@ -50190,6 +50205,8 @@ ${sheetHtml}
                     if (details) {
                         details.textContent = `Antigüedad: ${mat.diasAntiguedad}d • Accesos: ${mat.accesos} • Interacciones: ${mat.interacciones} • Onboarding: ${mat.onboardingCompletado ? 'Completado' : 'Pendiente'}`;
                     }
+                    const sel = document.getElementById('profile-pref-modo-select');
+                    if (sel) sel.value = isAdv ? 'avanzado' : 'basico';
                     const toggle = document.getElementById('profile-pref-modo-toggle');
                     if (toggle) toggle.checked = isAdv;
                     const lbl = document.getElementById('profile-pref-modo-label');
