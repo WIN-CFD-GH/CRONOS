@@ -2333,8 +2333,8 @@ Año02026
         </div>
     </header>
 
-    <!-- Barra de Navegacion Superior (PRIORIDAD 2 - Optimizada sin Scroll Horizontal) -->
-    <nav class="bg-white shadow-xs border-b border-slate-200 z-40 relative">
+    <!-- Barra de Navegacion Superior (Sticky Navigation - Permanece visible durante scroll) -->
+    <nav id="main-modules-nav" class="bg-white shadow-xs border-b border-slate-200 z-40 sticky top-[76px]">
         <div
             class="w-full max-w-[1920px] mx-auto px-3 sm:px-4 lg:px-6 flex items-center gap-1.5 sm:gap-2 overflow-x-auto py-2 scrollbar-hide">
 
@@ -50327,6 +50327,37 @@ ${sheetHtml}
                 document.addEventListener('DOMContentLoaded', () => CronosSmartOnboarding.init());
             } else {
                 CronosSmartOnboarding.init();
+            }
+        })(window);
+    </script>
+
+    <!-- ========================================================================= -->
+    <!-- STICKY NAVIGATION EXTENSION (SINCRONIZACIÓN EXACTA HEADER + BARRA)        -->
+    <!-- ========================================================================= -->
+    <script>
+        (function (window) {
+            'use strict';
+            function syncStickyModulesNav() {
+                const header = document.getElementById('main-header');
+                const nav = document.getElementById('main-modules-nav');
+                if (!header || !nav) return;
+                const h = Math.round(header.getBoundingClientRect().height);
+                if (h > 0) {
+                    nav.style.top = h + 'px';
+                }
+            }
+            window.CronosStickyNav = { sync: syncStickyModulesNav };
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', syncStickyModulesNav);
+            } else {
+                syncStickyModulesNav();
+            }
+            window.addEventListener('resize', syncStickyModulesNav, { passive: true });
+            if (typeof ResizeObserver === 'function') {
+                const header = document.getElementById('main-header');
+                if (header) {
+                    new ResizeObserver(syncStickyModulesNav).observe(header);
+                }
             }
         })(window);
     </script>
