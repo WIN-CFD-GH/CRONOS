@@ -1306,6 +1306,36 @@ Año02026
                     </div>
                 </div>
 
+                <!-- Preferencias: Autogestión de Experiencia Adaptativa (Mi Perfil -> Preferencias) -->
+                <div id="profile-preferences-section"
+                    class="bg-white border border-indigo-200 rounded-xl p-3.5 space-y-2.5 text-slate-700 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-sliders text-indigo-600 text-sm"></i>
+                            <span class="font-black text-slate-900 text-xs uppercase tracking-wider">Preferencias de Experiencia</span>
+                        </div>
+                        <span id="profile-maturity-level-badge"
+                            class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 uppercase">
+                            NIVEL 1 • ASESOR NUEVO
+                        </span>
+                    </div>
+                    <p id="profile-maturity-details" class="text-[11px] text-slate-500 leading-snug">
+                        Experiencia adaptativa activa según tu nivel de madurez operativa en CRONOS FID.
+                    </p>
+                    <div class="pt-2 border-t border-slate-100 flex items-center justify-between gap-3">
+                        <div>
+                            <span class="font-bold text-slate-800 block text-xs">Modo Avanzado</span>
+                            <span class="text-[11px] text-slate-500">Reduce tutoriales repetitivos y ayudas no críticas.</span>
+                        </div>
+                        <label class="inline-flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" id="profile-pref-modo-toggle"
+                                onchange="if(window.CronosSmartOnboarding) CronosSmartOnboarding.setSelfAdvancedMode(this.checked);"
+                                class="w-4 h-4 accent-indigo-600 cursor-pointer">
+                            <span id="profile-pref-modo-label" class="text-xs font-black text-indigo-700">Modo Básico</span>
+                        </label>
+                    </div>
+                </div>
+
                 <!-- Banner Informativo Firebase -->
                 <div
                     class="bg-amber-50 border border-amber-200 rounded-xl p-3.5 flex items-center justify-between text-slate-700 shadow-sm">
@@ -2236,6 +2266,15 @@ Año02026
                                 class="w-full text-left px-4 py-2 hover:bg-slate-50 text-slate-600 flex items-center gap-2.5 transition cursor-pointer">
                                 <i class="fa-solid fa-gear text-slate-400 w-4 text-center"></i>
                                 <span>Configuracion</span>
+                            </button>
+                            <button type="button" id="menu-opt-advisor-mode"
+                                onclick="if(window.CronosSmartOnboarding) CronosSmartOnboarding.toggleSelfMode(); toggleUserDropdown(event);"
+                                class="w-full text-left px-4 py-2.5 hover:bg-indigo-50 text-slate-800 flex items-center justify-between gap-2 transition cursor-pointer border-t border-slate-100/70">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <i id="menu-opt-advisor-mode-icon" class="fa-solid fa-bolt text-indigo-600 w-4 text-center"></i>
+                                    <span id="menu-opt-advisor-mode-label" class="font-bold truncate">Activar Modo Avanzado</span>
+                                </div>
+                                <span id="menu-opt-advisor-mode-badge" class="text-[9px] font-black px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 uppercase shrink-0">BÁSICO</span>
                             </button>
                             <button type="button" id="menu-opt-onboarding"
                                 onclick="startCronosOnboarding(true); toggleUserDropdown(event);"
@@ -24615,12 +24654,36 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         window.CRONOS_VERSION_INFO = {
             proyecto: "CRONOS FID",
             nombreCompleto: "Centro de Recursos Operativos para Negociación y Fidelización",
-            version: "JELI v6.1.0 • WIN NOV2026",
+            version: "JELI v6.6.0 • WIN NOV2026",
             autor: "Jhonny Leon Illescas",
             roles: "Diseño Funcional, Arquitectura Operativa, Gestión de Procesos, Desarrollo Evolutivo",
             anio: 2026,
             descripcion: "Sistema integral de apoyo operativo, capacitación, tipificaciones, escalamientos, SLA, analítica y soporte a asesores. Proyecto desarrollado para la gestión operativa de campañas de fidelización.",
             changelog: [
+                {
+                    version: "v6.6.0",
+                    tag: "Sistema Inteligente de Experiencia Adaptativa por Nivel de Madurez (Roadmap v6.6)",
+                    motivo: "Adaptar la experiencia automáticamente al nivel de madurez del asesor reduciendo el ruido visual sin cambios forzados.",
+                    items: [
+                        "Determinación automática de 3 niveles de madurez: Nivel 1 (Asesor Nuevo: <60 días o <300 interacciones), Nivel 2 (Asesor Intermedio: >=60 días y 300-1000 interacciones) y Nivel 3 (Asesor Avanzado: >60 días, >1000 interacciones y Onboarding completado)",
+                        "Evaluación integral de antigüedad, cantidad de accesos, interacciones registradas, onboarding completado y uso de módulos principales (Clave Secreta, Tipificaciones, CRONOS SLA, Procesos Operativos)",
+                        "Sugerencia inteligente sin cambio automático al detectar Asesor Avanzado ('Hemos detectado que ya cuentas con experiencia utilizando CRONOS FID. ¿Deseas activar el Modo Avanzado?' [Activar] / [Más tarde])",
+                        "Autogestión del asesor desde Mi Perfil -> Preferencias y administración por usuario en Gestión Usuarios -> Configuración de Experiencia",
+                        "Métricas de distribución de madurez (Usuarios Básicos, Usuarios Intermedios, Usuarios Avanzados) para Administrador, Supervisor y Formador"
+                    ]
+                },
+                {
+                    version: "v6.2.0",
+                    tag: "Modo Asesor Avanzado y Reducción de Ruido Visual (Design Thinking Sprint 4)",
+                    motivo: "Optimizar la experiencia de asesores experimentados reduciendo ayudas repetitivas sin afectar procesos operativos.",
+                    items: [
+                        "Modo Básico (Usuario Nuevo = SI): mantiene Onboarding, Tutor Operativo, Ayudas Contextuales, Recomendaciones y Recordatorios para OJT y curva de aprendizaje",
+                        "Modo Avanzado (Usuario Nuevo = NO): elimina ayudas repetitivas, tutoriales visibles y banners no críticos manteniendo 100% de funcionalidad (Procesos Operativos, CRONOS SLA, Clave Secreta, Tipificaciones)",
+                        "Cambio dinámico por usuario desde Gestión Usuarios -> Configuración de Experiencia habilitado para Administrador, Supervisor, Coordinador y Formador",
+                        "Selector voluntario para el asesor (Activar Modo Avanzado / Volver a Modo Básico) con persistencia inmediata y cero impacto en rendimiento",
+                        "Actualización de Documentación Maestra, ChangeLog y trazabilidad Design Thinking"
+                    ]
+                },
                 {
                     version: "v6.1.0",
                     tag: "Sistema de Onboarding Inteligente y Tutor Operativo (Open for Extension, Closed for Modification)",
@@ -28940,6 +29003,8 @@ B) SUPABASE (OPEN FOR EXTENSION):
 - Capa Final    : CRONOS AI Insights (DATO -> ANÁLISIS -> RECOMENDACIÓN)
 - Fase 6.0      : Estabilización, Optimización de Rendimiento y Seguridad
 - Fase 6.1      : Sistema de Onboarding Inteligente (Recorrido Guiado 5 pasos, Ayuda Contextual bajo demanda, Tutor Operativo, Usuarios Nuevos vs Avanzados, Métricas y Configuración)
+- Fase 6.2      : Modo Asesor Avanzado vs Modo Básico (Reducción de ruido visual basada en Design Thinking, cambio dinámico por Admin/Supervisor/Coordinador/Formador y elección voluntaria del asesor)
+- Roadmap v6.6  : Sistema Inteligente de Experiencia Adaptativa por Nivel de Madurez (Asesor Nuevo, Intermedio y Avanzado, sugerencia no intrusiva sin cambio automático, autogestión en Mi Perfil -> Preferencias y métricas de madurez)
 
 3. DICTAMEN DE RENDIMIENTO (FASE 6.0.2)
 --------------------------------------------------------------------------------
@@ -28988,6 +29053,23 @@ B) SUPABASE (OPEN FOR EXTENSION):
 - Tutor Operativo (Información -> Tutor Operativo): Consejos rápidos, Preguntas frecuentes, Buenas prácticas y Errores frecuentes cargados bajo demanda.
 - Segmentación Usuarios Nuevos (SI -> ayudas ampliadas) vs Usuarios Avanzados (NO -> solo contenido crítico).
 - Configuración de Experiencia y Métricas de Onboarding visibles para Administrador, Supervisor y Formador.
+
+7.2. MODO ASESOR AVANZADO Y TRAZABILIDAD DESIGN THINKING (FASE 6.2)
+--------------------------------------------------------------------------------
+- Origen Design Thinking: Hallazgos de entrevistas a asesores experimentados y encuestas de adopción evidenciaron fatiga por ayudas repetitivas tras superar la curva OJT.
+- Modo Básico (Usuario Nuevo = SI): Para asesores nuevos y OJT. Mantiene Onboarding, Tutor Operativo, Ayudas Contextuales, Recomendaciones y Recordatorios.
+- Modo Avanzado (Usuario Nuevo = NO): Para asesores experimentados. Reduce ayudas repetitivas, tutoriales visibles, banners permanentes y recordatorios no críticos, manteniendo el 100% de funcionalidad operativa (Procesos Operativos, CRONOS SLA, Clave Secreta, Tipificaciones).
+- Gobernanza y Autonomía: Administrador, Supervisor, Coordinador y Formador pueden asignar el modo por usuario desde Gestión Usuarios -> Configuración de Experiencia; el asesor también puede alternar voluntariamente entre Modo Básico y Modo Avanzado con persistencia inmediata.
+
+7.3. SISTEMA INTELIGENTE DE EXPERIENCIA ADAPTATIVA POR NIVEL DE MADUREZ (ROADMAP v6.6)
+--------------------------------------------------------------------------------
+- Niveles de Madurez:
+  * Nivel 1 (Asesor Nuevo): < 60 días de antigüedad o < 300 interacciones registradas.
+  * Nivel 2 (Asesor Intermedio): >= 60 días de antigüedad y entre 300 y 1000 interacciones.
+  * Nivel 3 (Asesor Avanzado): > 60 días de antigüedad, > 1000 interacciones y Onboarding completado.
+- Evaluación Multi-Criterio: Antigüedad en plataforma, cantidad de accesos, interacciones registradas, onboarding completado y uso de módulos principales (Clave Secreta, Tipificaciones, CRONOS SLA, Procesos Operativos).
+- Sugerencia sin Cambio Automático: Al detectar Nivel 3 (Asesor Avanzado), CRONOS FID no cambia el modo unilateralmente; presenta la sugerencia "¿Deseas activar el Modo Avanzado?" con opciones [Activar] y [Más tarde].
+- Autogestión y Métricas: Configurable por el asesor en Mi Perfil -> Preferencias, administrable en Gestión Usuarios -> Configuración de Experiencia, con métricas de Usuarios Básicos, Intermedios y Avanzados para Administrador, Supervisor y Formador.
 
 8. REGLAS MAESTRAS OFICIALES DE DESARROLLO, ARQUITECTURA, ANALÍTICA Y MANEJO DE DATOS
 --------------------------------------------------------------------------------
@@ -48953,8 +49035,10 @@ ${sheetHtml}
             const STORAGE_CONFIG = 'cronos_smart_onboarding_config_v1';
             const STORAGE_NEW_USERS = 'cronos_smart_new_users_v1';
             const STORAGE_METRICS = 'cronos_smart_onboarding_metrics_v1';
+            const STORAGE_MATURITY = 'cronos_smart_maturity_telemetry_v1';
             const TOUR_DONE_PREFIX = 'cronos_smart_tour_done_';
             const CTX_SEEN_PREFIX = 'cronos_smart_ctx_seen_';
+            const ADV_DEFERRED_PREFIX = 'cronos_smart_adv_deferred_';
 
             const TOUR_STEPS = [
                 {
@@ -49149,7 +49233,7 @@ ${sheetHtml}
 
                 canManageOnboarding(user) {
                     const role = this.getUserRole(user).toLowerCase();
-                    return role.includes('admin') || role.includes('super') || role.includes('formador');
+                    return role.includes('admin') || role.includes('super') || role.includes('coordinador') || role.includes('formador');
                 },
 
                 getConfig() {
@@ -49160,11 +49244,12 @@ ${sheetHtml}
                             return {
                                 tourEnabled: parsed.tourEnabled !== false,
                                 tutorEnabled: parsed.tutorEnabled !== false,
-                                contextHelpEnabled: parsed.contextHelpEnabled !== false
+                                contextHelpEnabled: parsed.contextHelpEnabled !== false,
+                                defaultMode: parsed.defaultMode === 'avanzado' ? 'avanzado' : 'basico'
                             };
                         }
                     } catch (e) {}
-                    return { tourEnabled: true, tutorEnabled: true, contextHelpEnabled: true };
+                    return { tourEnabled: true, tutorEnabled: true, contextHelpEnabled: true, defaultMode: 'basico' };
                 },
 
                 saveConfig(cfg) {
@@ -49188,7 +49273,78 @@ ${sheetHtml}
                     if (Object.prototype.hasOwnProperty.call(map, key)) {
                         return Boolean(map[key]);
                     }
-                    return Boolean(u && u.usuarioNuevo === true);
+                    if (u && typeof u.usuarioNuevo === 'boolean') {
+                        return u.usuarioNuevo;
+                    }
+                    if (u && u.modoOperativo) {
+                        return u.modoOperativo !== 'avanzado';
+                    }
+                    return this.getConfig().defaultMode !== 'avanzado';
+                },
+
+                getUserMode(user) {
+                    return this.isNewUser(user) ? 'basico' : 'avanzado';
+                },
+
+                setUserMode(userKey, modeOrBool) {
+                    const isBasic = (modeOrBool === true || modeOrBool === 'SI' || modeOrBool === 'basico');
+                    this.setNewUserFlag(userKey, isBasic);
+                    const curKey = this.getUserKey();
+                    if (String(userKey || '').toLowerCase().trim() === curKey) {
+                        this.applyVisualMode();
+                    }
+                },
+
+                toggleSelfMode() {
+                    const u = this.getCurrentUser();
+                    const key = this.getUserKey(u);
+                    const currentMode = this.getUserMode(u);
+                    const nextMode = currentMode === 'basico' ? 'avanzado' : 'basico';
+                    this.setUserMode(key, nextMode);
+                    if (typeof showToast === 'function') {
+                        if (nextMode === 'avanzado') {
+                            showToast('Modo Avanzado activado', 'success', 'Ayudas repetitivas y tutoriales reducidos. Interfaz optimizada.');
+                        } else {
+                            showToast('Modo Básico activado', 'info', 'Onboarding, Tutor Operativo y ayudas contextuales habilitados.');
+                        }
+                    }
+                    return nextMode;
+                },
+
+                applyVisualMode() {
+                    const u = this.getCurrentUser();
+                    const mode = this.getUserMode(u);
+                    const isAdv = mode === 'avanzado';
+                    if (document.body && document.body.classList) {
+                        document.body.classList.toggle('cronos-modo-avanzado', isAdv);
+                        document.body.classList.toggle('cronos-modo-basico', !isAdv);
+                    }
+                    const lbl = document.getElementById('menu-opt-advisor-mode-label');
+                    const badge = document.getElementById('menu-opt-advisor-mode-badge');
+                    const icon = document.getElementById('menu-opt-advisor-mode-icon');
+                    if (lbl) lbl.textContent = isAdv ? 'Volver a Modo Básico' : 'Activar Modo Avanzado';
+                    if (badge) {
+                        badge.textContent = isAdv ? 'AVANZADO' : 'BÁSICO';
+                        badge.className = isAdv
+                            ? 'text-[9px] font-black px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-800 uppercase shrink-0'
+                            : 'text-[9px] font-black px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 uppercase shrink-0';
+                    }
+                    if (icon) {
+                        icon.className = isAdv
+                            ? 'fa-solid fa-graduation-cap text-emerald-600 w-4 text-center'
+                            : 'fa-solid fa-bolt text-indigo-600 w-4 text-center';
+                    }
+                    // En Modo Avanzado ocultar accesos repetitivos de tutorial y modales no críticos abiertos
+                    const menuOb = document.getElementById('menu-opt-onboarding');
+                    const menuRestart = document.getElementById('menu-opt-restart-onboarding');
+                    if (menuOb) menuOb.style.display = isAdv ? 'none' : '';
+                    if (menuRestart) menuRestart.style.display = isAdv ? 'none' : '';
+                    if (isAdv) {
+                        const ctxModal = document.getElementById('modal-smart-context-help');
+                        if (ctxModal) ctxModal.classList.add('hidden');
+                        const tourModal = document.getElementById('modal-smart-onboarding');
+                        if (tourModal) tourModal.classList.add('hidden');
+                    }
                 },
 
                 setNewUserFlag(userKey, isNew) {
@@ -49201,7 +49357,15 @@ ${sheetHtml}
                     } catch (e) {}
                     if (Array.isArray(window.CRONOS_USERS_DB)) {
                         const found = window.CRONOS_USERS_DB.find(u => this.getUserKey(u) === key);
-                        if (found) found.usuarioNuevo = Boolean(isNew);
+                        if (found) {
+                            found.usuarioNuevo = Boolean(isNew);
+                            found.modoOperativo = isNew ? 'basico' : 'avanzado';
+                        }
+                    }
+                    const cur = this.getCurrentUser();
+                    if (cur && this.getUserKey(cur) === key) {
+                        cur.usuarioNuevo = Boolean(isNew);
+                        cur.modoOperativo = isNew ? 'basico' : 'avanzado';
                     }
                 },
 
@@ -49250,10 +49414,12 @@ ${sheetHtml}
                     this.saveMetrics(metrics);
                 },
 
-                // FASE 1: Detectar primer acceso y lanzar Recorrido Guiado
+                // FASE 1: Detectar primer acceso y lanzar Recorrido Guiado (solo en Modo Básico)
                 checkFirstAccess() {
                     const u = this.getCurrentUser();
                     if (!u) return;
+                    this.applyVisualMode();
+                    if (this.getUserMode(u) === 'avanzado') return;
                     const cfg = this.getConfig();
                     if (!cfg.tourEnabled) return;
                     const shell = document.getElementById('app-shell');
@@ -49650,6 +49816,7 @@ ${sheetHtml}
                     const totalAyudas = metricList.reduce((acc, m) => acc + (m.ayudasConsultadas || 0), 0);
                     const totalModulos = metricList.reduce((acc, m) => acc + ((m.modulosVisitados || []).length), 0);
                     const users = Array.isArray(window.CRONOS_USERS_DB) ? window.CRONOS_USERS_DB : [];
+                    const dist = this.getMaturityDistribution();
 
                     container.innerHTML = `
                         <!-- FASE 7: Configuración de Experiencia -->
@@ -49673,6 +49840,31 @@ ${sheetHtml}
                                     <span class="text-xs font-bold text-slate-800">Ayudas contextuales</span>
                                     <input type="checkbox" ${cfg.contextHelpEnabled ? 'checked' : ''} onchange="CronosSmartOnboarding.toggleConfig('contextHelpEnabled', this.checked)" class="w-4 h-4 accent-emerald-600">
                                 </label>
+                            </div>
+                        </div>
+
+                        <!-- Métricas de Madurez Adaptativa (Usuarios Básicos, Intermedios, Avanzados) -->
+                        <div class="bg-white rounded-2xl border border-slate-200 p-5 space-y-4">
+                            <div>
+                                <h4 class="text-sm font-black text-slate-900">Métricas de Madurez Adaptativa (Administrador / Supervisor / Formador)</h4>
+                                <p class="text-xs text-slate-500">Clasificación automática por antigüedad, accesos, interacciones, onboarding y uso de módulos principales.</p>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200">
+                                    <div class="text-[10px] font-black uppercase text-emerald-700">Usuarios Básicos (Nivel 1 • Asesor Nuevo)</div>
+                                    <div id="metric-maturity-basicos" class="text-2xl font-black text-emerald-950 mt-1">${dist.basicos}</div>
+                                    <div class="text-[10px] text-emerald-700 mt-0.5">&lt; 60 días o &lt; 300 interacciones</div>
+                                </div>
+                                <div class="p-4 rounded-xl bg-amber-50 border border-amber-200">
+                                    <div class="text-[10px] font-black uppercase text-amber-700">Usuarios Intermedios (Nivel 2 • Intermedio)</div>
+                                    <div id="metric-maturity-intermedios" class="text-2xl font-black text-amber-950 mt-1">${dist.intermedios}</div>
+                                    <div class="text-[10px] text-amber-700 mt-0.5">&ge; 60 días y 300–1000 interacciones</div>
+                                </div>
+                                <div class="p-4 rounded-xl bg-indigo-50 border border-indigo-200">
+                                    <div class="text-[10px] font-black uppercase text-indigo-700">Usuarios Avanzados (Nivel 3 • Avanzado)</div>
+                                    <div id="metric-maturity-avanzados" class="text-2xl font-black text-indigo-950 mt-1">${dist.avanzados}</div>
+                                    <div class="text-[10px] text-indigo-700 mt-0.5">&gt; 60 días, &gt; 1000 interacciones y Onboarding OK</div>
+                                </div>
                             </div>
                         </div>
 
@@ -49719,11 +49911,13 @@ ${sheetHtml}
                             </div>
                         </div>
 
-                        <!-- FASE 4 & 5: Clasificación Usuario Nuevo (SI / NO) -->
+                        <!-- FASE 4 & 5: Clasificación Usuario Nuevo (SI / NO) y Modo Básico / Modo Avanzado -->
                         <div class="bg-white rounded-2xl border border-slate-200 p-5 space-y-3">
-                            <div>
-                                <h4 class="text-sm font-black text-slate-900">Clasificación: Usuario Nuevo (SI / NO)</h4>
-                                <p class="text-xs text-slate-500">SI = Activa ayudas ampliadas. NO = Usuario avanzado (solo contenido crítico).</p>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                <div>
+                                    <h4 class="text-sm font-black text-slate-900">Modo Operativo por Usuario: Activar Modo Básico / Activar Modo Avanzado</h4>
+                                    <p class="text-xs text-slate-500">Administrable por Administrador, Supervisor, Coordinador y Formador. El asesor también puede cambiar su modo desde Mi Perfil → Preferencias.</p>
+                                </div>
                             </div>
                             <div class="max-h-64 overflow-y-auto overflow-x-auto">
                                 <table class="w-full text-left text-xs">
@@ -49732,23 +49926,30 @@ ${sheetHtml}
                                             <th class="p-2.5">Nombre</th>
                                             <th class="p-2.5">Correo</th>
                                             <th class="p-2.5">Rol</th>
-                                            <th class="p-2.5 text-center">Usuario Nuevo</th>
+                                            <th class="p-2.5 text-center">Nivel Madurez</th>
+                                            <th class="p-2.5 text-center">Modo / Usuario Nuevo</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-slate-100">
                                         ${users.slice(0, 50).map(u => {
                                             const uKey = this.getUserKey(u);
                                             const isNew = this.isNewUser(u);
+                                            const mat = this.evaluateMaturity(u);
                                             return `
                                                 <tr>
                                                     <td class="p-2.5 font-bold text-slate-800">${u.nombre || uKey}</td>
                                                     <td class="p-2.5 font-mono text-slate-600">${u.correo || ''}</td>
                                                     <td class="p-2.5 text-slate-600">${u.rol || 'Asesor'}</td>
                                                     <td class="p-2.5 text-center">
+                                                        <span class="text-[10px] font-black px-2 py-0.5 rounded-full ${mat.level === 3 ? 'bg-indigo-100 text-indigo-800' : (mat.level === 2 ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800')}">
+                                                            Nivel ${mat.level} • ${mat.label}
+                                                        </span>
+                                                    </td>
+                                                    <td class="p-2.5 text-center">
                                                         <select onchange="CronosSmartOnboarding.onToggleNewUser('${uKey}', this.value === 'SI')"
-                                                            class="border border-slate-300 rounded-lg px-2 py-1 text-xs font-bold ${isNew ? 'bg-emerald-50 text-emerald-800' : 'bg-slate-50 text-slate-700'}">
-                                                            <option value="SI" ${isNew ? 'selected' : ''}>SI (Nuevo)</option>
-                                                            <option value="NO" ${!isNew ? 'selected' : ''}>NO (Avanzado)</option>
+                                                            class="border border-slate-300 rounded-lg px-2 py-1 text-xs font-bold ${isNew ? 'bg-emerald-50 text-emerald-800' : 'bg-indigo-50 text-indigo-800'}">
+                                                            <option value="SI" ${isNew ? 'selected' : ''}>Activar Modo Básico (Usuario Nuevo = SI)</option>
+                                                            <option value="NO" ${!isNew ? 'selected' : ''}>Activar Modo Avanzado (Usuario Nuevo = NO)</option>
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -49761,6 +49962,240 @@ ${sheetHtml}
                     `;
                 },
 
+                getMaturityTelemetryMap() {
+                    try {
+                        return JSON.parse(localStorage.getItem(STORAGE_MATURITY) || '{}') || {};
+                    } catch (e) {
+                        return {};
+                    }
+                },
+
+                setMaturityTelemetry(userKey, data) {
+                    const key = String(userKey || this.getUserKey() || '').toLowerCase().trim();
+                    if (!key) return null;
+                    const map = this.getMaturityTelemetryMap();
+                    map[key] = Object.assign({}, map[key] || {}, data || {});
+                    try {
+                        localStorage.setItem(STORAGE_MATURITY, JSON.stringify(map));
+                    } catch (e) {}
+                    if (typeof data?.onboardingCompletado === 'boolean') {
+                        if (data.onboardingCompletado) localStorage.setItem(TOUR_DONE_PREFIX + key, 'true');
+                        else localStorage.removeItem(TOUR_DONE_PREFIX + key);
+                    }
+                    const u = (Array.isArray(window.CRONOS_USERS_DB) && window.CRONOS_USERS_DB.find(x => this.getUserKey(x) === key)) || this.getCurrentUser();
+                    const mat = this.evaluateMaturity(u || { correo: key });
+                    if (key === this.getUserKey()) {
+                        this.syncProfilePreferencesUI();
+                        this.checkMaturitySuggestion(u || { correo: key });
+                    }
+                    return mat;
+                },
+
+                evaluateMaturity(user) {
+                    const u = user || this.getCurrentUser() || {};
+                    const key = this.getUserKey(u);
+                    const tMap = this.getMaturityTelemetryMap();
+                    const t = tMap[key] || {};
+                    const metrics = this.getMetrics();
+                    const rec = metrics[key] || {};
+
+                    let diasAntiguedad = typeof t.diasAntiguedad === 'number' ? t.diasAntiguedad : (typeof u.diasAntiguedad === 'number' ? u.diasAntiguedad : null);
+                    if (diasAntiguedad === null) {
+                        if (u.fechaCreacion) {
+                            const parts = String(u.fechaCreacion).split(/[\/\-]/);
+                            let created = null;
+                            if (parts.length === 3) {
+                                created = parts[0].length === 4
+                                    ? new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]))
+                                    : new Date(Number(parts[2]), Number(parts[1]) - 1, Number(parts[0]));
+                            }
+                            if (created && !isNaN(created.getTime())) {
+                                diasAntiguedad = Math.max(0, Math.floor((Date.now() - created.getTime()) / 86400000));
+                            }
+                        }
+                        if (diasAntiguedad === null) diasAntiguedad = 15;
+                    }
+
+                    const accesos = typeof t.accesos === 'number' ? t.accesos : (typeof u.accesos === 'number' ? u.accesos : 1);
+                    const recordedInt = ((rec.modulosVisitados || []).length * 10) + ((rec.ayudasConsultadas || 0) * 5);
+                    const interacciones = typeof t.interacciones === 'number'
+                        ? t.interacciones
+                        : (typeof u.interacciones === 'number' ? u.interacciones : recordedInt);
+
+                    const onboardingCompletado = typeof t.onboardingCompletado === 'boolean'
+                        ? t.onboardingCompletado
+                        : (localStorage.getItem(TOUR_DONE_PREFIX + key) === 'true' || (rec.recorridosCompletados || 0) > 0);
+
+                    const coreModules = ['generator', 'tipificaciones', 'cronos-sla', 'acuerdos-voz'];
+                    const visited = Array.isArray(t.modulosPrincipales) ? t.modulosPrincipales : (rec.modulosVisitados || []);
+                    const modulosPrincipales = coreModules.filter(m => visited.includes(m));
+
+                    // Clasificación según criterios sugeridos:
+                    // Nivel 1 (ASESOR NUEVO): < 60 días O < 300 interacciones
+                    // Nivel 3 (ASESOR AVANZADO): > 60 días (>=60), > 1000 interacciones y Onboarding completado
+                    // Nivel 2 (ASESOR INTERMEDIO): >= 60 días y entre 300 y 1000 interacciones (o >1000 sin onboarding)
+                    let level = 1;
+                    let code = 'nuevo';
+                    let label = 'ASESOR NUEVO';
+
+                    if (diasAntiguedad < 60 || interacciones < 300) {
+                        level = 1;
+                        code = 'nuevo';
+                        label = 'ASESOR NUEVO';
+                    } else if (diasAntiguedad >= 60 && interacciones > 1000 && onboardingCompletado) {
+                        level = 3;
+                        code = 'avanzado';
+                        label = 'ASESOR AVANZADO';
+                    } else {
+                        level = 2;
+                        code = 'intermedio';
+                        label = 'ASESOR INTERMEDIO';
+                    }
+
+                    return {
+                        level,
+                        code,
+                        label,
+                        diasAntiguedad,
+                        accesos,
+                        interacciones,
+                        onboardingCompletado,
+                        modulosPrincipales
+                    };
+                },
+
+                getMaturityDistribution() {
+                    const users = Array.isArray(window.CRONOS_USERS_DB) && window.CRONOS_USERS_DB.length
+                        ? window.CRONOS_USERS_DB
+                        : [this.getCurrentUser()].filter(Boolean);
+                    let basicos = 0;
+                    let intermedios = 0;
+                    let avanzados = 0;
+                    users.forEach(u => {
+                        const m = this.evaluateMaturity(u);
+                        if (m.level === 3) avanzados++;
+                        else if (m.level === 2) intermedios++;
+                        else basicos++;
+                    });
+                    return { basicos, intermedios, avanzados };
+                },
+
+                // NO CAMBIO AUTOMÁTICO: sugerir Modo Avanzado cuando se detecta Nivel 3 (Asesor Avanzado)
+                checkMaturitySuggestion(user) {
+                    const u = user || this.getCurrentUser();
+                    if (!u) return false;
+                    const key = this.getUserKey(u);
+                    const mat = this.evaluateMaturity(u);
+                    // No cambiar automáticamente: solo sugerir si es Asesor Avanzado, sigue en Modo Básico y no pospuso
+                    if (mat.level !== 3) return false;
+                    if (this.getUserMode(u) === 'avanzado') return false;
+                    if (localStorage.getItem(ADV_DEFERRED_PREFIX + key) === 'true') return false;
+
+                    this._ensureSuggestionModal();
+                    const modal = document.getElementById('modal-smart-advanced-suggestion');
+                    if (modal) modal.classList.remove('hidden');
+                    return true;
+                },
+
+                _ensureSuggestionModal() {
+                    if (document.getElementById('modal-smart-advanced-suggestion')) return;
+                    const div = document.createElement('div');
+                    div.id = 'modal-smart-advanced-suggestion';
+                    div.className = 'fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-[125] flex items-center justify-center p-4 hidden';
+                    div.innerHTML = `
+                        <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-md w-full overflow-hidden animate-pop">
+                            <div class="p-5 bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-950 text-white flex items-center gap-3 border-b-2 border-indigo-400">
+                                <div class="w-11 h-11 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-lg shadow-md shrink-0">
+                                    <i class="fa-solid fa-bolt"></i>
+                                </div>
+                                <div>
+                                    <div class="text-[10px] font-black uppercase tracking-wider text-indigo-300">Experiencia Adaptativa • Nivel 3 Detectado</div>
+                                    <h4 class="text-base font-black">Sugerencia de Modo Avanzado</h4>
+                                </div>
+                            </div>
+                            <div class="p-5 space-y-3">
+                                <p id="smart-adv-suggestion-text" class="text-xs text-slate-700 font-semibold leading-relaxed">
+                                    Hemos detectado que ya cuentas con experiencia utilizando CRONOS FID.
+                                    <br><br>
+                                    ¿Deseas activar el Modo Avanzado?
+                                </p>
+                            </div>
+                            <div class="px-5 py-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-end gap-2">
+                                <button type="button" id="btn-adv-suggest-later" onclick="CronosSmartOnboarding.deferAdvancedSuggestion()"
+                                    class="px-4 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 text-xs font-bold cursor-pointer">
+                                    Más tarde
+                                </button>
+                                <button type="button" id="btn-adv-suggest-activate" onclick="CronosSmartOnboarding.acceptAdvancedSuggestion()"
+                                    class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black uppercase tracking-wider cursor-pointer">
+                                    Activar
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(div);
+                },
+
+                acceptAdvancedSuggestion() {
+                    const key = this.getUserKey();
+                    localStorage.removeItem(ADV_DEFERRED_PREFIX + key);
+                    this.setUserMode(key, 'avanzado');
+                    this.syncProfilePreferencesUI();
+                    const modal = document.getElementById('modal-smart-advanced-suggestion');
+                    if (modal) modal.classList.add('hidden');
+                    if (typeof showToast === 'function') {
+                        showToast('Modo Avanzado activado', 'success', 'Interfaz optimizada con ayudas reducidas.');
+                    }
+                },
+
+                deferAdvancedSuggestion() {
+                    const key = this.getUserKey();
+                    localStorage.setItem(ADV_DEFERRED_PREFIX + key, 'true');
+                    const modal = document.getElementById('modal-smart-advanced-suggestion');
+                    if (modal) modal.classList.add('hidden');
+                    if (typeof showToast === 'function') {
+                        showToast('Continuando en Modo Básico', 'info', 'Puedes activar el Modo Avanzado cuando gustes desde Mi Perfil → Preferencias.');
+                    }
+                },
+
+                setSelfAdvancedMode(enableAdv) {
+                    const key = this.getUserKey();
+                    this.setUserMode(key, enableAdv ? 'avanzado' : 'basico');
+                    this.syncProfilePreferencesUI();
+                    if (typeof showToast === 'function') {
+                        showToast(
+                            enableAdv ? 'Modo Avanzado activado' : 'Modo Básico activado',
+                            'success',
+                            enableAdv ? 'Ayudas repetitivas reducidas.' : 'Ayudas y acompañamiento completos activados.'
+                        );
+                    }
+                },
+
+                syncProfilePreferencesUI() {
+                    const u = this.getCurrentUser();
+                    if (!u) return;
+                    const mat = this.evaluateMaturity(u);
+                    const mode = this.getUserMode(u);
+                    const isAdv = mode === 'avanzado';
+
+                    const badge = document.getElementById('profile-maturity-level-badge');
+                    if (badge) {
+                        badge.textContent = `NIVEL ${mat.level} • ${mat.label}`;
+                        badge.className = mat.level === 3
+                            ? 'text-[10px] font-black px-2.5 py-0.5 rounded-full bg-indigo-100 text-indigo-800 uppercase'
+                            : (mat.level === 2
+                                ? 'text-[10px] font-black px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 uppercase'
+                                : 'text-[10px] font-black px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 uppercase');
+                    }
+                    const details = document.getElementById('profile-maturity-details');
+                    if (details) {
+                        details.textContent = `Antigüedad: ${mat.diasAntiguedad}d • Accesos: ${mat.accesos} • Interacciones: ${mat.interacciones} • Onboarding: ${mat.onboardingCompletado ? 'Completado' : 'Pendiente'}`;
+                    }
+                    const toggle = document.getElementById('profile-pref-modo-toggle');
+                    if (toggle) toggle.checked = isAdv;
+                    const lbl = document.getElementById('profile-pref-modo-label');
+                    if (lbl) lbl.textContent = isAdv ? 'Modo Avanzado' : 'Modo Básico';
+                },
+
                 toggleConfig(key, val) {
                     const cfg = this.getConfig();
                     cfg[key] = Boolean(val);
@@ -49769,13 +50204,16 @@ ${sheetHtml}
                 },
 
                 onToggleNewUser(userKey, isNew) {
-                    this.setNewUserFlag(userKey, isNew);
+                    this.setUserMode(userKey, isNew);
+                    this.syncProfilePreferencesUI();
                     if (typeof showToast === 'function') {
-                        showToast(`Usuario marcado como ${isNew ? 'NUEVO (ayudas ampliadas)' : 'AVANZADO (solo contenido crítico)'}.`, 'success');
+                        showToast(`Modo actualizado: ${isNew ? 'MODO BÁSICO (Usuario Nuevo = SI)' : 'MODO AVANZADO (Usuario Nuevo = NO)'}.`, 'success');
                     }
                 },
 
                 syncRoleUI() {
+                    this.applyVisualMode();
+                    this.syncProfilePreferencesUI();
                     const optAdmin = document.getElementById('menu-opt-onboarding-admin');
                     if (optAdmin) {
                         optAdmin.style.display = this.canManageOnboarding() ? 'flex' : 'none';
@@ -49822,11 +50260,21 @@ ${sheetHtml}
                         };
                     }
 
+                    // Extender openUserProfileModal para sincronizar Mi Perfil -> Preferencias bajo demanda
+                    if (typeof window.openUserProfileModal === 'function') {
+                        const origProfile = window.openUserProfileModal;
+                        window.openUserProfileModal = function () {
+                            const res = origProfile.apply(this, arguments);
+                            CronosSmartOnboarding.syncProfilePreferencesUI();
+                            return res;
+                        };
+                    }
+
                     // Extender funciones globales de Onboarding sin romper llamadas existentes
                     window.startCronosOnboarding = (isManual = false) => this.startTour(isManual);
                     window.resetCronosOnboarding = () => this.resetTour();
 
-                    // Sincronizar UI por perfil y detectar primer ingreso cuando app-shell esté visible
+                    // Sincronizar UI por perfil y detectar primer ingreso o sugerencia de madurez cuando app-shell esté visible
                     let lastUserKey = null;
                     setInterval(() => {
                         const u = this.getCurrentUser();
@@ -49835,7 +50283,10 @@ ${sheetHtml}
                         if (k !== lastUserKey) {
                             lastUserKey = k;
                             this.syncRoleUI();
-                            setTimeout(() => this.checkFirstAccess(), 700);
+                            setTimeout(() => {
+                                this.checkFirstAccess();
+                                this.checkMaturitySuggestion(u);
+                            }, 700);
                         }
                     }, 1000);
                 }
