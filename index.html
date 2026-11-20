@@ -2181,6 +2181,13 @@ Año02026
                                 <i class="fa-solid fa-server text-emerald-600 w-4 text-center"></i>
                                 <span>Estado del Sistema</span>
                             </button>
+                            <div class="px-4 pt-2 pb-1 text-[10px] font-black uppercase tracking-wider text-slate-400 border-t border-slate-100/70">Información</div>
+                            <button type="button" id="menu-opt-tutor-operativo"
+                                onclick="if(window.CronosSmartOnboarding) CronosSmartOnboarding.openTutorModal(); toggleUserDropdown(event);"
+                                class="w-full text-left px-4 py-2 hover:bg-indigo-50 hover:text-indigo-800 flex items-center gap-2.5 transition cursor-pointer">
+                                <i class="fa-solid fa-graduation-cap text-indigo-600 w-4 text-center"></i>
+                                <span class="font-bold">Tutor Operativo</span>
+                            </button>
                             <button type="button" id="menu-opt-master-doc"
                                 onclick="CronosMasterDoc.openModal(); toggleUserDropdown(event);"
                                 class="w-full text-left px-4 py-2 hover:bg-indigo-50 hover:text-indigo-800 flex items-center gap-3 text-slate-700 text-xs font-semibold transition-all">
@@ -2192,6 +2199,12 @@ Año02026
                                 class="w-full text-left px-4 py-2 hover:bg-amber-50 hover:text-amber-800 flex items-center gap-2.5 transition cursor-pointer">
                                 <i class="fa-solid fa-circle-question text-amber-500 w-4 text-center"></i>
                                 <span class="font-bold">Centro de Ayuda CRONOS</span>
+                            </button>
+                            <button type="button" id="menu-opt-onboarding-admin" style="display: none;"
+                                onclick="if(window.CronosSmartOnboarding) CronosSmartOnboarding.openAdminModal(); toggleUserDropdown(event);"
+                                class="w-full text-left px-4 py-2 hover:bg-emerald-50 hover:text-emerald-800 flex items-center gap-2.5 transition cursor-pointer">
+                                <i class="fa-solid fa-sliders text-emerald-600 w-4 text-center"></i>
+                                <span class="font-bold">Onboarding y Métricas (Formación)</span>
                             </button>
 
                             <button type="button" id="menu-opt-profile"
@@ -6276,7 +6289,14 @@ Año02026
                                 class="bg-amber-100 text-amber-800 text-[10px] px-2 py-0.5 rounded-full font-black">2
                                 Activos</span>
                         </button>
+                        <button type="button" id="tab-btn-admin-experiencia"
+                            onclick="if(window.CronosSmartOnboarding) CronosSmartOnboarding.openExperienciaTab();"
+                            class="px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-2 transition bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 cursor-pointer">
+                            <i class="fa-solid fa-graduation-cap text-emerald-600"></i> Configuración de Experiencia
+                        </button>
                     </div>
+
+                    <div id="subtab-content-admin-experiencia" class="hidden space-y-6"></div>
 
                     <div id="subtab-content-admin-usuarios" class="space-y-6">
 
@@ -24595,12 +24615,24 @@ Por favor contactar para brindar información del proceso y coordinar visita.`
         window.CRONOS_VERSION_INFO = {
             proyecto: "CRONOS FID",
             nombreCompleto: "Centro de Recursos Operativos para Negociación y Fidelización",
-            version: "JELI v6.0.0 • WIN OCT2026",
+            version: "JELI v6.1.0 • WIN NOV2026",
             autor: "Jhonny Leon Illescas",
             roles: "Diseño Funcional, Arquitectura Operativa, Gestión de Procesos, Desarrollo Evolutivo",
             anio: 2026,
             descripcion: "Sistema integral de apoyo operativo, capacitación, tipificaciones, escalamientos, SLA, analítica y soporte a asesores. Proyecto desarrollado para la gestión operativa de campañas de fidelización.",
             changelog: [
+                {
+                    version: "v6.1.0",
+                    tag: "Sistema de Onboarding Inteligente y Tutor Operativo (Open for Extension, Closed for Modification)",
+                    motivo: "Reducir la curva de aprendizaje de nuevos asesores y mejorar la adopción operativa sin modificar módulos core.",
+                    items: [
+                        "Recorrido Guiado de 5 pasos en primer ingreso: Clave Secreta, Tipificaciones, CRONOS SLA, Procesos Operativos y Directorio",
+                        "Ayuda Contextual bajo demanda en primer ingreso por módulo (incluyendo checklist Cambio de Titularidad y recordatorio Calculadora de Prorrateos)",
+                        "Tutor Operativo integrado en Información -> Tutor Operativo (Consejos rápidos, Preguntas frecuentes, Buenas prácticas, Errores frecuentes)",
+                        "Segmentación de Usuarios Nuevos (ayudas ampliadas) vs Usuarios Avanzados (solo contenido crítico)",
+                        "Configuración de Experiencia y Métricas de Onboarding para Administrador, Supervisor y Formador"
+                    ]
+                },
                 {
                     version: "v6.0.0",
                     tag: "Consolidación de CRONOS FID como plataforma ejecutiva, analítica y estratégica",
@@ -28907,6 +28939,7 @@ B) SUPABASE (OPEN FOR EXTENSION):
 - Fase 9.4      : Consolidación Operativa (100% Paridad, 5,327 registros)
 - Capa Final    : CRONOS AI Insights (DATO -> ANÁLISIS -> RECOMENDACIÓN)
 - Fase 6.0      : Estabilización, Optimización de Rendimiento y Seguridad
+- Fase 6.1      : Sistema de Onboarding Inteligente (Recorrido Guiado 5 pasos, Ayuda Contextual bajo demanda, Tutor Operativo, Usuarios Nuevos vs Avanzados, Métricas y Configuración)
 
 3. DICTAMEN DE RENDIMIENTO (FASE 6.0.2)
 --------------------------------------------------------------------------------
@@ -28947,6 +28980,14 @@ B) SUPABASE (OPEN FOR EXTENSION):
 - Calidad: Vista 360° enfocada en matriz de calibración, muestreo de tickets y hallazgos críticos.
 - Formación: Vista 360° enfocada en brechas de conocimiento, planes de refuerzo y curva de aprendizaje.
 - Administrador: Acceso y control total, selector de emulación de perfiles en vivo para auditoría UX y gestión RBAC.
+
+7.1. SISTEMA DE ONBOARDING INTELIGENTE (FASE 6.1 - OPEN FOR EXTENSION, CLOSED FOR MODIFICATION)
+--------------------------------------------------------------------------------
+- Recorrido Guiado (Primer Ingreso): 5 pasos (Clave Secreta, Tipificaciones, CRONOS SLA, Procesos Operativos, Directorio).
+- Ayuda Contextual bajo demanda: Recomendaciones específicas al ingresar por primera vez a cada módulo (Cambio de Titularidad, Calculadora de Prorrateos, etc.).
+- Tutor Operativo (Información -> Tutor Operativo): Consejos rápidos, Preguntas frecuentes, Buenas prácticas y Errores frecuentes cargados bajo demanda.
+- Segmentación Usuarios Nuevos (SI -> ayudas ampliadas) vs Usuarios Avanzados (NO -> solo contenido crítico).
+- Configuración de Experiencia y Métricas de Onboarding visibles para Administrador, Supervisor y Formador.
 
 8. REGLAS MAESTRAS OFICIALES DE DESARROLLO, ARQUITECTURA, ANALÍTICA Y MANEJO DE DATOS
 --------------------------------------------------------------------------------
@@ -48277,6 +48318,79 @@ ${sheetHtml}
 
                                 <!-- Resultados Compuestos -->
                                 <div class="lg:col-span-7 space-y-4">
+                                    <!-- División Explícita por Tramos (Tramo 1 + Tramo 2 + Total Consolidado) -->
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                        <!-- PRORRATEO TRAMO 1 -->
+                                        <div id="card-prorrateo-tramo-1" class="p-4 rounded-2xl bg-sky-50 border border-sky-200 shadow-xs space-y-2">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-[11px] font-black uppercase tracking-wider text-sky-900">PRORRATEO TRAMO 1</span>
+                                                <span class="text-[10px] font-bold bg-sky-100 text-sky-800 px-2 py-0.5 rounded-full">Plan Anterior</span>
+                                            </div>
+                                            <div class="space-y-1 text-xs text-slate-700">
+                                                <div class="flex justify-between">
+                                                    <span class="text-slate-500 font-semibold">Fecha inicio:</span>
+                                                    <span id="out-tramo1-inicio" class="font-bold text-slate-900 font-mono">-</span>
+                                                </div>
+                                                <div class="flex justify-between">
+                                                    <span class="text-slate-500 font-semibold">Fecha fin:</span>
+                                                    <span id="out-tramo1-fin" class="font-bold text-slate-900 font-mono">-</span>
+                                                </div>
+                                                <div class="flex justify-between">
+                                                    <span class="text-slate-500 font-semibold">Días:</span>
+                                                    <span id="out-tramo1-dias" class="font-black text-sky-900 font-mono">0 días</span>
+                                                </div>
+                                            </div>
+                                            <div class="pt-2 border-t border-sky-200 flex items-baseline justify-between">
+                                                <span class="text-[11px] font-bold text-sky-800 uppercase">Importe:</span>
+                                                <span id="out-tramo1-importe" class="text-lg font-black text-sky-950 font-mono">S/ 0.00</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- PRORRATEO TRAMO 2 -->
+                                        <div id="card-prorrateo-tramo-2" class="p-4 rounded-2xl bg-indigo-50 border border-indigo-200 shadow-xs space-y-2">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-[11px] font-black uppercase tracking-wider text-indigo-900">PRORRATEO TRAMO 2</span>
+                                                <span class="text-[10px] font-bold bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-full">Plan Nuevo + SVA</span>
+                                            </div>
+                                            <div class="space-y-1 text-xs text-slate-700">
+                                                <div class="flex justify-between">
+                                                    <span class="text-slate-500 font-semibold">Fecha inicio:</span>
+                                                    <span id="out-tramo2-inicio" class="font-bold text-slate-900 font-mono">-</span>
+                                                </div>
+                                                <div class="flex justify-between">
+                                                    <span class="text-slate-500 font-semibold">Fecha fin:</span>
+                                                    <span id="out-tramo2-fin" class="font-bold text-slate-900 font-mono">-</span>
+                                                </div>
+                                                <div class="flex justify-between">
+                                                    <span class="text-slate-500 font-semibold">Días:</span>
+                                                    <span id="out-tramo2-dias" class="font-black text-indigo-900 font-mono">0 días</span>
+                                                </div>
+                                            </div>
+                                            <div class="pt-2 border-t border-indigo-200 space-y-1 text-xs">
+                                                <div class="flex justify-between">
+                                                    <span class="font-bold text-indigo-800">Importe Plan:</span>
+                                                    <span id="out-tramo2-importe-plan" class="font-black text-indigo-950 font-mono">S/ 0.00</span>
+                                                </div>
+                                                <div class="flex justify-between">
+                                                    <span class="font-bold text-purple-800">Importe SVA:</span>
+                                                    <span id="out-tramo2-importe-sva" class="font-black text-purple-950 font-mono">S/ 0.00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- TOTAL CONSOLIDADO -->
+                                        <div id="card-prorrateo-consolidado" class="p-4 rounded-2xl bg-gradient-to-br from-indigo-700 to-blue-800 text-white shadow-sm flex flex-col justify-between space-y-2">
+                                            <div>
+                                                <div class="text-[11px] font-black uppercase tracking-wider text-indigo-200">TOTAL CONSOLIDADO</div>
+                                                <div class="text-[10px] text-indigo-200 mt-0.5">Suma Tramo 1 + Tramo 2</div>
+                                            </div>
+                                            <div>
+                                                <div id="out-total-consolidado" class="text-2xl font-black text-white font-mono">S/ 0.00</div>
+                                                <div id="out-total-consolidado-sub" class="text-[10px] text-indigo-100 mt-1 font-mono">T1: S/ 0.00 + T2: S/ 0.00</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <!-- Fila 1: Montos Mensuales -->
                                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                         <div class="p-3.5 rounded-2xl bg-slate-900 text-white shadow-sm">
@@ -48438,20 +48552,30 @@ ${sheetHtml}
                     const fin = finStr ? new Date(finStr + 'T00:00:00') : new Date(y, m + 1, 0);
 
                     const msPerDay = 86400000;
-                    // Días desde inicio de ciclo hasta fecha de movimiento (inclusive), ej. 01/11 -> 17/11 = 17 días
+                    // Tramo 1: Inicio ciclo -> (Fecha movimiento - 1 día), ej. 01/11 -> 11/11 = 11 días
+                    const diasPreviosExcluyendoMov = Math.min(30, Math.max(0, Math.round((mov - ini) / msPerDay)));
+                    const diasTramo1 = diasPreviosExcluyendoMov;
+
+                    // Tramo 2: Fecha movimiento -> Fin ciclo (base 30 días), ej. 12/11 -> 30/11 = 19 días
+                    const diasDesdeMovimientoInclusive = Math.min(30, Math.max(0, 30 - diasTramo1));
+                    const diasTramo2 = diasDesdeMovimientoInclusive;
+
+                    // Compatibilidad legacy
                     let diasHastaMovimiento = Math.round((mov - ini) / msPerDay) + 1;
                     diasHastaMovimiento = Math.min(30, Math.max(1, diasHastaMovimiento));
-
-                    // Días desde día siguiente al movimiento hasta fin de ciclo (base 30 días), ej. 18/11 -> 30/11 = 13 días
                     const diasDesdeDiaSiguiente = Math.max(0, 30 - diasHastaMovimiento);
 
-                    // Días desde fecha de movimiento inclusive hasta fin de ciclo (para Alta SVA / Instalación / Reactivación), ej. 17/11 -> 30/11 = 14 días
-                    const diasDesdeMovimientoInclusive = Math.min(30, Math.max(1, 30 - diasHastaMovimiento + 1));
-
-                    // Días previos al movimiento sin incluir el día del movimiento (para Baja SVA / antes de suspensión), ej. 01/11 -> 16/11 = 16 días
-                    const diasPreviosExcluyendoMov = Math.max(0, diasHastaMovimiento - 1);
+                    const tramo1FinDate = new Date(mov.getTime() - msPerDay);
+                    const tramo1IniTxt = diasTramo1 > 0 ? ini.toLocaleDateString('es-PE') : '-';
+                    const tramo1FinTxt = diasTramo1 > 0 ? tramo1FinDate.toLocaleDateString('es-PE') : '-';
 
                     return {
+                        diasTramo1,
+                        diasTramo2,
+                        tramo1IniTxt,
+                        tramo1FinTxt,
+                        tramo2IniTxt: mov.toLocaleDateString('es-PE'),
+                        tramo2FinTxt: fin.toLocaleDateString('es-PE'),
                         diasHastaMovimiento,
                         diasDesdeDiaSiguiente,
                         diasDesdeMovimientoInclusive,
@@ -48537,15 +48661,15 @@ ${sheetHtml}
                         const planNvoNombre = selPlanNvo?.options[selPlanNvo.selectedIndex]?.getAttribute('data-nombre') || 'Plan Nuevo';
                         const tarifaNuevoDesc = planNuevo * (1 - desc / 100);
 
-                        diasPlanAnt = t.diasHastaMovimiento; // ej. 01/11 -> 17/11 = 17 días
+                        diasPlanAnt = t.diasTramo1; // ej. 01/11 -> 11/11 = 11 días
                         montoPlanAnt = (planActual / 30) * diasPlanAnt;
-                        diasPlanNvo = t.diasDesdeDiaSiguiente; // ej. 18/11 -> 30/11 = 13 días
+                        diasPlanNvo = t.diasTramo2; // ej. 12/11 -> 30/11 = 19 días
                         montoPlanNvo = (tarifaNuevoDesc / 30) * diasPlanNvo;
                         prorrateoPlan = montoPlanAnt + montoPlanNvo;
                         montoPlanMensual = tarifaNuevoDesc;
                         diasPlanLabel = `${diasPlanAnt}d Ant. / ${diasPlanNvo}d Nvo.`;
-                        planFormula = `Plan Ant (${diasPlanAnt}d): S/ ${planActual.toFixed(2)}÷30×${diasPlanAnt} = S/ ${montoPlanAnt.toFixed(2)} + Plan Nvo (${diasPlanNvo}d): S/ ${tarifaNuevoDesc.toFixed(2)}÷30×${diasPlanNvo} = S/ ${montoPlanNvo.toFixed(2)}`;
-                        explicacionPlan = `En su periodo de consumo (${t.inicioTxt} al ${t.finTxt}), se cobran <strong>${diasPlanAnt} días</strong> del plan anterior ${planActualNombre} (<strong>S/ ${montoPlanAnt.toFixed(2)}</strong>) y <strong>${diasPlanNvo} días</strong> del nuevo plan ${planNvoNombre} (<strong>S/ ${montoPlanNvo.toFixed(2)}</strong>).`;
+                        planFormula = `Tramo 1 (${t.tramo1IniTxt}→${t.tramo1FinTxt}, ${diasPlanAnt}d): S/ ${planActual.toFixed(2)}÷30×${diasPlanAnt} = S/ ${montoPlanAnt.toFixed(2)} + Tramo 2 (${t.tramo2IniTxt}→${t.tramo2FinTxt}, ${diasPlanNvo}d): S/ ${tarifaNuevoDesc.toFixed(2)}÷30×${diasPlanNvo} = S/ ${montoPlanNvo.toFixed(2)}`;
+                        explicacionPlan = `En su periodo de consumo (${t.inicioTxt} al ${t.finTxt}), se divide en Tramo 1 (${t.tramo1IniTxt} al ${t.tramo1FinTxt}: <strong>${diasPlanAnt} días</strong> del plan anterior ${planActualNombre} por <strong>S/ ${montoPlanAnt.toFixed(2)}</strong>) y Tramo 2 (${t.tramo2IniTxt} al ${t.tramo2FinTxt}: <strong>${diasPlanNvo} días</strong> del nuevo plan ${planNvoNombre} por <strong>S/ ${montoPlanNvo.toFixed(2)}</strong>).`;
                     } else if (op === 'suspension') {
                         const diasSuspRaw = Math.max(1, parseInt(document.getElementById('calc-susp-dias')?.value || 15, 10));
                         const diasSuspCiclo = Math.min(t.diasDesdeMovimientoInclusive, diasSuspRaw);
@@ -48572,13 +48696,13 @@ ${sheetHtml}
                         explicacionPlan = `Al reactivar el servicio el ${t.movTxt}, se cobran <strong>${diasPlanNvo} días</strong> activos hasta el fin del periodo (${t.finTxt}) por <strong>S/ ${montoPlanNvo.toFixed(2)}</strong>${saldo > 0 ? ` más saldo pendiente de S/ ${saldo.toFixed(2)}` : ''}.`;
                     } else {
                         // alta-sva / baja-sva: plan principal mantiene ciclo de consumo completo (30d)
-                        diasPlanAnt = t.diasHastaMovimiento;
+                        diasPlanAnt = t.diasTramo1;
                         montoPlanAnt = (planActual / 30) * diasPlanAnt;
-                        diasPlanNvo = t.diasDesdeDiaSiguiente;
+                        diasPlanNvo = t.diasTramo2;
                         montoPlanNvo = (planActual / 30) * diasPlanNvo;
                         prorrateoPlan = planActual;
                         diasPlanLabel = `30d ciclo (${t.inicioTxt}→${t.finTxt})`;
-                        planFormula = `Plan (${planActualNombre}): S/ ${planActual.toFixed(2)} (30d)`;
+                        planFormula = `Plan (${planActualNombre}): S/ ${planActual.toFixed(2)} (30d: ${diasPlanAnt}d T1 + ${diasPlanNvo}d T2)`;
                         explicacionPlan = `Su plan principal (${planActualNombre}, S/ ${planActual.toFixed(2)}) mantiene los 30 días completos del periodo de consumo (${t.inicioTxt} al ${t.finTxt}).`;
                     }
 
@@ -48636,6 +48760,26 @@ ${sheetHtml}
 
                     const setTxt = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
                     const setHtml = (id, v) => { const e = document.getElementById(id); if (e) e.innerHTML = v; };
+
+                    // Tramo 1, Tramo 2 y Total Consolidado
+                    const importeTramo1 = montoPlanAnt;
+                    const importePlanTramo2 = montoPlanNvo;
+                    const importeSvaTramo2 = prorrateoSva;
+                    const importeTramo2Total = importePlanTramo2 + importeSvaTramo2;
+
+                    setTxt('out-tramo1-inicio', diasPlanAnt > 0 ? t.tramo1IniTxt : '-');
+                    setTxt('out-tramo1-fin', diasPlanAnt > 0 ? t.tramo1FinTxt : '-');
+                    setTxt('out-tramo1-dias', `${diasPlanAnt} días`);
+                    setTxt('out-tramo1-importe', `S/ ${importeTramo1.toFixed(2)}`);
+
+                    setTxt('out-tramo2-inicio', t.tramo2IniTxt);
+                    setTxt('out-tramo2-fin', t.tramo2FinTxt);
+                    setTxt('out-tramo2-dias', `${diasPlanNvo} días`);
+                    setTxt('out-tramo2-importe-plan', `S/ ${importePlanTramo2.toFixed(2)}`);
+                    setTxt('out-tramo2-importe-sva', `S/ ${importeSvaTramo2.toFixed(2)}`);
+
+                    setTxt('out-total-consolidado', `S/ ${prorrateoTotal.toFixed(2)}`);
+                    setTxt('out-total-consolidado-sub', `T1: S/ ${importeTramo1.toFixed(2)} + T2: S/ ${importeTramo2Total.toFixed(2)}`);
 
                     setTxt('out-monto-plan', `S/ ${montoPlanMensual.toFixed(2)}`);
                     setTxt('out-monto-plan-sub', `Ant: ${diasPlanAnt}d (S/ ${montoPlanAnt.toFixed(2)}) | Nvo: ${diasPlanNvo}d (S/ ${montoPlanNvo.toFixed(2)})`);
@@ -48796,6 +48940,913 @@ ${sheetHtml}
             };
 
             window.CronosProcesosOperativos = CronosProcesosOperativos;
+        })(window);
+    </script>
+
+    <!-- ========================================================================= -->
+    <!-- SISTEMA DE ONBOARDING INTELIGENTE CRONOS FID (OPEN FOR EXTENSION)         -->
+    <!-- ========================================================================= -->
+    <script>
+        (function (window) {
+            'use strict';
+
+            const STORAGE_CONFIG = 'cronos_smart_onboarding_config_v1';
+            const STORAGE_NEW_USERS = 'cronos_smart_new_users_v1';
+            const STORAGE_METRICS = 'cronos_smart_onboarding_metrics_v1';
+            const TOUR_DONE_PREFIX = 'cronos_smart_tour_done_';
+            const CTX_SEEN_PREFIX = 'cronos_smart_ctx_seen_';
+
+            const TOUR_STEPS = [
+                {
+                    step: 1,
+                    module: 'generator',
+                    title: 'Clave Secreta',
+                    subtitle: 'Paso 1 de 5 • Validación de Seguridad',
+                    icon: 'fa-solid fa-key',
+                    colorClass: 'from-slate-900 to-slate-800 border-b-2 border-win-orange',
+                    points: [
+                        'Validación de titularidad: verifica identidad del titular antes de emitir o compartir la clave.',
+                        'BOTMAKER: utiliza el flujo oficial para validar y enviar la clave al cliente.',
+                        'Tiempo de vigencia: recuerda al cliente el tiempo límite de validez de la clave generada.'
+                    ]
+                },
+                {
+                    step: 2,
+                    module: 'tipificaciones',
+                    title: 'Tipificaciones',
+                    subtitle: 'Paso 2 de 5 • Registro de Atención',
+                    icon: 'fa-solid fa-list-ul',
+                    colorClass: 'from-slate-900 to-indigo-950 border-b-2 border-indigo-400',
+                    points: [
+                        'Tipificación correcta: selecciona exactamente el motivo y submotivo según la gestión real.',
+                        'Uso de plantillas: apoya la redacción con las plantillas estandarizadas para evitar omisiones.',
+                        'Casos de negocio: valida el escenario (retención, consulta, ajuste) antes de cerrar la atención.'
+                    ]
+                },
+                {
+                    step: 3,
+                    module: 'cronos-sla',
+                    title: 'CRONOS SLA',
+                    subtitle: 'Paso 3 de 5 • Control de Tiempos',
+                    icon: 'fa-solid fa-stopwatch-20',
+                    colorClass: 'from-slate-900 to-amber-950 border-b-2 border-amber-400',
+                    points: [
+                        'Objetivo: controlar el tiempo de espera en línea para proteger la experiencia del cliente.',
+                        'Temporizadores: inicia y pausa el timer en cada retención o validación.',
+                        'Alertas: atiende las alertas visuales y sonoras antes de superar el umbral SLA.',
+                        'Beneficios: reduce observaciones de calidad y mejora tus indicadores operativos.'
+                    ]
+                },
+                {
+                    step: 4,
+                    module: 'acuerdos-voz',
+                    title: 'Procesos Operativos',
+                    subtitle: 'Paso 4 de 5 • Trámites y Cálculos',
+                    icon: 'fa-solid fa-layer-group',
+                    colorClass: 'from-indigo-950 to-slate-900 border-b-2 border-emerald-400',
+                    points: [
+                        'Cambio de Titularidad: genera la constancia verificando DNI actual, DNI nuevo, correo y dirección.',
+                        'Cesión Contractual: valida requisitos y datos de ambas partes antes de emitir.',
+                        'Calculadora de Prorrateos: calcula Tramo 1, Tramo 2 y Total sobre el periodo de consumo (emisión informativa).'
+                    ]
+                },
+                {
+                    step: 5,
+                    module: 'directorio',
+                    title: 'Directorio',
+                    subtitle: 'Paso 5 de 5 • Escalamientos',
+                    icon: 'fa-solid fa-address-book',
+                    colorClass: 'from-emerald-950 to-slate-900 border-b-2 border-emerald-400',
+                    points: [
+                        'Escalamientos: identifica el área y canal correcto según la casuística del cliente.',
+                        'Uso correcto: verifica la información mínima requerida antes de derivar para evitar rechazos.'
+                    ]
+                }
+            ];
+
+            // Contenido bajo demanda para Ayuda Contextual (Fase 2)
+            function getContextualData(moduleKey) {
+                const map = {
+                    'formularios': {
+                        title: 'Cambio de Titularidad y Formularios',
+                        critical: 'Antes de generar el documento: valida DNI titular actual, DNI nuevo titular, correo y dirección.',
+                        items: [
+                            '✅ Validar DNI titular actual.',
+                            '✅ Validar DNI nuevo titular.',
+                            '✅ Validar correo.',
+                            '✅ Validar dirección.'
+                        ]
+                    },
+                    'calculadoras': {
+                        title: 'Calculadora de Prorrateos',
+                        critical: 'Recordatorio: La fecha de emisión es informativa. El cálculo se realiza sobre el período de consumo.',
+                        items: [
+                            '📅 La fecha de emisión es solo informativa (tabla de remisiones).',
+                            '🧮 El cálculo se realiza sobre el período de consumo (Tramo 1 + Tramo 2).',
+                            '📊 Verifica Inicio de ciclo, Fecha de movimiento y Fin de ciclo.'
+                        ]
+                    },
+                    'generator': {
+                        title: 'Clave Secreta',
+                        critical: 'Valida titularidad antes de generar la clave y confirma vigencia vía BOTMAKER.',
+                        items: [
+                            '🔐 Validar titularidad completa del abonado.',
+                            '🤖 Gestionar el envío/validación por BOTMAKER.',
+                            '⏳ Informar al cliente el tiempo de vigencia.'
+                        ]
+                    },
+                    'tipificaciones': {
+                        title: 'Tipificaciones',
+                        critical: 'Usa la plantilla oficial del caso de negocio y valida motivo/submotivo antes de copiar.',
+                        items: [
+                            '🏷️ Selecciona la tipificación exacta según el caso de negocio.',
+                            '📝 Utiliza las plantillas para mantener trazabilidad completa.'
+                        ]
+                    },
+                    'tickets': {
+                        title: 'Tickets (Tecnológico)',
+                        critical: 'Adjunta evidencia y datos de contacto actualizados antes de registrar el ticket.',
+                        items: [
+                            '🎫 Verifica descartes básicos previos al ticket.',
+                            '📞 Confirma teléfono de contacto y disponibilidad horaria.'
+                        ]
+                    },
+                    'derivaciones': {
+                        title: 'Derivaciones (Discord)',
+                        critical: 'Verifica el canal correspondiente y completa todos los campos obligatorios.',
+                        items: [
+                            '📨 Selecciona el canal correcto de derivación.',
+                            '✅ Valida que no falten datos obligatorios para evitar devoluciones.'
+                        ]
+                    },
+                    'acuerdos-voz': {
+                        title: 'Procesos Operativos',
+                        critical: 'Revisa Acuerdos de Voz, Formularios (Cambio de Titularidad/Cesión) y Prorrateos según el trámite.',
+                        items: [
+                            '🎙️ Acuerdos de Voz: lee el guion completo sin omitir condiciones.',
+                            '📄 Formularios: valida DNI, correo y dirección antes de generar.',
+                            '🧮 Prorrateos: calcula sobre el periodo de consumo (emisión informativa).'
+                        ]
+                    },
+                    'directorio': {
+                        title: 'Directorio (Escalamiento)',
+                        critical: 'Escala únicamente al área responsable adjuntando los requisitos mínimos.',
+                        items: [
+                            '🧭 Confirma el flujo de escalamiento antes de transferir.',
+                            '📋 Incluye código de cliente y sustento de la atención.'
+                        ]
+                    }
+                };
+                return map[moduleKey] || null;
+            }
+
+            // Contenido bajo demanda para Tutor Operativo (Fase 3)
+            function getTutorData() {
+                return {
+                    consejos: [
+                        { title: 'Clave Secreta y BOTMAKER', text: 'Antes de generar una clave, valida siempre la titularidad y recuerda al cliente su tiempo de vigencia.' },
+                        { title: 'Control de SLA en línea', text: 'Activa el Timer CRONOS SLA apenas pongas al cliente en espera para evitar alertas tardías.' },
+                        { title: 'Prorrateos por Tramos', text: 'Explica al cliente el Tramo 1 (plan anterior) y Tramo 2 (plan nuevo + SVA) sobre su periodo de consumo.' }
+                    ],
+                    faq: [
+                        { q: '¿La fecha de emisión cambia el monto del prorrateo?', a: 'No. La fecha de emisión (tabla de remisiones) es únicamente informativa; el cálculo se realiza sobre el período de consumo.' },
+                        { q: '¿Qué debo validar antes de generar un Cambio de Titularidad?', a: 'DNI del titular actual, DNI del nuevo titular, correo electrónico y dirección exacta.' },
+                        { q: '¿Dónde veo los canales de escalamiento?', a: 'En el módulo Directorio (Escalamiento), filtrando por área o casuística.' }
+                    ],
+                    practicas: [
+                        'Confirmar siempre los datos del cliente al inicio de la llamada o chat.',
+                        'Usar las plantillas de Tipificaciones para no omitir campos clave en el CRM.',
+                        'Revisar el desglose Tramo 1 y Tramo 2 antes de brindar un monto estimado al cliente.'
+                    ],
+                    errores: [
+                        'Generar Cambio de Titularidad con DNI o correo sin validar.',
+                        'Confundir la fecha de emisión informativa con el periodo de consumo en prorrateos.',
+                        'Olvidar pausar o reiniciar el temporizador CRONOS SLA al retomar la atención.',
+                        'Derivar un caso en Discord sin completar los datos mínimos del Directorio.'
+                    ]
+                };
+            }
+
+            const CronosSmartOnboarding = {
+                tourIndex: 0,
+                activeTutorTab: 'consejos',
+                _wrapped: false,
+
+                getCurrentUser() {
+                    return window.CRONOS_CURRENT_USER || (typeof UserManager !== 'undefined' && UserManager.getCurrentUser ? UserManager.getCurrentUser() : null);
+                },
+
+                getUserKey(user) {
+                    const u = user || this.getCurrentUser();
+                    if (!u) return 'anon';
+                    return String(u.correo || u.email || u.uid || u.usuario || 'anon').toLowerCase().trim();
+                },
+
+                getUserRole(user) {
+                    const u = user || this.getCurrentUser();
+                    return String(u?.rol || 'Asesor').trim();
+                },
+
+                canManageOnboarding(user) {
+                    const role = this.getUserRole(user).toLowerCase();
+                    return role.includes('admin') || role.includes('super') || role.includes('formador');
+                },
+
+                getConfig() {
+                    try {
+                        const raw = localStorage.getItem(STORAGE_CONFIG);
+                        if (raw) {
+                            const parsed = JSON.parse(raw);
+                            return {
+                                tourEnabled: parsed.tourEnabled !== false,
+                                tutorEnabled: parsed.tutorEnabled !== false,
+                                contextHelpEnabled: parsed.contextHelpEnabled !== false
+                            };
+                        }
+                    } catch (e) {}
+                    return { tourEnabled: true, tutorEnabled: true, contextHelpEnabled: true };
+                },
+
+                saveConfig(cfg) {
+                    try {
+                        localStorage.setItem(STORAGE_CONFIG, JSON.stringify(cfg));
+                    } catch (e) {}
+                },
+
+                getNewUsersMap() {
+                    try {
+                        return JSON.parse(localStorage.getItem(STORAGE_NEW_USERS) || '{}') || {};
+                    } catch (e) {
+                        return {};
+                    }
+                },
+
+                isNewUser(user) {
+                    const u = user || this.getCurrentUser();
+                    const key = this.getUserKey(u);
+                    const map = this.getNewUsersMap();
+                    if (Object.prototype.hasOwnProperty.call(map, key)) {
+                        return Boolean(map[key]);
+                    }
+                    return Boolean(u && u.usuarioNuevo === true);
+                },
+
+                setNewUserFlag(userKey, isNew) {
+                    const key = String(userKey || '').toLowerCase().trim();
+                    if (!key) return;
+                    const map = this.getNewUsersMap();
+                    map[key] = Boolean(isNew);
+                    try {
+                        localStorage.setItem(STORAGE_NEW_USERS, JSON.stringify(map));
+                    } catch (e) {}
+                    if (Array.isArray(window.CRONOS_USERS_DB)) {
+                        const found = window.CRONOS_USERS_DB.find(u => this.getUserKey(u) === key);
+                        if (found) found.usuarioNuevo = Boolean(isNew);
+                    }
+                },
+
+                getMetrics() {
+                    try {
+                        return JSON.parse(localStorage.getItem(STORAGE_METRICS) || '{}') || {};
+                    } catch (e) {
+                        return {};
+                    }
+                },
+
+                saveMetrics(metrics) {
+                    try {
+                        localStorage.setItem(STORAGE_METRICS, JSON.stringify(metrics));
+                    } catch (e) {}
+                },
+
+                recordMetric(type, detail) {
+                    const u = this.getCurrentUser();
+                    if (!u) return;
+                    const key = this.getUserKey(u);
+                    const metrics = this.getMetrics();
+                    if (!metrics[key]) {
+                        metrics[key] = {
+                            nombre: u.nombre || key,
+                            correo: u.correo || key,
+                            rol: this.getUserRole(u),
+                            modulosVisitados: [],
+                            ayudasConsultadas: 0,
+                            recorridosCompletados: 0,
+                            ultimoUso: new Date().toISOString()
+                        };
+                    }
+                    const rec = metrics[key];
+                    rec.nombre = u.nombre || rec.nombre;
+                    rec.rol = this.getUserRole(u);
+                    rec.ultimoUso = new Date().toISOString();
+                    if (type === 'modulo' && detail) {
+                        if (!Array.isArray(rec.modulosVisitados)) rec.modulosVisitados = [];
+                        if (!rec.modulosVisitados.includes(detail)) rec.modulosVisitados.push(detail);
+                    } else if (type === 'ayuda') {
+                        rec.ayudasConsultadas = (rec.ayudasConsultadas || 0) + 1;
+                    } else if (type === 'recorrido') {
+                        rec.recorridosCompletados = (rec.recorridosCompletados || 0) + 1;
+                    }
+                    this.saveMetrics(metrics);
+                },
+
+                // FASE 1: Detectar primer acceso y lanzar Recorrido Guiado
+                checkFirstAccess() {
+                    const u = this.getCurrentUser();
+                    if (!u) return;
+                    const cfg = this.getConfig();
+                    if (!cfg.tourEnabled) return;
+                    const shell = document.getElementById('app-shell');
+                    if (shell && shell.classList.contains('hidden')) return;
+                    const key = this.getUserKey(u);
+                    const done = localStorage.getItem(TOUR_DONE_PREFIX + key) === 'true';
+                    if (!done) {
+                        this.startTour(false);
+                    }
+                },
+
+                startTour(isManual = false) {
+                    const cfg = this.getConfig();
+                    if (!isManual && !cfg.tourEnabled) return;
+                    this.tourIndex = 0;
+                    this._ensureTourModal();
+                    this.renderTourStep(0);
+                    const modal = document.getElementById('modal-smart-onboarding');
+                    if (modal) modal.classList.remove('hidden');
+                },
+
+                resetTour() {
+                    const key = this.getUserKey();
+                    localStorage.removeItem(TOUR_DONE_PREFIX + key);
+                    localStorage.removeItem('cronos_onboarding_completed');
+                    this.startTour(true);
+                },
+
+                _ensureTourModal() {
+                    if (document.getElementById('modal-smart-onboarding')) return;
+                    const div = document.createElement('div');
+                    div.id = 'modal-smart-onboarding';
+                    div.className = 'fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-[120] flex items-center justify-center p-4 hidden';
+                    div.innerHTML = `
+                        <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-lg w-full overflow-hidden animate-pop">
+                            <div id="smart-ob-header" class="p-5 text-white bg-gradient-to-r from-slate-900 to-slate-800 border-b-2 border-win-orange relative">
+                                <button type="button" onclick="CronosSmartOnboarding.closeTour()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center cursor-pointer">
+                                    <i class="fa-solid fa-xmark text-sm"></i>
+                                </button>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 rounded-2xl bg-win-orange text-white flex items-center justify-center text-xl shadow-md shrink-0">
+                                        <i id="smart-ob-icon" class="fa-solid fa-key"></i>
+                                    </div>
+                                    <div>
+                                        <div id="smart-ob-sub" class="text-[10px] font-black uppercase tracking-wider text-amber-300">Paso 1 de 5</div>
+                                        <h3 id="smart-ob-title" class="text-lg font-black">Título</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-5 space-y-4">
+                                <ul id="smart-ob-points" class="space-y-2.5 text-xs text-slate-700 leading-relaxed"></ul>
+                                <div class="flex items-center justify-center gap-1.5 pt-2" id="smart-ob-dots"></div>
+                            </div>
+                            <div class="px-5 py-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-2">
+                                <button type="button" id="smart-ob-prev" onclick="CronosSmartOnboarding.navigateTour(-1)"
+                                    class="px-4 py-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 text-xs font-bold cursor-pointer">
+                                    Anterior
+                                </button>
+                                <button type="button" id="smart-ob-next" onclick="CronosSmartOnboarding.navigateTour(1)"
+                                    class="px-5 py-2 rounded-xl bg-win-orange hover:bg-win-orangeHover text-white text-xs font-black uppercase tracking-wider cursor-pointer ml-auto">
+                                    Siguiente
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(div);
+                },
+
+                renderTourStep(idx) {
+                    if (idx < 0 || idx >= TOUR_STEPS.length) return;
+                    this.tourIndex = idx;
+                    const s = TOUR_STEPS[idx];
+                    const hdr = document.getElementById('smart-ob-header');
+                    if (hdr) hdr.className = 'p-5 text-white bg-gradient-to-r ' + s.colorClass + ' relative';
+                    const icon = document.getElementById('smart-ob-icon');
+                    if (icon) icon.className = s.icon;
+                    const sub = document.getElementById('smart-ob-sub');
+                    if (sub) sub.textContent = s.subtitle;
+                    const title = document.getElementById('smart-ob-title');
+                    if (title) title.textContent = s.title;
+
+                    const ul = document.getElementById('smart-ob-points');
+                    if (ul) {
+                        ul.innerHTML = s.points.map(p => `
+                            <li class="flex items-start gap-2.5 bg-slate-50 border border-slate-200 rounded-xl p-3">
+                                <i class="fa-solid fa-circle-check text-emerald-600 mt-0.5 shrink-0"></i>
+                                <span class="font-medium">${p}</span>
+                            </li>
+                        `).join('');
+                    }
+
+                    const dots = document.getElementById('smart-ob-dots');
+                    if (dots) {
+                        dots.innerHTML = TOUR_STEPS.map((_, i) => `<span class="${i === idx ? 'w-7 bg-win-orange' : (i < idx ? 'w-2.5 bg-emerald-500' : 'w-2.5 bg-slate-300')} h-2 rounded-full transition-all"></span>`).join('');
+                    }
+
+                    const btnPrev = document.getElementById('smart-ob-prev');
+                    if (btnPrev) btnPrev.classList.toggle('hidden', idx === 0);
+                    const btnNext = document.getElementById('smart-ob-next');
+                    if (btnNext) {
+                        btnNext.textContent = idx === TOUR_STEPS.length - 1 ? 'Finalizar Recorrido' : 'Siguiente';
+                    }
+
+                    if (typeof window._origSwitchTab === 'function') {
+                        if (s.module === 'cronos-sla') {
+                            window._origSwitchTab('generator', true);
+                        } else {
+                            window._origSwitchTab(s.module, true);
+                        }
+                    }
+                },
+
+                navigateTour(delta) {
+                    const next = this.tourIndex + delta;
+                    if (next >= TOUR_STEPS.length) {
+                        this.finishTour();
+                        return;
+                    }
+                    if (next >= 0) this.renderTourStep(next);
+                },
+
+                finishTour() {
+                    const key = this.getUserKey();
+                    localStorage.setItem(TOUR_DONE_PREFIX + key, 'true');
+                    localStorage.setItem('cronos_onboarding_completed', 'true');
+                    this.recordMetric('recorrido');
+                    const modal = document.getElementById('modal-smart-onboarding');
+                    if (modal) modal.classList.add('hidden');
+                    if (typeof showToast === 'function') {
+                        showToast('¡Recorrido guiado completado!', 'success', 'Ya conoces las herramientas clave de CRONOS FID.');
+                    }
+                },
+
+                closeTour() {
+                    const key = this.getUserKey();
+                    localStorage.setItem(TOUR_DONE_PREFIX + key, 'true');
+                    const modal = document.getElementById('modal-smart-onboarding');
+                    if (modal) modal.classList.add('hidden');
+                },
+
+                // FASE 2, 4 y 5: Ayuda Contextual bajo demanda diferenciada (Nuevo vs Avanzado)
+                onModuleEnter(moduleKey) {
+                    if (!moduleKey) return;
+                    const u = this.getCurrentUser();
+                    if (!u) return;
+                    this.recordMetric('modulo', moduleKey);
+
+                    const cfg = this.getConfig();
+                    if (!cfg.contextHelpEnabled) return;
+
+                    const data = getContextualData(moduleKey);
+                    if (!data) return;
+
+                    const userKey = this.getUserKey(u);
+                    const seenKey = CTX_SEEN_PREFIX + userKey + '_' + moduleKey;
+                    if (localStorage.getItem(seenKey) === 'true') return;
+                    localStorage.setItem(seenKey, 'true');
+
+                    this.showContextualHelp(moduleKey, data, this.isNewUser(u));
+                },
+
+                showContextualHelp(moduleKey, data, isNew) {
+                    this.recordMetric('ayuda', moduleKey);
+                    if (!isNew) {
+                        // FASE 5: Usuario Avanzado -> Reducir ayudas, mostrar solo contenido crítico
+                        this._showCriticalBanner(data.title, data.critical);
+                        return;
+                    }
+                    // FASE 4: Usuario Nuevo -> Ayudas ampliadas
+                    this._ensureContextModal();
+                    const titleEl = document.getElementById('smart-ctx-title');
+                    const critEl = document.getElementById('smart-ctx-critical');
+                    const listEl = document.getElementById('smart-ctx-items');
+                    if (titleEl) titleEl.textContent = data.title;
+                    if (critEl) critEl.textContent = data.critical;
+                    if (listEl) {
+                        listEl.innerHTML = data.items.map(it => `<div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-800">${it}</div>`).join('');
+                    }
+                    const modal = document.getElementById('modal-smart-context-help');
+                    if (modal) modal.classList.remove('hidden');
+                },
+
+                _showCriticalBanner(title, criticalText) {
+                    let banner = document.getElementById('smart-critical-help-banner');
+                    if (!banner) {
+                        banner = document.createElement('div');
+                        banner.id = 'smart-critical-help-banner';
+                        banner.className = 'fixed bottom-4 right-4 z-[115] max-w-sm bg-slate-900 text-white border-l-4 border-amber-400 rounded-2xl shadow-2xl p-4 flex items-start gap-3 animate-pop';
+                        document.body.appendChild(banner);
+                    }
+                    banner.innerHTML = `
+                        <i class="fa-solid fa-triangle-exclamation text-amber-400 mt-0.5"></i>
+                        <div class="flex-1 min-w-0">
+                            <div class="text-[10px] font-black uppercase tracking-wider text-amber-300">${title} • Recordatorio Crítico</div>
+                            <p class="text-xs text-slate-100 mt-1 leading-snug">${criticalText}</p>
+                        </div>
+                        <button type="button" onclick="this.parentElement.classList.add('hidden')" class="text-slate-400 hover:text-white cursor-pointer">
+                            <i class="fa-solid fa-xmark text-xs"></i>
+                        </button>
+                    `;
+                    banner.classList.remove('hidden');
+                    clearTimeout(this._critTimer);
+                    this._critTimer = setTimeout(() => {
+                        if (banner) banner.classList.add('hidden');
+                    }, 7000);
+                },
+
+                _ensureContextModal() {
+                    if (document.getElementById('modal-smart-context-help')) return;
+                    const div = document.createElement('div');
+                    div.id = 'modal-smart-context-help';
+                    div.className = 'fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-[115] flex items-center justify-center p-4 hidden';
+                    div.innerHTML = `
+                        <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-md w-full overflow-hidden animate-pop">
+                            <div class="p-4 bg-gradient-to-r from-indigo-900 to-slate-900 text-white flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <i class="fa-solid fa-lightbulb text-amber-400 text-lg"></i>
+                                    <div>
+                                        <div class="text-[10px] font-black uppercase text-indigo-200">Ayuda Contextual Ampliada</div>
+                                        <h4 id="smart-ctx-title" class="text-sm font-black">Módulo</h4>
+                                    </div>
+                                </div>
+                                <button type="button" onclick="document.getElementById('modal-smart-context-help').classList.add('hidden')" class="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center cursor-pointer">
+                                    <i class="fa-solid fa-xmark text-xs"></i>
+                                </button>
+                            </div>
+                            <div class="p-5 space-y-3">
+                                <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs font-bold text-amber-900" id="smart-ctx-critical"></div>
+                                <div id="smart-ctx-items" class="space-y-2"></div>
+                            </div>
+                            <div class="px-5 py-3 bg-slate-50 border-t border-slate-200 flex justify-end">
+                                <button type="button" onclick="document.getElementById('modal-smart-context-help').classList.add('hidden')"
+                                    class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold cursor-pointer">
+                                    Entendido
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(div);
+                },
+
+                // FASE 3: Tutor Operativo (bajo demanda)
+                openTutorModal() {
+                    const cfg = this.getConfig();
+                    if (!cfg.tutorEnabled) {
+                        if (typeof showToast === 'function') showToast('El Tutor Operativo está desactivado en Configuración de Experiencia.', 'info');
+                        return;
+                    }
+                    this.recordMetric('ayuda', 'tutor-operativo');
+                    this._ensureTutorModal();
+                    this.renderTutorTab(this.activeTutorTab || 'consejos');
+                    const modal = document.getElementById('modal-tutor-operativo');
+                    if (modal) modal.classList.remove('hidden');
+                },
+
+                _ensureTutorModal() {
+                    if (document.getElementById('modal-tutor-operativo')) return;
+                    const div = document.createElement('div');
+                    div.id = 'modal-tutor-operativo';
+                    div.className = 'fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-[115] flex items-center justify-center p-4 hidden';
+                    div.innerHTML = `
+                        <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-pop">
+                            <div class="p-5 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-lg">
+                                        <i class="fa-solid fa-graduation-cap"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-[10px] font-black uppercase tracking-wider text-indigo-300">Información • Acompañamiento en Piso</div>
+                                        <h3 class="text-base font-black">Tutor Operativo CRONOS FID</h3>
+                                    </div>
+                                </div>
+                                <button type="button" onclick="document.getElementById('modal-tutor-operativo').classList.add('hidden')" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center cursor-pointer">
+                                    <i class="fa-solid fa-xmark text-sm"></i>
+                                </button>
+                            </div>
+                            <div class="px-5 pt-3 bg-slate-50 border-b border-slate-200 flex items-center gap-2 overflow-x-auto" id="tutor-tabs-bar">
+                                <button type="button" data-tutor-tab="consejos" onclick="CronosSmartOnboarding.renderTutorTab('consejos')" class="px-3.5 py-2 rounded-t-xl text-xs font-black cursor-pointer">Consejos rápidos</button>
+                                <button type="button" data-tutor-tab="faq" onclick="CronosSmartOnboarding.renderTutorTab('faq')" class="px-3.5 py-2 rounded-t-xl text-xs font-black cursor-pointer">Preguntas frecuentes</button>
+                                <button type="button" data-tutor-tab="practicas" onclick="CronosSmartOnboarding.renderTutorTab('practicas')" class="px-3.5 py-2 rounded-t-xl text-xs font-black cursor-pointer">Buenas prácticas</button>
+                                <button type="button" data-tutor-tab="errores" onclick="CronosSmartOnboarding.renderTutorTab('errores')" class="px-3.5 py-2 rounded-t-xl text-xs font-black cursor-pointer">Errores frecuentes</button>
+                            </div>
+                            <div id="tutor-tab-body" class="p-5 overflow-y-auto space-y-3 flex-1"></div>
+                        </div>
+                    `;
+                    document.body.appendChild(div);
+                },
+
+                renderTutorTab(tabKey) {
+                    this.activeTutorTab = tabKey;
+                    const data = getTutorData();
+                    document.querySelectorAll('#tutor-tabs-bar button').forEach(btn => {
+                        const active = btn.getAttribute('data-tutor-tab') === tabKey;
+                        btn.className = active
+                            ? 'px-3.5 py-2 rounded-t-xl text-xs font-black bg-white text-indigo-700 border border-b-0 border-slate-200 cursor-pointer'
+                            : 'px-3.5 py-2 rounded-t-xl text-xs font-bold text-slate-500 hover:text-slate-800 cursor-pointer';
+                    });
+                    const body = document.getElementById('tutor-tab-body');
+                    if (!body) return;
+                    if (tabKey === 'consejos') {
+                        body.innerHTML = data.consejos.map(c => `
+                            <div class="p-4 rounded-2xl bg-indigo-50/70 border border-indigo-200">
+                                <div class="text-xs font-black text-indigo-900">${c.title}</div>
+                                <p class="text-xs text-slate-700 mt-1">${c.text}</p>
+                            </div>
+                        `).join('');
+                    } else if (tabKey === 'faq') {
+                        body.innerHTML = data.faq.map(f => `
+                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                                <div class="text-xs font-black text-slate-900">${f.q}</div>
+                                <p class="text-xs text-slate-600 mt-1">${f.a}</p>
+                            </div>
+                        `).join('');
+                    } else if (tabKey === 'practicas') {
+                        body.innerHTML = data.practicas.map(p => `
+                            <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-start gap-2.5 text-xs font-semibold text-emerald-950">
+                                <i class="fa-solid fa-circle-check text-emerald-600 mt-0.5"></i>
+                                <span>${p}</span>
+                            </div>
+                        `).join('');
+                    } else {
+                        body.innerHTML = data.errores.map(e => `
+                            <div class="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 flex items-start gap-2.5 text-xs font-semibold text-rose-950">
+                                <i class="fa-solid fa-triangle-exclamation text-rose-600 mt-0.5"></i>
+                                <span>${e}</span>
+                            </div>
+                        `).join('');
+                    }
+                },
+
+                // FASE 4, 5, 6, 7: Panel de Configuración de Experiencia, Usuarios Nuevos y Métricas
+                openExperienciaTab() {
+                    if (!this.canManageOnboarding()) {
+                        if (typeof showToast === 'function') showToast('Disponible solo para Administrador, Supervisor y Formador.', 'warning');
+                        return;
+                    }
+                    const btnUsr = document.getElementById('tab-btn-admin-usuarios');
+                    const btnCom = document.getElementById('tab-btn-admin-comunicados');
+                    const btnExp = document.getElementById('tab-btn-admin-experiencia');
+                    const contUsr = document.getElementById('subtab-content-admin-usuarios');
+                    const contCom = document.getElementById('subtab-content-admin-comunicados');
+                    const contExp = document.getElementById('subtab-content-admin-experiencia');
+
+                    const inactiveCls = 'px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-2 transition bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 cursor-pointer';
+                    if (btnUsr) btnUsr.className = inactiveCls;
+                    if (btnCom) btnCom.className = inactiveCls;
+                    if (btnExp) btnExp.className = 'px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-2 transition bg-emerald-600 text-white shadow-sm cursor-pointer';
+
+                    if (contUsr) contUsr.classList.add('hidden');
+                    if (contCom) contCom.classList.add('hidden');
+                    if (contExp) {
+                        contExp.classList.remove('hidden');
+                        this.renderAdminPanel(contExp);
+                    }
+                },
+
+                openAdminModal() {
+                    if (!this.canManageOnboarding()) {
+                        if (typeof showToast === 'function') showToast('Disponible solo para Administrador, Supervisor y Formador.', 'warning');
+                        return;
+                    }
+                    let modal = document.getElementById('modal-onboarding-admin');
+                    if (!modal) {
+                        modal = document.createElement('div');
+                        modal.id = 'modal-onboarding-admin';
+                        modal.className = 'fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-[115] flex items-center justify-center p-4 hidden';
+                        modal.innerHTML = `
+                            <div class="bg-slate-50 rounded-3xl shadow-2xl border border-slate-200 max-w-5xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-pop">
+                                <div class="p-4 bg-slate-900 text-white flex items-center justify-between">
+                                    <div class="font-black text-sm flex items-center gap-2">
+                                        <i class="fa-solid fa-graduation-cap text-emerald-400"></i>
+                                        <span>Onboarding Inteligente: Configuración, Usuarios Nuevos y Métricas</span>
+                                    </div>
+                                    <button type="button" onclick="document.getElementById('modal-onboarding-admin').classList.add('hidden')" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center cursor-pointer">
+                                        <i class="fa-solid fa-xmark text-sm"></i>
+                                    </button>
+                                </div>
+                                <div id="modal-onboarding-admin-body" class="p-5 overflow-y-auto space-y-5"></div>
+                            </div>
+                        `;
+                        document.body.appendChild(modal);
+                    }
+                    const body = document.getElementById('modal-onboarding-admin-body');
+                    if (body) this.renderAdminPanel(body);
+                    modal.classList.remove('hidden');
+                },
+
+                renderAdminPanel(container) {
+                    if (!container || !this.canManageOnboarding()) return;
+                    const cfg = this.getConfig();
+                    const metrics = this.getMetrics();
+                    const metricList = Object.values(metrics);
+                    const totalRecorridos = metricList.reduce((acc, m) => acc + (m.recorridosCompletados || 0), 0);
+                    const totalAyudas = metricList.reduce((acc, m) => acc + (m.ayudasConsultadas || 0), 0);
+                    const totalModulos = metricList.reduce((acc, m) => acc + ((m.modulosVisitados || []).length), 0);
+                    const users = Array.isArray(window.CRONOS_USERS_DB) ? window.CRONOS_USERS_DB : [];
+
+                    container.innerHTML = `
+                        <!-- FASE 7: Configuración de Experiencia -->
+                        <div class="bg-white rounded-2xl border border-slate-200 p-5 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="text-sm font-black text-slate-900">Configuración de Experiencia (Onboarding Inteligente)</h4>
+                                    <p class="text-xs text-slate-500">Activa o desactiva módulos de ayuda bajo demanda sin afectar la operación.</p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <label class="p-3.5 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between cursor-pointer">
+                                    <span class="text-xs font-bold text-slate-800">Recorridos guiados</span>
+                                    <input type="checkbox" ${cfg.tourEnabled ? 'checked' : ''} onchange="CronosSmartOnboarding.toggleConfig('tourEnabled', this.checked)" class="w-4 h-4 accent-emerald-600">
+                                </label>
+                                <label class="p-3.5 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between cursor-pointer">
+                                    <span class="text-xs font-bold text-slate-800">Tutor Operativo</span>
+                                    <input type="checkbox" ${cfg.tutorEnabled ? 'checked' : ''} onchange="CronosSmartOnboarding.toggleConfig('tutorEnabled', this.checked)" class="w-4 h-4 accent-emerald-600">
+                                </label>
+                                <label class="p-3.5 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between cursor-pointer">
+                                    <span class="text-xs font-bold text-slate-800">Ayudas contextuales</span>
+                                    <input type="checkbox" ${cfg.contextHelpEnabled ? 'checked' : ''} onchange="CronosSmartOnboarding.toggleConfig('contextHelpEnabled', this.checked)" class="w-4 h-4 accent-emerald-600">
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- FASE 6: Métricas de Onboarding -->
+                        <div class="bg-white rounded-2xl border border-slate-200 p-5 space-y-4">
+                            <h4 class="text-sm font-black text-slate-900">Métricas de Onboarding (Formación / Supervisión / Admin)</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <div class="p-4 rounded-xl bg-indigo-50 border border-indigo-200">
+                                    <div class="text-[10px] font-black uppercase text-indigo-700">Módulos Visitados</div>
+                                    <div class="text-2xl font-black text-indigo-950 mt-1">${totalModulos}</div>
+                                </div>
+                                <div class="p-4 rounded-xl bg-amber-50 border border-amber-200">
+                                    <div class="text-[10px] font-black uppercase text-amber-700">Ayudas Consultadas</div>
+                                    <div class="text-2xl font-black text-amber-950 mt-1">${totalAyudas}</div>
+                                </div>
+                                <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200">
+                                    <div class="text-[10px] font-black uppercase text-emerald-700">Recorridos Completados</div>
+                                    <div class="text-2xl font-black text-emerald-950 mt-1">${totalRecorridos}</div>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-xs">
+                                    <thead>
+                                        <tr class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200 uppercase text-[10px]">
+                                            <th class="p-2.5">Usuario</th>
+                                            <th class="p-2.5">Perfil</th>
+                                            <th class="p-2.5 text-center">Módulos Visitados</th>
+                                            <th class="p-2.5 text-center">Ayudas Consultadas</th>
+                                            <th class="p-2.5 text-center">Recorridos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        ${metricList.length ? metricList.map(m => `
+                                            <tr>
+                                                <td class="p-2.5 font-bold text-slate-800">${m.nombre} <span class="text-[10px] text-slate-400 font-mono">(${m.correo})</span></td>
+                                                <td class="p-2.5 text-slate-600">${m.rol}</td>
+                                                <td class="p-2.5 text-center font-mono font-bold">${(m.modulosVisitados || []).length}</td>
+                                                <td class="p-2.5 text-center font-mono font-bold">${m.ayudasConsultadas || 0}</td>
+                                                <td class="p-2.5 text-center font-mono font-bold">${m.recorridosCompletados || 0}</td>
+                                            </tr>
+                                        `).join('') : '<tr><td colspan="5" class="p-4 text-center text-slate-400">Sin métricas registradas aún.</td></tr>'}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- FASE 4 & 5: Clasificación Usuario Nuevo (SI / NO) -->
+                        <div class="bg-white rounded-2xl border border-slate-200 p-5 space-y-3">
+                            <div>
+                                <h4 class="text-sm font-black text-slate-900">Clasificación: Usuario Nuevo (SI / NO)</h4>
+                                <p class="text-xs text-slate-500">SI = Activa ayudas ampliadas. NO = Usuario avanzado (solo contenido crítico).</p>
+                            </div>
+                            <div class="max-h-64 overflow-y-auto overflow-x-auto">
+                                <table class="w-full text-left text-xs">
+                                    <thead>
+                                        <tr class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200 uppercase text-[10px]">
+                                            <th class="p-2.5">Nombre</th>
+                                            <th class="p-2.5">Correo</th>
+                                            <th class="p-2.5">Rol</th>
+                                            <th class="p-2.5 text-center">Usuario Nuevo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        ${users.slice(0, 50).map(u => {
+                                            const uKey = this.getUserKey(u);
+                                            const isNew = this.isNewUser(u);
+                                            return `
+                                                <tr>
+                                                    <td class="p-2.5 font-bold text-slate-800">${u.nombre || uKey}</td>
+                                                    <td class="p-2.5 font-mono text-slate-600">${u.correo || ''}</td>
+                                                    <td class="p-2.5 text-slate-600">${u.rol || 'Asesor'}</td>
+                                                    <td class="p-2.5 text-center">
+                                                        <select onchange="CronosSmartOnboarding.onToggleNewUser('${uKey}', this.value === 'SI')"
+                                                            class="border border-slate-300 rounded-lg px-2 py-1 text-xs font-bold ${isNew ? 'bg-emerald-50 text-emerald-800' : 'bg-slate-50 text-slate-700'}">
+                                                            <option value="SI" ${isNew ? 'selected' : ''}>SI (Nuevo)</option>
+                                                            <option value="NO" ${!isNew ? 'selected' : ''}>NO (Avanzado)</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            `;
+                                        }).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                },
+
+                toggleConfig(key, val) {
+                    const cfg = this.getConfig();
+                    cfg[key] = Boolean(val);
+                    this.saveConfig(cfg);
+                    if (typeof showToast === 'function') showToast('Configuración de Experiencia actualizada.', 'success');
+                },
+
+                onToggleNewUser(userKey, isNew) {
+                    this.setNewUserFlag(userKey, isNew);
+                    if (typeof showToast === 'function') {
+                        showToast(`Usuario marcado como ${isNew ? 'NUEVO (ayudas ampliadas)' : 'AVANZADO (solo contenido crítico)'}.`, 'success');
+                    }
+                },
+
+                syncRoleUI() {
+                    const optAdmin = document.getElementById('menu-opt-onboarding-admin');
+                    if (optAdmin) {
+                        optAdmin.style.display = this.canManageOnboarding() ? 'flex' : 'none';
+                    }
+                    const btnExp = document.getElementById('tab-btn-admin-experiencia');
+                    if (btnExp) {
+                        btnExp.style.display = this.canManageOnboarding() ? '' : 'none';
+                    }
+                },
+
+                init() {
+                    if (this._wrapped) return;
+                    this._wrapped = true;
+
+                    // Open for Extension: envolver switchTab sin modificar su implementación original
+                    if (typeof window.switchTab === 'function') {
+                        window._origSwitchTab = window.switchTab;
+                        window.switchTab = function (target, isPopState) {
+                            const res = window._origSwitchTab.apply(this, arguments);
+                            setTimeout(() => CronosSmartOnboarding.onModuleEnter(target), 80);
+                            return res;
+                        };
+                    }
+
+                    // Envolver subpestañas de Procesos Operativos sin modificar su código
+                    if (window.CronosProcesosOperativos && typeof window.CronosProcesosOperativos.switchSubTab === 'function') {
+                        const origSub = window.CronosProcesosOperativos.switchSubTab.bind(window.CronosProcesosOperativos);
+                        window.CronosProcesosOperativos.switchSubTab = function (sub) {
+                            const res = origSub(sub);
+                            setTimeout(() => CronosSmartOnboarding.onModuleEnter(sub), 80);
+                            return res;
+                        };
+                    }
+
+                    // Envolver switchAdminTab para ocultar Configuración de Experiencia al volver a Usuarios/Comunicados
+                    if (window.CronosAnnouncementManager && typeof window.CronosAnnouncementManager.switchAdminTab === 'function') {
+                        const origAdminTab = window.CronosAnnouncementManager.switchAdminTab.bind(window.CronosAnnouncementManager);
+                        window.CronosAnnouncementManager.switchAdminTab = function (tab) {
+                            const btnExp = document.getElementById('tab-btn-admin-experiencia');
+                            const contExp = document.getElementById('subtab-content-admin-experiencia');
+                            if (btnExp) btnExp.className = 'px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-2 transition bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 cursor-pointer';
+                            if (contExp) contExp.classList.add('hidden');
+                            return origAdminTab(tab);
+                        };
+                    }
+
+                    // Extender funciones globales de Onboarding sin romper llamadas existentes
+                    window.startCronosOnboarding = (isManual = false) => this.startTour(isManual);
+                    window.resetCronosOnboarding = () => this.resetTour();
+
+                    // Sincronizar UI por perfil y detectar primer ingreso cuando app-shell esté visible
+                    let lastUserKey = null;
+                    setInterval(() => {
+                        const u = this.getCurrentUser();
+                        if (!u) return;
+                        const k = this.getUserKey(u);
+                        if (k !== lastUserKey) {
+                            lastUserKey = k;
+                            this.syncRoleUI();
+                            setTimeout(() => this.checkFirstAccess(), 700);
+                        }
+                    }, 1000);
+                }
+            };
+
+            window.CronosSmartOnboarding = CronosSmartOnboarding;
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => CronosSmartOnboarding.init());
+            } else {
+                CronosSmartOnboarding.init();
+            }
         })(window);
     </script>
 </body>
